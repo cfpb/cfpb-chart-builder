@@ -1,0 +1,22 @@
+{
+  "name": "cfpb-chart-builder",
+  "version": "0.0.1",
+  "description": "A package to build charts to CFPB style",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cfpb/cfpb-chart-builder.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cfpb/cfpb-chart-builder/issues"
+  },
+  "homepage": "https://github.com/cfpb/cfpb-chart-builder#readme",
+  "dependencies": {
+    "d3": "4.2.7"
+  }
+}

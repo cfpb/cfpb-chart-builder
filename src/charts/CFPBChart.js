@@ -1,6 +1,5 @@
 'use strict';
 
-// var objectCreate = require( './utils/object-create-polyfill.js' );
 var d3 = require( 'd3' );
 
 function CFPBChart( name ) {

@@ -2,16 +2,18 @@
 
 var d3 = require( 'd3' );
 var CFPBChart = require( './CFPBChart' );
-var stateCoords = require( '../utils/stateTileCoords' );
-
+var stateCoords = require( '../utils/state-tile-coords' );
+var fillByValue = require( '../utils/fill-by-value' );
+var valueGrid;
 
 TileMap.prototype = new CFPBChart();
 TileMap.prototype.constructor = TileMap;
 
-function TileMap( options ) {
-  this.selector = options.selector;
-  this.data = options.data;
+function TileMap( properties ) {
+  this.selector = properties.selector;
+  this.data = properties.data;
   this.type = 'TileMap';
+  valueGrid = properties.valueGrid || undefined;
 
 
   this.drawGraph = function( options ) {
@@ -27,7 +29,7 @@ function TileMap( options ) {
     var width = baseWidth - margin.left - margin.right,
         height = baseHeight - margin.top - margin.bottom,
         tileGutterWidth = Math.floor( width / 11 ),
-        tileWidth = Math.floor( width / 11 - width / 100 );
+        tileWidth = Math.floor( tileGutterWidth - 2 - tileGutterWidth / 20 );
 
     var svg = d3.select( this.selector ) 
       .append( 'svg' )
@@ -39,7 +41,7 @@ function TileMap( options ) {
 
     var tiles = svg.selectAll( 'g' )
       .data( data )
-      .enter()
+      .enter();
 
     tiles.append( 'rect' )
       .attr( 'x', function( d ) {
@@ -50,7 +52,10 @@ function TileMap( options ) {
       } )
       .attr( 'width', tileWidth )
       .attr( 'height', tileWidth )
-      .style( 'fill', '#2CB34A');
+      .style( 'fill', function( d ) {
+        return fillByValue( d.value, valueGrid )
+      } )
+      .style( 'stroke', '#75787B');
 
     tiles.append( 'text' )
       .attr( 'x', function( d ) {
@@ -60,15 +65,35 @@ function TileMap( options ) {
       } )
       .attr( 'y', function( d ) {
         var y = stateCoords(d.state)[1] * tileGutterWidth;
-        y += tileWidth * 1/3;
+        y += tileWidth * .4;
         return y;
       } )
       .attr( 'width', tileWidth )
       .attr( 'height', tileWidth )
-      .style( 'font-size', tileWidth / 3 + 'px' )
+      .style( 'font-size', tileWidth * .25 + 'px' )
       .style( 'text-anchor', 'middle' )
-      .style( 'border', '1px solid #BABBBD')
       .text( function( d ) { return d.state; } );
+
+    tiles.append( 'text' )
+      .attr( 'x', function( d ) {
+        var x = stateCoords(d.state)[0] * tileGutterWidth;
+        x += .5 * tileWidth;
+        return x;
+      } )
+      .attr( 'y', function( d ) {
+        var y = stateCoords(d.state)[1] * tileGutterWidth;
+        y += tileWidth * .8;
+        return y;
+      } )
+      .attr( 'width', tileWidth )
+      .attr( 'height', tileWidth )
+      .style( 'font-size', tileWidth * .25 + 'px' )
+      .style( 'text-anchor', 'middle' )
+      .text( function( d ) {
+        var val = Math.round( d.value * 100 );
+        return val + '%';
+      } );
+
 
     return svg;
   }

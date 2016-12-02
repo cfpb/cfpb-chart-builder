@@ -6,9 +6,9 @@ var CFPBChart = require( './CFPBChart' );
 BarChart.prototype = new CFPBChart();
 BarChart.prototype.constructor = BarChart;
 
-function BarChart( options ) {
-  this.selector = options.selector;
-  this.data = options.data;
+function BarChart( properties ) {
+  this.selector = properties.selector;
+  this.data = properties.data;
   this.type = 'BarChart';
 
   this.drawGraph = function( options ) {

@@ -44,18 +44,25 @@ function BarChart( properties ) {
       d.amount = +d.amount;
     } );
 
-    var ymin = d3.min( data, function(d) { return d.amount } ) - 2,
+    var ymin = d3.min( data, function(d) { return d.amount } ),
         ymax = d3.max( data, function(d) { return d.amount; } );
 
-    ymax = Math.max( ymax, Math.abs( ymin ) );
-    ymin = Math.max( ymin, -ymax );
+    // If the graph displays values below zero...
+    if ( ymin < 0 ) {
+      // add some padding
+      // ymin -= 2;
+
+      // Even the graph out so that 0 is in the middle
+      ymax = Math.max( ymax, Math.abs( ymin ) );
+      ymin = Math.max( ymin, -ymax );
+    }
 
     x.domain( data.map( function( d ) { return d.date; } ) );
-    y.domain( [ ymin, ymax ] );
+    y.domain( [ Math.min( 0, ymin ), ymax ] );
 
     svg.append( 'g' )
         .attr( 'class', 'x axis' )
-        .attr( 'transform', 'translate( 0,' + height + ')' )
+        .attr( 'transform', 'translate( 0,' + Math.max( y( 0 ), y( ymin ) ) + ')' )
         .call(
           d3.axisBottom( x )
           .tickValues( x.domain().filter(
@@ -93,14 +100,16 @@ function BarChart( properties ) {
           } )
         .attr( 'fill', '#2CB34A' );
 
-    svg.append( 'line' )
-        .attr( 'x1', 0 )
-        .attr( 'x2', width )
-        .attr( 'y1', y( 0 ) )
-        .attr( 'y2', y( 0 ) )
-        .style( 'stroke', '#000000' )
-        .attr( 'stroke-width', 2 )
-        .style( 'stroke-dasharray', ( '7, 3' ) )
+    if ( options.zeroLine === true ) {
+      svg.append( 'line' )
+          .attr( 'x1', 0 )
+          .attr( 'x2', width )
+          .attr( 'y1', y( 0 ) )
+          .attr( 'y2', y( 0 ) )
+          .style( 'stroke', '#000000' )
+          .attr( 'stroke-width', 2 )
+          .style( 'stroke-dasharray', ( '7, 3' ) );
+    }
 
     return svg;
   }

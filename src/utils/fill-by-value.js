@@ -8,7 +8,6 @@ function fillByValue( value, valueGrid ) {
   }
   for (var i = 0; i < valueGrid.length; i++ ) {
     var max = valueGrid[i].maxValue;
-    console.log( value, max );
     if ( value < max || typeof max !== 'number' ) {
       return valueGrid[i].fillColor;
     }

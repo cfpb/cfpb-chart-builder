@@ -10,6 +10,7 @@ function BarChart( properties ) {
   this.selector = properties.selector;
   this.data = properties.data;
   this.type = 'BarChart';
+  this.yAxisLabel = properties.yAxisLabel;
 
   this.drawGraph = function( options ) {
     var data = this.data;
@@ -85,7 +86,7 @@ function BarChart( properties ) {
         .attr( 'x', -1 * ( height + ymin ) / 2 )
         .attr( 'y', -50 )
         .style( 'font-size', '.75em' )
-        .text( 'Year-over-year change (%)' );
+        .text( this.yAxisLabel );
 
     svg.selectAll( 'bar' )
         .data( data )

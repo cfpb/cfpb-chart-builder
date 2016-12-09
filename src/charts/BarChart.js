@@ -10,7 +10,7 @@ function BarChart( properties ) {
   this.selector = properties.selector;
   this.data = properties.data;
   this.type = 'BarChart';
-  this.yAxisLabel = properties.yAxisLabel;
+  this.labels = properties.labels || {};
 
   this.drawGraph = function( options ) {
     var data = this.data;
@@ -41,26 +41,29 @@ function BarChart( properties ) {
               'translate( ' + margin.left + ',' + margin.top + ' )' );  
 
     data.forEach( function( d ) {
-      d.date = d.date;
+      d.label = d.label;
       d.amount = +d.amount;
     } );
 
     var ymin = d3.min( data, function(d) { return d.amount } ),
         ymax = d3.max( data, function(d) { return d.amount; } );
 
-    // If the graph displays values below zero...
+    // If the graph displays values below zero, find new bounds by
+    // rounding to the absolute greatest factor of 10 and set that
+    // as the min and max
     if ( ymin < 0 ) {
-      // add some padding
-      // ymin -= 2;
+      var top = Math.ceil( Math.abs( ymax ) / 10 ) * 10,
+          bottom = Math.ceil( Math.abs( ymin ) / 10 ) * 10,
+          max = Math.max( top, bottom );
 
-      // Even the graph out so that 0 is in the middle
-      ymax = Math.max( ymax, Math.abs( ymin ) );
-      ymin = Math.max( ymin, -ymax );
+      ymax = max;
+      ymin = -1 * max;
     }
 
-    x.domain( data.map( function( d ) { return d.date; } ) );
+    x.domain( data.map( function( d ) { return d.label; } ) );
     y.domain( [ Math.min( 0, ymin ), ymax ] );
 
+    // x-axis
     svg.append( 'g' )
         .attr( 'class', 'x axis' )
         .attr( 'transform', 'translate( 0,' + Math.max( y( 0 ), y( ymin ) ) + ')' )
@@ -71,28 +74,46 @@ function BarChart( properties ) {
               return !( i % 12 );
             } )
           )
-          .tickFormat( function( d, i ) { return d.substr( 0, 4 ) } )
+          .tickFormat( function( d, i ) { return 'Jan ' + d.substr( 0, 4 ) } )
         )
       .selectAll( 'text' )
-        .style( 'text-anchor', 'middle' );
+        .style( 'text-anchor', 'middle' )
+        .attr( 'y', 15 );
 
+    // Determine y-axis tick interval
+    var yTickInterval = 10;
+
+    // y-axis
     svg.append( 'g' )
         .attr( 'class', 'y axis')
-        .call( d3.axisLeft( y ).ticks( ( ymax - ymin ) / 20 ) );
+        .call(
+          d3.axisLeft( y )
+            .ticks( ( ymax - ymin ) / yTickInterval )
+            .tickSize( -width )
+            .tickFormat( function( d ) {
+              if ( ymax <= 40 || d % 20 === 0 ) {
+                return d + '%'
+              }
+            } )
+          )
+        .selectAll( 'text' )
+          .attr( 'dy', '.25em' );
 
+    // y-axis label
     svg.append( 'text' )
         .attr( 'transform', 'rotate(-90)' )
         .attr( 'text-anchor', 'middle' )
         .attr( 'x', -1 * ( height + ymin ) / 2 )
         .attr( 'y', -50 )
-        .style( 'font-size', '.75em' )
-        .text( this.yAxisLabel );
+        .attr( 'class', 'y-axis-label' )
+        .style( 'font-size', '1em' )
+        .text( this.labels.yAxisLabel || '' );
 
     svg.selectAll( 'bar' )
         .data( data )
       .enter().append( 'rect' )
         .attr( 'class', 'bar' )
-        .attr( 'x', function(d) { return x( d.date ); })
+        .attr( 'x', function(d) { return x( d.label ); })
         .attr( 'width' , x.bandwidth() )
         .attr( 'y', function( d ) { return y( Math.max( 0, d.amount ) ); })
         .attr( 'height',
@@ -101,20 +122,8 @@ function BarChart( properties ) {
           } )
         .attr( 'fill', '#2CB34A' );
 
-    if ( options.zeroLine === true ) {
-      svg.append( 'line' )
-          .attr( 'x1', 0 )
-          .attr( 'x2', width )
-          .attr( 'y1', y( 0 ) )
-          .attr( 'y2', y( 0 ) )
-          .style( 'stroke', '#000000' )
-          .attr( 'stroke-width', 2 )
-          .style( 'stroke-dasharray', ( '7, 3' ) );
-    }
-
     return svg;
   }
 }
-
 
 module.exports = BarChart;

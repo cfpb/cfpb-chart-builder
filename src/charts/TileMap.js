@@ -4,7 +4,8 @@ var d3 = require( 'd3' );
 var CFPBChart = require( './CFPBChart' );
 var stateCoords = require( '../utils/state-tile-coords' );
 var fillByValue = require( '../utils/fill-by-value' );
-var valueGrid;
+var valueGrid,
+    legendLabels;
 
 TileMap.prototype = new CFPBChart();
 TileMap.prototype.constructor = TileMap;
@@ -13,7 +14,8 @@ function TileMap( properties ) {
   this.selector = properties.selector;
   this.data = properties.data;
   this.type = 'TileMap';
-  valueGrid = properties.valueGrid || undefined;
+  valueGrid = properties.valueGrid || [];
+  legendLabels = properties.legendLabels || [];
 
 
   this.drawGraph = function( options ) {
@@ -48,7 +50,7 @@ function TileMap( properties ) {
         return stateCoords(d.state)[0] * tileGutterWidth;
       } )
       .attr( 'y', function( d ) {
-        return stateCoords(d.state)[1] * tileGutterWidth;
+        return stateCoords(d.state)[1] * tileGutterWidth + 60;
       } )
       .attr( 'width', tileWidth )
       .attr( 'height', tileWidth )
@@ -64,12 +66,13 @@ function TileMap( properties ) {
         return x;
       } )
       .attr( 'y', function( d ) {
-        var y = stateCoords(d.state)[1] * tileGutterWidth;
+        var y = stateCoords(d.state)[1] * tileGutterWidth + 60;
         y += tileWidth * .4;
         return y;
       } )
       .attr( 'width', tileWidth )
       .attr( 'height', tileWidth )
+      .attr( 'class', 'state-abbreviation' )
       .style( 'font-size', tileWidth * .25 + 'px' )
       .style( 'text-anchor', 'middle' )
       .text( function( d ) { return d.state; } );
@@ -81,7 +84,7 @@ function TileMap( properties ) {
         return x;
       } )
       .attr( 'y', function( d ) {
-        var y = stateCoords(d.state)[1] * tileGutterWidth;
+        var y = stateCoords(d.state)[1] * tileGutterWidth + 60;
         y += tileWidth * .8;
         return y;
       } )
@@ -94,6 +97,29 @@ function TileMap( properties ) {
         return val + '%';
       } );
 
+    // draw the legend, rectangles
+    for ( var x = 0; x < valueGrid.length; x++ ) {
+      svg.append( 'rect' )
+        .attr( 'x', x * tileWidth + 15 )
+        .attr( 'y', 0 )
+        .attr( 'width', tileWidth )
+        .attr( 'height', 10 )
+        .attr( 'fill', valueGrid[x].fillColor )
+        .style( 'stroke', '#75787B');
+    }
+
+    // draw the legend, text labels
+    for ( var x = 0; x < legendLabels.length; x++ ) {
+      svg.append( 'text' )
+        .attr( 'x', x * tileWidth + 15 )
+        .attr( 'y', 20 + tileWidth * .125 )
+        .attr( 'width', tileWidth )
+        .attr( 'height', 30 )
+        .style( 'font-size', tileWidth * .25 + 'px' )
+        .style( 'text-anchor', 'middle' )
+        .style( 'fill', '#75787B')
+        .text( legendLabels[x] )
+    }
 
     return svg;
   }

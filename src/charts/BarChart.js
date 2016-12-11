@@ -6,11 +6,14 @@ var CFPBChart = require( './CFPBChart' );
 BarChart.prototype = new CFPBChart();
 BarChart.prototype.constructor = BarChart;
 
+var yAxisUnit;
+
 function BarChart( properties ) {
   this.selector = properties.selector;
   this.data = properties.data;
   this.type = 'BarChart';
   this.labels = properties.labels || {};
+  yAxisUnit = properties.yAxisUnit || '';
 
   this.drawGraph = function( options ) {
     var data = this.data;
@@ -92,7 +95,7 @@ function BarChart( properties ) {
             .tickSize( -width )
             .tickFormat( function( d ) {
               if ( ymax <= 40 || d % 20 === 0 ) {
-                return d + '%'
+                return d + yAxisUnit;
               }
             } )
           )
@@ -122,7 +125,11 @@ function BarChart( properties ) {
           } )
         .attr( 'fill', '#2CB34A' );
 
-    return svg;
+    return {
+      chart: svg,
+      x: x,
+      y: y
+    }
   }
 }
 

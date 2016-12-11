@@ -46,8 +46,9 @@ function TileMap( properties ) {
       .enter();
 
     tiles.append( 'rect' )
+      .filter( function( d ) { return stateCoords( d.state ) !== false; } )
       .attr( 'x', function( d ) {
-        return stateCoords(d.state)[0] * tileGutterWidth;
+        return stateCoords( d.state )[0] * tileGutterWidth;
       } )
       .attr( 'y', function( d ) {
         return stateCoords(d.state)[1] * tileGutterWidth + 60;
@@ -60,6 +61,7 @@ function TileMap( properties ) {
       .style( 'stroke', '#75787B');
 
     tiles.append( 'text' )
+      .filter( function( d ) { return stateCoords( d.state ) !== false; } )
       .attr( 'x', function( d ) {
         var x = stateCoords(d.state)[0] * tileGutterWidth;
         x += .5 * tileWidth;
@@ -78,6 +80,7 @@ function TileMap( properties ) {
       .text( function( d ) { return d.state; } );
 
     tiles.append( 'text' )
+      .filter( function( d ) { return stateCoords( d.state ) !== false; } )
       .attr( 'x', function( d ) {
         var x = stateCoords(d.state)[0] * tileGutterWidth;
         x += .5 * tileWidth;

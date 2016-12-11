@@ -18,12 +18,36 @@ function sortByDateAscending( a, b ) {
 }
 
 function findBestYTickFactor( ymin, ymax, factor ) {
-  var multipliers = [ 2, 4, 5, 10, 20, 25, 50, 100 ];
+  var multipliers = [ 2, 4, 5, 10, 20, 25, 50, 100, 200, 500, 1000, 2000, 5000, 10000 ];
+  var divisors = [ .5, .25, .1, .05, .025, .01 ];
   var count = ( ymax - ymin ) / factor;
-  for (var x = 0; count > 11; x++ ) {
-    count = ( ymax - ymin ) / ( factor * multipliers[x] ); 
+  var newFactor = factor;
+  var coeff = 1;
+
+  if ( count > 11 ) {
+    for (var x = 0; count > 11; x++ ) {
+      coeff = multipliers[x];
+      newFactor = factor * coeff;
+      count = ( ymax - ymin ) / newFactor;
+    }
+
+  // @todo - fix the minimum tick count code
+  // 
+  // } else if ( count < 5 ) {
+  //   for (var x = 0; count < 5; x++ ) {
+  //     console.log( 'count of ' + count + ' was no good' )
+  //     coeff = divisors[x];
+  //     newFactor = factor * coeff;
+  //     count = ( ymax - ymin ) / newFactor;
+  //     console.log( 'new count is ' + count );
+  //   }
+
   }
-  return factor * multipliers[x];
+
+  return { 
+    factor: newFactor,
+    multiplier: coeff
+  };
 }
 
 function LineChart( properties ) {
@@ -67,7 +91,8 @@ function LineChart( properties ) {
     ymin = Math.min( ymin, 0 );
 
     // check if the yAxisTickFactor is ideal
-    var tickFactor = findBestYTickFactor( ymin, ymax, yAxisTickFactor );
+    var tickFactor = findBestYTickFactor( ymin, ymax, yAxisTickFactor ).factor;
+    var tickMultiplier = findBestYTickFactor( ymin, ymax, yAxisTickFactor ).multiplier;
 
     // ymax should be rounded up to the nearest yAxisTickFactor
     ymax = Math.ceil( ymax / tickFactor ) * tickFactor;
@@ -83,9 +108,14 @@ function LineChart( properties ) {
         .attr( 'transform', 
               'translate( ' + margin.left + ',' + margin.top + ' )' );  
 
+    // line function
     var line = d3.line()
-          .x( function( d ) { return x( d.x ); } )
-          .y( function( d ) { return y( d.y ); } );
+          .x( function( d ) {
+            return x( d.x );
+          } )
+          .y( function( d ) {
+            return Math.floor( y( d.y ) );
+          } );
 
     // Add the X Axis
     svg.append('g')
@@ -107,13 +137,16 @@ function LineChart( properties ) {
           .tickSize( -width )
           .tickFormat(function( d ) {
             if ( d % 20 === 0 ) {
-              return Math.floor( d / tickFactor ) + yAxisUnit;
+              if ( tickMultiplier < 1 ) {
+                var ticker = Math.floor( d / tickFactor * tickMultiplier * 10 ) / 10;
+                return ticker + yAxisUnit; 
+              }
+              return Math.floor( d / tickFactor * tickMultiplier ) + yAxisUnit;
             }
           } )
         )
       .selectAll( 'text' )
-        .attr( 'text-anchor', 'middle' )
-        .attr( 'dx', '-15px' );
+        .attr( 'text-anchor', 'right' );
 
     // Iterate all lines:
     for ( var key in data ) {

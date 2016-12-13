@@ -2,6 +2,8 @@
 
 var d3 = require( 'd3' );
 var CFPBChart = require( './CFPBChart' );
+var getMonth = d3.utcFormat( '%b' );
+var getYear =  d3.utcFormat( '%Y' );
 
 LineChart.prototype = new CFPBChart();
 LineChart.prototype.constructor = LineChart;

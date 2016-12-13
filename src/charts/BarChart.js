@@ -28,6 +28,7 @@ function BarChart( properties ) {
     var width = baseWidth - margin.left - margin.right,
         height = baseHeight - margin.top - margin.bottom;
 
+    // @todo - add time interval handling
     var x = d3.scaleBand()
         .range( [ 0, width ] )
         .padding( paddingDecimal );
@@ -67,7 +68,7 @@ function BarChart( properties ) {
     y.domain( [ Math.min( 0, ymin ), ymax ] );
 
     // x-axis
-    svg.append( 'g' )
+    var xAxis = svg.append( 'g' )
         .attr( 'class', 'x axis' )
         .attr( 'transform', 'translate( 0,' + Math.max( y( 0 ), y( ymin ) ) + ')' )
         .call(
@@ -77,11 +78,23 @@ function BarChart( properties ) {
               return !( i % 12 );
             } )
           )
-          .tickFormat( function( d, i ) { return 'Jan ' + d.substr( 0, 4 ) } )
-        )
-      .selectAll( 'text' )
-        .style( 'text-anchor', 'middle' )
-        .attr( 'y', 15 );
+          .tickFormat( function( d, i ) { return ' '} )
+        );
+
+    // @todo - this must be customizable!
+    xAxis.selectAll( 'g' )
+        .append( 'text' )
+          .style( 'text-anchor', 'middle' )
+          .attr( 'y', 25 )
+          .text( function( d ) { return 'Jan' } )
+          .attr( 'width', width / 15 );
+
+    xAxis.selectAll( 'g' )
+        .append( 'text' )
+          .style( 'text-anchor', 'middle' )
+          .attr( 'y', 45 )
+          .text( function( d ) { return d.substr( 0, 4 ) } )
+          .attr( 'width', width / 15 );
 
     // Determine y-axis tick interval
     var yTickInterval = 10;

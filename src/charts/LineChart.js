@@ -2,6 +2,8 @@
 
 var d3 = require( 'd3' );
 var CFPBChart = require( './CFPBChart' );
+var getMonth = d3.utcFormat( '%b' );
+var getYear =  d3.utcFormat( '%Y' );
 
 LineChart.prototype = new CFPBChart();
 LineChart.prototype.constructor = LineChart;
@@ -75,8 +77,8 @@ function LineChart( properties ) {
     var width = baseWidth - margin.left - margin.right,
         height = baseHeight - margin.top - margin.bottom;
 
+    // @todo: the x-axis is not always time intervals 
     var x = d3.scaleTime()
-      // @todo: wait, the x-axis is not always time intervals
         .range( [ 0, width ] );
 
     var y = d3.scaleLinear()
@@ -118,14 +120,27 @@ function LineChart( properties ) {
           } );
 
     // Add the X Axis
-    svg.append('g')
+    // Add the X Axis
+    var xAxis = svg.append('g')
       .classed('axis axis__x', true)
       .attr('transform', 'translate(0,' + height + ')')
       .call( d3.axisBottom( x )
-         .tickFormat( d3.timeFormat( '%b %Y' ) )
-      )
-      .selectAll( 'text' )
-        .attr( 'dy', '15px' );
+         .tickFormat( function( d ) { return ''; }  )
+      );
+
+    xAxis.selectAll( 'g' )
+        .append( 'text' )
+          .style( 'text-anchor', 'middle' )
+          .attr( 'y', 25 )
+          .text( function( d) { return getMonth( d ); } )
+          .attr( 'width', width / 15 );
+
+    xAxis.selectAll( 'g' )
+        .append( 'text' )
+          .style( 'text-anchor', 'middle' )
+          .attr( 'y', 45 )
+          .text( function( d ) { return getYear( d ); } )
+          .attr( 'width', width / 15 );
 
 
     // Add the Y Axis

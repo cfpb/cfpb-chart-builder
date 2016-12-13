@@ -1,6 +1,6 @@
 {
   "name": "cfpb-chart-builder",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A package to build charts to CFPB style",
   "main": "index.js",
   "scripts": {

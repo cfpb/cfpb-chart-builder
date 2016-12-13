@@ -166,7 +166,10 @@ function LineChart( properties ) {
 
     // add the legend
     var legendPositions = [
-      [ 0, -55 ], [ 0, -35 ], [ width / 4, -55 ], [ width / 4, -35 ]     
+      [ -70, -65 ],
+      [ -70, -45 ], 
+      [ width / 4, -55 ], 
+      [ width / 4, -35 ]     
     ];
     for ( var key in lineSets ) {
       if ( lineSets[key].showInLegend !== false ) {

@@ -20,29 +20,25 @@ function sortByDateAscending( a, b ) {
 }
 
 function findBestYTickFactor( ymin, ymax, factor ) {
-  var multipliers = [ 2, 4, 5, 10, 20, 25, 50, 100, 200, 500, 1000, 2000, 5000, 10000 ];
-  var divisors = [ .5, .25, .1, .05, .025, .01 ];
-  var count = ( ymax - ymin ) / factor;
+  var multipliers = [ 2, 4, 5, 10, 15, 20, 25, 50, 100, 200, 500, 1000, 2000, 5000, 10000 ];
+  var divisors = [ .5, .25, .2, .1, .05, .025, .01 ];
+  var count = Math.ceil( ( ymax - ymin ) / factor );
   var newFactor = factor;
   var coeff = 1;
 
-  if ( count > 11 ) {
-    for (var x = 0; count > 11; x++ ) {
+  if ( count > 9 ) {
+    for (var x = 0; count > 9; x++ ) {
       coeff = multipliers[x];
       newFactor = factor * coeff;
-      count = ( ymax - ymin ) / newFactor;
+      count = Math.ceil( ( ymax - ymin ) / newFactor );
     }
 
-  // @todo - fix the minimum tick count code
-  // 
-  // } else if ( count < 5 ) {
-  //   for (var x = 0; count < 5; x++ ) {
-  //     console.log( 'count of ' + count + ' was no good' )
-  //     coeff = divisors[x];
-  //     newFactor = factor * coeff;
-  //     count = ( ymax - ymin ) / newFactor;
-  //     console.log( 'new count is ' + count );
-  //   }
+  } else if ( count < 5 ) {
+    for (var x = 0; count < 5; x++ ) {
+      coeff = divisors[x];
+      newFactor = factor * coeff;
+      count = Math.ceil( ( ymax - ymin ) / newFactor );
+    }
 
   }
 
@@ -100,7 +96,7 @@ function LineChart( properties ) {
     ymax = Math.ceil( ymax / tickFactor ) * tickFactor;
 
     x.domain( [ xmin, xmax ] );
-    y.domain( [ ymin, ymax ]);
+    y.domain( [ ymin, ymax ] );
 
     var svg = d3.select( this.selector ) 
       .append( 'svg' )
@@ -148,16 +144,14 @@ function LineChart( properties ) {
       .classed( 'axis axis__y', true )
       .call(
         d3.axisLeft( y )
-          .ticks( ( ymax - ymin ) / tickFactor )
+          .ticks( Math.ceil( ( ymax - ymin ) / tickFactor ) )
           .tickSize( -width )
           .tickFormat(function( d ) {
-            if ( d % 20 === 0 ) {
-              if ( tickMultiplier < 1 ) {
-                var ticker = Math.floor( d / tickFactor * tickMultiplier * 10 ) / 10;
-                return ticker + yAxisUnit; 
-              }
-              return Math.floor( d / tickFactor * tickMultiplier ) + yAxisUnit;
+            if ( tickMultiplier < 1 ) {
+              var ticker = Math.floor( d / tickFactor * tickMultiplier * 10 ) / 10;
+              return ticker.toString() + yAxisUnit; 
             }
+            return Math.ceil( d / tickFactor * tickMultiplier ) + yAxisUnit;
           } )
         )
       .selectAll( 'text' )

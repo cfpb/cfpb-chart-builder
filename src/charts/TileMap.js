@@ -38,10 +38,17 @@ function TileMap( properties ) {
         .attr( 'width', width + margin.left + margin.right)
         .attr( 'height', height + margin.top + margin.bottom)
       .append( 'g' )
+        .classed( 'tiles' , true )
         .attr( 'transform', 
               'translate( ' + margin.left + ',' + margin.top + ' )' );
 
-    var tiles = svg.selectAll( 'g' )
+    // Add legend group
+    svg.append( 'g' )
+        .classed( 'legend' , true );
+
+    var legend = svg.selectAll('.legend');
+
+    var tiles = svg.selectAll( '.tiles' )
       .data( data )
       .enter();
 
@@ -102,7 +109,7 @@ function TileMap( properties ) {
 
     // draw the legend, rectangles
     for ( var x = 0; x < valueGrid.length; x++ ) {
-      svg.append( 'rect' )
+      legend.append( 'rect' )
         .attr( 'x', x * tileWidth + 15 )
         .attr( 'y', 0 )
         .attr( 'width', tileWidth )
@@ -113,7 +120,7 @@ function TileMap( properties ) {
 
     // draw the legend, text labels
     for ( var x = 0; x < legendLabels.length; x++ ) {
-      svg.append( 'text' )
+      legend.append( 'text' )
         .attr( 'x', x * tileWidth + 15 )
         .attr( 'y', 20 + tileWidth * .125 )
         .attr( 'width', tileWidth )

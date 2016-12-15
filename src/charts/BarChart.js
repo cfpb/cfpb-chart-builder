@@ -98,6 +98,9 @@ function BarChart( properties ) {
 
     // Determine y-axis tick interval
     var yTickInterval = 10;
+    if ( ymax > 130 ) {
+      yTickInterval = 20;
+    }
 
     // y-axis
     svg.append( 'g' )
@@ -107,7 +110,7 @@ function BarChart( properties ) {
             .ticks( ( ymax - ymin ) / yTickInterval )
             .tickSize( -width )
             .tickFormat( function( d ) {
-              if ( ymax <= 40 || d % 20 === 0 ) {
+              if ( ymax <= 40 || d % ( 2 * yTickInterval ) === 0 ) {
                 return d + yAxisUnit;
               }
             } )

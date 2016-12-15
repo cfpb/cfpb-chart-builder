@@ -19,33 +19,63 @@ function sortByDateAscending( a, b ) {
     return a.x - b.x;
 }
 
-function findBestYTickFactor( ymin, ymax, factor ) {
-  var multipliers = [ 2, 4, 5, 10, 15, 20, 25, 50, 100, 200, 500, 1000, 2000, 5000, 10000 ];
-  var divisors = [ .5, .25, .2, .1, .05, .025, .01 ];
-  var count = Math.ceil( ( ymax - ymin ) / factor );
-  var newFactor = factor;
-  var coeff = 1;
+function findNewMax( max ) {
+  var newMax = 0;
+  if ( max < 50 ) {
+    newMax = 5 * Math.ceil( max / 5 );
+  } else if ( max > 100 && max < 500 ) {
+    newMax = 50 * Math.ceil( max / 50 );
+  } else {
+    var pow = max.toString().length - 1;
+    newMax = Math.pow( 10, pow ) * Math.ceil( max / Math.pow( 10, pow ) );
+  }
 
-  if ( count > 9 ) {
-    for (var x = 0; count > 9; x++ ) {
-      coeff = multipliers[x];
-      newFactor = factor * coeff;
-      count = Math.ceil( ( ymax - ymin ) / newFactor );
+  return newMax;
+}
+
+function tickThinker( ymin, ymax, factor ) {
+  var acceptable = [ .5, .25, .2, .1, .05, .025, .01,
+          1, 2, 5, 10, 15, 20, 25, 50, 100, 200 ];
+  // var divisors = [ .5, .25, .2, .1, .05, .025, .01 ];
+  var range = Math.ceil( ymax - ymin );
+  var count = Math.floor( range / factor );
+  var coeff = range / ( factor * count );
+
+  for (var count = 10; count >= 5; count-- ) {
+    coeff = range / ( factor * count ); 
+    if ( range % count === 0 && acceptable.indexOf( coeff ) !== -1 ) {
+      break;
     }
+  }
 
-  } else if ( count < 5 ) {
-    for (var x = 0; count < 5; x++ ) {
-      coeff = divisors[x];
-      newFactor = factor * coeff;
-      count = Math.ceil( ( ymax - ymin ) / newFactor );
-    }
-
+  var array = [];
+  for ( var x = 0; x <= count; x++ ) {
+    array.push( x * coeff * factor );
   }
 
   return { 
-    factor: newFactor,
-    multiplier: coeff
+    valueArray: array,
+    coefficient: coeff
   };
+}
+
+function labelToString( number, multiplier ) {
+  var label = number.toString();
+  if ( multiplier < 1 ) {
+    if ( label.length > 4 ) {
+      label = label.substr( 0, 4 );
+      if ( label.substr( 3, 1 ) === '0' ) {
+        label = label.substr( 0, 3 );
+      }
+    }
+  } else if ( label.indexOf('.') !== -1 ) {
+    var decPart = label.split('.')[1];
+    var intPart = label.split('.')[0];
+    decPart = decPart.substr( 0, 1 )
+    label = intPart + '.' + decPart;
+  }
+
+  return label;
 }
 
 function LineChart( properties ) {
@@ -88,12 +118,13 @@ function LineChart( properties ) {
     // ymin should be 0 or less
     ymin = Math.min( ymin, 0 );
 
-    // check if the yAxisTickFactor is ideal
-    var tickFactor = findBestYTickFactor( ymin, ymax, yAxisTickFactor ).factor;
-    var tickMultiplier = findBestYTickFactor( ymin, ymax, yAxisTickFactor ).multiplier;
+    // ymax should be "niced" (made into a nice round number)
+    ymax = findNewMax( ymax );
 
-    // ymax should be rounded up to the nearest yAxisTickFactor
-    ymax = Math.ceil( ymax / tickFactor ) * tickFactor;
+    // check if the yAxisTickFactor is ideal
+    var bestTickFactors = tickThinker( ymin, ymax, yAxisTickFactor );
+    var tickMultiplier = bestTickFactors.coefficient;
+    var tickValueArray = bestTickFactors.valueArray;
 
     x.domain( [ xmin, xmax ] );
     y.domain( [ ymin, ymax ] );
@@ -115,7 +146,6 @@ function LineChart( properties ) {
             return Math.floor( y( d.y ) );
           } );
 
-    // Add the X Axis
     // Add the X Axis
     var xAxis = svg.append('g')
       .classed('axis axis__x', true)
@@ -140,22 +170,19 @@ function LineChart( properties ) {
 
 
     // Add the Y Axis
+    var yAxis = d3.axisLeft( y );
+
+    yAxis.tickValues( tickValueArray )
+    yAxis.tickFormat( function( d ) {
+      var label = d / yAxisTickFactor;
+      label = labelToString( label, tickMultiplier );
+      return label + yAxisUnit;
+    } )
+    yAxis.tickSize( -width );
+
     svg.append( 'g' )
       .classed( 'axis axis__y', true )
-      .call(
-        d3.axisLeft( y )
-          .ticks( Math.ceil( ( ymax - ymin ) / tickFactor ) )
-          .tickSize( -width )
-          .tickFormat(function( d ) {
-            if ( tickMultiplier < 1 ) {
-              var ticker = Math.floor( d / tickFactor * tickMultiplier * 10 ) / 10;
-              return ticker.toString() + yAxisUnit; 
-            }
-            return Math.ceil( d / tickFactor * tickMultiplier ) + yAxisUnit;
-          } )
-        )
-      .selectAll( 'text' )
-        .attr( 'text-anchor', 'right' );
+      .call( yAxis );
 
     // Iterate all lines:
     for ( var key in data ) {

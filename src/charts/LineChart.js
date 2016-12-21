@@ -3,7 +3,9 @@
 var d3 = require( 'd3' );
 var CFPBChart = require( './CFPBChart' );
 var getMonth = d3.utcFormat( '%b' );
+var getFullMonth = d3.utcFormat( '%B' );
 var getYear =  d3.utcFormat( '%Y' );
+var formatDollars = d3.format( '$,' );
 
 LineChart.prototype = new CFPBChart();
 LineChart.prototype.constructor = LineChart;
@@ -13,10 +15,19 @@ var lineSets = [],
     yAxisTickFactor,
     yAxisLabel,
     yAxisUnit,
-    labels = {};
-    
+    labels = {},
+    classes = {};
+
 function sortByDateAscending( a, b ) {
     return a.x - b.x;
+}
+
+function getObjProp( property, object ) {
+  if ( object.hasOwnProperty( property ) ) {
+    return object[property];
+  }
+
+  return '';
 }
 
 function findNewMax( max ) {
@@ -80,8 +91,11 @@ function labelToString( number, multiplier ) {
 
 function LineChart( properties ) {
   this.selector = properties.selector;
+  this.tableSelector = properties.tableSelector;
   this.type = 'LineChart';
   this.data = {};
+  this.classes = properties.classes || {};
+  this.content = properties.content || {};
   rawData = properties.data;
   labels = properties.labels || {};
   lineSets = properties.lineSets || undefined;
@@ -236,6 +250,32 @@ function LineChart( properties ) {
       x: x,
       y: y
     };
+  };
+
+  this.appendTable = function() {
+    var table = d3.select( this.tableSelector ).append( 'table' );
+
+    table.classed( getObjProp( 'table', this.classes ), true );
+
+    table.append( 'thead').html( getObjProp( 'thead', this.content ) );
+
+    var tr = table.selectAll( 'tr' )
+      .data( rawData ).enter()
+      .append( 'tr' );
+
+    tr.append( 'td' ).html( function ( d ) {
+      return getFullMonth( d.x ) + ' ' + getYear( d.x );
+    } );
+    tr.append( 'td' ).html( function ( d ) {
+      return formatDollars( d.y );
+    } );
+    tr.append( 'td' ).html( function ( d ) {
+      return d.set;
+    } );
+
+    tr.classed( getObjProp( 'tr', this.classes ), true );
+    tr.selectAll( 'td' ).classed( getObjProp( 'td', this.classes ), true );
+
   };
 
   this.getDataBySets = function() {

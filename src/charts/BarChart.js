@@ -8,10 +8,21 @@ BarChart.prototype.constructor = BarChart;
 
 var yAxisUnit;
 
+function getObjProp( property, object ) {
+  if ( object.hasOwnProperty( property ) ) {
+    return object[property];
+  }
+
+  return '';
+}
+
 function BarChart( properties ) {
   this.selector = properties.selector;
+  this.tableSelector = properties.tableSelector;
   this.data = properties.data;
   this.type = 'BarChart';
+  this.classes = properties.classes || {};
+  this.content = properties.content || {};
   this.labels = properties.labels || {};
   yAxisUnit = properties.yAxisUnit || '';
 
@@ -146,7 +157,31 @@ function BarChart( properties ) {
       x: x,
       y: y
     }
-  }
+  };
+
+  this.appendTable = function() {
+    var table = d3.select( this.tableSelector ).append( 'table' );
+    var yTickUnit = this.labels.yTickUnit;
+
+    table.classed( getObjProp( 'table', this.classes ), true );
+
+    table.append( 'thead').html( getObjProp( 'thead', this.content ) );
+
+    var tr = table.selectAll( 'tr' )
+      .data( this.data ).enter()
+      .append( 'tr' );
+
+    tr.append( 'td' ).html( function ( d ) {
+      return d.label;
+    } );
+    tr.append( 'td' ).html( function ( d ) {
+      return d.amount.toFixed( 2 ) + yTickUnit;
+    } );
+
+    tr.classed( getObjProp( 'tr', this.classes ), true );
+    tr.selectAll( 'td' ).classed( getObjProp( 'td', this.classes ), true );
+
+  };
 }
 
 module.exports = BarChart;

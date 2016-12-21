@@ -10,10 +10,21 @@ var valueGrid,
 TileMap.prototype = new CFPBChart();
 TileMap.prototype.constructor = TileMap;
 
+function getObjProp( property, object ) {
+  if ( object.hasOwnProperty( property ) ) {
+    return object[property];
+  }
+
+  return '';
+}
+
 function TileMap( properties ) {
-  this.selector = properties.selector;
-  this.data = properties.data;
   this.type = 'TileMap';
+  this.selector = properties.selector;
+  this.tableSelector = properties.tableSelector;
+  this.data = properties.data;
+  this.classes = properties.classes || {};
+  this.content = properties.content || {};
   valueGrid = properties.valueGrid || [];
   legendLabels = properties.legendLabels || [];
 
@@ -94,7 +105,7 @@ function TileMap( properties ) {
         return x;
       } )
       .attr( 'y', function( d ) {
-        var y = stateCoords(d.state)[1] * tileGutterWidth + 60;
+        var y = stateCoords( d.state )[1] * tileGutterWidth + 60;
         y += tileWidth * .8;
         return y;
       } )
@@ -132,6 +143,29 @@ function TileMap( properties ) {
     }
 
     return svg;
+  },
+
+  this.appendTable = function() {
+    var table = d3.select( this.tableSelector ).append( 'table' );
+
+    table.classed( getObjProp( 'table', this.classes ), true );
+
+    table.append( 'thead').html( getObjProp( 'thead', this.content ) );
+
+    var tr = table.selectAll( 'tr' )
+      .data( this.data ).enter()
+      .append( 'tr' );
+
+    tr.append( 'td' ).html( function ( d ) {
+      return d.state;
+    } );
+    tr.append( 'td' ).html( function ( d ) {
+      return Math.floor( d.value * 10000 ) / 100 + '%';
+    } );
+
+    tr.classed( getObjProp( 'tr', this.classes ), true );
+    tr.selectAll( 'td' ).classed( getObjProp( 'td', this.classes ), true );
+
   }
 
 }

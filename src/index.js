@@ -1,10 +1,10 @@
 'use strict';
 
-require( './src/utils/document-ready.js')
-// var barChart = require( './src/charts/BarChart.js' );
-// var tileMap = require( './src/charts/TileMap.js' );
-var lineChart = require( './src/charts/LineChart.js' );
-var barChart = require( './src/charts/BarChart.js' );
+var documentReady = require( './utils/document-ready')
+// var barChart = require( './charts/BarChart' );
+// var tileMap = require( './charts/TileMap' );
+var lineChart = require( './charts/LineChart' );
+var barChart = require( './charts/BarChart' );
 var Papa = require( 'papaparse' );
 
 var chartBuilder = {};
@@ -17,10 +17,10 @@ documentReady( function() {
 
     loadSource( chart, function( chart, data ) {
       var type = chart.getAttribute( 'data-chart-type' ),
-          selector = chart.getAttribute( 'id' ),
+          selector = chart,
           group = chart.getAttribute( 'data-group' );
 
-      
+
       var properties = {
         type: type,
         selector: selector
@@ -101,8 +101,10 @@ function processYoyData( csv, group ) {
 // GET requests:
 
 function loadSource( chart, callback ) {
-    var url = chart.getAttribute( 'data-source' );
+    var url = chart.getAttribute( 'data-chart-source' );
     var request = new XMLHttpRequest();
+
+    url = "https://raw.githubusercontent.com/cfpb/consumer-credit-trends/master/data/" + url;
 
     request.onreadystatechange = function() {
         if ( request.readyState == XMLHttpRequest.DONE ) {

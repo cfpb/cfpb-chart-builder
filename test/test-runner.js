@@ -45,21 +45,3 @@ function getSaucy() {
 }
 
 if (isCI()) getSaucy();
-
-// Create a chart for every item in the sample data array.
-charts = charts.forEach(function(chart) {
-  var div = document.createElement('div');
-  var contents =
-    "<h3>" + chart.source + "</h3>" +
-    "<div class='cfpb-chart'" +
-      "data-chart-type='" + chart.chartType + "'" +
-      "data-chart-title='" + chart.title + "'" +
-      "data-chart-description='This is the chart description'" +
-      "data-chart-group='" + chart.group + "'" +
-      "data-chart-source='consumer-credit-trends/" + chart.source + "'>" +
-      "This is the chart description." +
-    "</div>" +
-    "<hr />";
-  div.innerHTML = contents;
-  document.body.appendChild(div);
-});

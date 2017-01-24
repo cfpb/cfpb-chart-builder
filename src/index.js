@@ -1,5 +1,6 @@
 'use strict';
 
+var ajax = require('xdr');
 var documentReady = require( './utils/document-ready')
 var createChart = require( './charts' );
 var process = require( './utils/process-csv' );
@@ -47,25 +48,9 @@ documentReady( function() {
 
 function loadSource( chart, callback ) {
     var url = chart.getAttribute( 'data-chart-source' );
-    var request = new XMLHttpRequest();
-
     url = DATA_SOURCE_BASE + url;
 
-    request.onreadystatechange = function() {
-        if ( request.readyState == XMLHttpRequest.DONE ) {
-           if ( request.status == 200 ) {
-              var data = request.responseText;
-              callback( chart, data );
-           }
-           else if ( request.status == 400 ) {
-              // 400 error handling
-           }
-           else {
-              // other error handling
-           }
-        }
-    };
-
-    request.open( 'GET', url, true );
-    request.send();
+    ajax( {url: url, type: 'csv'}, function( resp ) {
+      callback( chart, resp.data );
+    } );
 }

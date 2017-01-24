@@ -72,7 +72,6 @@ function processNumOriginationsData( csv, group ) {
 function processYoyData( csv, group ) {
   var data = [];
   csv = Papa.parse( csv ).data;
-
   csv.forEach( function( dataPoint ) {
     if ( dataPoint[2] === group ) {
       var date = _dateCategory( dataPoint[0] );

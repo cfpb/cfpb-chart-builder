@@ -4,8 +4,8 @@
   "description": "A package to build charts to CFPB style",
   "main": "index.js",
   "scripts": {
-    "build": "browserify src/index.js -o dist/cfpb-chart-builder.js && browserify src/index.js -t uglifyify | uglifyjs -c -o dist/cfpb-chart-builder.min.js",
-    "watch": "watchify src/index.js -o dist/cfpb-chart-builder.js -v -d",
+    "build": "mkdir -p dist && browserify src/index.js -o dist/cfpb-chart-builder.js && browserify src/index.js -t uglifyify | uglifyjs -c -o dist/cfpb-chart-builder.min.js",
+    "watch": "mkdir -p dist && watchify src/index.js -o dist/cfpb-chart-builder.js -v -d",
     "browser-tests": "node test/browser-tests.js",
     "test": "npm run browser-tests"
   },

@@ -2,6 +2,12 @@
 
 var Highcharts = require('highcharts/highmaps');
 
+Highcharts.setOptions({
+  lang: {
+    thousandsSep: ','
+  }
+});
+
 function TileMap(props) {
 
   var props = props || {};

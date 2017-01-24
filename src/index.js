@@ -4,7 +4,7 @@ var documentReady = require( './utils/document-ready')
 var createChart = require( './charts' );
 var process = require( './utils/process-csv' );
 
-var DATA_SOURCE_BASE = "https://s3.amazonaws.com/files.consumerfinance.gov/data/consumer-credit-trends/";
+var DATA_SOURCE_BASE = "https://s3.amazonaws.com/files.consumerfinance.gov/data/";
 
 documentReady( function() {
   var charts = document.getElementsByClassName( 'cfpb-chart' );

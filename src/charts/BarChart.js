@@ -1,6 +1,13 @@
 'use strict';
 
-var Highcharts = require( 'highcharts/highstock');
+var Highcharts = require( 'highcharts/highstock' );
+
+Highcharts.setOptions({
+  lang: {
+    rangeSelectorZoom: '',
+    thousandsSep: ','
+  }
+});
 
 var months = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
     'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec' ];
@@ -19,8 +26,8 @@ var projDateText = 'April 2016';
     },
     description: props.description,
     credits: false,
-    lang: {
-      rangeSelectorZoom: ''
+    rangeSelector : {
+      inputEnabled:false
     },
     chart: {
       width: 650,

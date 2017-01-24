@@ -5,6 +5,7 @@ var request = require('request');
 
 var SAUCE_LABS_USERNAME = process.env.SAUCE_LABS_USERNAME,
     SAUCE_LABS_ACCESS_KEY = process.env.SAUCE_LABS_ACCESS_KEY,
+    CI_ENVIRONMENT = process.env.CI_ENVIRONMENT || '',
     STATIC_SERVER_PORT = 8089;
 
 if (!SAUCE_LABS_USERNAME || !STATIC_SERVER_PORT) {
@@ -47,7 +48,7 @@ function startSauce(err, process) {
             ["Windows 7", "firefox", "27"],
             ["Windows 7", "chrome", ""]
         ],
-        "url": "http://localhost:" + STATIC_SERVER_PORT + "/test",
+        "url": "http://localhost:" + STATIC_SERVER_PORT + "/test?ci_environment=" + CI_ENVIRONMENT,
         "framework": "custom"
     }
   };

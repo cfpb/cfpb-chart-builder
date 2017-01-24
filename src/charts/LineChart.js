@@ -1,12 +1,19 @@
 'use strict';
 
-var Highcharts = require( 'highcharts/highstock')
+var Highcharts = require( 'highcharts/highstock' );
 
-// props Object properties:
-// selector: id of element where chart goes
-// title: chart title
-// description: chart description
-// data: the data for the chart
+Highcharts.setOptions({
+  lang: {
+    rangeSelectorZoom: '',
+    thousandsSep: ','
+  }
+});
+
+Highcharts.setOptions({
+  lang: {
+    rangeSelectorZoom: ''
+  }
+});
 
 function LineChart( props ) {
   var options = {
@@ -15,8 +22,17 @@ function LineChart( props ) {
     },
     description: props.description,
     credits: false,
-    lang: {
-      rangeSelectorZoom: ''
+    rangeSelector : {
+      inputEnabled:false
+    },
+    plotOptions: {
+      series: {
+        states: {
+          hover: {
+            enabled: false
+          }
+        }
+      }
     },
     navigator: {
         maskFill: 'rgba(0, 0, 0, 0.05)',
@@ -70,7 +86,7 @@ function LineChart( props ) {
     ]
   }
 
-  Highcharts.stockChart( props.selector, options);
+  Highcharts.stockChart( props.selector, options );
 
 }
 

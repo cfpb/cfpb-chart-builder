@@ -6,7 +6,8 @@
   "scripts": {
     "build": "browserify src/index.js -o dist/cfpb-chart-builder.js && browserify src/index.js -t uglifyify | uglifyjs -c -o dist/cfpb-chart-builder.min.js",
     "watch": "watchify src/index.js -o dist/cfpb-chart-builder.js -v -d",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "browser-tests": "node test/browser-tests.js",
+    "test": "npm run browser-tests"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,9 @@
   },
   "devDependencies": {
     "browserify": "^13.3.0",
+    "request": "^2.79.0",
+    "sauce-connect-launcher": "^1.2.0",
+    "static-server": "^2.0.4",
     "uglify-js": "^2.7.5",
     "uglifyify": "^3.0.4",
     "watchify": "^3.8.0"

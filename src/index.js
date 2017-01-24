@@ -14,7 +14,6 @@ documentReady( function() {
 
     loadSource( chart, function( chart, data ) {
       var type = chart.getAttribute( 'data-chart-type' ),
-          selector = chart,
           group = chart.getAttribute( 'data-chart-group' );
 
       // Ensure undefined attributes aren't cast as a string.
@@ -22,7 +21,7 @@ documentReady( function() {
 
       var properties = {
         type: type,
-        selector: selector
+        selector: chart
       }
 
       if ( type === 'line' ) {

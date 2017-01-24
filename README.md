@@ -1,5 +1,7 @@
 # CFPB Chart Builder
 
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/cct-sauce.svg)](https://saucelabs.com/u/cct-sauce)
+
 This package builds charts to CFPB styles.
 
 

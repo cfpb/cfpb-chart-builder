@@ -81,6 +81,17 @@ var projDateText = 'April 2016';
         }
       }
     },
+    navigator: {
+        maskFill: 'rgba(0, 0, 0, 0.05)',
+        handles: {
+            backgroundColor: '#fff',
+            borderColor: '#000'
+        },
+        series: {
+            color: '#addc91',
+            lineWidth: 2
+        }
+    },
     series: [ {
         type: 'column',
         data: props.data,

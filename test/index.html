@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CFPB Chart Builder Demo Page</title>
+  </head>
+  <body>
+
+    <h1>Every Single CCT Chart</h1>
+
+    <p>This page dynamically generates all <a href="https://github.com/cfpb/consumer-credit-trends/blob/22fa7cce6d3c4e5a7907d8849fb3ec56092714c4/src/static/js/templates/charts.js">these charts</a> on page load. Expect it to be a little sluggish.</p>
+
+  <script type="text/javascript" src="./sample-data.js"></script>
+  <script type="text/javascript">
+    // Create a chart for every item in the sample data array.
+    charts = charts.forEach((chart) => {
+      var div = document.createElement('div');
+      var contents = `
+        <h3>${chart.source}</h3>
+        <div class="cfpb-chart"
+          data-chart-type="${chart.chartType}"
+          data-chart-title="${chart.title}"
+          data-chart-description="This is the chart's description"
+          data-chart-group="${chart.group}"
+          data-chart-source="${chart.source}">
+          This is the chart's description.
+        </div>
+        <hr />
+      `;
+      div.innerHTML = contents;
+      document.body.appendChild(div);
+    });
+  </script>
+  <script type="text/javascript" src="../dist/cfpb-chart-builder.js"></script>
+  <script>
+  var tests = [];
+
+  window.onerror = function(message, url, lineNumber) {
+    tests.push({
+      "name": "Smoke test",
+      "result": false,
+      "message": `Error: ${message} on line ${lineNumber}.`,
+      "duration": 5000
+    });
+    return true;
+  };
+
+  setTimeout(function () {
+    window.global_test_results = {
+      passed: tests.length > 0 ? 0 : 1,
+      failed: tests.length,
+      total: tests.length || 1,
+      duration: 10000,
+      tests: tests
+    };
+    console.log(window.global_test_results);
+    console.log("Tests " + (tests.length > 0 ? "failed!" : "passed!") );
+  }, 5000);
+
+  </script>
+  </body>
+</html>

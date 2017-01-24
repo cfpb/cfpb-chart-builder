@@ -1,13 +1,10 @@
 'use strict';
 
 var documentReady = require( './utils/document-ready')
-// var barChart = require( './charts/BarChart' );
-// var tileMap = require( './charts/TileMap' );
-var lineChart = require( './charts/LineChart' );
-var barChart = require( './charts/BarChart' );
-var Papa = require( 'papaparse' );
+var createChart = require( './charts' );
+var process = require( './utils/process-csv' );
 
-var chartBuilder = {};
+var DATA_SOURCE_BASE = "https://s3.amazonaws.com/files.consumerfinance.gov/data/consumer-credit-trends/";
 
 documentReady( function() {
   var charts = document.getElementsByClassName( 'cfpb-chart' );
@@ -18,8 +15,10 @@ documentReady( function() {
     loadSource( chart, function( chart, data ) {
       var type = chart.getAttribute( 'data-chart-type' ),
           selector = chart,
-          group = chart.getAttribute( 'data-group' );
+          group = chart.getAttribute( 'data-chart-group' );
 
+      // Ensure undefined attributes aren't cast as a string.
+      group = group === "undefined" ? undefined : group;
 
       var properties = {
         type: type,
@@ -27,76 +26,23 @@ documentReady( function() {
       }
 
       if ( type === 'line' ) {
-        properties.data = processNumOriginationsData( data, group );
-        lineChart( properties );
+        properties.data = process.originations( data, group );
+        createChart.line( properties );
       }
 
       if ( type === 'bar' ) {
-        properties.data = processYoyData( data, group );
-        barChart( properties );
+        properties.data = process.yoy( data, group );
+        createChart.bar( properties );
+      }
+
+      if ( type === 'map' ) {
+        properties.data = process.map( data, group );
+        createChart.map( properties );
       }
 
     } );
   }
 } );
-
-// Get the CSV into a non-esoteric format.
-function processNumOriginationsData( csv, group ) {
-  var data = {
-    unadjusted: [],
-    adjusted: []
-  };
-  csv = Papa.parse(csv).data;
-  csv.shift();
-  csv.forEach(function(dataPoint) {
-    var arr = [];
-    var series = dataPoint[2];
-    arr.push( dateTranslate(dataPoint[0]) );
-    arr.push( parseFloat(dataPoint[1] ) );
-
-
-
-    if ( group !== null ) {
-      series = dataPoint[3];
-    }
-
-    if ( group === null || group === dataPoint[2] ) {
-      if ( series === "Unadjusted" ) {
-        data.unadjusted.push( arr );
-      } else {
-        data.adjusted.push( arr );
-      }
-    }
-
-  });
-  data.unadjusted = data.unadjusted.sort(function(a, b) {
-    return a[0] - b[0];
-  });
-  data.adjusted = data.adjusted.sort(function(a, b) {
-    return a[0] - b[0];
-  });
-
-  return data;
-}
-
-function processYoyData( csv, group ) {
-  var data = [];
-  csv = Papa.parse( csv ).data;
-
-  csv.forEach( function( dataPoint ) {
-    if ( dataPoint[2] === group ) {
-      var date = dateCategory( dataPoint[0] );
-      // var year = +date.substr( date.length -2, 2 );
-
-      // if ( year >= 9 ) {
-      if ( date > new Date( '2009-01-01 00:00:00 UTC' ) ) {
-        data.push( [ dateCategory( dataPoint[0] ), +dataPoint[1] * 100 ] );
-      }
-    }
-  } );
-
-  return data;
-}
 
 // GET requests:
 
@@ -104,7 +50,7 @@ function loadSource( chart, callback ) {
     var url = chart.getAttribute( 'data-chart-source' );
     var request = new XMLHttpRequest();
 
-    url = "https://raw.githubusercontent.com/cfpb/consumer-credit-trends/master/data/" + url;
+    url = DATA_SOURCE_BASE + url;
 
     request.onreadystatechange = function() {
         if ( request.readyState == XMLHttpRequest.DONE ) {
@@ -124,31 +70,3 @@ function loadSource( chart, callback ) {
     request.open( 'GET', url, true );
     request.send();
 }
-
-function dateTranslate( index ) {
-  var year = Math.floor( index / 12 ) + 2000;
-  var month = index % 12;
-  month += 1;
-  if ( month < 10 ) {
-    month = '0' + month;
-  }
-
-  return Date.parse( new Date( year + '-' + month + '-01' ) );
-}
-
-function dateCategory( index ) {
-  var months = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
-      'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec' ];
-  var year = Math.floor( index / 12 ) + 2000;
-  var month = index % 12;
-  month += 1;
-  if ( month < 10 ) {
-    month = '0' + month;
-  }
-  var date = Date.UTC( year, month, 1 );
-  // var category = months[ date.getMonth() ] + ' ' + date.getFullYear();
-
-  return date;
-}
-
-module.exports = chartBuilder;

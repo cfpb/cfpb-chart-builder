@@ -9,8 +9,6 @@ var Highcharts = require( 'highcharts/highstock')
 // data: the data for the chart
 
 function LineChart( props ) {
-  console.log( props.data )
-
   var options = {
     title: {
         text: props.title
@@ -33,8 +31,7 @@ function LineChart( props ) {
     },
     chart: {
       width: 650,
-      height: 500,
-      marginTop: 50
+      height: 500
     },
     xAxis: {
       startOnTick: true,
@@ -47,14 +44,8 @@ function LineChart( props ) {
     yAxis: {
       opposite: false,
       className: 'axis-label',
-      tickInterval: 500000,
       title: {
         text: props.title
-      },
-      labels: {
-        formatter: function () {
-          return this.value / 1000000 + 'M';
-        }
       }
     },
     series: [
@@ -78,8 +69,6 @@ function LineChart( props ) {
       }
     ]
   }
-
-
 
   Highcharts.stockChart( props.selector, options);
 

@@ -1,6 +1,6 @@
 'use strict';
 
-var Highcharts = require( 'highcharts/highstock')
+var Highcharts = require( 'highcharts/highstock');
 
 var months = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
     'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec' ];
@@ -24,8 +24,7 @@ var projDateText = 'April 2016';
     },
     chart: {
       width: 650,
-      height: 500,
-      marginTop: 50
+      height: 500
     },
     legend: {
       enabled: false
@@ -61,7 +60,7 @@ var projDateText = 'April 2016';
       //     rotation: 0,
       //     style: {
       //       'color': '#75787b',
-      //       'font-size': '16px'            
+      //       'font-size': '16px'
       //     },
       //     text: 'Values after ' + projDateText + ' are projected',
       //     textAlign: 'right',

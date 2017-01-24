@@ -1,18 +1,22 @@
 var path = require('path');
+var fs = require('fs');
 var sauceConnectLauncher = require('sauce-connect-launcher');
 var StaticServer = require('static-server');
 var request = require('request');
+var config = path.join(__dirname, './config.json');
 
-var SAUCE_LABS_USERNAME = process.env.SAUCE_LABS_USERNAME,
-    SAUCE_LABS_ACCESS_KEY = process.env.SAUCE_LABS_ACCESS_KEY,
-    CI_ENVIRONMENT = process.env.CI_ENVIRONMENT || '',
-    STATIC_SERVER_PORT = 8089;
-
-if (!SAUCE_LABS_USERNAME || !STATIC_SERVER_PORT) {
-  console.error("Please define SAUCE_LABS_USERNAME and SAUCE_LABS_ACCESS_KEY environment variables.");
-  console.error("Ask your teammates for the proper credentials.");
+if (!fs.existsSync(config)) {
+  console.error("Please define SAUCE_LABS_USERNAME and SAUCE_LABS_ACCESS_KEY in `test/config.js`.");
+  console.error("See https://github.com/cfpb/cfpb-chart-builder#testing");
   process.exit(1);
 }
+
+config = require(config);
+
+var SAUCE_LABS_USERNAME = config.SAUCE_LABS_USERNAME,
+    SAUCE_LABS_ACCESS_KEY = config.SAUCE_LABS_ACCESS_KEY,
+    CI_ENVIRONMENT = process.env.CI_ENVIRONMENT || '',
+    STATIC_SERVER_PORT = 8089;
 
 var server = new StaticServer({
   rootPath: path.join( __dirname, '../'),

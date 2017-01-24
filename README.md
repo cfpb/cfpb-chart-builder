@@ -48,14 +48,14 @@ Visit `http://localhost:8088/test/all-charts.html` to see *all* the CCT charts.
 ## Testing
 
 Sauce Labs is used to test the charts in IE 8 through 10.
+An [Open Sauce](https://saucelabs.com/open-source) account has been created for this repo.
+The `curl` command below will grab the credentials for you.
 
-1. `export SAUCE_LABS_USERNAME=XXXXXXXXXX`
-1. `export SAUCE_LABS_ACCESS_KEY=YYYYYYYYYY`
+1. `curl -o test/config.json https://GHE/raw/gist/contolini/504ea71f6a19c74090c7a150aff60421/raw/b3850abab5466af62406d3f0d7a3da05f7f92124/config.json`
 1. `npm test`
 
-They'll take several minutes to run.
-An [open source](https://saucelabs.com/open-source) account has been created for this repo.
-Ask @contolini for the credentials.
+The browser tests will take several minutes to run.
+The test script simply loads `http://localhost:8088/test` in IE VMs and reports any `window` errors.
 
 ## Open source licensing info
 1. [TERMS](TERMS.md)

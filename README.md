@@ -2,9 +2,7 @@
 
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/cct-sauce.svg)](https://saucelabs.com/u/cct-sauce)
 
-Charts for [Consumer Financial Protection Bureau](https://cfpb.github.io/).
-
-![Screenshot](screenshot.png)
+Charts for the [Consumer Financial Protection Bureau](https://cfpb.github.io/).
 
 ## Usage
 
@@ -28,11 +26,13 @@ Add this library to your page:
 
 It'll generate a chart for you:
 
+![Screenshot](screenshot.png)
 
+It can also do column charts and maps.
 
 ## Configuration
 
-TBD.
+TBD
 
 ## Contributing
 
@@ -41,7 +41,7 @@ TBD.
 1. `npm run watch` to bundle the JS and output it to `dist/`.
 1. `npm start` to serve the test directory.
 1. Open `http://localhost:8088/test` in a browser to see the test page with lots of charts on it.
-1. Whenever a JS file in `src/` is edited, the JS will be rebundled.
+1. Whenever a JS file in `src/` is edited, the JS will be rebundled. Refresh the page.
 
 ## Testing
 

@@ -82,7 +82,7 @@ function checkSauce() {
           }
           console.log(test.platform.join(" ") + " passed.");
         });
-        if (failures.length > 0) {
+        if (failures > 0) {
           process.exit(1);
         }
         process.exit(0);

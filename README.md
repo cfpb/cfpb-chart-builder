@@ -38,11 +38,12 @@ TBD
 
 1. Clone this repository.
 1. `npm install`
-1. `npm run build` to bundle the JS and output it to `dist/`.
+1. `npm run watch` to bundle the JS and output it to `dist/`.
 1. `npm start` to serve the test directory.
 1. Open `http://localhost:8088/test` in a browser to see the test page with a dozen random charts on it.
 1. Whenever a JS file in `src/` is edited, the JS will be rebundled. Refresh the page.
 
+Before publishing a new version of the module to npm, run `npm run build` to minify the assets in `dist/`.
 Visit `http://localhost:8088/test/all-charts.html` to see *all* the CCT charts.
 
 ## Testing

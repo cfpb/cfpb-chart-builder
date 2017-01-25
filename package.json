@@ -11,7 +11,8 @@
     "watch": "watchify src/index.js -o dist/cfpb-chart-builder.js -v -d",
     "start": "http-server . -p 8088",
     "browser-tests": "CI_ENVIRONMENT=true node test/browser-tests.js",
-    "test": "npm run browser-tests"
+    "test": "npm run build && npm run browser-tests",
+    "preinstall": "git config merge.ours.driver true"
   },
   "repository": {
     "type": "git",

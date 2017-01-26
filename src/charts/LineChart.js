@@ -105,7 +105,7 @@ function LineChart( props ) {
         zones: [{
             value: props.data.projectedDate.timestamp
         }, {
-            dashStyle: 'dash'
+            dashStyle: 'ShortDot'
         }]
       }
     ]

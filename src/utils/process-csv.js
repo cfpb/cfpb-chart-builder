@@ -21,10 +21,6 @@ function formatDate( index ) {
   return theDate;
 }
 
-function getProjectedTimestamp( monthIndex ) {
-  return formatDate( monthIndex - 6 );
-}
-
 function _dateCategory( index ) {
   var months = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
       'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec' ];
@@ -73,36 +69,65 @@ function processNumOriginationsData( csv, group ) {
     return a[0] - b[0];
   });
 
-  // data.projectedDate = getProjectedTimestamp( data.adjusted[0][0] );
+  data.projectedDate = {};
+  data.projectedDate.timestamp = _getProjectedTimestamp( data.adjusted, false );
+  data.projectedDate.label = _getProjectedHumanDate( data.projectedDate.timestamp );
+  console.log( data )
 
   return data;
 }
 
 function processYoyData( csv, group ) {
-  var data = [];
+  var data = {
+    values: [],
+    projectedDate: null
+  }
   csv = Papa.parse( csv ).data;
 
   csv.forEach( function( dataPoint ) {
     if ( dataPoint[2] === group ) {
       var date = _dateCategory( dataPoint[0] );
-      // var year = +date.substr( date.length -2, 2 );
 
-      // if ( year >= 9 ) {
       if ( date > new Date( '2009-01-01 00:00:00 UTC' ) ) {
-        data.push( [ _dateCategory( dataPoint[0] ), +dataPoint[1] * 100 ] );
+        data.values.push( [ _dateCategory( dataPoint[0] ), +dataPoint[1] * 100 ] );
       }
     }
   } );
+
+  data.projectedDate = {};
+  data.projectedDate.timestamp = _getProjectedTimestamp( data.values, true );
+  data.projectedDate.label = _getProjectedHumanDate( data.projectedDate.timestamp );
+
+  console.log( data )
 
   return data;
 }
 
 // data should be the array
-function getProjectedDate( data ) {
-  var mostRecentMonthOfDataAvailable = data[data.length - 1][0];
-  var sixMonthsAgo = (60 * 60 * 24 * 365 * 1000 / 2);
+function _getProjectedTimestamp( valuesList, isYoy ) {
+  var mostRecentMonthOfDataAvailable = valuesList[valuesList.length - 1][0];
+  // six months ago for line chart data
+  var projectedThreshold = (60 * 60 * 24 * 365 * 1000 / 2);
 
-  return mostRecentMonthOfDataAvailable - sixMonthsAgo;
+  if ( isYoy === true ) {
+    // 212.917 days = 7 months
+    // Year over year data has an extra month compared to line chart data.
+    // Wanna check these dates still work for every month with some unit tests.
+    projectedThreshold = 60 * 60 * 24 * 212.917 * 1000
+  }
+
+  return mostRecentMonthOfDataAvailable - projectedThreshold;
+}
+
+function _getProjectedHumanDate( timestamp ) {
+
+  var months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+
+  var projectedMonth = months[ new Date( timestamp ).getMonth() ];
+  var projectedYear = new Date( timestamp ).getFullYear();
+  var projectedDate = projectedMonth + ' ' + projectedYear;
+
+  return projectedDate;
 }
 
 function processMapData( csv ) {

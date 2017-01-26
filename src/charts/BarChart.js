@@ -9,16 +9,8 @@ Highcharts.setOptions({
   }
 });
 
-var months = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
-    'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec' ];
 
 function BarChart( props ) {
-  // var mostRecentMonthOfDataAvailable = props.data.unadjusted[props.data.unadjusted.length - 1][0];
-  // var sixMonthsAgo = (60 * 60 * 24 * 365 * 1000 / 2);
-  // var projectedDate = mostRecentMonthOfDataAvailable - sixMonthsAgo;
-  // props.data.projectedDate = projectedDate;
-
-var projDateText = 'April 2016';
 
   var options = {
     title: {
@@ -50,9 +42,9 @@ var projDateText = 'April 2016';
       plotLines: [{
         color: '#75787b',
         width: 1,
-        value: 1462075200000,
+        value: props.data.projectedDate.timestamp,
         label: {
-          text: 'Values after April 2016 <br>are projected',
+          text: 'Values after ' + props.data.projectedDate.label + ' <br>are projected',
           align: 'left',
           verticalAlign: 'top',
           rotation: 0,
@@ -60,36 +52,6 @@ var projDateText = 'April 2016';
           y: -20
         }
       }],
-      // labels: {
-      //   autoRotation: false,
-      //   formatter: function() {
-      //     var date = new Date( this.value );
-      //     return months[ date.getMonth() ] + ' ' + date.getFullYear();
-      //   },
-      //   style: {
-      //     'color': '#75787b',
-      //     'font-size': '16px'
-      //   },
-      //   y: 30
-      // }
-      // plotLines: [{
-      //   className: 'bar-chart_projected-line',
-      //   color: '#75787b',
-      //   label: {
-      //     align: 'left',
-      //     rotation: 0,
-      //     style: {
-      //       'color': '#75787b',
-      //       'font-size': '16px'
-      //     },
-      //     text: 'Values after ' + projDateText + ' are projected',
-      //     textAlign: 'right',
-      //     // useHTML: true,
-      //     y: -30
-      //   },
-      //   width: 2,
-      //   value: props.data.length - 6.5
-      // }]
     },
     yAxis: {
       opposite: false,
@@ -114,7 +76,7 @@ var projDateText = 'April 2016';
     },
     series: [ {
         type: 'column',
-        data: props.data,
+        data: props.data.values,
         name: 'Year-over-year change (%)',
         tooltip: {
           valueDecimals: 2
@@ -123,7 +85,7 @@ var projDateText = 'April 2016';
         zones: [
           {
             color: '#2CB34A',
-            value: Date.UTC( 2016, 4, 1 ) // FIX THIS
+            value: props.data.projectedDate.timestamp
           },
           {
             color: '#addc91',

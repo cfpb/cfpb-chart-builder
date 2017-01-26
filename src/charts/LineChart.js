@@ -16,10 +16,6 @@ Highcharts.setOptions({
 });
 
 function LineChart( props ) {
-  var mostRecentMonthOfDataAvailable = props.data.unadjusted[props.data.unadjusted.length - 1][0];
-  var sixMonthsAgo = (60 * 60 * 24 * 365 * 1000 / 2);
-  var projectedDate = mostRecentMonthOfDataAvailable - sixMonthsAgo;
-  props.data.projectedDate = projectedDate;
   var options = {
     title: {
         text: props.title
@@ -62,9 +58,9 @@ function LineChart( props ) {
       plotLines: [{
         color: '#75787b',
         width: 1,
-        value: props.data.projectedDate,
+        value: props.data.projectedDate.timestamp,
         label: {
-          text: 'Values after April 2016 <br>are projected',
+          text: 'Values after ' + props.data.projectedDate.label + ' <br>are projected',
           align: 'left',
           verticalAlign: 'top',
           rotation: 0,
@@ -92,7 +88,7 @@ function LineChart( props ) {
         },
         zoneAxis: 'x',
         zones: [{
-            value: props.data.projectedDate
+            value: props.data.projectedDate.timestamp
         }, {
             dashStyle: 'dot'
         }]
@@ -107,7 +103,7 @@ function LineChart( props ) {
         },
         zoneAxis: 'x',
         zones: [{
-            value: props.data.projectedDate
+            value: props.data.projectedDate.timestamp
         }, {
             dashStyle: 'dot'
         }]

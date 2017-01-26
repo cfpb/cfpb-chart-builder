@@ -9,11 +9,22 @@ Highcharts.setOptions({
   }
 });
 
-Highcharts.setOptions({
-  lang: {
-    rangeSelectorZoom: ''
+/**
+ * _getTickValue - Convert the data point's unit to M or B.
+ *
+ * @param  {int} value  Data point's value
+ * @return {int}        Data point's value over million or billion.
+ */
+function _getTickValue( value ) {
+  // If it's 0 or borked data gets passed in, return it.
+  if ( !value ) {
+    return value;
   }
-});
+  if ( value % 1000000000 < value ) {
+    return value / 1000000000 + 'B';
+  }
+  return value / 1000000 + 'M';
+}
 
 function LineChart( props ) {
   var options = {
@@ -62,6 +73,11 @@ function LineChart( props ) {
       className: 'axis-label',
       title: {
         text: props.title
+      },
+      labels: {
+        formatter: function () {
+          return _getTickValue( this.value );
+        }
       }
     },
     series: [

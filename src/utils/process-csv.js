@@ -107,18 +107,25 @@ function processYoyData( csv, group ) {
  * Returns a UTC timestamp number for the month when each graph's data is projected
  *
  * @param {Array} valuesList - list of values from the data, containing an array with timestamp representing the month and year at index 0, and the value at index 1
- * @returns {Number} timestamp - UTC timestamp representing the milliseconds elapsed since the UNIX epoch, for the month for each value point in the data set
+ * @returns {Boolean} isYoy - is the valuesList year-over-year (Yoy) data? If so, it includes an additional month, so we need to calculate the projected date differently.
  */
 function _getProjectedTimestamp( valuesList, isYoy ) {
   var mostRecentMonthOfDataAvailable = valuesList[valuesList.length - 1][0];
-  // six months ago for line chart data
-  var projectedThreshold = ( ( 60 * 60 * 24 * 365 * 1000 ) / 2 );
+  /*
+  152.083 days = 5 months, which is six months ago for line chart data. Wee count 5 months back, because the timestamps are the first of each month:
+  0 - november 1
+  1 month - october 1
+  2 - sept 1
+  3 - aug 1
+  4 - jul 1
+  5 - june 1
+  For data through November, months AFTER May are projected. June through November should be projected in the UI.
+  */
+  var projectedThreshold = 60 * 60 * 24 * 152.083 * 1000;
 
   if ( isYoy === true ) {
-    // 212.917 days = 7 months
-    // Year over year data has an extra month compared to line chart data.
-    // Wanna check these dates still work for every month with some unit tests.
-    projectedThreshold = 60 * 60 * 24 * 212.917 * 1000
+    // Year over year data has an extra month compared to line chart data, so we include the last 7 months of the set instead of only 6.
+    projectedThreshold = ( ( 60 * 60 * 24 * 365 * 1000 ) / 2 )
   }
 
   return mostRecentMonthOfDataAvailable - projectedThreshold;
@@ -127,7 +134,8 @@ function _getProjectedTimestamp( valuesList, isYoy ) {
 /**
  * Returns a human-readable string representing the month and year after which data in each graph is projected
  *
- * @returns {Number} timestamp - UTC timestamp representing the milliseconds elapsed since the UNIX epoch, for the month when each graph begins displaying projected data
+ * @param {Number} timestamp - UTC timestamp representing the milliseconds elapsed since the UNIX epoch, for the month when each graph begins displaying projected data
+ * @returns {String} projectedDate - text with the Month and Year of the projected data cutoff point, for use in labeling projected date in graphs
  */
 function _getProjectedDate( timestamp ) {
 

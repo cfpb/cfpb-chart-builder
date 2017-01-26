@@ -81,8 +81,8 @@ function LineChart( props ) {
       {
         name: 'Unadjusted',
         data: props.data.unadjusted,
-        color: '#addc91',
-        lineWidth: 3,
+        color: '#20aa3f',
+        lineWidth: 1,
         tooltip: {
             valueDecimals: 0
         },
@@ -90,14 +90,14 @@ function LineChart( props ) {
         zones: [{
             value: props.data.projectedDate.timestamp
         }, {
-            dashStyle: 'dot'
+            dashStyle: 'dash'
         }]
       },
       {
         name: 'Seasonally Adjusted',
         data: props.data.adjusted,
         color: '#20aa3f',
-        lineWidth: 3,
+        lineWidth: 5,
         tooltip: {
             valueDecimals: 0
         },
@@ -105,7 +105,7 @@ function LineChart( props ) {
         zones: [{
             value: props.data.projectedDate.timestamp
         }, {
-            dashStyle: 'dot'
+            dashStyle: 'dash'
         }]
       }
     ]

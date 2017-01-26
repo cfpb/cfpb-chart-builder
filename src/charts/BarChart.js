@@ -77,20 +77,17 @@ function BarChart( props ) {
     series: [ {
         type: 'column',
         data: props.data.values,
+        color: '#20aa3f',
         name: 'Year-over-year change (%)',
         tooltip: {
           valueDecimals: 2
         },
         zoneAxis: 'x',
-        zones: [
-          {
-            color: '#2CB34A',
+        zones: [{
             value: props.data.projectedDate.timestamp
-          },
-          {
-            color: '#addc91',
-          }
-        ]
+        }, {
+            color: '#addc91'
+        }]
       } ]
   }
 

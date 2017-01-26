@@ -7,7 +7,7 @@ var Papa = require( 'papaparse' );
 var tileMapUtils = require( './tile-map' );
 
 // Convert the integers in the CSVs into human-readable dates.
-function _dateTranslate( index ) {
+function formatDate( index ) {
   var year = Math.floor( index / 12 ) + 2000;
   var month = index % 12;
   month += 1;
@@ -15,7 +15,14 @@ function _dateTranslate( index ) {
     month = '0' + month;
   }
 
-  return Date.parse( new Date( year + '-' + month + '-01' ) );
+  // @todo: don't use Date.parse, it's incompatible with older browsers we support such as ie 8
+  var theDate = Date.parse( new Date( year + '-' + month + '-01' ) );
+
+  return theDate;
+}
+
+function getProjectedTimestamp( monthIndex ) {
+  return formatDate( monthIndex - 6 );
 }
 
 function _dateCategory( index ) {
@@ -43,7 +50,7 @@ function processNumOriginationsData( csv, group ) {
   csv.forEach(function(dataPoint) {
     var arr = [];
     var series = dataPoint[2];
-    arr.push( _dateTranslate(dataPoint[0]) );
+    arr.push( formatDate(dataPoint[0]) );
     arr.push( parseFloat(dataPoint[1] ) );
 
     if ( group ) {
@@ -66,12 +73,15 @@ function processNumOriginationsData( csv, group ) {
     return a[0] - b[0];
   });
 
+  // data.projectedDate = getProjectedTimestamp( data.adjusted[0][0] );
+
   return data;
 }
 
 function processYoyData( csv, group ) {
   var data = [];
   csv = Papa.parse( csv ).data;
+
   csv.forEach( function( dataPoint ) {
     if ( dataPoint[2] === group ) {
       var date = _dateCategory( dataPoint[0] );
@@ -85,6 +95,14 @@ function processYoyData( csv, group ) {
   } );
 
   return data;
+}
+
+// data should be the array
+function getProjectedDate( data ) {
+  var mostRecentMonthOfDataAvailable = data[data.length - 1][0];
+  var sixMonthsAgo = (60 * 60 * 24 * 365 * 1000 / 2);
+
+  return mostRecentMonthOfDataAvailable - sixMonthsAgo;
 }
 
 function processMapData( csv ) {
@@ -111,6 +129,7 @@ function processMapData( csv ) {
 }
 
 module.exports = {
+  formatDate: formatDate,
   originations: processNumOriginationsData,
   yoy: processYoyData,
   map: processMapData

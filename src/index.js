@@ -31,7 +31,11 @@ documentReady( function() {
       }
 
       if ( type === 'bar' ) {
-        properties.data = process.yoy( data, group );
+        properties = process.yoy( data, group );
+        // properties = {
+        //   data: process.yoy( data, group ),
+        //   projectedDate:  // add projectedDate prop here
+        // }
         createChart.bar( properties );
       }
 

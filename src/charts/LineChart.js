@@ -16,6 +16,10 @@ Highcharts.setOptions({
 });
 
 function LineChart( props ) {
+  var mostRecentMonthOfDataAvailable = props.data.unadjusted[props.data.unadjusted.length - 1][0];
+  var sixMonthsAgo = (60 * 60 * 24 * 365 * 1000 / 2);
+  var projectedDate = mostRecentMonthOfDataAvailable - sixMonthsAgo;
+  props.data.projectedDate = projectedDate;
   var options = {
     title: {
         text: props.title
@@ -55,6 +59,19 @@ function LineChart( props ) {
       dateTimeLabelFormats: {
           day: '%b %Y'
       },
+      plotLines: [{
+        color: '#75787b',
+        width: 1,
+        value: props.data.projectedDate,
+        label: {
+          text: 'Values after April 2016 <br>are projected',
+          align: 'left',
+          verticalAlign: 'top',
+          rotation: 0,
+          x: -100,
+          y: -20
+        }
+      }],
       tickInterval: 60 * 60 * 24 * 365 * 1000 // one year in ms
     },
     yAxis: {
@@ -72,7 +89,13 @@ function LineChart( props ) {
         lineWidth: 3,
         tooltip: {
             valueDecimals: 0
-        }
+        },
+        zoneAxis: 'x',
+        zones: [{
+            value: props.data.projectedDate
+        }, {
+            dashStyle: 'dot'
+        }]
       },
       {
         name: 'Seasonally Adjusted',
@@ -81,7 +104,13 @@ function LineChart( props ) {
         lineWidth: 3,
         tooltip: {
             valueDecimals: 0
-        }
+        },
+        zoneAxis: 'x',
+        zones: [{
+            value: props.data.projectedDate
+        }, {
+            dashStyle: 'dot'
+        }]
       }
     ]
   }

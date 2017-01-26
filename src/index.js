@@ -17,7 +17,8 @@ documentReady( function() {
 
     loadSource( chart, function( chart, data ) {
       var type = chart.getAttribute( 'data-chart-type' ),
-          group = chart.getAttribute( 'data-chart-group' );
+          group = chart.getAttribute( 'data-chart-metadata' ),
+          color = chart.getAttribute( 'data-chart-color' );
 
       // Ensure undefined attributes aren't cast as a string.
       group = group === "undefined" ? undefined : group;

@@ -43,13 +43,9 @@ function BarChart( props ) {
         color: '#75787b',
         width: 1,
         value: props.data.projectedDate.timestamp,
+        zIndex: 10,
         label: {
-          text: 'Values after ' + props.data.projectedDate.label + ' <br>are projected',
-          align: 'left',
-          verticalAlign: 'top',
-          rotation: 0,
-          x: -100,
-          y: -20
+          text: 'Values after ' + props.data.projectedDate.label + ' are projected'
         }
       }],
     },

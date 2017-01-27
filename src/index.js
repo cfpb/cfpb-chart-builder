@@ -38,7 +38,7 @@ documentReady( function() {
         createChart.bar( properties );
       }
 
-      if ( type === 'map' ) {
+      if ( type === 'tile_map' ) {
         properties.data = process.map( data, group );
         createChart.map( properties );
       }

@@ -72,7 +72,6 @@ function processNumOriginationsData( csv, group ) {
   data.projectedDate = {};
   data.projectedDate.timestamp = _getProjectedTimestamp( data.adjusted, false );
   data.projectedDate.label = _getProjectedDate( data.projectedDate.timestamp );
-  console.log( data )
 
   return data;
 }
@@ -97,8 +96,6 @@ function processYoyData( csv, group ) {
   data.projectedDate = {};
   data.projectedDate.timestamp = _getProjectedTimestamp( data.values, true );
   data.projectedDate.label = _getProjectedDate( data.projectedDate.timestamp );
-
-  console.log( data )
 
   return data;
 }

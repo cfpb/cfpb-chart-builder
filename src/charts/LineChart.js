@@ -9,12 +9,49 @@ Highcharts.setOptions( {
   }
 } );
 
+
+/**
+ * _getFirstNumber - get the first value that is a Number
+ *
+ * @param  {array} array  An array of Objects with values to check
+ * @returns {string}    an actual Number
+ */
+
+function _getFirstNumber( array ) {
+  var val;
+  for (var x = 0; x < array.length; x++ ) {
+    if ( !isNaN(array[x][1]) ) {
+      val = array[x][1];
+      return val;
+      }
+  }
+  return false;
+}
+
+/**
+ * _getYAxisUnits - Get the text of the y-axis title
+ *
+ * @param  {array} array  An array of values to check
+ * @returns {string}    Appropriate y-axis title
+ */
+function _getYAxisUnits( array ) {
+  var value = _getFirstNumber( array );
+  if ( !value ) {
+    return value;
+  }
+  if ( value % 1000000000 < value ) {
+    return 'billions'
+  }
+  return 'millions'
+}
+
 /**
  * _getTickValue - Convert the data point's unit to M or B.
  *
  * @param  {int} value  Data point's value
  * @returns {int}        Data point's value over million or billion.
  */
+
 function _getTickValue( value ) {
   // If it's 0 or borked data gets passed in, return it.
   if ( !value ) {
@@ -36,6 +73,10 @@ function LineChart( props ) {
     rangeSelector: {
       height: 35,
       inputEnabled: false,
+      buttonPosition: {
+        x: 0,
+        y: 0
+      },
       buttonTheme: {
         r: 5, // border radius
         fill: '#CCE3F5',
@@ -114,7 +155,10 @@ function LineChart( props ) {
       opposite: false,
       className: 'axis-label',
       title: {
-        text: props.title
+        text: 'Number of Originations (in ' + _getYAxisUnits( props.data.adjusted ) + ')',
+        style: {
+          'color': '#919395'
+        }
       },
       labels: {
         formatter: function() {

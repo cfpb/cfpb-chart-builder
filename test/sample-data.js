@@ -18,7 +18,7 @@ var charts = [{
   "elementID": "figure-1a__volume__auto-loans"
  }, {
   "title": "",
-  "chartType": "map",
+  "chartType": "tile_map",
   "market": "auto-loans",
   "reportType": "origination-activity",
   "figureID": "figure-1c",
@@ -309,7 +309,7 @@ var charts = [{
   "elementID": "figure-1a__volume__credit-cards"
  }, {
   "title": "",
-  "chartType": "map",
+  "chartType": "tile_map",
   "market": "credit-cards",
   "reportType": "origination-activity",
   "figureID": "figure-1c",
@@ -600,7 +600,7 @@ var charts = [{
   "elementID": "figure-1a__volume__mortgages"
  }, {
   "title": "",
-  "chartType": "map",
+  "chartType": "tile_map",
   "market": "mortgages",
   "reportType": "origination-activity",
   "figureID": "figure-1c",
@@ -891,7 +891,7 @@ var charts = [{
   "elementID": "figure-1a__volume__student-loans"
  }, {
   "title": "",
-  "chartType": "map",
+  "chartType": "tile_map",
   "market": "student-loans",
   "reportType": "origination-activity",
   "figureID": "figure-1c",

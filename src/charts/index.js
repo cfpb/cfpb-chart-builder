@@ -1,5 +1,8 @@
-module.exports = {
-  bar: require('./BarChart'),
-  line: require('./LineChart'),
-  map: require('./TileMap')
-}
+'use strict';
+
+var charts = {};
+charts.bar = require( './BarChart' );
+charts.line = require( './LineChart' );
+charts.map = require( './TileMap' );
+
+module.exports = charts;

@@ -2,19 +2,19 @@
 
 var Highcharts = require( 'highcharts/highstock' );
 
-Highcharts.setOptions({
+Highcharts.setOptions( {
   lang: {
     rangeSelectorZoom: '',
     thousandsSep: ','
   }
-});
+} );
 
 
 function BarChart( props ) {
 
   var options = {
     title: {
-        text: props.title
+      text: props.title
     },
     description: props.description,
     credits: false,
@@ -72,7 +72,7 @@ function BarChart( props ) {
     },
     xAxis: {
       tickInterval: 12,
-      plotLines: [{
+      plotLines: [ {
         color: '#75787b',
         width: 1,
         value: props.data.projectedDate.timestamp,
@@ -80,7 +80,7 @@ function BarChart( props ) {
         label: {
           text: 'Values after ' + props.data.projectedDate.label + ' are projected'
         }
-      }],
+      } ]
     },
     yAxis: {
       opposite: false,
@@ -93,34 +93,34 @@ function BarChart( props ) {
       }
     },
     navigator: {
-        maskFill: 'rgba(0, 0, 0, 0.05)',
-        handles: {
-            backgroundColor: '#fff',
-            borderColor: '#000'
-        },
-        series: {
-            color: '#addc91',
-            lineWidth: 2
-        }
+      maskFill: 'rgba(0, 0, 0, 0.05)',
+      handles: {
+        backgroundColor: '#fff',
+        borderColor: '#000'
+      },
+      series: {
+        color: '#addc91',
+        lineWidth: 2
+      }
     },
     series: [ {
-        type: 'column',
-        data: props.data.values,
-        color: '#20aa3f',
-        name: 'Year-over-year change (%)',
-        tooltip: {
-          valueDecimals: 2
-        },
-        zoneAxis: 'x',
-        zones: [{
-            value: props.data.projectedDate.timestamp
-        }, {
-            color: '#addc91'
-        }]
+      type: 'column',
+      data: props.data.values,
+      color: '#20aa3f',
+      name: 'Year-over-year change (%)',
+      tooltip: {
+        valueDecimals: 2
+      },
+      zoneAxis: 'x',
+      zones: [ {
+        value: props.data.projectedDate.timestamp
+      }, {
+        color: '#addc91'
       } ]
-  }
+    } ]
+  };
 
-  Highcharts.stockChart( props.selector, options);
+  Highcharts.stockChart( props.selector, options );
 }
 
 module.exports = BarChart;

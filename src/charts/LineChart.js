@@ -2,18 +2,18 @@
 
 var Highcharts = require( 'highcharts/highstock' );
 
-Highcharts.setOptions({
+Highcharts.setOptions( {
   lang: {
     rangeSelectorZoom: '',
     thousandsSep: ','
   }
-});
+} );
 
 /**
  * _getTickValue - Convert the data point's unit to M or B.
  *
  * @param  {int} value  Data point's value
- * @return {int}        Data point's value over million or billion.
+ * @returns {int}        Data point's value over million or billion.
  */
 function _getTickValue( value ) {
   // If it's 0 or borked data gets passed in, return it.
@@ -29,13 +29,13 @@ function _getTickValue( value ) {
 function LineChart( props ) {
   var options = {
     title: {
-        text: props.title
+      text: props.title
     },
     description: props.description,
     credits: false,
-    rangeSelector : {
+    rangeSelector: {
       height: 35,
-      inputEnabled:false,
+      inputEnabled: false,
       buttonTheme: {
         r: 5, // border radius
         fill: '#CCE3F5',
@@ -48,25 +48,25 @@ function LineChart( props ) {
           }
         }
       },
-      buttons: [{
-          type: 'year',
-          count: 1,
-          text: '1y'
-        },
-        {
-          type: 'year',
-          count: 3,
-          text: '3y'
-        },
-        {
-          type: 'year',
-          count: 5,
-          text: '5y'
-        },
-        {
-          type: 'all',
-          text: 'All'
-        },
+      buttons: [ {
+        type: 'year',
+        count: 1,
+        text: '1y'
+      },
+      {
+        type: 'year',
+        count: 3,
+        text: '3y'
+      },
+      {
+        type: 'year',
+        count: 5,
+        text: '5y'
+      },
+      {
+        type: 'all',
+        text: 'All'
+      }
       ]
     },
     plotOptions: {
@@ -79,15 +79,15 @@ function LineChart( props ) {
       }
     },
     navigator: {
-        maskFill: 'rgba(0, 0, 0, 0.05)',
-        handles: {
-            backgroundColor: '#fff',
-            borderColor: '#000'
-        },
-        series: {
-            color: '#addc91',
-            lineWidth: 2
-        }
+      maskFill: 'rgba(0, 0, 0, 0.05)',
+      handles: {
+        backgroundColor: '#fff',
+        borderColor: '#000'
+      },
+      series: {
+        color: '#addc91',
+        lineWidth: 2
+      }
     },
     chart: {
       width: 650,
@@ -97,9 +97,9 @@ function LineChart( props ) {
       startOnTick: true,
       type: 'datetime',
       dateTimeLabelFormats: {
-          day: '%b %Y'
+        day: '%b %Y'
       },
-      plotLines: [{
+      plotLines: [ {
         color: '#75787b',
         width: 1,
         value: props.data.projectedDate.timestamp,
@@ -107,7 +107,7 @@ function LineChart( props ) {
         label: {
           text: 'Values after ' + props.data.projectedDate.label + ' are projected'
         }
-      }],
+      } ],
       tickInterval: 60 * 60 * 24 * 365 * 1000 // one year in ms
     },
     yAxis: {
@@ -117,7 +117,7 @@ function LineChart( props ) {
         text: props.title
       },
       labels: {
-        formatter: function () {
+        formatter: function() {
           return _getTickValue( this.value );
         }
       }
@@ -129,14 +129,14 @@ function LineChart( props ) {
         color: '#20aa3f',
         lineWidth: 1,
         tooltip: {
-            valueDecimals: 0
+          valueDecimals: 0
         },
         zoneAxis: 'x',
-        zones: [{
-            value: props.data.projectedDate.timestamp
+        zones: [ {
+          value: props.data.projectedDate.timestamp
         }, {
-            dashStyle: 'dash'
-        }]
+          dashStyle: 'dash'
+        } ]
       },
       {
         name: 'Seasonally Adjusted',
@@ -144,17 +144,17 @@ function LineChart( props ) {
         color: '#20aa3f',
         lineWidth: 5,
         tooltip: {
-            valueDecimals: 0
+          valueDecimals: 0
         },
         zoneAxis: 'x',
-        zones: [{
-            value: props.data.projectedDate.timestamp
+        zones: [ {
+          value: props.data.projectedDate.timestamp
         }, {
-            dashStyle: 'ShortDot'
-        }]
+          dashStyle: 'ShortDot'
+        } ]
       }
     ]
-  }
+  };
 
   Highcharts.stockChart( props.selector, options );
 

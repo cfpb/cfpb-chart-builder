@@ -1,16 +1,16 @@
 'use strict';
 
-var Highcharts = require('highcharts/highmaps');
+var Highcharts = require( 'highcharts/highmaps' );
 
-Highcharts.setOptions({
+Highcharts.setOptions( {
   lang: {
     thousandsSep: ','
   }
-});
+} );
 
-function TileMap(props) {
+function TileMap( props ) {
 
-  var props = props || {};
+  props = props || {};
 
   var options = {
     title: {
@@ -31,7 +31,7 @@ function TileMap(props) {
         return this.point.tooltip;
       }
     },
-    series: [{
+    series: [ {
       type: 'map',
       borderColor: 'rgb(117, 120, 123)',
       states: {
@@ -49,10 +49,10 @@ function TileMap(props) {
       },
       name: props.title,
       data: props.data
-    }]
+    } ]
   };
 
-  Highcharts.mapChart(props.selector, options);
+  Highcharts.mapChart( props.selector, options );
 }
 
 module.exports = TileMap;

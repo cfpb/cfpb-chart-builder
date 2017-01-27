@@ -34,7 +34,40 @@ function LineChart( props ) {
     description: props.description,
     credits: false,
     rangeSelector : {
-      inputEnabled:false
+      height: 35,
+      inputEnabled:false,
+      buttonTheme: {
+        r: 5, // border radius
+        fill: '#CCE3F5',
+        style: {
+          height: '35px'
+        },
+        states: {
+          select: {
+            fill: '#7FB8E6'
+          }
+        }
+      },
+      buttons: [{
+          type: 'year',
+          count: 1,
+          text: '1y'
+        },
+        {
+          type: 'year',
+          count: 3,
+          text: '3y'
+        },
+        {
+          type: 'year',
+          count: 5,
+          text: '5y'
+        },
+        {
+          type: 'all',
+          text: 'All'
+        },
+      ]
     },
     plotOptions: {
       series: {

@@ -178,7 +178,7 @@ function LineChart( props ) {
       opposite: false,
       className: 'axis-label',
       title: {
-        text: 'Number of Originations (in ' + _getYAxisUnits( props.data.adjusted ) + ')',
+        text: 'Number of originations (in ' + _getYAxisUnits( props.data.adjusted ) + ')',
         style: {
           'color': '#919395'
         }
@@ -191,7 +191,7 @@ function LineChart( props ) {
     },
     series: [
       {
-        name: 'Seasonally Adjusted',
+        name: 'Seasonally adjusted',
         data: props.data.adjusted,
         color: '#20aa3f',
         legendIndex: 1,

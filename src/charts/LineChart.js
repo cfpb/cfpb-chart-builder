@@ -71,11 +71,12 @@ function LineChart( props ) {
     description: props.description,
     credits: false,
     rangeSelector: {
+      selected: 'all',
       height: 35,
       inputEnabled: false,
       buttonPosition: {
         x: 0,
-        y: 0
+        y: 30
       },
       buttonTheme: {
         r: 5, // border radius
@@ -110,6 +111,13 @@ function LineChart( props ) {
       }
       ]
     },
+    legend: {
+      align: 'right',
+      enabled: true,
+      verticalAlign: 'top',
+      x: 0,
+      y: -15
+    },
     plotOptions: {
       series: {
         states: {
@@ -132,7 +140,9 @@ function LineChart( props ) {
     },
     chart: {
       width: 650,
-      height: 500
+      height: 500,
+      marginTop: 100,
+      zoomType: 'none'
     },
     xAxis: {
       startOnTick: true,
@@ -146,7 +156,13 @@ function LineChart( props ) {
         value: props.data.projectedDate.timestamp,
         zIndex: 10,
         label: {
-          text: 'Values after ' + props.data.projectedDate.label + ' are projected'
+          text: 'Values after ' + props.data.projectedDate.label + ' are projected',
+          align: 'right',
+          rotation: 0,
+          style: {
+            color: '#919395'
+          },
+          y: -15
         }
       } ],
       tickInterval: 60 * 60 * 24 * 365 * 1000 // one year in ms
@@ -168,24 +184,10 @@ function LineChart( props ) {
     },
     series: [
       {
-        name: 'Unadjusted',
-        data: props.data.unadjusted,
-        color: '#20aa3f',
-        lineWidth: 1,
-        tooltip: {
-          valueDecimals: 0
-        },
-        zoneAxis: 'x',
-        zones: [ {
-          value: props.data.projectedDate.timestamp
-        }, {
-          dashStyle: 'dash'
-        } ]
-      },
-      {
         name: 'Seasonally Adjusted',
         data: props.data.adjusted,
         color: '#20aa3f',
+        legendIndex: 1,
         lineWidth: 5,
         tooltip: {
           valueDecimals: 0
@@ -196,11 +198,43 @@ function LineChart( props ) {
         }, {
           dashStyle: 'ShortDot'
         } ]
+      },
+      {
+        name: 'Unadjusted',
+        data: props.data.unadjusted,
+        color: '#20aa3f',
+        lineWidth: 1,
+        legendIndex: 2,
+        tooltip: {
+          valueDecimals: 0
+        },
+        zoneAxis: 'x',
+        zones: [ {
+          value: props.data.projectedDate.timestamp
+        }, {
+          dashStyle: 'dash'
+        } ]
       }
     ]
   };
 
-  Highcharts.stockChart( props.selector, options );
+  Highcharts.stockChart( props.selector, options,
+    function( chart ) {
+      chart.renderer.text( 'Select time range', 7, 16 )
+        .css( {
+          color: '#919395',
+          fontSize: '14px'
+        })
+        .add();
+
+      chart.renderer.rect( 0, 75, 650, 2 )
+        .attr({
+          fill: '#919395',
+          zIndex: 10
+        })
+        .add();
+    }
+  );
 
 }
 

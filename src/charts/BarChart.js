@@ -11,7 +11,7 @@ Highcharts.setOptions( {
 
 
 function BarChart( props ) {
-
+  
   var options = {
     title: {
       text: props.title

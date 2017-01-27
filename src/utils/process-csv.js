@@ -46,20 +46,23 @@ function processNumOriginationsData( csv, group ) {
   csv = Papa.parse( csv ).data;
   csv.shift();
   csv.forEach( function( dataPoint ) {
-    var arr = [];
-    var series = dataPoint[2];
-    arr.push( formatDate( dataPoint[0] ) );
-    arr.push( parseFloat( dataPoint[1] ) );
 
-    if ( group ) {
-      series = dataPoint[3];
-    }
+    if ( _dateCategory( dataPoint[0] ) > new Date( '2009-01-01 00:00:00 UTC' ) ) {
+      var arr = [];
+      var series = dataPoint[2];
+      arr.push( formatDate( dataPoint[0] ) );
+      arr.push( parseFloat( dataPoint[1] ) );
 
-    if ( !group || group === dataPoint[2] ) {
-      if ( series === 'Unadjusted' ) {
-        data.unadjusted.push( arr );
-      } else {
-        data.adjusted.push( arr );
+      if ( group ) {
+        series = dataPoint[3];
+      }
+
+      if ( !group || group === dataPoint[2] ) {
+        if ( series === 'Unadjusted' ) {
+          data.unadjusted.push( arr );
+        } else {
+          data.adjusted.push( arr );
+        }
       }
     }
 

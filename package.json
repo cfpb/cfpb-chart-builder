@@ -1,7 +1,7 @@
 {
   "name": "cfpb-chart-builder",
-  "version": "0.0.9",
-  "description": "A package to build charts to CFPB style",
+  "version": "1.0.0",
+  "description": "Charts for the Consumer Financial Protection Bureau",
   "main": "src/index.js",
   "scripts": {
     "build": "npm run js && npm run css && npm run minify",
@@ -11,13 +11,14 @@
     "watch": "watchify src/index.js -o dist/cfpb-chart-builder.js -v -d",
     "start": "http-server . -p 8088",
     "browser-tests": "CI_ENVIRONMENT=true node test/browser-tests.js",
-    "test": "npm run browser-tests"
+    "test": "npm run build && npm run browser-tests",
+    "preinstall": "git config merge.ours.driver true"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cfpb/cfpb-chart-builder.git"
   },
-  "author": "",
+  "author": "Consumer Financial Protection Bureau",
   "license": "CC0-1.0",
   "bugs": {
     "url": "https://github.com/cfpb/cfpb-chart-builder/issues"

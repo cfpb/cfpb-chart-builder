@@ -13,6 +13,8 @@ Add a `div` with a class of `cfpb-chart` and the following data attributes to yo
      data-chart-type="line"
      data-chart-title="Number of Originations (in millions)"
      data-chart-description="Auto loan originations decreased in 2016."
+     data-chart-color="green"
+     data-chart-metadata="Number of Loans"
      data-chart-source="consumer-credit-trends/auto-loans.csv">
      Auto loan originations decreased in 2016.
 </div>
@@ -38,12 +40,19 @@ TBD
 
 1. Clone this repository.
 1. `npm install`
-1. `npm run build` to bundle the JS and output it to `dist/`.
+1. `npm run watch` to bundle the JS and output it to `dist/`.
 1. `npm start` to serve the test directory.
 1. Open `http://localhost:8088/test` in a browser to see the test page with a dozen random charts on it.
 1. Whenever a JS file in `src/` is edited, the JS will be rebundled. Refresh the page.
 
-Visit `http://localhost:8088/test/all-charts.html` to see *all* the CCT charts.
+Bonus: Visit `http://localhost:8088/test/all-charts.html` to see *all* the CCT charts.
+
+Helpful commands:
+
+- `npm run build` - Bundle and minify all assets into the `dist/` directory.
+- `npm run watch` - Bundle JS files whenever they're changed.
+- `npm start` - Start a local server to demo the charts at `http://localhost:8088/test`.
+- `npm test` - Run the test charts through Sauce Labs.
 
 ## Testing
 

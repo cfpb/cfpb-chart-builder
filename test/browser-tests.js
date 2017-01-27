@@ -5,13 +5,22 @@ var StaticServer = require('static-server');
 var request = require('request');
 var config = path.join(__dirname, './config.json');
 
-if (!fs.existsSync(config)) {
+if (!fs.existsSync(config) && !process.env.SAUCE_LABS_ACCESS_KEY) {
   console.error("Please define SAUCE_LABS_USERNAME and SAUCE_LABS_ACCESS_KEY in `test/config.js`.");
   console.error("See https://github.com/cfpb/cfpb-chart-builder#testing");
   process.exit(1);
 }
 
-config = require(config);
+if (process.env.SAUCE_LABS_USERNAME && process.env.SAUCE_LABS_ACCESS_KEY) {
+  // Travis has Sauce Labs creds in an environment variable
+  config = {
+     SAUCE_LABS_USERNAME: process.env.SAUCE_LABS_USERNAME,
+     SAUCE_LABS_ACCESS_KEY: process.env.SAUCE_LABS_ACCESS_KEY
+  }
+} else {
+  // Read creds from config file
+  config = require(config);
+}
 
 var SAUCE_LABS_USERNAME = config.SAUCE_LABS_USERNAME,
     SAUCE_LABS_ACCESS_KEY = config.SAUCE_LABS_ACCESS_KEY,
@@ -52,7 +61,7 @@ function startSauce(err, process) {
             ["Windows 7", "firefox", "27"],
             ["Windows 7", "chrome", ""]
         ],
-        "url": "http://localhost:" + STATIC_SERVER_PORT + "/test?ci_environment=" + CI_ENVIRONMENT,
+        "url": "http://localhost:" + STATIC_SERVER_PORT + "/test/?ci_environment=" + CI_ENVIRONMENT,
         "framework": "custom"
     }
   };

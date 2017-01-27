@@ -10,8 +10,8 @@
 
     <p>This page dynamically generates all <a href="https://github.com/cfpb/consumer-credit-trends/blob/22fa7cce6d3c4e5a7907d8849fb3ec56092714c4/src/static/js/templates/charts.js">these charts</a> on page load. Expect it to be a little sluggish.</p>
 
-    <script type="text/javascript" src="/test/sample-data.js"></script>
-    <script type="text/javascript" src="/test/test-runner.js"></script>
+    <script type="text/javascript" src="./sample-data.js"></script>
+    <script type="text/javascript" src="./test-runner.js"></script>
 
     <script type="text/javascript">
       // Load every single chart from the sample-data file.
@@ -22,8 +22,9 @@
           "<div class='cfpb-chart'" +
             "data-chart-type='" + chart.chartType + "'" +
             "data-chart-title='" + chart.title + "'" +
+            "data-chart-color='green'" +
             "data-chart-description='This is the chart description'" +
-            "data-chart-group='" + chart.group + "'" +
+            "data-chart-metadata='" + chart.group + "'" +
             "data-chart-source='consumer-credit-trends/" + chart.source + "'>" +
             "This is the chart description." +
           "</div>" +
@@ -33,7 +34,7 @@
       });
     </script>
 
-    <script type="text/javascript" src="/dist/cfpb-chart-builder.js"></script>
+    <script type="text/javascript" src="../dist/cfpb-chart-builder.js"></script>
 
   </body>
 </html>

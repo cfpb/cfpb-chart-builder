@@ -5,7 +5,9 @@ var documentReady = require( './utils/document-ready')
 var createChart = require( './charts' );
 var process = require( './utils/process-csv' );
 
-var DATA_SOURCE_BASE = "http://files.consumerfinance.gov/data/";
+var DATA_SOURCE_BASE = window.location.protocol.indexOf('https') === -1
+                     ? "//files.consumerfinance.gov/data/"
+                     : "//s3.amazonaws.com/files.consumerfinance.gov/data/";
 
 documentReady( function() {
   var charts = document.getElementsByClassName( 'cfpb-chart' );
@@ -15,7 +17,8 @@ documentReady( function() {
 
     loadSource( chart, function( chart, data ) {
       var type = chart.getAttribute( 'data-chart-type' ),
-          group = chart.getAttribute( 'data-chart-group' );
+          group = chart.getAttribute( 'data-chart-metadata' ),
+          color = chart.getAttribute( 'data-chart-color' );
 
       // Ensure undefined attributes aren't cast as a string.
       group = group === "undefined" ? undefined : group;
@@ -50,7 +53,7 @@ function loadSource( chart, callback ) {
     var url = chart.getAttribute( 'data-chart-source' );
     url = DATA_SOURCE_BASE + url;
 
-    ajax( {url: url, type: 'text', mime: 'text/csv' }, function( resp ) {
+    ajax( { url: url }, function( resp ) {
       callback( chart, resp.data );
     } );
 }

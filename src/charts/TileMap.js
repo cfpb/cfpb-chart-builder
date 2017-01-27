@@ -32,7 +32,7 @@ function TileMap( props ) {
       }
     },
     series: [ {
-      type: 'tile_map',
+      type: 'map',
       borderColor: 'rgb(117, 120, 123)',
       states: {
         hover: {

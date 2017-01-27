@@ -47,7 +47,7 @@ function processNumOriginationsData( csv, group ) {
   csv.shift();
   csv.forEach( function( dataPoint ) {
 
-    if ( _dateCategory( dataPoint[0] ) > new Date( '2009-01-01 00:00:00 UTC' ) ) {
+    if ( _dateCategory( dataPoint[0] ) > new Date('2009', '01', '01', '00', '00', '00', '00') ) {
       var arr = [];
       var series = dataPoint[2];
       arr.push( formatDate( dataPoint[0] ) );

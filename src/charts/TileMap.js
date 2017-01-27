@@ -16,10 +16,6 @@ function TileMap( props ) {
     title: {
       text: props.title
     },
-    chart: {
-      width: 650,
-      height: 500
-    },
     description: props.description,
     credits: false,
     legend: {

@@ -89,10 +89,6 @@ function LineChart( props ) {
         lineWidth: 2
       }
     },
-    chart: {
-      width: 650,
-      height: 500
-    },
     xAxis: {
       startOnTick: true,
       type: 'datetime',

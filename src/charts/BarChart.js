@@ -54,10 +54,6 @@ function BarChart( props ) {
       }
       ]
     },
-    chart: {
-      width: 650,
-      height: 500
-    },
     legend: {
       enabled: false
     },

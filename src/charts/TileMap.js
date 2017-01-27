@@ -39,9 +39,11 @@ function TileMap( props ) {
       // borderWidth: 0.2,
       dataLabels: {
         enabled: true,
-        color: '#FFFFFF',
-        format: '{point.name}<br />{point.value}%',
-        style: ''
+        color: '#000000',
+        formatter: function() {
+          return '<div style="text-align:center">' + this.point.name + '<br />' + this.point.value + '%</div>';
+        },
+        useHTML: true
       },
       name: props.title,
       data: props.data

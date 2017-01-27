@@ -114,6 +114,13 @@ function LineChart( props ) {
     legend: {
       align: 'right',
       enabled: true,
+      floating: true,
+      itemMarginTop: 10,
+      itemStyle: {
+        'color': '#919395',
+        'font-weight': 'normal'
+      },
+      layout: 'vertical',
       verticalAlign: 'top',
       x: 0,
       y: -15
@@ -229,7 +236,7 @@ function LineChart( props ) {
 
       chart.renderer.rect( 0, 75, 650, 2 )
         .attr({
-          fill: '#919395',
+          fill: '#E3E4E5',
           zIndex: 10
         })
         .add();

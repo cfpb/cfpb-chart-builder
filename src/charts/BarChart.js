@@ -144,7 +144,7 @@ function BarChart( props ) {
 
       chart.renderer.rect( 0, 75, 650, 2 )
         .attr({
-          fill: '#919395',
+          fill: '#E3E4E5',
           zIndex: 10
         })
         .add();

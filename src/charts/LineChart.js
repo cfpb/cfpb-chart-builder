@@ -66,6 +66,15 @@ function LineChart( props ) {
       dateTimeLabelFormats: {
           day: '%b %Y'
       },
+      plotLines: [{
+        color: '#75787b',
+        width: 1,
+        value: props.data.projectedDate.timestamp,
+        zIndex: 10,
+        label: {
+          text: 'Values after ' + props.data.projectedDate.label + ' are projected'
+        }
+      }],
       tickInterval: 60 * 60 * 24 * 365 * 1000 // one year in ms
     },
     yAxis: {
@@ -84,20 +93,32 @@ function LineChart( props ) {
       {
         name: 'Unadjusted',
         data: props.data.unadjusted,
-        color: '#addc91',
-        lineWidth: 3,
+        color: '#20aa3f',
+        lineWidth: 1,
         tooltip: {
             valueDecimals: 0
-        }
+        },
+        zoneAxis: 'x',
+        zones: [{
+            value: props.data.projectedDate.timestamp
+        }, {
+            dashStyle: 'dash'
+        }]
       },
       {
         name: 'Seasonally Adjusted',
         data: props.data.adjusted,
         color: '#20aa3f',
-        lineWidth: 3,
+        lineWidth: 5,
         tooltip: {
             valueDecimals: 0
-        }
+        },
+        zoneAxis: 'x',
+        zones: [{
+            value: props.data.projectedDate.timestamp
+        }, {
+            dashStyle: 'ShortDot'
+        }]
       }
     ]
   }

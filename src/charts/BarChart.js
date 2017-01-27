@@ -9,16 +9,8 @@ Highcharts.setOptions({
   }
 });
 
-var months = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
-    'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec' ];
 
 function BarChart( props ) {
-  // var i = props.data.categories.length - 7,
-  //     projected = props.data.categories[i],
-  //     projDate = new Date( projected ),
-  //     projDateText = months[projDate.getMonth()] + ' ' + projDate.getFullYear();
-
-var projDateText = 'April 2016';
 
   var options = {
     title: {
@@ -47,36 +39,15 @@ var projDateText = 'April 2016';
     },
     xAxis: {
       tickInterval: 12,
-      // labels: {
-      //   autoRotation: false,
-      //   formatter: function() {
-      //     var date = new Date( this.value );
-      //     return months[ date.getMonth() ] + ' ' + date.getFullYear();
-      //   },
-      //   style: {
-      //     'color': '#75787b',
-      //     'font-size': '16px'
-      //   },
-      //   y: 30
-      // }
-      // plotLines: [{
-      //   className: 'bar-chart_projected-line',
-      //   color: '#75787b',
-      //   label: {
-      //     align: 'left',
-      //     rotation: 0,
-      //     style: {
-      //       'color': '#75787b',
-      //       'font-size': '16px'
-      //     },
-      //     text: 'Values after ' + projDateText + ' are projected',
-      //     textAlign: 'right',
-      //     // useHTML: true,
-      //     y: -30
-      //   },
-      //   width: 2,
-      //   value: props.data.length - 6.5
-      // }]
+      plotLines: [{
+        color: '#75787b',
+        width: 1,
+        value: props.data.projectedDate.timestamp,
+        zIndex: 10,
+        label: {
+          text: 'Values after ' + props.data.projectedDate.label + ' are projected'
+        }
+      }],
     },
     yAxis: {
       opposite: false,
@@ -101,21 +72,18 @@ var projDateText = 'April 2016';
     },
     series: [ {
         type: 'column',
-        data: props.data,
+        data: props.data.values,
+        color: '#20aa3f',
         name: 'Year-over-year change (%)',
         tooltip: {
           valueDecimals: 2
         },
         zoneAxis: 'x',
-        zones: [
-          {
-            color: '#2CB34A',
-            value: Date.UTC( 2016, 4, 1 )
-          },
-          {
-            color: '#addc91',
-          }
-        ]
+        zones: [{
+            value: props.data.projectedDate.timestamp
+        }, {
+            color: '#addc91'
+        }]
       } ]
   }
 

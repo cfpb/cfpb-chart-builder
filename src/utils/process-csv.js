@@ -87,7 +87,7 @@ function processYoyData( csv, group ) {
     if ( dataPoint[2] === group ) {
       var date = _dateCategory( dataPoint[0] );
 
-      if ( date > new Date( '2009-01-01 00:00:00 UTC' ) ) {
+      if ( date > new Date('2009', '01', '01', '00', '00', '00', '00') ) {
         data.values.push( [ _dateCategory( dataPoint[0] ), +dataPoint[1] * 100 ] );
       }
     }

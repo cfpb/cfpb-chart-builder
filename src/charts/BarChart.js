@@ -11,7 +11,7 @@ Highcharts.setOptions( {
 
 
 function BarChart( props ) {
-  
+
   var options = {
     title: {
       text: props.title
@@ -137,14 +137,14 @@ function BarChart( props ) {
         .css( {
           color: '#919395',
           fontSize: '14px'
-        })
+        } )
         .add();
 
       chart.renderer.rect( 0, 75, 650, 2 )
-        .attr({
+        .attr( {
           fill: '#E3E4E5',
           zIndex: 10
-        })
+        } )
         .add();
     }
   );

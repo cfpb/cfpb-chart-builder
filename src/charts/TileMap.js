@@ -64,6 +64,43 @@ function TileMap( props ) {
     tooltip: {
       enabled: false
     },
+    responsive: {
+      rules: [{
+        condition: {
+          maxWidth: 500
+        },
+        chartOptions: {
+          chart: {
+            height: 400
+          },
+          series: [ {
+            type: 'map',
+            borderColor: '#75787b',
+            states: {
+              hover: {
+                brightness: 0,
+                borderColor: '#000'
+              }
+            },
+            // borderWidth: 0.2,
+            dataLabels: {
+              enabled: true,
+              color: '#000000',
+              formatter: function() {
+                return '<div style="text-align:center">' + this.point.name + '<br /><span style="font-weight:normal;">' + this.point.value + '%</span></div>';
+              },
+              useHTML: true,
+              style: {
+                fontSize: '10px',
+                lineHeight: '1em'
+              }
+            },
+            name: props.title,
+            data: props.data
+          } ]
+        }
+      }]
+    },
     series: [ {
       type: 'map',
       borderColor: '#75787b',

@@ -11,7 +11,7 @@ Highcharts.setOptions( {
 
 
 function BarChart( props ) {
-
+  
   var options = {
     title: {
       text: props.title
@@ -19,8 +19,13 @@ function BarChart( props ) {
     description: props.description,
     credits: false,
     rangeSelector: {
+      selected: 'all',
       height: 35,
       inputEnabled: false,
+      buttonPosition: {
+        x: 0,
+        y: 30
+      },
       buttonTheme: {
         r: 5, // border radius
         fill: '#CCE3F5',
@@ -54,6 +59,10 @@ function BarChart( props ) {
       }
       ]
     },
+    chart: {
+      marginTop: 100,
+      zoomType: 'none'
+    },
     legend: {
       enabled: false
     },
@@ -74,7 +83,13 @@ function BarChart( props ) {
         value: props.data.projectedDate.timestamp,
         zIndex: 10,
         label: {
-          text: 'Values after ' + props.data.projectedDate.label + ' are projected'
+          text: 'Values after ' + props.data.projectedDate.label + ' are projected',
+          align: 'right',
+          rotation: 0,
+          style: {
+            color: '#919395'
+          },
+          y: -15
         }
       } ]
     },
@@ -116,7 +131,24 @@ function BarChart( props ) {
     } ]
   };
 
-  Highcharts.stockChart( props.selector, options );
+  Highcharts.stockChart( props.selector, options,
+    function( chart ) {
+      chart.renderer.text( 'Select time range', 7, 16 )
+        .css( {
+          color: '#919395',
+          fontSize: '14px'
+        })
+        .add();
+
+      chart.renderer.rect( 0, 75, 650, 2 )
+        .attr({
+          fill: '#E3E4E5',
+          zIndex: 10
+        })
+        .add();
+    }
+  );
+
 }
 
 module.exports = BarChart;

@@ -60,8 +60,6 @@ function BarChart( props ) {
       ]
     },
     chart: {
-      width: 650,
-      height: 500,
       marginTop: 100,
       zoomType: 'none'
     },

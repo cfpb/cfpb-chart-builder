@@ -138,7 +138,7 @@ function LineChart( props ) {
       maskFill: 'rgba(0, 0, 0, 0.05)',
       handles: {
         backgroundColor: '#fff',
-        borderColor: '#000'
+        borderColor: '#101820'
       },
       series: {
         color: '#addc91',

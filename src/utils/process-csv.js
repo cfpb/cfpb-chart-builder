@@ -163,11 +163,13 @@ function processMapData( csv ) {
   } );
   data = data.map( function( row, i ) {
     var state = tileMapUtils.statePaths['state' + row[0]],
-        value = Math.round( row[1] * 100 );
+        value = Math.round( row[1] * 100 ),
+        tooltip = state.abbr + ' ' + ( value < 0 ? 'decreased' : 'increased' ) + ' by ' + Math.abs( value ) + '%';
     return {
       name: state.abbr,
       path: state.path,
       value: value,
+      tooltip: tooltip,
       color: tileMapUtils.getColor( value )
     };
   } );

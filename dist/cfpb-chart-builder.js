@@ -2892,7 +2892,7 @@ function BarChart( props ) {
       maskFill: 'rgba(0, 0, 0, 0.05)',
       handles: {
         backgroundColor: '#fff',
-        borderColor: '#000'
+        borderColor: '#101820'
       },
       series: {
         color: '#addc91',
@@ -3079,7 +3079,7 @@ function LineChart( props ) {
       maskFill: 'rgba(0, 0, 0, 0.05)',
       handles: {
         backgroundColor: '#fff',
-        borderColor: '#000'
+        borderColor: '#101820'
       },
       series: {
         color: '#addc91',
@@ -3194,14 +3194,16 @@ var Highcharts = require( 'highcharts/highmaps' );
 function _drawLegend( chart ) {
 
   var legendStyle = {
-    color: '#000',
+    color: '#101820',
     fontSize: '15px',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontFamily: "'AvenirNextLTW01-Demi',Arial,sans-serif;"
   };
 
   var textStyle = {
     color: '#919395',
-    fontSize: '15px'
+    fontSize: '15px',
+    fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif"
   };
 
   function _boxStyle( color ) {
@@ -3212,7 +3214,7 @@ function _drawLegend( chart ) {
     };
   }
 
-  chart.renderer.text( 'Year-over-year change (rounded to the nearest whole number)', 10, 20 ).css( legendStyle ).add();
+  chart.renderer.text( 'Year-over-year change (rounded to the nearest whole number)', 10, 25 ).css( legendStyle ).add();
 
   chart.renderer.rect( 10, 48, 15, 15 ).attr( _boxStyle( '#93cf7c' ) ).add();
   chart.renderer.rect( 10, 71, 15, 15 ).attr( _boxStyle( '#d6e8fa' ) ).add();
@@ -3250,11 +3252,17 @@ function TileMap( props ) {
     legend: {
       enabled: false
     },
+    // tooltip: {
+    //   borderColor: 'rgb(117, 120, 123)',
+    //   formatter: function() {
+    //     return this.point.tooltip;
+    //   }
+    // },
     tooltip: {
       enabled: false
     },
     responsive: {
-      rules: [{
+      rules: [ {
         condition: {
           maxWidth: 500
         },
@@ -3268,13 +3276,13 @@ function TileMap( props ) {
             states: {
               hover: {
                 brightness: 0,
-                borderColor: '#000'
+                borderColor: '#101820'
               }
             },
             // borderWidth: 0.2,
             dataLabels: {
               enabled: true,
-              color: '#000000',
+              color: '#101820',
               formatter: function() {
                 return '<div style="text-align:center">' + this.point.name + '<br /><span style="font-weight:normal;">' + this.point.value + '%</span></div>';
               },
@@ -3288,7 +3296,7 @@ function TileMap( props ) {
             data: props.data
           } ]
         }
-      }]
+      } ]
     },
     series: [ {
       type: 'map',
@@ -3302,7 +3310,7 @@ function TileMap( props ) {
       // borderWidth: 0.2,
       dataLabels: {
         enabled: true,
-        color: '#000000',
+        color: '#101820',
         formatter: function() {
           return '<div style="text-align:center">' + this.point.name + '<br /><span style="font-weight:normal;">' + this.point.value + '%</span></div>';
         },
@@ -3317,6 +3325,7 @@ function TileMap( props ) {
     } ]
   };
 
+  props.selector.className += ' cfpb-chart__tile-map';
   Highcharts.mapChart( props.selector, options, _drawLegend );
 
 }
@@ -3577,11 +3586,13 @@ function processMapData( csv ) {
   } );
   data = data.map( function( row, i ) {
     var state = tileMapUtils.statePaths['state' + row[0]],
-        value = Math.round( row[1] * 100 );
+        value = Math.round( row[1] * 100 ),
+        tooltip = state.abbr + ' ' + ( value < 0 ? 'decreased' : 'increased' ) + ' by ' + Math.abs( value ) + '%';
     return {
       name: state.abbr,
       path: state.path,
       value: value,
+      tooltip: tooltip,
       color: tileMapUtils.getColor( value )
     };
   } );

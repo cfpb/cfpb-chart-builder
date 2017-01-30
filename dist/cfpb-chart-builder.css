@@ -9,6 +9,9 @@
   .cfpb-chart .highcharts-legend-item text {
     font-size: 16px !important;
   }
+  .cfpb-chart .highcharts-legend {
+    transform: translate(200, -5) !important;
+  }
 }
 .cfpb-chart[data-chart-type="tile_map"] {
   height: 630px;

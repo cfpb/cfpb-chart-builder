@@ -1,6 +1,7 @@
 'use strict';
 
 var Highcharts = require( 'highcharts/highstock' );
+var getColorScheme = require( '../utils/get-color-scheme.js' );
 
 Highcharts.setOptions( {
   lang: {
@@ -19,11 +20,11 @@ Highcharts.setOptions( {
 
 function _getFirstNumber( array ) {
   var val;
-  for (var x = 0; x < array.length; x++ ) {
-    if ( !isNaN(array[x][1]) ) {
+  for ( var x = 0; x < array.length; x++ ) {
+    if ( !isNaN( array[x][1] ) ) {
       val = array[x][1];
       return val;
-      }
+    }
   }
   return false;
 }
@@ -40,9 +41,9 @@ function _getYAxisUnits( array ) {
     return value;
   }
   if ( value % 1000000000 < value ) {
-    return 'billions'
+    return 'billions';
   }
-  return 'millions'
+  return 'millions';
 }
 
 /**
@@ -64,6 +65,7 @@ function _getTickValue( value ) {
 }
 
 function LineChart( props ) {
+  var colors = getColorScheme( props.color );
   var options = {
     title: {
       text: props.title
@@ -138,7 +140,7 @@ function LineChart( props ) {
       maskFill: 'rgba(0, 0, 0, 0.05)',
       handles: {
         backgroundColor: '#fff',
-        borderColor: '#000'
+        borderColor: '#101820'
       },
       series: {
         color: '#addc91',
@@ -178,7 +180,7 @@ function LineChart( props ) {
       title: {
         text: 'Number of originations (in ' + _getYAxisUnits( props.data.adjusted ) + ')',
         style: {
-          'color': '#919395'
+          color: '#919395'
         }
       },
       labels: {
@@ -191,7 +193,7 @@ function LineChart( props ) {
       {
         name: 'Seasonally adjusted',
         data: props.data.adjusted,
-        color: '#20aa3f',
+        color: colors.primary,
         legendIndex: 1,
         lineWidth: 5,
         tooltip: {
@@ -207,7 +209,7 @@ function LineChart( props ) {
       {
         name: 'Unadjusted',
         data: props.data.unadjusted,
-        color: '#20aa3f',
+        color: colors.primary,
         lineWidth: 1,
         legendIndex: 2,
         tooltip: {
@@ -229,14 +231,14 @@ function LineChart( props ) {
         .css( {
           color: '#919395',
           fontSize: '14px'
-        })
+        } )
         .add();
 
       chart.renderer.rect( 0, 75, 650, 2 )
-        .attr({
+        .attr( {
           fill: '#E3E4E5',
           zIndex: 10
-        })
+        } )
         .add();
     }
   );

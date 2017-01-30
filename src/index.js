@@ -25,7 +25,8 @@ documentReady( function() {
 
       var properties = {
         type: type,
-        selector: chart
+        selector: chart,
+        color: color
       }
 
       if ( type === 'line' ) {

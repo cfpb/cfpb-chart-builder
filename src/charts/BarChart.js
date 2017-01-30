@@ -11,7 +11,7 @@ Highcharts.setOptions( {
 
 
 function BarChart( props ) {
-  
+
   var options = {
     title: {
       text: props.title
@@ -110,7 +110,7 @@ function BarChart( props ) {
         borderColor: '#000'
       },
       series: {
-        color: '#addc91',
+        color: colors.primary,
         lineWidth: 2
       }
     },

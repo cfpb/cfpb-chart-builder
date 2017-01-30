@@ -2786,6 +2786,7 @@ this.clipBox.width=this.xAxis.len,this.clipBox.height=this.yAxis.len):this.chart
 'use strict';
 
 var Highcharts = require( 'highcharts/highstock' );
+var getColorScheme = require( '../utils/get-color-scheme.js' );
 
 Highcharts.setOptions( {
   lang: {
@@ -2796,7 +2797,7 @@ Highcharts.setOptions( {
 
 
 function BarChart( props ) {
-
+  var colors = getColorScheme( props.color );
   var options = {
     title: {
       text: props.title
@@ -2902,7 +2903,7 @@ function BarChart( props ) {
     series: [ {
       type: 'column',
       data: props.data.values,
-      color: '#20aa3f',
+      color: colors.primary,
       name: 'Year-over-year change (%)',
       tooltip: {
         valueDecimals: 2
@@ -2911,7 +2912,7 @@ function BarChart( props ) {
       zones: [ {
         value: props.data.projectedDate.timestamp
       }, {
-        color: '#addc91'
+        color: colors.secondary
       } ]
     } ]
   };
@@ -2938,10 +2939,11 @@ function BarChart( props ) {
 
 module.exports = BarChart;
 
-},{"highcharts/highstock":2}],6:[function(require,module,exports){
+},{"../utils/get-color-scheme.js":11,"highcharts/highstock":2}],6:[function(require,module,exports){
 'use strict';
 
 var Highcharts = require( 'highcharts/highstock' );
+var getColorScheme = require( '../utils/get-color-scheme.js' );
 
 Highcharts.setOptions( {
   lang: {
@@ -3005,6 +3007,7 @@ function _getTickValue( value ) {
 }
 
 function LineChart( props ) {
+  var colors = getColorScheme( props.color );
   var options = {
     title: {
       text: props.title
@@ -3132,7 +3135,7 @@ function LineChart( props ) {
       {
         name: 'Seasonally adjusted',
         data: props.data.adjusted,
-        color: '#20aa3f',
+        color: colors.primary,
         legendIndex: 1,
         lineWidth: 5,
         tooltip: {
@@ -3148,7 +3151,7 @@ function LineChart( props ) {
       {
         name: 'Unadjusted',
         data: props.data.unadjusted,
-        color: '#20aa3f',
+        color: colors.primary,
         lineWidth: 1,
         legendIndex: 2,
         tooltip: {
@@ -3186,7 +3189,7 @@ function LineChart( props ) {
 
 module.exports = LineChart;
 
-},{"highcharts/highstock":2}],7:[function(require,module,exports){
+},{"../utils/get-color-scheme.js":11,"highcharts/highstock":2}],7:[function(require,module,exports){
 'use strict';
 
 var Highcharts = require( 'highcharts/highmaps' );
@@ -3370,7 +3373,8 @@ documentReady( function() {
 
       var properties = {
         type: type,
-        selector: chart
+        selector: chart,
+        color: color
       }
 
       if ( type === 'line' ) {
@@ -3403,7 +3407,7 @@ function loadSource( chart, callback ) {
     } );
 }
 
-},{"./charts":8,"./utils/document-ready":10,"./utils/process-csv":11,"xdr":4}],10:[function(require,module,exports){
+},{"./charts":8,"./utils/document-ready":10,"./utils/process-csv":12,"xdr":4}],10:[function(require,module,exports){
 'use strict';
 
 function ready( fn ) {
@@ -3421,6 +3425,36 @@ function ready( fn ) {
 module.exports = ready;
 
 },{}],11:[function(require,module,exports){
+'use strict';
+
+// This script simply retrieves colors for a color scheme
+
+var colorScheme = {
+  blue: {
+    primary: '#0072ce',
+    secondary: '#4497dc'
+  },
+  green: {
+    primary: '#20aa3f',
+    secondary: '#66c368'
+  },
+  navy: {
+    primary: '#254b87',
+    secondary: '#5674a3'
+  },
+  teal: {
+    primary: '#257675',
+    secondary: '#579695'
+  }
+};
+
+var getColorScheme = function( color ) {
+  return colorScheme[color];
+};
+
+module.exports = getColorScheme;
+
+},{}],12:[function(require,module,exports){
 'use strict';
 
 //
@@ -3606,7 +3640,7 @@ module.exports = {
   map: processMapData
 };
 
-},{"./tile-map":12,"papaparse":3}],12:[function(require,module,exports){
+},{"./tile-map":13,"papaparse":3}],13:[function(require,module,exports){
 'use strict';
 
 function getColor( value ) {

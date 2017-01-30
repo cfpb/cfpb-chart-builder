@@ -2,14 +2,14 @@
   max-width: 650px;
   height: 500px;
 }
-.cfpb-chart__tile-map {
+.cfpb-chart[data-chart-type="tile_map"] {
   height: 630px;
 }
 @media (max-width: 500px) {
   .cfpb-chart {
     height: 500px;
   }
-  .cfpb-chart__tile-map {
+  .cfpb-chart[data-chart-type="tile_map"] {
     height: 400px;
   }
 }

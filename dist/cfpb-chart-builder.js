@@ -3328,7 +3328,6 @@ function TileMap( props ) {
     } ]
   };
 
-  props.selector.className += ' cfpb-chart__tile-map';
   Highcharts.mapChart( props.selector, options, _drawLegend );
 
 }

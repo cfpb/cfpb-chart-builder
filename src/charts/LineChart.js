@@ -151,7 +151,7 @@ function LineChart( props ) {
         borderColor: '#101820'
       },
       series: {
-        color: '#addc91',
+        color: colors.primary,
         lineWidth: 2
       }
     },
@@ -163,7 +163,8 @@ function LineChart( props ) {
       startOnTick: true,
       type: 'datetime',
       dateTimeLabelFormats: {
-        day: '%b %Y'
+        month: '%b %Y',
+        year: '%b %Y'
       },
       labels: {
         style: {

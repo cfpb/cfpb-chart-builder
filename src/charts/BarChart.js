@@ -84,6 +84,11 @@ function BarChart( props ) {
           fontSize: '16px',
           fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif"
         },
+      startOnTick: true,
+      type: 'datetime',
+      dateTimeLabelFormats: {
+        month: '%b %Y',
+        year: '%b %Y'
       },
       plotLines: [ {
         color: '#75787b',
@@ -124,7 +129,7 @@ function BarChart( props ) {
         borderColor: '#101820'
       },
       series: {
-        color: '#addc91',
+        color: colors.primary,
         lineWidth: 2
       }
     },

@@ -111,7 +111,7 @@ function BarChart( props ) {
         borderColor: '#101820'
       },
       series: {
-        color: '#addc91',
+        color: colors.primary,
         lineWidth: 2
       }
     },

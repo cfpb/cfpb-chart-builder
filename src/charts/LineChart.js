@@ -1,6 +1,7 @@
 'use strict';
 
 var Highcharts = require( 'highcharts/highstock' );
+var getColorScheme = require( '../utils/get-color-scheme.js' );
 
 Highcharts.setOptions( {
   lang: {
@@ -64,6 +65,7 @@ function _getTickValue( value ) {
 }
 
 function LineChart( props ) {
+  var colors = getColorScheme( props.color );
   var options = {
     title: {
       text: props.title
@@ -191,7 +193,7 @@ function LineChart( props ) {
       {
         name: 'Seasonally adjusted',
         data: props.data.adjusted,
-        color: '#20aa3f',
+        color: colors.primary,
         legendIndex: 1,
         lineWidth: 5,
         tooltip: {
@@ -207,7 +209,7 @@ function LineChart( props ) {
       {
         name: 'Unadjusted',
         data: props.data.unadjusted,
-        color: '#20aa3f',
+        color: colors.primary,
         lineWidth: 1,
         legendIndex: 2,
         tooltip: {

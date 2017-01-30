@@ -78,7 +78,6 @@ function BarChart( props ) {
       }
     },
     xAxis: {
-      tickInterval: 12,
       labels: {
         style: {
           fontSize: '16px',

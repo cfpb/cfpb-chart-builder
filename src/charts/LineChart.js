@@ -155,7 +155,8 @@ function LineChart( props ) {
       startOnTick: true,
       type: 'datetime',
       dateTimeLabelFormats: {
-        day: '%b %Y'
+        month: '%b %Y',
+        year: '%b %Y'
       },
       plotLines: [ {
         color: '#75787b',

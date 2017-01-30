@@ -77,7 +77,12 @@ function BarChart( props ) {
       }
     },
     xAxis: {
-      tickInterval: 12,
+      startOnTick: true,
+      type: 'datetime',
+      dateTimeLabelFormats: {
+        month: '%b %Y',
+        year: '%b %Y'
+      },
       plotLines: [ {
         color: '#75787b',
         width: 1,

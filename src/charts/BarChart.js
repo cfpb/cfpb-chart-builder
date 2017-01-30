@@ -87,8 +87,8 @@ function BarChart( props ) {
       startOnTick: true,
       type: 'datetime',
       dateTimeLabelFormats: {
-        month: '%b %Y',
-        year: '%b %Y'
+        month: '%b<br/>%Y',
+        year: '%b<br/>%Y'
       },
       plotLines: [ {
         color: '#75787b',

@@ -163,8 +163,8 @@ function LineChart( props ) {
       startOnTick: true,
       type: 'datetime',
       dateTimeLabelFormats: {
-        month: '%b %Y',
-        year: '%b %Y'
+        month: '%b<br/>%Y',
+        year: '%b<br/>%Y'
       },
       labels: {
         style: {

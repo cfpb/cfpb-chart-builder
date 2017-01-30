@@ -47,7 +47,7 @@ function processNumOriginationsData( csv, group ) {
   csv.shift();
   csv.forEach( function( dataPoint ) {
 
-    if ( _dateCategory( dataPoint[0] ) > new Date('2009', '01', '01', '00', '00', '00', '00') ) {
+    if ( _dateCategory( dataPoint[0] ) > new Date( '2009', '01', '01', '00', '00', '00', '00' ) ) {
       var arr = [];
       var series = dataPoint[2];
       arr.push( formatDate( dataPoint[0] ) );
@@ -162,12 +162,12 @@ function processMapData( csv ) {
     return Boolean( row[0] );
   } );
   data = data.map( function( row, i ) {
-    var state = Object.keys( tileMapUtils.statePaths )[i],
+    var state = tileMapUtils.statePaths['state' + row[0]],
         value = Math.round( row[1] * 100 ),
-        tooltip = 'Loan originations in ' + state + ' ' + ( value < 0 ? 'decreased' : 'increased' ) + ' by ' + Math.abs( value ) + '%';
+        tooltip = state.abbr + ' ' + ( value < 0 ? 'decreased' : 'increased' ) + ' by ' + Math.abs( value ) + '%';
     return {
-      name: state,
-      path: tileMapUtils.statePaths[state],
+      name: state.abbr,
+      path: state.path,
       value: value,
       tooltip: tooltip,
       color: tileMapUtils.getColor( value )

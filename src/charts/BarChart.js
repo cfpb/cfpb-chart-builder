@@ -117,6 +117,7 @@ function BarChart( props ) {
     series: [ {
       type: 'column',
       data: props.data.values,
+      className: 'highcharts-point__projected',
       color: '#20aa3f',
       name: 'Year-over-year change (%)',
       tooltip: {

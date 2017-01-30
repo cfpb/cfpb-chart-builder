@@ -84,6 +84,7 @@ function BarChart( props ) {
           fontSize: '16px',
           fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif"
         },
+      },
       startOnTick: true,
       type: 'datetime',
       dateTimeLabelFormats: {

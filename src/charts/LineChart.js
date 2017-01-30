@@ -7,6 +7,12 @@ Highcharts.setOptions( {
   lang: {
     rangeSelectorZoom: '',
     thousandsSep: ','
+  },
+  chart: {
+    style: {
+      fontSize: '16px',
+      fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif"
+    }
   }
 } );
 
@@ -84,7 +90,8 @@ function LineChart( props ) {
         r: 5, // border radius
         fill: '#CCE3F5',
         style: {
-          height: '35px'
+          height: '35px',
+          fontSize: '14px'
         },
         states: {
           select: {
@@ -119,8 +126,9 @@ function LineChart( props ) {
       floating: true,
       itemMarginTop: 10,
       itemStyle: {
-        'color': '#919395',
-        'font-weight': 'normal'
+        'color': '#75787b',
+        'font-weight': 'normal',
+        'font-size': '16px'
       },
       layout: 'vertical',
       verticalAlign: 'top',
@@ -155,8 +163,14 @@ function LineChart( props ) {
       startOnTick: true,
       type: 'datetime',
       dateTimeLabelFormats: {
-        month: '%b %Y',
-        year: '%b %Y'
+        month: '%b<br/>%Y',
+        year: '%b<br/>%Y'
+      },
+      labels: {
+        style: {
+          fontSize: '16px',
+          fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif"
+        },
       },
       plotLines: [ {
         color: '#75787b',
@@ -168,7 +182,7 @@ function LineChart( props ) {
           align: 'right',
           rotation: 0,
           style: {
-            color: '#919395'
+            color: '#75787b'
           },
           y: -15
         }
@@ -181,12 +195,16 @@ function LineChart( props ) {
       title: {
         text: 'Number of originations (in ' + _getYAxisUnits( props.data.adjusted ) + ')',
         style: {
-          color: '#919395'
+          color: '#75787b'
         }
       },
       labels: {
         formatter: function() {
           return _getTickValue( this.value );
+        },
+        style: {
+          fontSize: '16px',
+          fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif"
         }
       }
     },
@@ -230,7 +248,7 @@ function LineChart( props ) {
     function( chart ) {
       chart.renderer.text( 'Select time range', 7, 16 )
         .css( {
-          color: '#919395',
+          color: '#75787b',
           fontSize: '14px'
         } )
         .add();

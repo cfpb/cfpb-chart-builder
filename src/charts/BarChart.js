@@ -31,7 +31,8 @@ function BarChart( props ) {
         r: 5, // border radius
         fill: '#CCE3F5',
         style: {
-          height: '35px'
+          height: '35px',
+          fontSize: '14px'
         },
         states: {
           select: {
@@ -77,11 +78,17 @@ function BarChart( props ) {
       }
     },
     xAxis: {
+      labels: {
+        style: {
+          fontSize: '16px',
+          fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif"
+        },
+      },
       startOnTick: true,
       type: 'datetime',
       dateTimeLabelFormats: {
-        month: '%b %Y',
-        year: '%b %Y'
+        month: '%b<br/>%Y',
+        year: '%b<br/>%Y'
       },
       plotLines: [ {
         color: '#75787b',
@@ -93,7 +100,7 @@ function BarChart( props ) {
           align: 'right',
           rotation: 0,
           style: {
-            color: '#919395'
+            color: '#75787b'
           },
           y: -15
         }
@@ -101,6 +108,12 @@ function BarChart( props ) {
     },
     yAxis: {
       opposite: false,
+      labels: {
+        style: {
+          fontSize: '16px',
+          fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif"
+        }
+      },
       title: {
         text: 'Year-over-year change (%)',
         style: {
@@ -141,7 +154,7 @@ function BarChart( props ) {
     function( chart ) {
       chart.renderer.text( 'Select time range', 7, 16 )
         .css( {
-          color: '#919395',
+          color: '#75787b',
           fontSize: '14px'
         } )
         .add();

@@ -6,14 +6,14 @@ function _drawLegend( chart ) {
 
   var legendStyle = {
     color: '#101820',
-    fontSize: '15px',
+    fontSize: '16px',
     fontWeight: 'bold',
     fontFamily: "'AvenirNextLTW01-Demi',Arial,sans-serif;"
   };
 
   var textStyle = {
-    color: '#919395',
-    fontSize: '15px',
+    color: '#75787b',
+    fontSize: '16px',
     fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif"
   };
 

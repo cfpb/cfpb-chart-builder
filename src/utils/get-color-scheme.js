@@ -4,25 +4,25 @@
 
 var colorScheme = {
   blue: {
-    primary: '#0072CE',
-    secondary: '#328ED8'
+    primary: '#0072ce',
+    secondary: '#4497dc'
   },
   green: {
-    primary: '#2CB34A',
-    secondary: '#ADDC91'
+    primary: '#20aa3f',
+    secondary: '#66c368'
   },
   navy: {
-    primary: '#002D72',
-    secondary: '#33578E'
+    primary: '#254b87',
+    secondary: '#5674a3'
   },
   teal: {
-    primary: '#005E5D',
-    secondary: '#337E7D'
+    primary: '#257675',
+    secondary: '#579695'
   }
-}
+};
 
 var getColorScheme = function( color ) {
   return colorScheme[color];
-}
+};
 
 module.exports = getColorScheme;

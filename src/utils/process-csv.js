@@ -24,16 +24,9 @@ function formatDate( index ) {
 }
 
 function _dateCategory( index ) {
-  var months = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
-    'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec' ];
   var year = Math.floor( index / 12 ) + 2000;
   var month = index % 12;
-  month += 1;
-  if ( month < 10 ) {
-    month = '0' + month;
-  }
-  var date = Date.UTC( year, month, 1 );
-  // var category = months[ date.getMonth() ] + ' ' + date.getFullYear();
+  var date = Date.UTC( year, month );
 
   return date;
 }
@@ -91,8 +84,7 @@ function processYoyData( csv, group ) {
   csv.forEach( function( dataPoint ) {
     if ( dataPoint[2] === group ) {
       var date = _dateCategory( dataPoint[0] );
-
-      if ( date > new Date( '2009', '01', '01', '00', '00', '00', '00' ) ) {
+      if ( date > Date.UTC( 2008, 11 ) ) {
         data.values.push( [ _dateCategory( dataPoint[0] ), Number( dataPoint[1] ) * 100 ] );
       }
     }

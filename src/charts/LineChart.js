@@ -1,6 +1,7 @@
 'use strict';
 
 var Highcharts = require( 'highcharts/highstock' );
+require( 'highcharts/modules/accessibility' )( Highcharts );
 var getColorScheme = require( '../utils/get-color-scheme.js' );
 
 Highcharts.setOptions( {

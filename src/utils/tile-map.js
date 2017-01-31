@@ -2,18 +2,18 @@
 
 function getColor( value ) {
   if ( value < -15 ) {
-    return '#7eb7e8';
+    return '#96c4ed';
   }
   if ( value < -5 ) {
     return '#d6e8fa';
   }
-  if ( value < 5 ) {
+  if ( value < 6 ) {
     return '#f7f8f9';
   }
-  if ( value < 15 ) {
-    return '#d6e8fa';
+  if ( value < 16 ) {
+    return '#e2efd8';
   }
-  return '#93cf7c';
+  return '#bae0a2';
 }
 
 var statePaths = {

@@ -27,11 +27,11 @@ function _drawLegend( chart ) {
 
   chart.renderer.text( 'Year-over-year change (rounded to the nearest whole number)', 10, 25 ).css( legendStyle ).add();
 
-  chart.renderer.rect( 10, 48, 15, 15 ).attr( _boxStyle( '#93cf7c' ) ).add();
-  chart.renderer.rect( 10, 71, 15, 15 ).attr( _boxStyle( '#d6e8fa' ) ).add();
+  chart.renderer.rect( 10, 48, 15, 15 ).attr( _boxStyle( '#bae0a2' ) ).add();
+  chart.renderer.rect( 10, 71, 15, 15 ).attr( _boxStyle( '#e2efd8' ) ).add();
   chart.renderer.rect( 10, 94, 15, 15 ).attr( _boxStyle( '#f7f8f9' ) ).add();
   chart.renderer.rect( 10, 117, 15, 15 ).attr( _boxStyle( '#d6e8fa' ) ).add();
-  chart.renderer.rect( 10, 140, 15, 15 ).attr( _boxStyle( '#7eb7e8' ) ).add();
+  chart.renderer.rect( 10, 140, 15, 15 ).attr( _boxStyle( '#96c4ed' ) ).add();
 
   chart.renderer.text( '16% or greater', 32, 61 ).css( textStyle ).add();
   chart.renderer.text( '6% to 15%', 32, 84 ).css( textStyle ).add();

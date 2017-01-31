@@ -12,23 +12,10 @@ var tileMapUtils = require( './tile-map' );
 function formatDate( index ) {
   var year = Math.floor( index / 12 ) + 2000;
   var month = index % 12;
-  month += 1;
-  if ( month < 10 ) {
-    month = '0' + month;
-  }
 
-  // @todo: don't use Date.parse, it's incompatible with older browsers we support such as ie 8
-  var theDate = Date.parse( new Date( year + '-' + month + '-01' ) );
+  var theDate = Date.UTC( year, month ) ;
 
   return theDate;
-}
-
-function _dateCategory( index ) {
-  var year = Math.floor( index / 12 ) + 2000;
-  var month = index % 12;
-  var date = Date.UTC( year, month );
-
-  return date;
 }
 
 function processNumOriginationsData( csv, group ) {
@@ -40,7 +27,7 @@ function processNumOriginationsData( csv, group ) {
   csv.shift();
   csv.forEach( function( dataPoint ) {
 
-    if ( _dateCategory( dataPoint[0] ) > new Date( '2009', '01', '01', '00', '00', '00', '00' ) ) {
+    if ( formatDate( dataPoint[0] ) > Date.UTC( 2008, 11 ) ) {
       var arr = [];
       var series = dataPoint[2];
       arr.push( formatDate( dataPoint[0] ) );
@@ -83,9 +70,9 @@ function processYoyData( csv, group ) {
 
   csv.forEach( function( dataPoint ) {
     if ( dataPoint[2] === group ) {
-      var date = _dateCategory( dataPoint[0] );
+      var date = formatDate( dataPoint[0] );
       if ( date > Date.UTC( 2008, 11 ) ) {
-        data.values.push( [ _dateCategory( dataPoint[0] ), Number( dataPoint[1] ) * 100 ] );
+        data.values.push( [ formatDate( dataPoint[0] ), Number( dataPoint[1] ) * 100 ] );
       }
     }
   } );

@@ -1,22 +1,47 @@
 {
   "name": "cfpb-chart-builder",
-  "version": "0.1.0",
+  "version": "1.1.2",
   "description": "Charts for the Consumer Financial Protection Bureau",
-  "homepage": "https://github.com/cfpb/cfpb-chart-builder#readme",
-  "author": {
-    "name": "Consumer Financial Protection Bureau",
-    "email": "tech@cfpb.gov",
-    "url": "https://cfpb.github.io/"
+  "main": "src/index.js",
+  "scripts": {
+    "build": "npm run js && npm run css && npm run minify",
+    "js": "browserify src/index.js -o dist/cfpb-chart-builder.js",
+    "css": "lessc src/styles.less dist/cfpb-chart-builder.css",
+    "minify": "browserify src/index.js -t uglifyify | uglifyjs -c -o dist/cfpb-chart-builder.min.js && lessc --clean-css src/styles.less dist/cfpb-chart-builder.min.css",
+    "start": "http-server . -p 8088",
+    "browser-tests": "CI_ENVIRONMENT=true node test/browser-tests.js",
+    "test": "npm run lint && npm run build && npm run browser-tests",
+    "lint": "eslint src/**/*.js --fix",
+    "preinstall": "git config merge.ours.driver true"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cfpb/cfpb-chart-builder.git"
   },
+  "author": {
+    "name": "Consumer Financial Protection Bureau",
+    "email": "tech@cfpb.gov",
+    "url": "https://cfpb.github.io/"
+  },
   "license": "CC0-1.0",
   "keywords": [
-    "cfpb-chart-builder"
+    "cfpb-chart-builder",
+    "highcharts",
+    "charts",
+    "graphs",
+    "bar chart",
+    "line chart",
+    "map",
+    "tile map"
   ],
+  "bugs": {
+    "url": "https://github.com/cfpb/cfpb-chart-builder/issues"
+  },
+  "homepage": "https://github.com/cfpb/cfpb-chart-builder#readme",
   "dependencies": {
+    "highcharts": "5.0.7",
+    "papaparse": "4.1.2",
+    "xdr": "0.5.3",
     "cf-grid": "^4.0.1",
     "cf-layout": "^4.0.1",
     "cf-core": "^4.0.1",
@@ -32,6 +57,7 @@
     "gulp-autoprefixer": "3.1.0",
     "gulp-changed": "1.2.1",
     "gulp-concat": "2.6.0",
+    "gulp-connect": "5.0.0",
     "gulp-webpack": "1.5.0",
     "gulp-cssmin": "0.1.7",
     "gulp-eslint": "3.0.1",
@@ -47,6 +73,17 @@
     "gulp-util": "3.0.6",
     "jquery": "1.11.3",
     "pretty-hrtime": "1.0.0",
-    "require-dir": "0.3.0"
+    "require-dir": "0.3.0",
+    "browserify": "13.3.0",
+    "eslint": "3.14.1",
+    "http-server": "0.9.0",
+    "less": "2.7.2",
+    "less-plugin-clean-css": "1.5.1",
+    "request": "2.79.0",
+    "sauce-connect-launcher": "1.2.0",
+    "static-server": "2.0.4",
+    "uglify-js": "2.7.5",
+    "uglifyify": "3.0.4",
+    "watchify": "3.8.0"
   }
 }

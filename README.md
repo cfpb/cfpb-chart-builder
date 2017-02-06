@@ -59,9 +59,10 @@ Helpful commands:
 
 Sauce Labs is used to test the charts in IE 8 through 10.
 An [Open Sauce](https://saucelabs.com/open-source) account has been created for this repo.
-The `curl` command below will grab the credentials for you.
+Its credentials can be found at https://GHE/gist/contolini/504ea71f6a19c74090c7a150aff60421.
 
-1. `curl -o test/config.json https://GHE/raw/gist/contolini/504ea71f6a19c74090c7a150aff60421/raw/b3850abab5466af62406d3f0d7a3da05f7f92124/config.json`
+1. `cp test/config.json.example test/config.json`
+1. Add valid Sauce Labs credentials to `test/config.json` (see above gist).
 1. `npm test`
 
 The browser tests will take several minutes to run.

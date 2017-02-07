@@ -49,12 +49,21 @@ module.exports = {
       compress: true
     }
   },
+  chartStyles: {
+    cwd:      loc.src + '/static/css',
+    src:      '/cfpb-chart-builder.less',
+    dest:     loc.dist + '/static/css',
+    settings: {
+      paths: glob.sync( loc.lib + '/cf-*/src/' ),
+      compress: true
+    }
+  },
   scripts: {
     src: [
-      loc.src + '/static/js/main.js'
+      loc.src + '/static/js/**/*.js'
     ],
     dest: loc.dist + '/static/js/',
-    name: 'main.js'
+    name: 'cfpb-chart-builder'
   },
   images: {
     src:  loc.src + '/static/img/**',

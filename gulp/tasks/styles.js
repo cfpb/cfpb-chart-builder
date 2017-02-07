@@ -33,6 +33,27 @@ gulp.task( 'styles:modern', function() {
     } ) );
 } );
 
+gulp.task( 'styles:charts', function() {
+  return gulp.src( config.chartStyles.cwd + config.chartStyles.src )
+    .pipe( plugins.sourcemaps.init() )
+    .pipe( plugins.less( config.chartStyles.settings ) )
+    .on( 'error', handleErrors )
+    .pipe( plugins.autoprefixer( {
+      browsers: [ 'last 2 version',
+                  'not ie <= 8',
+                  'android 4',
+                  'BlackBerry 7',
+                  'BlackBerry 10' ]
+    } ) )
+    .pipe( plugins.rename( {
+      suffix: '.min'
+    } ) )
+    .pipe( gulp.dest( config.chartStyles.dest ) )
+    .pipe( browserSync.reload( {
+      stream: true
+    } ) );
+} );
+
 gulp.task( 'styles:ie', function() {
   return gulp.src( configStyles.cwd + configStyles.src )
     .pipe( plugins.less( configStyles.settings ) )
@@ -56,5 +77,6 @@ gulp.task( 'styles:ie', function() {
 
 gulp.task( 'styles', [
   'styles:modern',
+  'styles:charts',
   'styles:ie'
 ] );

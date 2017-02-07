@@ -14,7 +14,7 @@ gulp.task( 'scripts', function() {
     .pipe( plugins.sourcemaps.init() )
     .pipe( plugins.webpack( {
       output: {
-        filename: '[name].js'
+        filename: configScripts.name + '.js'
       }
     } ) )
     .pipe( plugins.uglify() )

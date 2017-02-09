@@ -56,12 +56,16 @@ __pycache__/
 
 # Unit test / coverage reports
 #################
+test/unit_test_coverage/
+test/perf_test_results/
+test/screenshot.png
 htmlcov/
 .tox/
 .coverage
 .cache
 nosetests.xml
 coverage.xml
+.snyk
 
 # Front-End #
 #############

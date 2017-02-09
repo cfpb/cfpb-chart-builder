@@ -20,7 +20,7 @@ module.exports = {
       ' *  <%= pkg.name %> - v<%= pkg.version %>\n' +
       ' *  <%= pkg.homepage %>\n' +
       ' *  Licensed <%= pkg.license %> by' +
-      ' Consumer Financial Protection Bureau christopher.contolini@cfpb.gov\n' +
+      ' Consumer Financial Protection Bureau tech@cfpb.gov\n' +
       ' */',
   lint: {
     src: [

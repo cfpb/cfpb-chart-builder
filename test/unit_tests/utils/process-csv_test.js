@@ -12,6 +12,7 @@ describe( 'process-csv', function() { // eslint-disable-line max-statements, no-
   var yoy = processCsv.processYoyData;
   var map = processCsv.processMapData;
   var getProjectedDate = processCsv.getProjectedDate;
+  var getProjectedTimestamp = processCsv.getProjectedTimestamp;
 
 
   describe( 'formatDate', function() { // eslint-disable-line max-len
@@ -30,11 +31,21 @@ describe( 'process-csv', function() { // eslint-disable-line max-statements, no-
 
   describe( 'getProjectedDate', function() {
 
-    it( 'should return a human readable month and year string six months before the given timestamp', function() {
-      expect( getProjectedDate( 946684800000, false ) )
-        .to.equal( "November 1999" );
-      expect( getProjectedDate( 1477958400000, false ) )
-        .to.equal( "May 2016" );
+    it( 'should return a human readable month and year string one month before the given timestamp', function() {
+      expect( getProjectedDate( 1477958400000 ) )
+        .to.equal( "October 2016" );
+    } );
+
+  } );
+
+  describe( 'getProjectedTimestamp', function() {
+
+    it( 'should return UTC timestamp for the first month of the projected data, six months before given UTC date', function() {
+
+      var dataList = [[1477958400000, 0.5]]
+
+      expect( getProjectedTimestamp( dataList, false ) )
+        .to.equal( 1464818428800 );
     } );
 
   } );

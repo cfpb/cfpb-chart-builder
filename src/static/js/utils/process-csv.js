@@ -55,7 +55,7 @@ function processNumOriginationsData( csv, group ) {
   } );
 
   data.projectedDate = {};
-  data.projectedDate.timestamp = _getProjectedTimestamp( data.adjusted, false );
+  data.projectedDate.timestamp = getProjectedTimestamp( data.adjusted, false );
   data.projectedDate.label = getProjectedDate( data.projectedDate.timestamp );
 
   return data;
@@ -78,7 +78,7 @@ function processYoyData( csv, group ) {
   } );
 
   data.projectedDate = {};
-  data.projectedDate.timestamp = _getProjectedTimestamp( data.values, true );
+  data.projectedDate.timestamp = getProjectedTimestamp( data.values, true );
   data.projectedDate.label = getProjectedDate( data.projectedDate.timestamp );
 
   return data;
@@ -89,9 +89,9 @@ function processYoyData( csv, group ) {
  *
  * @param {Array} valuesList - list of values from the data, containing an array with timestamp representing the month and year at index 0, and the value at index 1
  * @param {Boolean} isYoy - is the valuesList year-over-year (Yoy) data? If so, it includes an additional month, so we need to calculate the projected date differently.
- * @returns {String} a timestamp.
+ * @returns {Number} a timestamp.
  */
-function _getProjectedTimestamp( valuesList, isYoy ) {
+function getProjectedTimestamp( valuesList, isYoy ) {
   var mostRecentMonthOfDataAvailable = valuesList[valuesList.length - 1][0];
 
   /*
@@ -160,5 +160,6 @@ module.exports = {
   originations: processNumOriginationsData,
   yoy: processYoyData,
   map: processMapData,
-  getProjectedDate: getProjectedDate
+  getProjectedDate: getProjectedDate,
+  getProjectedTimestamp: getProjectedTimestamp
 };

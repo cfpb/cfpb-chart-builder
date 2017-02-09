@@ -232,7 +232,7 @@ function LineChart( props ) {
         data: props.data.adjusted,
         color: colors.primary,
         legendIndex: 1,
-        lineWidth: 5,
+        lineWidth: 3,
         tooltip: {
           valueDecimals: 0
         },

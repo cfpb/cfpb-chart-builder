@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "browser-sync": "2.8.0",
+    "chai": "3.5.0",
     "del": "1.2.0",
     "fs": "0.0.2",
     "gulp": "3.9.1",
@@ -73,7 +74,6 @@
     "gulp-util": "3.0.6",
     "gulp-istanbul": "1.1.1",
     "gulp-mocha": "3.0.1",
-    "gulp-util": "3.0.8",
     "jquery": "1.11.3",
     "pretty-hrtime": "1.0.0",
     "require-dir": "0.3.0",

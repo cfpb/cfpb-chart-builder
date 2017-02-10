@@ -40,7 +40,3 @@ gulp.task( 'test',
     'test:unit'
   ]
 );
-
-gulp.task( 'test:browser', function() {
-  testBrowserSauceLabs();
-} );

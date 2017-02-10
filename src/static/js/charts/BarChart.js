@@ -83,7 +83,7 @@ function BarChart( props ) {
         style: {
           fontSize: '16px',
           fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif"
-        },
+        }
       },
       lineColor: '#d2d3d5',
       tickColor: '#d2d3d5',

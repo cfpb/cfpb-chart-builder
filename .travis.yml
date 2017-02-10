@@ -1,5 +1,8 @@
 language: node_js
 node_js:
   - 6
-before_script:
-  - npm run build
+install:
+  - npm install -g gulp
+  - ./setup.sh
+script:
+  - npm test

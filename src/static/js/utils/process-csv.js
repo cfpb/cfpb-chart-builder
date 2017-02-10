@@ -55,8 +55,8 @@ function processNumOriginationsData( csv, group ) {
   } );
 
   data.projectedDate = {};
-  data.projectedDate.timestamp = _getProjectedTimestamp( data.adjusted, false );
-  data.projectedDate.label = _getProjectedDate( data.projectedDate.timestamp );
+  data.projectedDate.timestamp = getProjectedTimestamp( data.adjusted, false );
+  data.projectedDate.label = getProjectedDate( data.projectedDate.timestamp );
 
   return data;
 }
@@ -78,8 +78,8 @@ function processYoyData( csv, group ) {
   } );
 
   data.projectedDate = {};
-  data.projectedDate.timestamp = _getProjectedTimestamp( data.values, true );
-  data.projectedDate.label = _getProjectedDate( data.projectedDate.timestamp );
+  data.projectedDate.timestamp = getProjectedTimestamp( data.values, true );
+  data.projectedDate.label = getProjectedDate( data.projectedDate.timestamp );
 
   return data;
 }
@@ -89,9 +89,9 @@ function processYoyData( csv, group ) {
  *
  * @param {Array} valuesList - list of values from the data, containing an array with timestamp representing the month and year at index 0, and the value at index 1
  * @param {Boolean} isYoy - is the valuesList year-over-year (Yoy) data? If so, it includes an additional month, so we need to calculate the projected date differently.
- * @returns {String} a timestamp.
+ * @returns {Number} a timestamp.
  */
-function _getProjectedTimestamp( valuesList, isYoy ) {
+function getProjectedTimestamp( valuesList, isYoy ) {
   var mostRecentMonthOfDataAvailable = valuesList[valuesList.length - 1][0];
 
   /*
@@ -120,7 +120,7 @@ function _getProjectedTimestamp( valuesList, isYoy ) {
  * @param {Number} timestamp - UTC timestamp representing the milliseconds elapsed since the UNIX epoch, for the month when each graph begins displaying projected data
  * @returns {String} projectedDate - text with the Month and Year of the projected data cutoff point, for use in labeling projected date in graphs
  */
-function _getProjectedDate( timestamp ) {
+function getProjectedDate( timestamp ) {
 
   var months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
 
@@ -159,5 +159,7 @@ module.exports = {
   formatDate: formatDate,
   originations: processNumOriginationsData,
   yoy: processYoyData,
-  map: processMapData
+  map: processMapData,
+  getProjectedDate: getProjectedDate,
+  getProjectedTimestamp: getProjectedTimestamp
 };

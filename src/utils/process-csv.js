@@ -5,6 +5,48 @@
 // When we finish those scripts we will no longer need this file.
 //
 
+/**
+*   Polyfill for Object.create()
+*   use this to create new objects
+*/
+if (!Object.create) {
+  Object.create = function (o) {
+    if (arguments.length > 1) {
+      throw new Error('Sorry the polyfill Object.create only accepts the first parameter.');
+    }
+    function F() {}
+    F.prototype = o;
+    return new F();
+  };
+}
+
+/**
+*   Polyfill for Array.indexOf
+*/
+if (!Array.prototype.indexOf)
+{
+  Array.prototype.indexOf = function(elt /*, from*/)
+  {
+    var len = this.length >>> 0;
+    var from = Number(arguments[1]) || 0;
+    from = (from < 0)
+         ? Math.ceil(from)
+         : Math.floor(from);
+    if (from < 0)
+      from += len;
+
+    for (; from < len; from++)
+    {
+      if (from in this &&
+          this[from] === elt)
+        return from;
+    }
+    return -1;
+  };
+}
+
+
+
 var Papa = require( 'papaparse' );
 var tileMapUtils = require( './tile-map' );
 
@@ -25,8 +67,9 @@ function processNumOriginationsData( csv, group ) {
   };
   csv = Papa.parse( csv ).data;
   csv.shift();
-  csv.forEach( function( dataPoint ) {
 
+  for ( var x = 0; x < csv.length; x++ ) {
+    var dataPoint = csv[x];
     if ( formatDate( dataPoint[0] ) > Date.UTC( 2008, 11 ) ) {
       var arr = [];
       var series = dataPoint[2];
@@ -45,8 +88,7 @@ function processNumOriginationsData( csv, group ) {
         }
       }
     }
-
-  } );
+  }
   data.unadjusted = data.unadjusted.sort( function( a, b ) {
     return a[0] - b[0];
   } );
@@ -68,14 +110,16 @@ function processYoyData( csv, group ) {
   };
   csv = Papa.parse( csv ).data;
 
-  csv.forEach( function( dataPoint ) {
+  for ( var x = 0; x < csv.length; x++ ) {
+    var dataPoint = csv[x];
     if ( dataPoint[2] === group ) {
       var date = formatDate( dataPoint[0] );
       if ( date > Date.UTC( 2008, 11 ) ) {
         data.values.push( [ formatDate( dataPoint[0] ), Number( dataPoint[1] ) * 100 ] );
       }
     }
-  } );
+
+  }
 
   data.projectedDate = {};
   data.projectedDate.timestamp = _getProjectedTimestamp( data.values, true );

@@ -190,8 +190,9 @@ function LineChart( props ) {
           fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif"
         },
       },
-      lineColor: '#75787b',
-      tickColor: '#75787b',
+      lineColor: '#d2d3d5',
+      tickColor: '#d2d3d5',
+      gridLineColor: '#d2d3d5'
       plotLines: [ {
         color: '#75787b',
         width: 1,
@@ -227,8 +228,9 @@ function LineChart( props ) {
           fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif"
         }
       },
-      lineColor: '#75787b',
-      tickColor: '#75787b'
+      lineColor: '#d2d3d5',
+      tickColor: '#d2d3d5',
+      gridLineColor: '#d2d3d5'
     },
     series: [
       {

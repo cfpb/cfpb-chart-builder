@@ -114,8 +114,6 @@ The browser tests will take several minutes to run.
 The test script simply loads `http://localhost:8088/test` in IE VMs and reports any `window` errors.
 
 
-
-
 ## How to test the software
 
 After running `./setup.sh` or compiling with Gulp,

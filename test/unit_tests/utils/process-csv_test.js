@@ -13,6 +13,7 @@ describe( 'process-csv', function() { // eslint-disable-line max-statements, no-
   var map = processCsv.processMapData;
   var getProjectedDate = processCsv.getProjectedDate;
   var getProjectedTimestamp = processCsv.getProjectedTimestamp;
+  var convertDate = processCsv.convertDate;
 
 
   describe( 'formatDate', function() { // eslint-disable-line max-len
@@ -29,11 +30,47 @@ describe( 'process-csv', function() { // eslint-disable-line max-statements, no-
 
   } );
 
+  describe( 'convertDate', function() {
+
+// 1485925200000 = February 2017
+// 1477958400000 = Nov 2016
+    it( 'should convert a UTC timestamp in milliseconds to a human friendly month and year date', function() {
+      expect( convertDate( 1477958400000 ).humanFriendly )
+        .to.equal( 'November 2016' );
+    } );
+
+    it( 'should convert a UTC timestamp in milliseconds to a human friendly month and year date', function() {
+      expect( convertDate( 1485925200000 ).humanFriendly )
+        .to.equal( 'February 2017' );
+    } );
+
+    it( 'should convert a UTC timestamp in milliseconds to a UTC timestamp in milliseconds', function() {
+      expect( convertDate( 1477958400000 ).timestamp )
+        .to.equal( 1477958400000 );
+    } );
+
+    it( 'should convert a human friendly month and year date to a UTC timestamp in milliseconds', function() {
+      expect( convertDate( 'November 2016' ).timestamp )
+        .to.equal( 1477958400000 );
+    } );
+
+    it( 'should convert a human friendly month and year date to a human friendly month and year date', function() {
+      expect( convertDate( 'February 2017' ).humanFriendly )
+        .to.equal( 'February 2017' );
+    } );
+
+  });
+
   describe( 'getProjectedDate', function() {
 
     it( 'should return a human readable month and year string one month before the given timestamp', function() {
       expect( getProjectedDate( 1477958400000 ) )
         .to.equal( "October 2016" );
+    } );
+
+    it( 'should return a human readable month and year string one month before the given timestamp', function() {
+      expect( getProjectedDate( 1485925200000 ) )
+        .to.equal( "January 2017" );
     } );
 
   } );

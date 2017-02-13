@@ -18,6 +18,48 @@ function formatDate( index ) {
   return theDate;
 }
 
+/**
+ * Returns an object with the UTC timestamp number in milliseconds and human-friendly month and year for a given date in either format
+ *
+ * @param {Number} milliseconds - UTC timestamp in milliseconds representing the month and year for a given data point, e.g. 1477958400000
+ * @param {String} monthAndYear - Month + YYYY format in milliseconds representing the month and year for a given data point, e.g. "January 2000"
+ * @returns {Obj} object with UTC timestamp in milliseconds and the human-readable version of the month and year for the given date.
+ */
+function convertDate( date ) {
+  var humanFriendly = null;
+  var timestamp = null;
+
+  var months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+
+  if ( typeof date === 'number' && date.toString().length === 13 ) {
+
+    console.log ( date )
+
+    timestamp = date;
+
+    var month = new Date( date ).getMonth();
+    month = months[ month ];
+    var year = new Date( date ).getFullYear();
+
+    humanFriendly = month + ' ' + year;
+
+
+  } else if ( typeof date === 'string' ) {
+
+// year, month[, day[, hour[, minute[, second[, millisecond]]]]]
+    timestamp = Date.UTC( 2017, 1, 1, 0, 0, 0, 0 );
+    humanFriendly = date;
+
+  } else {
+    // return error
+  }
+
+  return {
+    humanFriendly: humanFriendly,
+    timestamp: timestamp
+  }
+}
+
 function processNumOriginationsData( csv, group ) {
   var data = {
     unadjusted: [],
@@ -161,5 +203,6 @@ module.exports = {
   yoy: processYoyData,
   map: processMapData,
   getProjectedDate: getProjectedDate,
-  getProjectedTimestamp: getProjectedTimestamp
+  getProjectedTimestamp: getProjectedTimestamp,
+  convertDate: convertDate
 };

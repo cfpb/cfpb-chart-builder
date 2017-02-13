@@ -83,8 +83,11 @@ function BarChart( props ) {
         style: {
           fontSize: '16px',
           fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif"
-        },
+        }
       },
+      lineColor: '#d2d3d5',
+      tickColor: '#d2d3d5',
+      gridLineColor: '#d2d3d5',
       startOnTick: true,
       type: 'datetime',
       dateTimeLabelFormats: {
@@ -115,6 +118,9 @@ function BarChart( props ) {
           fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif"
         }
       },
+      lineColor: '#d2d3d5',
+      tickColor: '#d2d3d5',
+      gridLineColor: '#d2d3d5',
       title: {
         text: 'Year-over-year change (%)',
         style: {

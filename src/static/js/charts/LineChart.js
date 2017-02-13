@@ -192,7 +192,7 @@ function LineChart( props ) {
       },
       lineColor: '#d2d3d5',
       tickColor: '#d2d3d5',
-      gridLineColor: '#d2d3d5'
+      gridLineColor: '#d2d3d5',
       plotLines: [ {
         color: '#75787b',
         width: 1,

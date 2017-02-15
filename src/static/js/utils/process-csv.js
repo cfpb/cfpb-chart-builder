@@ -28,28 +28,29 @@ function formatDate( index ) {
 function convertDate( date ) {
   var humanFriendly = null;
   var timestamp = null;
-
+  var month = null;
+  var year = null;
   var months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
 
-  if ( typeof date === 'number' && date.toString().length === 13 ) {
+  if ( typeof date === 'number' && date.toString().length >= 12 && date.toString().length <= 13 ) {
 
-    console.log ( date )
-
-    timestamp = date;
-
-    var month = new Date( date ).getMonth();
-    month = months[ month ];
-    var year = new Date( date ).getFullYear();
+    month = new Date( date ).getUTCMonth();
+    month = months[month];
+    year = new Date( date ).getUTCFullYear();
 
     humanFriendly = month + ' ' + year;
-
-
+    timestamp = date;
   } else if ( typeof date === 'string' ) {
 
-// year, month[, day[, hour[, minute[, second[, millisecond]]]]]
-    timestamp = Date.UTC( 2017, 1, 1, 0, 0, 0, 0 );
-    humanFriendly = date;
+    var strLength = date.length;
+    var monthString = date.substring( 0, strLength - 5 );
 
+    month = months.indexOf( monthString );
+    year = date.slice( date.length - 4, date.length );
+
+
+    timestamp = Date.UTC( year, month, 1, 0, 0, 0, 0 );
+    humanFriendly = date;
   } else {
     // return error
   }
@@ -164,14 +165,21 @@ function getProjectedTimestamp( valuesList, isYoy ) {
  */
 function getProjectedDate( timestamp ) {
 
-  var months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+  // var months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
 
   // Projected month threshhold is one month before the data itself is projected. E.g., data after May 2016 is projected, so graphs show June 2016 and after as projected, not inclusive of the month of May.
-  var projectedMonth = months[new Date( timestamp ).getMonth() - 1];
-  var projectedYear = new Date( timestamp ).getFullYear();
-  var projectedDate = projectedMonth + ' ' + projectedYear;
+  // var projectedMonth = months[new Date( timestamp ).getMonth() - 1];
+  // var projectedYear = new Date( timestamp ).getFullYear();
+  // var projectedDate = projectedMonth + ' ' + projectedYear;
 
-  return projectedDate;
+  var getDate = convertDate( timestamp );
+
+  getDate.date = new Date( timestamp );
+  var projectedDate = getDate.date.setUTCMonth( getDate.date.getUTCMonth() - 1 );
+
+  return convertDate( getDate.date.getTime() ).humanFriendly;
+
+  // return projectedDate;
 }
 
 function processMapData( csv ) {

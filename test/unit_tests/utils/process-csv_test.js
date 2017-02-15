@@ -34,14 +34,15 @@ describe( 'process-csv', function() { // eslint-disable-line max-statements, no-
 
 // 1485925200000 = February 2017
 // 1477958400000 = Nov 2016
+    
     it( 'should convert a UTC timestamp in milliseconds to a human friendly month and year date', function() {
+      expect( convertDate( 946684800000 ).humanFriendly )
+        .to.equal( 'January 2000' );
       expect( convertDate( 1477958400000 ).humanFriendly )
         .to.equal( 'November 2016' );
-    } );
-
-    it( 'should convert a UTC timestamp in milliseconds to a human friendly month and year date', function() {
       expect( convertDate( 1485925200000 ).humanFriendly )
         .to.equal( 'February 2017' );
+
     } );
 
     it( 'should convert a UTC timestamp in milliseconds to a UTC timestamp in milliseconds', function() {
@@ -50,11 +51,23 @@ describe( 'process-csv', function() { // eslint-disable-line max-statements, no-
     } );
 
     it( 'should convert a human friendly month and year date to a UTC timestamp in milliseconds', function() {
+      expect( convertDate( 'January 2000' ).timestamp )
+        .to.equal( 946684800000 );
       expect( convertDate( 'November 2016' ).timestamp )
         .to.equal( 1477958400000 );
+      expect( convertDate( 'February 2017' ).timestamp )
+        .to.equal( 1485907200000 );
     } );
 
+    it( 'should convert a human friendly date to a timestamp and back to a human friendly date', function() {
+      var february = convertDate( 'February 2017' ).timestamp;
+      expect( convertDate( february ).humanFriendly )
+        .to.equal( 'February 2017' );
+    } );
+
+
     it( 'should convert a human friendly month and year date to a human friendly month and year date', function() {
+
       expect( convertDate( 'February 2017' ).humanFriendly )
         .to.equal( 'February 2017' );
     } );
@@ -62,6 +75,11 @@ describe( 'process-csv', function() { // eslint-disable-line max-statements, no-
   });
 
   describe( 'getProjectedDate', function() {
+
+    it( 'should return a human readable month and year string one month before the given timestamp', function() {
+      expect( getProjectedDate( 1483228800000 ) )
+        .to.equal( "December 2016" );
+    } );
 
     it( 'should return a human readable month and year string one month before the given timestamp', function() {
       expect( getProjectedDate( 1477958400000 ) )

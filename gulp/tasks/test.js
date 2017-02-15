@@ -25,7 +25,7 @@ function testUnitScripts( cb ) {
         } ) )
 
         .pipe( gulpIstanbul.enforceThresholds( {
-          thresholds: { global: 90 }
+          thresholds: { global: 60 }
         } ) )
 
         .on( 'end', cb );

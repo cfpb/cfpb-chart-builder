@@ -88,7 +88,7 @@ describe( 'process-csv', function() { // eslint-disable-line max-statements, no-
 
     it( 'should return a human readable month and year string one month before the given timestamp', function() {
       expect( getProjectedDate( 1485925200000 ) )
-        .to.equal( "January 2017" );
+        .to.equal( "January 2017" );  
     } );
 
   } );
@@ -97,9 +97,9 @@ describe( 'process-csv', function() { // eslint-disable-line max-statements, no-
 
     it( 'should return UTC timestamp for the first month of the projected data, six months before given UTC date', function() {
 
-      var dataList = [[1477958400000, 0.5]]
+      var dataList = [[0, 0.5], [0, 0.5], [1477958400000, 0.5]]
 
-      expect( getProjectedTimestamp( dataList, false ) )
+      expect( getProjectedTimestamp( dataList ) )
         .to.equal( 1464818428800 );
     } );
 

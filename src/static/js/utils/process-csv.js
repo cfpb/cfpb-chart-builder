@@ -98,7 +98,7 @@ function processNumOriginationsData( csv, group ) {
   } );
 
   data.projectedDate = {};
-  data.projectedDate.timestamp = getProjectedTimestamp( data.adjusted, false );
+  data.projectedDate.timestamp = getProjectedTimestamp( data.adjusted );
   data.projectedDate.label = getProjectedDate( data.projectedDate.timestamp );
 
   return data;
@@ -121,7 +121,7 @@ function processYoyData( csv, group ) {
   } );
 
   data.projectedDate = {};
-  data.projectedDate.timestamp = getProjectedTimestamp( data.values, true );
+  data.projectedDate.timestamp = getProjectedTimestamp( data.values );
   data.projectedDate.label = getProjectedDate( data.projectedDate.timestamp );
 
   return data;
@@ -131,14 +131,13 @@ function processYoyData( csv, group ) {
  * Returns a UTC timestamp number for the month when each graph's data is projected
  *
  * @param {Array} valuesList - list of values from the data, containing an array with timestamp representing the month and year at index 0, and the value at index 1
- * @param {Boolean} isYoy - is the valuesList year-over-year (Yoy) data? If so, it includes an additional month, so we need to calculate the projected date differently.
  * @returns {Number} a timestamp.
  */
-function getProjectedTimestamp( valuesList, isYoy ) {
+function getProjectedTimestamp( valuesList ) {
   var mostRecentMonthOfDataAvailable = valuesList[valuesList.length - 1][0];
 
   /*
-  152.083 days = 5 months, which is six months ago for line chart data. Wee count 5 months back, because the timestamps are the first of each month:
+  152.083 days = 5 months to represent six months ago. We count 5 months back, because the timestamps are the first of each month:
   0 - november 1
   1 month - october 1
   2 - sept 1
@@ -148,11 +147,6 @@ function getProjectedTimestamp( valuesList, isYoy ) {
   For data through November, months AFTER May are projected. June through November should be projected in the UI.
   */
   var projectedThreshold = 60 * 60 * 24 * 152.083 * 1000;
-
-  if ( isYoy === true ) {
-    // Year over year data has an extra month compared to line chart data, so we include the last 7 months of the set instead of only 6.
-    projectedThreshold = 60 * 60 * 24 * 365 * 1000 / 2;
-  }
 
   return mostRecentMonthOfDataAvailable - projectedThreshold;
 }
@@ -165,21 +159,11 @@ function getProjectedTimestamp( valuesList, isYoy ) {
  */
 function getProjectedDate( timestamp ) {
 
-  // var months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+  var getDate = new Date( timestamp );
+  getDate.setUTCMonth( getDate.getUTCMonth() - 1 );
+  var projectedDate = convertDate( getDate.getTime() ).humanFriendly;
 
-  // Projected month threshhold is one month before the data itself is projected. E.g., data after May 2016 is projected, so graphs show June 2016 and after as projected, not inclusive of the month of May.
-  // var projectedMonth = months[new Date( timestamp ).getMonth() - 1];
-  // var projectedYear = new Date( timestamp ).getFullYear();
-  // var projectedDate = projectedMonth + ' ' + projectedYear;
-
-  var getDate = convertDate( timestamp );
-
-  getDate.date = new Date( timestamp );
-  var projectedDate = getDate.date.setUTCMonth( getDate.date.getUTCMonth() - 1 );
-
-  return convertDate( getDate.date.getTime() ).humanFriendly;
-
-  // return projectedDate;
+  return projectedDate;
 }
 
 function processMapData( csv ) {

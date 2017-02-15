@@ -8,12 +8,17 @@
 var Papa = require( 'papaparse' );
 var tileMapUtils = require( './tile-map' );
 
-// Convert the integers in the CSVs into human-readable dates.
+/**
+ * Returns an object with the UTC timestamp number in milliseconds and human-friendly month and year for a given date in either format
+ *
+ * @param {Number} index - counter starting at 0 representing the month and year for a data point. 0 is January 2000, 1 is February 2000, etc.
+ * @returns {Number} UTC timestamp in milliseconds representing the month and year for the given date index.
+ */
 function formatDate( index ) {
   var year = Math.floor( index / 12 ) + 2000;
   var month = index % 12;
 
-  var theDate = Date.UTC( year, month ) ;
+  var theDate = Date.UTC( year, month );
 
   return theDate;
 }
@@ -21,8 +26,7 @@ function formatDate( index ) {
 /**
  * Returns an object with the UTC timestamp number in milliseconds and human-friendly month and year for a given date in either format
  *
- * @param {Number} milliseconds - UTC timestamp in milliseconds representing the month and year for a given data point, e.g. 1477958400000
- * @param {String} monthAndYear - Month + YYYY format in milliseconds representing the month and year for a given data point, e.g. "January 2000"
+ * @param {(number|string)} date - UTC timestamp in milliseconds representing the month and year for a given data point, e.g. 1477958400000, OR a string in Month + YYYY format for a given data point, e.g. "January 2000"
  * @returns {Obj} object with UTC timestamp in milliseconds and the human-readable version of the month and year for the given date.
  */
 function convertDate( date ) {
@@ -58,9 +62,16 @@ function convertDate( date ) {
   return {
     humanFriendly: humanFriendly,
     timestamp: timestamp
-  }
+  };
 }
 
+/**
+ * Returns a data object with data starting in January 2009 for use in all line charts
+ *
+ * @param {Number} csv - response from requested CSV file
+ * @param {String} group - optional parameter for specifying if the chart requires use of a "group" column in the CSV, for example the charts with a group of "Younger than 30" will filter data to only include values matching that group
+ * @returns {Obj} data - object with adjusted and unadjusted value arrays containing timestamps and a number value
+ */
 function processNumOriginationsData( csv, group ) {
   var data = {
     unadjusted: [],
@@ -104,6 +115,13 @@ function processNumOriginationsData( csv, group ) {
   return data;
 }
 
+/**
+ * Returns a data object with data starting in January 2009 for use in all bar charts
+ *
+ * @param {Number} csv - response from requested CSV file
+ * @param {String} group - optional parameter for specifying if the chart requires use of a "group" column in the CSV, for example the charts with a group of "Younger than 30" will filter data to only include values matching that group
+ * @returns {Obj} data - object with adjusted and unadjusted value arrays containing timestamps and a number value
+ */
 function processYoyData( csv, group ) {
   var data = {
     values: [],

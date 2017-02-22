@@ -50,16 +50,70 @@ if (!Array.prototype.indexOf)
 var Papa = require( 'papaparse' );
 var tileMapUtils = require( './tile-map' );
 
-// Convert the integers in the CSVs into human-readable dates.
+/**
+ * Returns an object with the UTC timestamp number in milliseconds and human-friendly month and year for a given date in either format
+ *
+ * @param {Number} index - counter starting at 0 representing the month and year for a data point. 0 is January 2000, 1 is February 2000, etc.
+ * @returns {Number} UTC timestamp in milliseconds representing the month and year for the given date index.
+ */
 function formatDate( index ) {
   var year = Math.floor( index / 12 ) + 2000;
   var month = index % 12;
 
-  var theDate = Date.UTC( year, month ) ;
+  var theDate = Date.UTC( year, month );
 
   return theDate;
 }
 
+/**
+ * Returns an object with the UTC timestamp number in milliseconds and human-friendly month and year for a given date in either format
+ *
+ * @param {(number|string)} date - UTC timestamp in milliseconds representing the month and year for a given data point, e.g. 1477958400000, OR a string in Month + YYYY format for a given data point, e.g. "January 2000"
+ * @returns {Obj} object with UTC timestamp in milliseconds and the human-readable version of the month and year for the given date.
+ */
+function convertDate( date ) {
+  var humanFriendly = null;
+  var timestamp = null;
+  var month = null;
+  var year = null;
+  var months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+
+  if ( typeof date === 'number' && date.toString().length >= 12 && date.toString().length <= 13 ) {
+
+    month = new Date( date ).getUTCMonth();
+    month = months[month];
+    year = new Date( date ).getUTCFullYear();
+
+    humanFriendly = month + ' ' + year;
+    timestamp = date;
+  } else if ( typeof date === 'string' ) {
+
+    var strLength = date.length;
+    var monthString = date.substring( 0, strLength - 5 );
+
+    month = months.indexOf( monthString );
+    year = date.slice( date.length - 4, date.length );
+
+
+    timestamp = Date.UTC( year, month, 1, 0, 0, 0, 0 );
+    humanFriendly = date;
+  } else {
+    // return error
+  }
+
+  return {
+    humanFriendly: humanFriendly,
+    timestamp: timestamp
+  };
+}
+
+/**
+ * Returns a data object with data starting in January 2009 for use in all line charts
+ *
+ * @param {Number} csv - response from requested CSV file
+ * @param {String} group - optional parameter for specifying if the chart requires use of a "group" column in the CSV, for example the charts with a group of "Younger than 30" will filter data to only include values matching that group
+ * @returns {Obj} data - object with adjusted and unadjusted value arrays containing timestamps and a number value
+ */
 function processNumOriginationsData( csv, group ) {
   var data = {
     unadjusted: [],
@@ -97,12 +151,19 @@ function processNumOriginationsData( csv, group ) {
   } );
 
   data.projectedDate = {};
-  data.projectedDate.timestamp = getProjectedTimestamp( data.adjusted, false );
+  data.projectedDate.timestamp = getProjectedTimestamp( data.adjusted );
   data.projectedDate.label = getProjectedDate( data.projectedDate.timestamp );
 
   return data;
 }
 
+/**
+ * Returns a data object with data starting in January 2009 for use in all bar charts
+ *
+ * @param {Number} csv - response from requested CSV file
+ * @param {String} group - optional parameter for specifying if the chart requires use of a "group" column in the CSV, for example the charts with a group of "Younger than 30" will filter data to only include values matching that group
+ * @returns {Obj} data - object with adjusted and unadjusted value arrays containing timestamps and a number value
+ */
 function processYoyData( csv, group ) {
   var data = {
     values: [],
@@ -122,7 +183,7 @@ function processYoyData( csv, group ) {
   }
 
   data.projectedDate = {};
-  data.projectedDate.timestamp = getProjectedTimestamp( data.values, true );
+  data.projectedDate.timestamp = getProjectedTimestamp( data.values );
   data.projectedDate.label = getProjectedDate( data.projectedDate.timestamp );
 
   return data;
@@ -132,14 +193,13 @@ function processYoyData( csv, group ) {
  * Returns a UTC timestamp number for the month when each graph's data is projected
  *
  * @param {Array} valuesList - list of values from the data, containing an array with timestamp representing the month and year at index 0, and the value at index 1
- * @param {Boolean} isYoy - is the valuesList year-over-year (Yoy) data? If so, it includes an additional month, so we need to calculate the projected date differently.
  * @returns {Number} a timestamp.
  */
-function getProjectedTimestamp( valuesList, isYoy ) {
+function getProjectedTimestamp( valuesList ) {
   var mostRecentMonthOfDataAvailable = valuesList[valuesList.length - 1][0];
 
   /*
-  152.083 days = 5 months, which is six months ago for line chart data. Wee count 5 months back, because the timestamps are the first of each month:
+  152.083 days = 5 months to represent six months ago. We count 5 months back, because the timestamps are the first of each month:
   0 - november 1
   1 month - october 1
   2 - sept 1
@@ -149,11 +209,6 @@ function getProjectedTimestamp( valuesList, isYoy ) {
   For data through November, months AFTER May are projected. June through November should be projected in the UI.
   */
   var projectedThreshold = 60 * 60 * 24 * 152.083 * 1000;
-
-  if ( isYoy === true ) {
-    // Year over year data has an extra month compared to line chart data, so we include the last 7 months of the set instead of only 6.
-    projectedThreshold = 60 * 60 * 24 * 365 * 1000 / 2;
-  }
 
   return mostRecentMonthOfDataAvailable - projectedThreshold;
 }
@@ -166,12 +221,9 @@ function getProjectedTimestamp( valuesList, isYoy ) {
  */
 function getProjectedDate( timestamp ) {
 
-  var months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
-
-  // Projected month threshhold is one month before the data itself is projected. E.g., data after May 2016 is projected, so graphs show June 2016 and after as projected, not inclusive of the month of May.
-  var projectedMonth = months[new Date( timestamp ).getMonth() - 1];
-  var projectedYear = new Date( timestamp ).getFullYear();
-  var projectedDate = projectedMonth + ' ' + projectedYear;
+  var getDate = new Date( timestamp );
+  getDate.setUTCMonth( getDate.getUTCMonth() - 1 );
+  var projectedDate = convertDate( getDate.getTime() ).humanFriendly;
 
   return projectedDate;
 }
@@ -205,5 +257,6 @@ module.exports = {
   yoy: processYoyData,
   map: processMapData,
   getProjectedDate: getProjectedDate,
-  getProjectedTimestamp: getProjectedTimestamp
+  getProjectedTimestamp: getProjectedTimestamp,
+  convertDate: convertDate
 };

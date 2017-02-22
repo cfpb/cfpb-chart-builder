@@ -10,7 +10,8 @@ var DATA_SOURCE_BASE = window.location.protocol.indexOf( 'https' ) === -1 ?
                       '//s3.amazonaws.com/files.consumerfinance.gov/data/';
 
 documentReady( function() {
-  var charts = document.getElementsByClassName( 'cfpb-chart' );
+
+  var charts = document.querySelectorAll( '.cfpb-chart' );
   var urls = {};
 
   for ( var x = 0; x < charts.length; x++ ) {

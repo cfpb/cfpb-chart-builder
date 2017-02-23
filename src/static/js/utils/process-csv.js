@@ -248,6 +248,7 @@ function processMapData( csv ) {
       color: tileMapUtils.getColor( value )
     };
   } );
+
   return data;
 }
 

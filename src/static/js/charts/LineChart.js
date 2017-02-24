@@ -187,8 +187,9 @@ function LineChart( props ) {
       labels: {
         style: {
           fontSize: '16px',
-          fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif"
-        },
+          fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif",
+          color: '#75787b'
+        }
       },
       lineColor: '#d2d3d5',
       tickColor: '#d2d3d5',
@@ -225,7 +226,8 @@ function LineChart( props ) {
         },
         style: {
           fontSize: '16px',
-          fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif"
+          fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif",
+          color: '#75787b'
         }
       },
       lineColor: '#d2d3d5',

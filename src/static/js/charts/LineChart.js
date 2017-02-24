@@ -100,20 +100,24 @@ function LineChart( props ) {
       selected: 'all',
       height: 35,
       inputEnabled: false,
+      buttonSpacing: 15,
       buttonPosition: {
         x: 0,
         y: 30
       },
       buttonTheme: {
+        width: 45,
         r: 5, // border radius
         fill: '#CCE3F5',
         style: {
-          height: '35px',
           fontSize: '14px'
         },
         states: {
           select: {
-            fill: '#7FB8E6'
+            fill: '#7FB8E6',
+            style: {
+              fontWeight: 'bold'
+            }
           }
         }
       },
@@ -208,8 +212,7 @@ function LineChart( props ) {
           },
           y: -15
         }
-      } ],
-      tickInterval: 60 * 60 * 24 * 365 * 1000 // one year in ms
+      } ]
     },
     yAxis: {
       opposite: false,
@@ -218,7 +221,8 @@ function LineChart( props ) {
         text: _getYAxisLabel( props.data.adjusted ) + ' of originations (in ' + _getYAxisUnits( props.data.adjusted ) + ')',
         style: {
           color: '#75787b'
-        }
+        },
+        x: -15
       },
       labels: {
         formatter: function() {

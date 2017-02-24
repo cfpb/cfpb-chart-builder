@@ -129,7 +129,8 @@ function BarChart( props ) {
         style: {
           'color': '#75787b',
           'font-size': '16px'
-        }
+        },
+        x: -15
       }
     },
     navigator: {

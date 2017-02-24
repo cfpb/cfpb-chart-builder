@@ -12,7 +12,8 @@ Highcharts.setOptions( {
   chart: {
     style: {
       fontSize: '16px',
-      fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif"
+      fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif",
+      'color': '#5a5d61'
     }
   }
 } );
@@ -144,7 +145,7 @@ function LineChart( props ) {
       floating: true,
       itemMarginTop: 10,
       itemStyle: {
-        'color': '#75787b',
+        'color': '#5a5d61',
         'font-weight': 'normal',
         'font-size': '16px'
       },
@@ -188,7 +189,7 @@ function LineChart( props ) {
         style: {
           fontSize: '16px',
           fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif",
-          color: '#75787b'
+          color: '#5a5d61'
         }
       },
       lineColor: '#d2d3d5',
@@ -204,7 +205,7 @@ function LineChart( props ) {
           align: 'right',
           rotation: 0,
           style: {
-            color: '#75787b'
+            color: '#5a5d61'
           },
           y: -15
         }
@@ -217,7 +218,7 @@ function LineChart( props ) {
       title: {
         text: _getYAxisLabel( props.data.adjusted ) + ' of originations (in ' + _getYAxisUnits( props.data.adjusted ) + ')',
         style: {
-          color: '#75787b'
+          color: '#5a5d61'
         }
       },
       labels: {
@@ -227,7 +228,7 @@ function LineChart( props ) {
         style: {
           fontSize: '16px',
           fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif",
-          color: '#75787b'
+          color: '#5a5d61'
         }
       },
       lineColor: '#d2d3d5',
@@ -274,7 +275,7 @@ function LineChart( props ) {
     function( chart ) {
       chart.renderer.text( 'Select time range', 7, 16 )
         .css( {
-          color: '#75787b',
+          color: '#5a5d61',
           fontSize: '14px'
         } )
         .add();

@@ -13,7 +13,7 @@ function _drawLegend( chart ) {
   };
 
   var textStyle = {
-    color: '#75787b',
+    color: '#5a5d61',
     fontSize: '16px',
     fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif"
   };

@@ -101,13 +101,15 @@ function LineChart( props ) {
       selected: 'all',
       height: 35,
       inputEnabled: false,
-      buttonSpacing: 15,
+/* TODO: buttonSpacing will be re-integrated with responsive styles */
+//      buttonSpacing: 15,
       buttonPosition: {
         x: 0,
         y: 30
       },
       buttonTheme: {
-        width: 45,
+/* TODO: width will be re-integrated with responsive styles */
+//        width: 45,
         r: 5, // border radius
         fill: '#CCE3F5',
         style: {

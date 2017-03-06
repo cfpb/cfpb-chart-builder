@@ -150,7 +150,7 @@ function BarChart( props ) {
     },
     series: [ {
       type: 'column',
-      data: props.data.values,
+      data: props.data,
       color: colors.primary,
       name: 'Year-over-year change (%)',
       tooltip: {

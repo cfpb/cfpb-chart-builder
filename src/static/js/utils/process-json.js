@@ -1,53 +1,46 @@
 'use strict';
 
-//
-// This data processing will eventually happen on the server.
-// When we finish those scripts we will no longer need this file.
-//
 
-/**
-*   Polyfill for Object.create()
-*   use this to create new objects
-*/
-if (!Object.create) {
-  Object.create = function (o) {
-    if (arguments.length > 1) {
-      throw new Error('Sorry the polyfill Object.create only accepts the first parameter.');
-    }
-    function F() {}
-    F.prototype = o;
-    return new F();
-  };
-}
+// /**
+// *   Polyfill for Object.create()
+// *   use this to create new objects
+// */
+// if (!Object.create) {
+//   Object.create = function (o) {
+//     if (arguments.length > 1) {
+//       throw new Error('Sorry the polyfill Object.create only accepts the first parameter.');
+//     }
+//     function F() {}
+//     F.prototype = o;
+//     return new F();
+//   };
+// }
 
-/**
-*   Polyfill for Array.indexOf
-*/
-if (!Array.prototype.indexOf)
-{
-  Array.prototype.indexOf = function(elt /*, from*/)
-  {
-    var len = this.length >>> 0;
-    var from = Number(arguments[1]) || 0;
-    from = (from < 0)
-         ? Math.ceil(from)
-         : Math.floor(from);
-    if (from < 0)
-      from += len;
+// /**
+// *   Polyfill for Array.indexOf
+// */
+// if (!Array.prototype.indexOf)
+// {
+//   Array.prototype.indexOf = function(elt /*, from*/)
+//   {
+//     var len = this.length >>> 0;
+//     var from = Number(arguments[1]) || 0;
+//     from = (from < 0)
+//          ? Math.ceil(from)
+//          : Math.floor(from);
+//     if (from < 0)
+//       from += len;
 
-    for (; from < len; from++)
-    {
-      if (from in this &&
-          this[from] === elt)
-        return from;
-    }
-    return -1;
-  };
-}
+//     for (; from < len; from++)
+//     {
+//       if (from in this &&
+//           this[from] === elt)
+//         return from;
+//     }
+//     return -1;
+//   };
+// }
 
-
-
-var Papa = require( 'papaparse' );
 var tileMapUtils = require( './tile-map' );
 
 /**
@@ -110,39 +103,34 @@ function convertDate( date ) {
 /**
  * Returns a data object with data starting in January 2009 for use in all line charts
  *
- * @param {Number} csv - response from requested CSV file
- * @param {String} group - optional parameter for specifying if the chart requires use of a "group" column in the CSV, for example the charts with a group of "Younger than 30" will filter data to only include values matching that group
+ * @param {Number} data - response from requested JSON file
+ * @param {String} group - optional parameter for specifying if the chart requires use of a "group" property in the JSON, for example the charts with a group of "Younger than 30" will filter data to only include values matching that group
  * @returns {Obj} data - object with adjusted and unadjusted value arrays containing timestamps and a number value
  */
-function processNumOriginationsData( csv, group ) {
-  var data = {
-    unadjusted: [],
-    adjusted: []
-  };
-  csv = Papa.parse( csv ).data;
-  csv.shift();
+function processNumOriginationsData( data, group ) {
 
-  for ( var x = 0; x < csv.length; x++ ) {
-    var dataPoint = csv[x];
-    if ( formatDate( dataPoint[0] ) > Date.UTC( 2008, 11 ) ) {
-      var arr = [];
-      var series = dataPoint[2];
-      arr.push( formatDate( dataPoint[0] ) );
-      arr.push( parseFloat( dataPoint[1] ) );
+  data = JSON.parse( data );
 
-      if ( group ) {
-        series = dataPoint[3];
-      }
+  if ( group !== null ) {
+    var tmp = data;
+    data = data[group];
+  }
 
-      if ( !group || group === dataPoint[2] ) {
-        if ( series === 'Unadjusted' ) {
-          data.unadjusted.push( arr );
-        } else {
-          data.adjusted.push( arr );
-        }
-      }
+  // remove data before January 2009
+  for ( var x = 0; x < data.adjusted.length; x++ ) {
+    if ( data.adjusted[x][0] <= Date.UTC( 2009, 0 ) ) {
+      data.adjusted.splice( x, 1 );
+      x--; // Check array[x] again, since we removed an entry in the array
     }
   }
+
+  for ( var x = 0; x < data.unadjusted.length; x++ ) {
+    if ( data.unadjusted[x][0] <= Date.UTC( 2009, 0 ) ) {
+      data.unadjusted.splice( x, 1 );
+      x--; // Check array[x] again, since we removed an entry in the array
+    }
+  }
+
   data.unadjusted = data.unadjusted.sort( function( a, b ) {
     return a[0] - b[0];
   } );
@@ -160,30 +148,31 @@ function processNumOriginationsData( csv, group ) {
 /**
  * Returns a data object with data starting in January 2009 for use in all bar charts
  *
- * @param {Number} csv - response from requested CSV file
- * @param {String} group - optional parameter for specifying if the chart requires use of a "group" column in the CSV, for example the charts with a group of "Younger than 30" will filter data to only include values matching that group
+ * @param {Number} data - response from requested JSON file
+ * @param {String} group - optional parameter for specifying if the chart requires use of a "group" property in the JSON, for example the charts with a group of "Younger than 30" will filter data to only include values matching that group
  * @returns {Obj} data - object with adjusted and unadjusted value arrays containing timestamps and a number value
  */
-function processYoyData( csv, group ) {
-  var data = {
-    values: [],
-    projectedDate: null
-  };
-  csv = Papa.parse( csv ).data;
+function processYoyData( data, group ) {
+  data = JSON.parse( data );
 
-  for ( var x = 0; x < csv.length; x++ ) {
-    var dataPoint = csv[x];
-    if ( dataPoint[2] === group ) {
-      var date = formatDate( dataPoint[0] );
-      if ( date > Date.UTC( 2008, 11 ) ) {
-        data.values.push( [ formatDate( dataPoint[0] ), Number( dataPoint[1] ) * 100 ] );
-      }
+  var moar = data;
+
+  if ( group !== null ) {
+    data = data[group];
+  }
+
+  // remove data before January 2009
+  for ( var x = 0; x < data.length; x++ ) {
+    if ( data[x][0] <= Date.UTC( 2008, 11 ) ) {
+      data.splice( x, 1 );
+      x--; // Check array[x] again, since we removed an entry in the array
+    } else {
+      data[x][1] *= 100;
     }
-
   }
 
   data.projectedDate = {};
-  data.projectedDate.timestamp = getProjectedTimestamp( data.values );
+  data.projectedDate.timestamp = getProjectedTimestamp( data );
   data.projectedDate.label = getProjectedDate( data.projectedDate.timestamp );
 
   return data;
@@ -228,20 +217,21 @@ function getProjectedDate( timestamp ) {
   return projectedDate;
 }
 
-function processMapData( csv ) {
-  var data = Papa.parse( csv ).data;
-  // Delete the first row (column titles)
-  data.shift();
+function processMapData( json ) {
+
+  var data = JSON.parse( json );
+
   // Filter out any empty values just in case
   data = data.filter( function( row ) {
-    return Boolean( row[0] );
+    return Boolean( row.name );
   } );
-  data = data.map( function( row, i ) {
-    var state = tileMapUtils.statePaths['state' + row[0]],
-        value = Math.round( row[1] * 100 ),
+
+  data = data.map( function( obj, i ) {
+    var state = tileMapUtils.statePaths[obj.name],
+        value = Math.round( obj.value ),
         tooltip = state.abbr + ' ' + ( value < 0 ? 'decreased' : 'increased' ) + ' by ' + Math.abs( value ) + '%';
     return {
-      name: state.abbr,
+      name: obj.name,
       path: state.path,
       value: value,
       tooltip: tooltip,

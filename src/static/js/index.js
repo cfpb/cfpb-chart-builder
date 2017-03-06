@@ -9,8 +9,6 @@ var DATA_SOURCE_BASE = window.location.protocol.indexOf( 'https' ) === -1 ?
                       '//files.consumerfinance.gov/data/' :
                       '//s3.amazonaws.com/files.consumerfinance.gov/data/';
 
-var DATA_SOURCE_BASE = '//s3.amazonaws.com/files.consumerfinance.gov/data/';
-
 documentReady( function() {
 
   var charts = document.querySelectorAll( '.cfpb-chart' );

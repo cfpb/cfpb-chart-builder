@@ -36,7 +36,6 @@
   "homepage": "https://github.com/cfpb/cfpb-chart-builder#readme",
   "dependencies": {
     "highcharts": "https://github.com/mistergone/highcharts#ie8-fix",
-    "papaparse": "4.1.2",
     "xdr": "0.5.3",
     "cf-grid": "^4.0.1",
     "cf-layout": "^4.0.1",

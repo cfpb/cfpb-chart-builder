@@ -71,20 +71,19 @@ function processNumOriginationsData( data, group ) {
   data = JSON.parse( data );
 
   if ( group !== null ) {
-    var tmp = data;
     data = data[group];
   }
 
   // remove data before January 2009
   for ( var x = 0; x < data.adjusted.length; x++ ) {
-    if ( data.adjusted[x][0] <= Date.UTC( 2009, 0 ) ) {
+    if ( data.adjusted[x][0] < Date.UTC( 2009, 0 ) ) {
       data.adjusted.splice( x, 1 );
       x--; // Check array[x] again, since we removed an entry in the array
     }
   }
 
   for ( var x = 0; x < data.unadjusted.length; x++ ) {
-    if ( data.unadjusted[x][0] <= Date.UTC( 2009, 0 ) ) {
+    if ( data.unadjusted[x][0] < Date.UTC( 2009, 0 ) ) {
       data.unadjusted.splice( x, 1 );
       x--; // Check array[x] again, since we removed an entry in the array
     }
@@ -122,7 +121,7 @@ function processYoyData( data, group ) {
 
   // remove data before January 2009
   for ( var x = 0; x < data.length; x++ ) {
-    if ( data[x][0] <= Date.UTC( 2008, 11 ) ) {
+    if ( data[x][0] < Date.UTC( 2009, 0 ) ) {
       data.splice( x, 1 );
       x--; // Check array[x] again, since we removed an entry in the array
     } else {

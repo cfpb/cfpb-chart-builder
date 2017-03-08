@@ -9,6 +9,36 @@ var DATA_SOURCE_BASE = window.location.protocol.indexOf( 'https' ) === -1 ?
                       '//files.consumerfinance.gov/data/' :
                       '//s3.amazonaws.com/files.consumerfinance.gov/data/';
 
+/**
+*   Polyfill for Array.indexOf
+*/
+if (!Array.prototype.indexOf)
+{
+  Array.prototype.indexOf = function(elt /*, from*/)
+  {
+    var len = this.length >>> 0;
+    var from = Number(arguments[1]) || 0;
+    from = (from < 0)
+         ? Math.ceil(from)
+         : Math.floor(from);
+    if (from < 0)
+      from += len;
+
+    for (; from < len; from++)
+    {
+      if (from in this &&
+          this[from] === elt)
+        return from;
+    }
+    return -1;
+  };
+}
+
+/***
+* When the document is ready, the code for cfpb-chart-builder seeks out chart
+* blocks and generates charts inside the designated elements.
+*/
+
 documentReady( function() {
 
   var charts = document.querySelectorAll( '.cfpb-chart' );

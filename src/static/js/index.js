@@ -44,6 +44,12 @@ documentReady( function() {
   var charts = document.querySelectorAll( '.cfpb-chart' );
   var urls = {};
 
+  var errorStrings = {
+    parseError: 'There was an error parsing the data as JSON',
+    groupError: 'There was an error finding the group in data properties',
+    propertyError: 'There was an error finding the adjusted and/or unadjusted properties in the data'
+  }
+
   for ( var x = 0; x < charts.length; x++ ) {
     var chart = charts[x];
     var url = chart.getAttribute( 'data-chart-source' );
@@ -74,17 +80,33 @@ documentReady( function() {
 
         if ( type === 'line' ) {
           properties.data = process.originations( data, group );
-          createChart.line( properties );
+
+          if ( typeof properties.data === 'object' ) {
+            createChart.line( properties );            
+          } else {
+            chart.setAttribute( 'data-chart-error', errorStrings[properties.data] );
+            console.log( errorStrings[properties.data] );
+          }
         }
 
         if ( type === 'bar' ) {
           properties.data = process.yoy( data, group );
-          createChart.bar( properties );
+          if ( typeof properties.data === 'object' ) {
+            createChart.bar( properties );            
+          } else {
+            chart.setAttribute( 'data-chart-error', errorStrings[properties.data] );
+            console.log( errorStrings[properties.data] );
+          }
         }
 
         if ( type === 'tile_map' ) {
           properties.data = process.map( data, group );
-          createChart.map( properties );
+          if ( typeof properties.data === 'object' ) {
+            createChart.map( properties );            
+          } else {
+            chart.setAttribute( 'data-chart-error', errorStrings[properties.data] );
+            console.log( errorStrings[properties.data] );
+          }
         }
 
       }

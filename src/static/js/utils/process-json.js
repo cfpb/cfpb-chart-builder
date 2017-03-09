@@ -68,10 +68,26 @@ function convertDate( date ) {
  */
 function processNumOriginationsData( data, group ) {
 
-  data = JSON.parse( data );
+  // Check if the returned string is valid JSON
+  try {
+    data = JSON.parse( data );    
+  } catch( error ) {
+    data = 'parseError'
+  }
+  if ( typeof data !== 'object' ) {
+    return data;
+  }
 
-  if ( group !== null ) {
+  // check for data integrity!
+  if ( group !== null && data.hasOwnProperty ( group ) ) {
     data = data[group];
+  } else if ( group !== null && !data.hasOwnProperty ( group ) ) {
+    // If group is not a property of the data, return an error
+    return 'groupError';
+  }
+  // if data does not have correct properties, return an error
+  if ( !data.hasOwnProperty( 'adjusted' ) || !data.hasOwnProperty( 'unadjusted' ) ) {
+    return 'propertyError';
   }
 
   // remove data before January 2009
@@ -111,12 +127,22 @@ function processNumOriginationsData( data, group ) {
  * @returns {Obj} data - object with adjusted and unadjusted value arrays containing timestamps and a number value
  */
 function processYoyData( data, group ) {
-  data = JSON.parse( data );
+  // Check if the returned string is valid JSON
+  try {
+    data = JSON.parse( data );    
+  } catch( error ) {
+    data = 'parseError'
+  }
+  if ( typeof data !== 'object' ) {
+    return data;
+  }
 
-  var moar = data;
-
-  if ( group !== null ) {
+  // check for data integrity!
+  if ( group !== null && data.hasOwnProperty ( group ) ) {
     data = data[group];
+  } else if ( group !== null && !data.hasOwnProperty ( group ) ) {
+    // If group is not a property of the data, return an error
+    return 'groupError';
   }
 
   // remove data before January 2009
@@ -175,9 +201,16 @@ function getProjectedDate( timestamp ) {
   return projectedDate;
 }
 
-function processMapData( json ) {
-
-  var data = JSON.parse( json );
+function processMapData( data ) {
+  // Check if the returned string is valid JSON
+  try {
+    data = JSON.parse( data );    
+  } catch( error ) {
+    data = 'parseError'
+  }
+  if ( typeof data !== 'object' ) {
+    return data;
+  }
 
   // Filter out any empty values just in case
   data = data.filter( function( row ) {

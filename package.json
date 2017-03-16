@@ -1,6 +1,6 @@
 {
   "name": "cfpb-chart-builder",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Charts for the Consumer Financial Protection Bureau",
   "main": "src/static/js/index.js",
   "scripts": {
@@ -36,7 +36,6 @@
   "homepage": "https://github.com/cfpb/cfpb-chart-builder#readme",
   "dependencies": {
     "highcharts": "https://github.com/mistergone/highcharts#ie8-fix",
-    "papaparse": "4.1.2",
     "xdr": "0.5.3",
     "cf-grid": "^4.0.1",
     "cf-layout": "^4.0.1",

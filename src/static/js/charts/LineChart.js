@@ -18,7 +18,6 @@ Highcharts.setOptions( {
   }
 } );
 
-
 /**
  * _getFirstNumber - get the first value that is a Number
  *
@@ -91,6 +90,19 @@ function _getTickValue( value ) {
 
 function LineChart( props ) {
   var colors = getColorScheme( props.color );
+  var windowWidth = document.documentElement.clientWidth;
+  var projectedText = 'Values after ' + props.data.projectedDate.label + ' are projected';
+  var yAxisTitle = _getYAxisLabel( props.data.adjusted ) + ' of originations (in ' + _getYAxisUnits( props.data.adjusted ) + ')';
+
+  // responsive options are based on chart size not window size. Since our
+  // gutters change the size of the chart, we have to be tricksy when it comes
+  // to responsive.rules maxWidth condition.
+
+  var responsiveMaxWidth = 570;
+  if ( windowWidth > 600 ) {
+    responsiveMaxWidth = 0; // disable responsive, basically
+  }
+
   var options = {
     title: {
       text: props.title
@@ -101,15 +113,11 @@ function LineChart( props ) {
       selected: 'all',
       height: 35,
       inputEnabled: false,
-/* TODO: buttonSpacing will be re-integrated with responsive styles */
-//      buttonSpacing: 15,
       buttonPosition: {
         x: 0,
         y: 30
       },
       buttonTheme: {
-/* TODO: width will be re-integrated with responsive styles */
-//        width: 45,
         r: 5, // border radius
         fill: '#CCE3F5',
         style: {
@@ -152,8 +160,8 @@ function LineChart( props ) {
       itemMarginTop: 10,
       itemStyle: {
         'color': '#5a5d61',
-        'font-weight': 'normal',
-        'font-size': '16px'
+        'fontWeight': 'normal',
+        'fontSize': '16px'
       },
       layout: 'vertical',
       verticalAlign: 'top',
@@ -207,7 +215,7 @@ function LineChart( props ) {
         value: props.data.projectedDate.timestamp,
         zIndex: 10,
         label: {
-          text: 'Values after ' + props.data.projectedDate.label + ' are projected',
+          text: projectedText,
           align: 'right',
           rotation: 0,
           style: {
@@ -221,7 +229,7 @@ function LineChart( props ) {
       opposite: false,
       className: 'axis-label',
       title: {
-        text: _getYAxisLabel( props.data.adjusted ) + ' of originations (in ' + _getYAxisUnits( props.data.adjusted ) + ')',
+        text: yAxisTitle,
         style: {
           color: '#5a5d61'
         },
@@ -235,11 +243,13 @@ function LineChart( props ) {
           fontSize: '16px',
           fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif",
           color: '#5a5d61'
-        }
+        },
+        y: 5
       },
       lineColor: '#d2d3d5',
       tickColor: '#d2d3d5',
-      gridLineColor: '#d2d3d5'
+      gridLineColor: '#d2d3d5',
+      showLastLabel: true
     },
     series: [
       {
@@ -274,24 +284,113 @@ function LineChart( props ) {
           dashStyle: 'dash'
         } ]
       }
-    ]
+    ],
+    responsive: {
+      rules: [{
+        condition: {
+          maxWidth: responsiveMaxWidth
+        },
+        chartOptions: {
+          chart: {
+            height: 440,
+            spacingBottom: 60
+          },
+          legend: {
+            align: 'left',
+            x: -10
+          },
+          navigator: {
+            enabled: false
+          },
+          rangeSelector: {
+            buttonSpacing: 15,
+            buttonPosition: {
+              x: ( windowWidth - 275 ) / 2,
+              y: 390
+            },
+            buttonTheme: {
+              width: 16,
+              height: 16,
+              padding: 14
+            }
+          },
+          scrollbar: {
+            enabled: false
+          },
+          xAxis: {
+            plotLines: []
+          },
+          yAxis: {
+            title: {
+              align: 'high',
+              text: '',
+              offset: 0,
+              rotation: 0,
+              y: -20
+            },
+            x: 0,
+          }
+        }
+      }]
+    }
   };
 
-  Highcharts.stockChart( props.selector, options,
+  var thisChart = Highcharts.stockChart( props.selector, options,
     function( chart ) {
-      chart.renderer.text( 'Select time range', 7, 16 )
-        .css( {
-          color: '#5a5d61',
-          fontSize: '14px'
-        } )
-        .add();
 
-      chart.renderer.rect( 0, 75, 650, 2 )
-        .attr( {
-          fill: '#E3E4E5',
-          zIndex: 10
-        } )
-        .add();
+      var ele = chart.container;
+
+      if ( windowWidth <= 600 ) {
+
+        chart.renderer.text( yAxisTitle, 7, 100 )
+          .css( {
+            color: '#5a5d61',
+            fontSize: '16px'
+          } )
+          .add();
+
+        chart.renderer.rect( 0, 75, windowWidth - 20, 2 )
+          .attr( {
+            fill: '#E3E4E5',
+            zIndex: 10
+          } )
+          .add();
+
+        var projDiv = ele.appendChild( document.createElement( 'div' ) );
+        projDiv.appendChild( document.createTextNode( projectedText ) );
+        projDiv.style.position = 'absolute';
+        projDiv.style.top = '0px';
+        projDiv.style.left = ele.clientWidth / 2 + 10 + 'px';
+        projDiv.style.fontSize = '16px';
+
+
+        chart.renderer.text( 'SELECT TIME RANGE', ( windowWidth - 175 ) / 2, 370 )
+          .css( {
+            color: '#5a5d61',
+            fontSize: '14px',
+            textAlign: 'left'
+          } )
+          .add();
+
+
+      } else {
+
+        chart.renderer.text( 'Select time range', 7, 16 )
+          .css( {
+            color: '#5a5d61',
+            fontSize: '14px'
+          } )
+          .add();
+
+        chart.renderer.rect( 0, 75, 650, 2 )
+          .attr( {
+            fill: '#E3E4E5',
+            zIndex: 10
+          } )
+          .add();
+
+      }
+
     }
   );
 

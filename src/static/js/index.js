@@ -10,12 +10,22 @@ var DATA_SOURCE_BASE = window.location.protocol.indexOf( 'https' ) === -1 ?
                       '//s3.amazonaws.com/files.consumerfinance.gov/data/';
 
 documentReady( function() {
+  buildCharts();
+
+  window.addEventListener( 'resize', buildCharts );
+
+} );
+
+function buildCharts() {
 
   var charts = document.querySelectorAll( '.cfpb-chart' );
   var urls = {};
 
   for ( var x = 0; x < charts.length; x++ ) {
     var chart = charts[x];
+    // Empty the chart for redraws
+    chart.innerHTML = '';
+
     var url = chart.getAttribute( 'data-chart-source' );
     if ( !urls.hasOwnProperty( url ) ) {
       urls[url] = [];
@@ -60,7 +70,7 @@ documentReady( function() {
       }
     } );
   }
-} );
+}
 
 // GET requests:
 

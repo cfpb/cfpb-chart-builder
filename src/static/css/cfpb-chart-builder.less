@@ -1,11 +1,42 @@
+@import 'https://code.highcharts.com/css/highcharts.css';
+
 .cfpb-chart {
   max-width: 650px;
   height: 500px;
+  // color: blue;
+
+  .highcharts-background,
+  .highcharts-legend-box {
+    fill: transparent;
+  }
+
+  .highcharts-root {
+    font-size: 16px;
+    font-family: 'AvenirNextLTW01-Regular',Arial,sans-serif;
+    color: #5a5d61;
+  }
+
   .highcharts-legend-item {
     text {
         font-size: 12px !important;
     }
   }
+
+  .highcharts-button {
+    border-radius: 5; // border radius
+    fill: #CCE3F5;
+    font-size: 14px;
+  }
+
+  .highcharts-button-pressed {
+    fill: #7FB8E6;
+    font-weight: bold;
+  }
+
+  .highcharts-range-selector-buttons {
+    transform: translate(0,30);
+  }
+
 }
 
 @media (min-width: 400px) {

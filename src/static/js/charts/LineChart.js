@@ -1,7 +1,7 @@
 'use strict';
 
-var Highcharts = require( 'highcharts/highstock' );
-require( 'highcharts/modules/accessibility' )( Highcharts );
+var Highcharts = require( 'highcharts/js/highstock' );
+require( 'highcharts/js/modules/accessibility' )( Highcharts );
 var getColorScheme = require( '../utils/get-color-scheme.js' );
 
 Highcharts.setOptions( {
@@ -11,9 +11,7 @@ Highcharts.setOptions( {
   },
   chart: {
     style: {
-      fontSize: '16px',
-      fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif",
-      'color': '#5a5d61'
+      
     }
   }
 } );
@@ -95,6 +93,7 @@ function LineChart( props ) {
     title: {
       text: props.title
     },
+    className: 'cfpb-chart_line',
     description: props.description,
     credits: false,
     rangeSelector: {
@@ -103,24 +102,13 @@ function LineChart( props ) {
       inputEnabled: false,
 /* TODO: buttonSpacing will be re-integrated with responsive styles */
 //      buttonSpacing: 15,
-      buttonPosition: {
-        x: 0,
-        y: 30
-      },
       buttonTheme: {
 /* TODO: width will be re-integrated with responsive styles */
 //        width: 45,
-        r: 5, // border radius
-        fill: '#CCE3F5',
-        style: {
-          fontSize: '14px'
-        },
+
         states: {
           select: {
-            fill: '#7FB8E6',
-            style: {
-              fontWeight: 'bold'
-            }
+            
           }
         }
       },

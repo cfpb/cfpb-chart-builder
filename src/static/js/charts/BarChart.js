@@ -1,7 +1,7 @@
 'use strict';
 
-var Highcharts = require( 'highcharts/highstock' );
-require( 'highcharts/modules/accessibility' )( Highcharts );
+var Highcharts = require( 'highcharts/js/highstock' );
+require( 'highcharts/js/modules/accessibility' )( Highcharts );
 var getColorScheme = require( '../utils/get-color-scheme.js' );
 
 Highcharts.setOptions( {
@@ -18,6 +18,7 @@ function BarChart( props ) {
     title: {
       text: props.title
     },
+    className: 'cfpb-chart_bar',
     description: props.description,
     credits: false,
     rangeSelector: {

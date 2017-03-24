@@ -155,7 +155,8 @@ function BarChart( props ) {
       },
       zoneAxis: 'x',
       zones: [ {
-        value: props.data.projectedDate.timestamp
+        value: props.data.projectedDate.timestamp,
+        className: 'highcharts-data__unprojected'
       }, {
       } ]
     } ]

@@ -2,17 +2,11 @@
 
 var Highcharts = require( 'highcharts/js/highstock' );
 require( 'highcharts/js/modules/accessibility' )( Highcharts );
-var getColorScheme = require( '../utils/get-color-scheme.js' );
 
 Highcharts.setOptions( {
   lang: {
     rangeSelectorZoom: '',
     thousandsSep: ','
-  },
-  chart: {
-    style: {
-      
-    }
   }
 } );
 
@@ -88,7 +82,6 @@ function _getTickValue( value ) {
 }
 
 function LineChart( props ) {
-  var colors = getColorScheme( props.color );
   var options = {
     title: {
       text: props.title
@@ -138,11 +131,6 @@ function LineChart( props ) {
       enabled: true,
       floating: true,
       itemMarginTop: 10,
-      itemStyle: {
-        'color': '#5a5d61',
-        'font-weight': 'normal',
-        'font-size': '16px'
-      },
       layout: 'vertical',
       verticalAlign: 'top',
       x: 0,
@@ -159,17 +147,12 @@ function LineChart( props ) {
     },
     navigator: {
       maskFill: 'rgba(0, 0, 0, 0.05)',
-      handles: {
-        backgroundColor: '#fff',
-        borderColor: '#101820'
-      },
+      
       series: {
-        color: colors.primary,
         lineWidth: 2
       }
     },
     chart: {
-      marginTop: 100,
       zoomType: 'none'
     },
     xAxis: {
@@ -180,11 +163,6 @@ function LineChart( props ) {
         year: '%b<br/>%Y'
       },
       labels: {
-        style: {
-          fontSize: '16px',
-          fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif",
-          color: '#5a5d61'
-        }
       },
       lineColor: '#d2d3d5',
       tickColor: '#d2d3d5',
@@ -198,9 +176,6 @@ function LineChart( props ) {
           text: 'Values after ' + props.data.projectedDate.label + ' are projected',
           align: 'right',
           rotation: 0,
-          style: {
-            color: '#5a5d61'
-          },
           y: -15
         }
       } ]
@@ -210,19 +185,11 @@ function LineChart( props ) {
       className: 'axis-label',
       title: {
         text: _getYAxisLabel( props.data.adjusted ) + ' of originations (in ' + _getYAxisUnits( props.data.adjusted ) + ')',
-        style: {
-          color: '#5a5d61'
-        },
         x: -15
       },
       labels: {
         formatter: function() {
           return _getTickValue( this.value );
-        },
-        style: {
-          fontSize: '16px',
-          fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif",
-          color: '#5a5d61'
         }
       },
       lineColor: '#d2d3d5',
@@ -231,26 +198,8 @@ function LineChart( props ) {
     },
     series: [
       {
-        name: 'Seasonally adjusted',
-        data: props.data.adjusted,
-        color: colors.primary,
-        legendIndex: 1,
-        lineWidth: 3,
-        tooltip: {
-          valueDecimals: 0
-        },
-        zoneAxis: 'x',
-        zones: [ {
-          value: props.data.projectedDate.timestamp
-        }, {
-          dashStyle: 'ShortDot'
-        } ]
-      },
-      {
         name: 'Unadjusted',
         data: props.data.unadjusted,
-        color: colors.primary,
-        lineWidth: 1,
         legendIndex: 2,
         tooltip: {
           valueDecimals: 0
@@ -260,6 +209,20 @@ function LineChart( props ) {
           value: props.data.projectedDate.timestamp
         }, {
           dashStyle: 'dash'
+        } ]
+      },
+      {
+        name: 'Seasonally adjusted',
+        data: props.data.adjusted,
+        legendIndex: 1,
+        tooltip: {
+          valueDecimals: 0
+        },
+        zoneAxis: 'x',
+        zones: [ {
+          value: props.data.projectedDate.timestamp
+        }, {
+          dashStyle: 'ShortDot'
         } ]
       }
     ]

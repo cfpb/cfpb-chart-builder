@@ -2,7 +2,6 @@
 
 var Highcharts = require( 'highcharts/js/highstock' );
 require( 'highcharts/js/modules/accessibility' )( Highcharts );
-var getColorScheme = require( '../utils/get-color-scheme.js' );
 
 Highcharts.setOptions( {
   lang: {
@@ -13,7 +12,6 @@ Highcharts.setOptions( {
 
 
 function BarChart( props ) {
-  var colors = getColorScheme( props.color );
   var options = {
     title: {
       text: props.title
@@ -145,14 +143,12 @@ function BarChart( props ) {
         borderColor: '#101820'
       },
       series: {
-        color: colors.primary,
         lineWidth: 2
       }
     },
     series: [ {
       type: 'column',
       data: props.data,
-      color: colors.primary,
       name: 'Year-over-year change (%)',
       tooltip: {
         valueDecimals: 2
@@ -161,7 +157,6 @@ function BarChart( props ) {
       zones: [ {
         value: props.data.projectedDate.timestamp
       }, {
-        color: colors.secondary
       } ]
     } ]
   };

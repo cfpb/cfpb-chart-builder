@@ -1,19 +1,28 @@
 @import 'https://code.highcharts.com/css/highcharts.css';
 
 .cfpb-chart {
+  margin-top: 100px;
   max-width: 650px;
   height: 500px;
-  // color: blue;
+
+  .highcharts-root,
+  .highcharts-legend-box,
+  .highcharts-axis-labels {
+    font-size: 16px;
+    font-family: 'AvenirNextLTW01-Regular',Arial,sans-serif;
+    color: #5a5d61;
+    fill: #5a5d61;
+  }
 
   .highcharts-background,
   .highcharts-legend-box {
     fill: transparent;
   }
 
-  .highcharts-root {
-    font-size: 16px;
-    font-family: 'AvenirNextLTW01-Regular',Arial,sans-serif;
-    color: #5a5d61;
+  .highcharts-legend-box {
+    // color: #5a5d61;
+    // font-size: 16px;
+    // font-weight: normal;
   }
 
   .highcharts-legend-item {
@@ -36,6 +45,90 @@
   .highcharts-range-selector-buttons {
     transform: translate(0,30);
   }
+
+  .highcharts-navigator-handle {
+    background-color: #fff;
+    border-color: #101820;
+  }
+
+  // Axes
+
+  .highcharts-axis-labels {
+    // color: #5a5d61; duplicate of root?
+    // font-size: 16px;
+    // font-weight: normal;
+  }
+
+  // .highcharts-xaxis-labels {}
+
+  // Colors and widths
+
+  &[data-chart-type='line'] {
+
+    // Unadjusted
+    .highcharts-series-0 {
+      .highcharts-graph {
+        stroke-width: 1px;
+      }
+    }
+
+    // Seasonally adjusted 
+    .highcharts-series-1 {
+      .highcharts-graph {
+        stroke-width: 3px;
+      }
+    }
+
+    &[data-chart-color='blue'] {
+
+      .highcharts-series {
+        stroke: #0072ce;
+      }
+
+    }
+
+    &[data-chart-color='green'] {
+
+      .highcharts-series {
+        stroke: #20aa3f;
+      }
+
+    }
+
+    &[data-chart-color='teal'] {
+
+
+      // Seasonally adjusted 
+      .highcharts-series {
+        stroke: #257675;
+      }
+
+    }
+
+    &[data-chart-color='navy'] {
+
+      // Seasonally adjusted 
+      .highcharts-series {
+        stroke: #254b87;
+      }
+
+    }
+
+  }
+
+// Bar projected data colors
+  // green
+  // stroke: #addc91;
+
+//navy 
+        // stroke: #889cc0;
+
+// teal
+        // stroke: #89b6b5;
+
+// blue
+// 7eb7e8
+
 
 }
 

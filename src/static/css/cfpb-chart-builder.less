@@ -119,35 +119,70 @@
 
   &[data-chart-type='bar'] {
 
+    // Set defaults to gray for help in troubleshooting
+    .highcharts-point {
+      fill: #5a5d61;
+      
+      &.highcharts-data__unprojected {
+        fill: #101820;
+      }
+
+    }
+
     &[data-chart-color='blue'] {
 
-        .highcharts-color-0 {
-          fill: #0072ce;
-        }
-        
-        .highcharts-data__unprojected {
+        .highcharts-point {
           fill: #7eb7e8;
+          
+          &.highcharts-data__unprojected {
+            fill: #0072ce;
+          }
+
         }
         
     }
 
+    &[data-chart-color='green'] {
+
+        .highcharts-point {
+          fill: #addc91;
+          
+          &.highcharts-data__unprojected {
+            fill: #20aa3f;
+          }
+
+        }
+        
+    }
+
+    &[data-chart-color='teal'] {
+
+        .highcharts-point {
+          fill: #89b6b5;
+          
+          &.highcharts-data__unprojected {
+            fill: #257675;
+          }
+
+        }
+        
+    }
+
+    &[data-chart-color='navy'] {
+
+        .highcharts-point {
+          fill: #889cc0;
+          
+          &.highcharts-data__unprojected {
+            fill: #254b87;
+          }
+
+        }
+        
+    }
+
+
   }
-
-// Bar projected data colors
-  // green
-  // stroke: #addc91;
-
-//navy 
-
-// teal
-        // stroke: #89b6b5;
-
-// blue
-// 7eb7e8
-
-// navy
-          // fill: #889cc0;          
-
 
 }
 

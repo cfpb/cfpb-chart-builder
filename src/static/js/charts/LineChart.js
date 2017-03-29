@@ -168,10 +168,7 @@ function LineChart( props ) {
       tickColor: '#d2d3d5',
       gridLineColor: '#d2d3d5',
       plotLines: [ {
-        color: '#75787b',
-        width: 1,
         value: props.data.projectedDate.timestamp,
-        zIndex: 10,
         label: {
           text: 'Values after ' + props.data.projectedDate.label + ' are projected',
           align: 'right',
@@ -207,8 +204,6 @@ function LineChart( props ) {
         zoneAxis: 'x',
         zones: [ {
           value: props.data.projectedDate.timestamp
-        }, {
-          dashStyle: 'dash'
         } ]
       },
       {
@@ -221,8 +216,6 @@ function LineChart( props ) {
         zoneAxis: 'x',
         zones: [ {
           value: props.data.projectedDate.timestamp
-        }, {
-          dashStyle: 'ShortDot'
         } ]
       }
     ]

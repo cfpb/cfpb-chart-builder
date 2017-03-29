@@ -100,17 +100,10 @@ function BarChart( props ) {
         year: '%b<br/>%Y'
       },
       plotLines: [ {
-        color: '#75787b',
-        width: 1,
         value: props.data.projectedDate.timestamp,
-        zIndex: 10,
         label: {
           text: 'Values after ' + props.data.projectedDate.label + ' are projected',
-          align: 'right',
           rotation: 0,
-          style: {
-            color: '#5a5d61'
-          },
           y: -15
         }
       } ]

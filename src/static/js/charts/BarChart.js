@@ -23,15 +23,11 @@ function BarChart( props ) {
       selected: 'all',
       height: 35,
       inputEnabled: false,
-/* TODO: buttonSpacing will be re-integrated with responsive styles */
-//      buttonSpacing: 15,
       buttonPosition: {
         x: 0,
         y: 30
       },
       buttonTheme: {
-/* TODO: width will be re-integrated with responsive styles */
-//        width: 45,
         r: 5, // border radius
         fill: '#CCE3F5',
         style: {
@@ -155,23 +151,11 @@ function BarChart( props ) {
     } ]
   };
 
-  Highcharts.stockChart( props.selector, options,
-    function( chart ) {
-      chart.renderer.text( 'Select time range', 7, 16 )
-        .css( {
-          color: '#5a5d61',
-          fontSize: '14px'
-        } )
-        .add();
-
-      chart.renderer.rect( 0, 75, 650, 2 )
-        .attr( {
-          fill: '#E3E4E5',
-          zIndex: 10
-        } )
-        .add();
-    }
-  );
+  Highcharts.stockChart( props.selector, options, function( chart ) {
+    // label(str, x, y, shape, anchorX, anchorY, useHTML, baseline, className)
+    chart.renderer.label('Select time range', 7, 16, null, null, null, true, null, 'range-selector-label' )
+    .add();
+  } );
 
 }
 

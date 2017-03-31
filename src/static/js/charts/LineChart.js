@@ -86,6 +86,10 @@ function LineChart( props ) {
     title: {
       text: props.title
     },
+    chart: {
+      marginTop: 100,
+      zoomType: 'none'
+    },
     className: 'cfpb-chart_line',
     description: props.description,
     credits: false,
@@ -93,17 +97,10 @@ function LineChart( props ) {
       selected: 'all',
       height: 35,
       inputEnabled: false,
-/* TODO: buttonSpacing will be re-integrated with responsive styles */
-//      buttonSpacing: 15,
-      buttonTheme: {
-/* TODO: width will be re-integrated with responsive styles */
-//        width: 45,
-
-        states: {
-          select: {
-            
-          }
-        }
+// @TODO: add responsive js to update this over 800px
+      buttonPosition: {
+        x: 0,
+        y: 430
       },
       buttons: [ {
         type: 'year',
@@ -151,9 +148,6 @@ function LineChart( props ) {
       series: {
         lineWidth: 2
       }
-    },
-    chart: {
-      zoomType: 'none'
     },
     xAxis: {
       startOnTick: true,
@@ -221,23 +215,11 @@ function LineChart( props ) {
     ]
   };
 
-  Highcharts.stockChart( props.selector, options,
-    function( chart ) {
-      chart.renderer.text( 'Select time range', 7, 16 )
-        .css( {
-          color: '#5a5d61',
-          fontSize: '14px'
-        } )
-        .add();
-
-      chart.renderer.rect( 0, 75, 650, 2 )
-        .attr( {
-          fill: '#E3E4E5',
-          zIndex: 10
-        } )
-        .add();
-    }
-  );
+  Highcharts.stockChart( props.selector, options, function( chart ) {
+    // label(str, x, y, shape, anchorX, anchorY, useHTML, baseline, className)
+    chart.renderer.label('Select time range', null, null, null, null, null, true, null, 'range-selector-label' )
+    .add();
+  } );
 
 }
 

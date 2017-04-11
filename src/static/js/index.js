@@ -2,6 +2,7 @@
 
 var ajax = require( 'xdr' );
 var documentReady = require( './utils/document-ready' );
+var debounce = require( './utils/debounce' );
 var createChart = require( './charts' );
 var process = require( './utils/process-json' );
 
@@ -42,7 +43,7 @@ if (!Array.prototype.indexOf)
 documentReady( function() {
   buildCharts();
 
-  window.addEventListener( 'resize', buildCharts );
+  window.addEventListener( 'resize', debounce( buildCharts, 1000 ) );
 
 } );
 
@@ -92,7 +93,7 @@ function buildCharts() {
           properties.data = process.originations( data, group );
 
           if ( typeof properties.data === 'object' ) {
-            createChart.line( properties );            
+            createChart.line( properties );
           } else {
             chart.setAttribute( 'data-chart-error', errorStrings[properties.data] );
             console.log( errorStrings[properties.data] );
@@ -102,7 +103,7 @@ function buildCharts() {
         if ( type === 'bar' ) {
           properties.data = process.yoy( data, group );
           if ( typeof properties.data === 'object' ) {
-            createChart.bar( properties );            
+            createChart.bar( properties );
           } else {
             chart.setAttribute( 'data-chart-error', errorStrings[properties.data] );
             console.log( errorStrings[properties.data] );
@@ -112,7 +113,7 @@ function buildCharts() {
         if ( type === 'tile_map' ) {
           properties.data = process.map( data, group );
           if ( typeof properties.data === 'object' ) {
-            createChart.map( properties );            
+            createChart.map( properties );
           } else {
             chart.setAttribute( 'data-chart-error', errorStrings[properties.data] );
             console.log( errorStrings[properties.data] );

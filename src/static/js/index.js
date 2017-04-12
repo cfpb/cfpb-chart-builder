@@ -2,6 +2,7 @@
 
 var ajax = require( 'xdr' );
 var documentReady = require( './utils/document-ready' );
+var debounce = require( './utils/debounce' );
 var createChart = require( './charts' );
 var process = require( './utils/process-json' );
 
@@ -40,6 +41,13 @@ if (!Array.prototype.indexOf)
 */
 
 documentReady( function() {
+  buildCharts();
+
+  window.addEventListener( 'resize', debounce( buildCharts, 1000 ) );
+
+} );
+
+function buildCharts() {
 
   var charts = document.querySelectorAll( '.cfpb-chart' );
   var urls = {};
@@ -52,6 +60,9 @@ documentReady( function() {
 
   for ( var x = 0; x < charts.length; x++ ) {
     var chart = charts[x];
+    // Empty the chart for redraws
+    chart.innerHTML = '';
+
     var url = chart.getAttribute( 'data-chart-source' );
     if ( !urls.hasOwnProperty( url ) ) {
       urls[url] = [];
@@ -82,7 +93,7 @@ documentReady( function() {
           properties.data = process.originations( data, group );
 
           if ( typeof properties.data === 'object' ) {
-            createChart.line( properties );            
+            createChart.line( properties );
           } else {
             chart.setAttribute( 'data-chart-error', errorStrings[properties.data] );
             console.log( errorStrings[properties.data] );
@@ -92,7 +103,7 @@ documentReady( function() {
         if ( type === 'bar' ) {
           properties.data = process.yoy( data, group );
           if ( typeof properties.data === 'object' ) {
-            createChart.bar( properties );            
+            createChart.bar( properties );
           } else {
             chart.setAttribute( 'data-chart-error', errorStrings[properties.data] );
             console.log( errorStrings[properties.data] );
@@ -102,7 +113,7 @@ documentReady( function() {
         if ( type === 'tile_map' ) {
           properties.data = process.map( data, group );
           if ( typeof properties.data === 'object' ) {
-            createChart.map( properties );            
+            createChart.map( properties );
           } else {
             chart.setAttribute( 'data-chart-error', errorStrings[properties.data] );
             console.log( errorStrings[properties.data] );
@@ -112,7 +123,7 @@ documentReady( function() {
       }
     } );
   }
-} );
+}
 
 // GET requests:
 

@@ -54,57 +54,17 @@
     }
   }
 
-  .highcharts-button {
-    height: 45px;
-    width: 45px;
-    fill: #CCE3F5;
-    font-size: 14px;
-
-    text {
-      // move down for small screens, back up for large
-      // y: 400px !important;
-
-      // .respond-to-min( 800px, {
-      //   y: 0px !important;
-      // } );
-
-    }
-
-    .respond-to-min( 800px, {
-      width: 35px;
-      height: 35px;
-    } );
-
-
-  }
-
-  .highcharts-button-box {
-    border-radius: 5px;
-    height: 45px;
-    width: 45px;
-    y: -10px;
-
-    .respond-to-min( 800px, {
-      width: 35px;
-      height: 35px;
-      y: 0px;
-    } );
-
-  }
-
-  .highcharts-button-pressed {
-    fill: #7FB8E6;
-    font-weight: bold;
-  }
 
   .highcharts-range-selector-buttons {
     position: relative;
     height: 45px;
-    width: 45px;
+    // width: 45px;
+    transform: translateY(440px);
 
     .respond-to-min( 800px, {
       width: 35px;
       height: 35px;
+      transform: translateY(0);
     } );
 
     &:after {
@@ -134,6 +94,57 @@
       } );
 
     }
+
+  }
+
+  .highcharts-button {
+    height: 45px;
+    width: 45px;
+    fill: #CCE3F5;
+    font-size: 14px;
+
+    &:hover {
+      cursor: pointer;
+      .highcharts-button-box {
+        fill: #7FB8E6;
+      }
+
+    }
+
+    text {
+      // move down for small screens, back up for large
+      // y: 400px !important;
+
+      // .respond-to-min( 800px, {
+      //   y: 0px !important;
+      // } );
+
+    }
+
+    .respond-to-min( 800px, {
+      width: 35px;
+      height: 35px;
+    } );
+
+
+  }
+
+  .highcharts-button-pressed,
+  .highcharts-button-hover {
+    fill: #7FB8E6;
+  }
+
+  .highcharts-button-box {
+    border-radius: 5px;
+    height: 45px;
+    width: 45px;
+    y: -10px;
+
+    .respond-to-min( 800px, {
+      width: 35px;
+      height: 35px;
+      y: 0px;
+    } );
 
   }
 

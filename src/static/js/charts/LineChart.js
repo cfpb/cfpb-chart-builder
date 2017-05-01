@@ -102,6 +102,20 @@ function LineChart( props ) {
         x: 0,
         y: 430
       },
+      buttonTheme: {
+        r: 5, // border radius
+        // fill: '#CCE3F5',
+        style: {
+          // height: '35px',
+          // fontSize: '14px'
+        },
+        states: {
+          select: {
+            fill: '#7FB8E6',
+            fontWeight: 'bold'
+          }
+        }
+      },
       buttons: [ {
         type: 'year',
         count: 1,

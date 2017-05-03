@@ -31,9 +31,34 @@ gulp.task( 'styles:modern', function() {
     .pipe( browserSync.reload( {
       stream: true
     } ) );
+    var info = plugins.autoprefixer().info();
+    console.log(info);
 } );
 
-gulp.task( 'styles:ie', function() {
+/**
+ * Process legacy CSS for IE9 only.
+ * @returns {PassThrough} A source stream.
+ */
+function stylesIE9() {
+  return gulp.src( configStyles.cwd + configStyles.src )
+    .pipe( plugins.less( configStyles.settings ) )
+    .on( 'error', handleErrors )
+    .pipe( plugins.autoprefixer( {
+      browsers: [ 'ie 9' ]
+    } ) )
+    .pipe( plugins.cssmin() )
+    .pipe( plugins.rename( {
+      suffix:  '.ie9.min',
+      extname: '.css'
+    } ) )
+    .pipe( gulp.dest( configStyles.dest ) )
+    .pipe( browserSync.reload( {
+      stream: true
+    } ) );
+}
+gulp.task( 'styles:stylesIE9', stylesIE9 );
+
+gulp.task( 'styles:stylesIE8', function() {
   return gulp.src( configStyles.cwd + configStyles.src )
     .pipe( plugins.less( configStyles.settings ) )
     .on( 'error', handleErrors )
@@ -45,7 +70,7 @@ gulp.task( 'styles:ie', function() {
     } ) )
     .pipe( plugins.cssmin() )
     .pipe( plugins.rename( {
-      suffix:  '.ie',
+      suffix:  '.ie8.min',
       extname: '.css'
     } ) )
     .pipe( gulp.dest( configStyles.dest ) )
@@ -99,6 +124,8 @@ gulp.task( 'styles:chartsMinify', function() {
       stream: true
     } ) );
 } );
+
+gulp.task( 'styles:ie', ['styles:stylesIE8', 'styles:stylesIE9'] );
 
 gulp.task( 'styles:charts', [
   'styles:chartsConcat',

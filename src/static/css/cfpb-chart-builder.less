@@ -58,13 +58,10 @@
   .highcharts-range-selector-buttons {
     position: relative;
     height: 45px;
-    // width: 45px;
-    transform: translateY(440px);
 
     .respond-to-min( 800px, {
-      width: 35px;
       height: 35px;
-      transform: translateY(0);
+      transform: translateY(-400px);
     } );
 
     &:after {
@@ -79,20 +76,20 @@
   }
 
   .highcharts-range-selector-label {
+    margin-top: 0 !important;
+    transform: translateY(400px);
     width: 100%;
     color: #5a5d61;
     font-size: 14px;
 
+    .h5();
+
+    .respond-to-min( 800px, {
+      transform: translateY(0px);
+    });
+
     span {
-      top: 400px !important;
-      left: 20% !important;
       z-index: 100;
-
-      .respond-to-min( 800px, {
-        top: 5px !important;
-        left: 3px !important;
-      } );
-
     }
 
   }
@@ -112,12 +109,6 @@
     }
 
     text {
-      // move down for small screens, back up for large
-      // y: 400px !important;
-
-      // .respond-to-min( 800px, {
-      //   y: 0px !important;
-      // } );
 
     }
 

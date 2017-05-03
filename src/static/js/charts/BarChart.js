@@ -25,14 +25,13 @@ function BarChart( props ) {
       inputEnabled: false,
       buttonPosition: {
         x: 0,
-        y: 30
+        y: 430
       },
       buttonTheme: {
         r: 5, // border radius
-        fill: '#CCE3F5',
         style: {
-          height: '35px',
-          fontSize: '14px'
+          height: '45px',
+          width: '45px', // start with small screen defaults
         },
         states: {
           select: {
@@ -153,7 +152,7 @@ function BarChart( props ) {
 
   Highcharts.stockChart( props.selector, options, function( chart ) {
     // label(str, x, y, shape, anchorX, anchorY, useHTML, baseline, className)
-    chart.renderer.label('Select time range', 7, 16, null, null, null, true, null, 'range-selector-label' )
+    chart.renderer.label('Select time range', null, null, null, null, null, true, null, 'range-selector-label' )
     .add();
   } );
 

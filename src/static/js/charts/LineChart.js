@@ -97,17 +97,15 @@ function LineChart( props ) {
       selected: 'all',
       height: 35,
       inputEnabled: false,
-// @TODO: add responsive js to update this over 800px
       buttonPosition: {
         x: 0,
         y: 430
       },
       buttonTheme: {
         r: 5, // border radius
-        // fill: '#CCE3F5',
         style: {
-          // height: '35px',
-          // fontSize: '14px'
+          height: '45px',
+          width: '45px', // start with small screen defaults
         },
         states: {
           select: {

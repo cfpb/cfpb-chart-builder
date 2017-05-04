@@ -16,6 +16,10 @@ function BarChart( props ) {
     title: {
       text: props.title
     },
+    chart: {
+      marginTop: 100,
+      zoomType: 'none'
+    },
     className: 'cfpb-chart_bar',
     description: props.description,
     credits: false,
@@ -23,16 +27,9 @@ function BarChart( props ) {
       selected: 'all',
       height: 35,
       inputEnabled: false,
-      buttonPosition: {
-        x: 0,
-        y: 430
-      },
       buttonTheme: {
         r: 5, // border radius
-        style: {
-          height: '45px',
-          width: '45px', // start with small screen defaults
-        },
+        width: 70,
         states: {
           select: {
             fill: '#7FB8E6',
@@ -60,10 +57,6 @@ function BarChart( props ) {
         text: 'All'
       }
       ]
-    },
-    chart: {
-      marginTop: 100,
-      zoomType: 'none'
     },
     legend: {
       enabled: false

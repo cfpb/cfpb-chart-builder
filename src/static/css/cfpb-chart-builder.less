@@ -55,9 +55,42 @@
   }
 
 
+  .highcharts-range-selector-label {
+    display: table;
+    margin-top: 0 !important;
+    transform: translateY(415px);
+    width: 100%;
+    color: #5a5d61;
+    font-size: 14px;
+
+    .h6();
+
+    .respond-to-min( 800px, {
+      transform: translateY(0px);
+    });
+
+    span {
+      display: table-cell;
+      position: relative !important;
+      text-align: center;
+      z-index: 100;
+
+      .respond-to-min( 800px, {
+        transform: translateY(0px);
+      });
+
+    }
+
+  }
+
   .highcharts-range-selector-buttons {
     position: relative;
     height: 45px;
+    transform: translate(-95px, 450px);
+
+    .respond-to-min( 350px, {
+      transform: translate(5%, 450px);
+    } );
 
     .respond-to-min( 800px, {
       height: 35px;
@@ -72,25 +105,6 @@
       border-bottom: 1px solid #E3E4E5;
     }
 
-
-  }
-
-  .highcharts-range-selector-label {
-    margin-top: 0 !important;
-    transform: translateY(400px);
-    width: 100%;
-    color: #5a5d61;
-    font-size: 14px;
-
-    .h5();
-
-    .respond-to-min( 800px, {
-      transform: translateY(0px);
-    });
-
-    span {
-      z-index: 100;
-    }
 
   }
 
@@ -109,6 +123,11 @@
     }
 
     text {
+      transform: translateX(-15px);
+
+      .respond-to-min( 800px, {
+        transform: translateX(0px);
+      } );
 
     }
 

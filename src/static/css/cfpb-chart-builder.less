@@ -42,6 +42,10 @@
     text-align: right;
   }
 
+  .highcharts-legend {
+    transform: translate(184,-5) !important;
+  }
+
   .highcharts-legend-box {
     // color: #5a5d61;
     // font-size: 16px;
@@ -49,11 +53,9 @@
   }
 
   .highcharts-legend-item {
-    text {
-        font-size: 12px !important;
-    }
-  }
+   
 
+  }
 
   .highcharts-range-selector-label {
     display: table;
@@ -192,6 +194,12 @@
 
   &[data-chart-type='line'] {
 
+    .highcharts-tracker,
+    .highcharts-graph {
+      stroke-linejoin: miter;
+      stroke-linecap: butt;
+    }
+
     // Unadjusted
     .highcharts-series-0 {
       .highcharts-graph {
@@ -206,9 +214,19 @@
       }
     }
 
+    // Projected data for last six months
+    .highcharts-zone-graph-1 {
+      stroke-dasharray: 5, 5;
+    }
+
+    .highcharts-color-0 .highcharts-zone-graph-1 {
+      stroke-dasharray: 3, 3;
+    }
+
     &[data-chart-color='blue'] {
 
-      .highcharts-series {
+      .highcharts-color-0, 
+      .highcharts-color-1 {
         stroke: #0072ce;
       }
 
@@ -216,7 +234,8 @@
 
     &[data-chart-color='green'] {
 
-      .highcharts-series {
+      .highcharts-color-0, 
+      .highcharts-color-1 {
         stroke: #20aa3f;
       }
 
@@ -225,8 +244,8 @@
     &[data-chart-color='teal'] {
 
 
-      // Seasonally adjusted 
-      .highcharts-series {
+      .highcharts-color-0, 
+      .highcharts-color-1 {
         stroke: #257675;
       }
 
@@ -234,8 +253,8 @@
 
     &[data-chart-color='navy'] {
 
-      // Seasonally adjusted 
-      .highcharts-series {
+      .highcharts-color-0, 
+      .highcharts-color-1 {
         stroke: #254b87;
       }
 
@@ -311,19 +330,6 @@
 
   }
 
-}
-
-@media (min-width: 400px) {
-  .cfpb-chart {
-    .highcharts-legend-item {
-      text {
-          font-size: 16px !important;
-      }
-    }
-    .highcharts-legend {
-      transform: translate(200,-5) !important;
-    }
-  }
 }
 
 .cfpb-chart[data-chart-type="tile_map"] {

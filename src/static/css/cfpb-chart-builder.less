@@ -40,16 +40,18 @@
   .highcharts-plot-line-label {
     color: #5a5d61;
     text-align: right;
+    transform: translate(0, -45px);
   }
 
   .highcharts-legend {
-    transform: translate(184,-5) !important;
+    transform: translate(-8px, -5px) !important;
+
+    .respond-to-min( 800px, {
+      transform: translate(184px, -5px) !important;
+    });
   }
 
   .highcharts-legend-box {
-    // color: #5a5d61;
-    // font-size: 16px;
-    // font-weight: normal;
   }
 
   .highcharts-legend-item {
@@ -183,12 +185,16 @@
   // Axes
 
   .highcharts-axis-labels {
-    // color: #5a5d61; duplicate of root?
-    // font-size: 16px;
-    // font-weight: normal;
   }
 
   // .highcharts-xaxis-labels {}
+
+  .highcharts-yaxis .highcharts-axis-title {
+    transform: rotate(0deg) translate(67px, -130px) !important;
+    .respond-to-min( 800px, {
+      transform: rotate( -90deg ) translate(0px, 0px) !important;
+    } );
+  }
 
   // Colors and widths
 
@@ -210,7 +216,7 @@
     // Seasonally adjusted 
     .highcharts-series-1 {
       .highcharts-graph {
-        stroke-width: 3px;
+        stroke-width: 4px;
       }
     }
 

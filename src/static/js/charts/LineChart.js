@@ -87,6 +87,8 @@ function LineChart( props ) {
       text: props.title
     },
     chart: {
+      // marginLeft: 0,
+      marginRight: 0,
       marginTop: 100,
       zoomType: 'none'
     },
@@ -129,14 +131,12 @@ function LineChart( props ) {
       ]
     },
     legend: {
-      align: 'right',
+      // align: 'right',
       enabled: true,
       floating: true,
       itemMarginTop: 10,
       layout: 'vertical',
-      verticalAlign: 'top',
-      x: 0,
-      y: -15
+      verticalAlign: 'top'
     },
     plotOptions: {
       series: {
@@ -181,7 +181,8 @@ function LineChart( props ) {
       className: 'axis-label',
       title: {
         text: _getYAxisLabel( props.data.adjusted ) + ' of originations (in ' + _getYAxisUnits( props.data.adjusted ) + ')',
-        x: -15
+        // offset: 0,
+        reserveSpace: true
       },
       labels: {
         formatter: function() {

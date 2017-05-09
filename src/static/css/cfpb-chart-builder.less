@@ -183,17 +183,29 @@
   }
 
   // Axes
+  &[data-chart-type='line'] {
 
-  .highcharts-axis-labels {
+    .highcharts-yaxis .highcharts-axis-title {
+
+      transform: rotate(0deg) translate(120px, -130px) !important;
+
+      .respond-to-min( 800px, {
+        transform: rotate( -90deg ) translate(0px, 0px) !important;
+      } );
+
+    }
   }
 
-  // .highcharts-xaxis-labels {}
+  &[data-chart-type='bar'] {
 
-  .highcharts-yaxis .highcharts-axis-title {
-    transform: rotate(0deg) translate(67px, -130px) !important;
-    .respond-to-min( 800px, {
-      transform: rotate( -90deg ) translate(0px, 0px) !important;
-    } );
+    .highcharts-yaxis .highcharts-axis-title {
+      transform: rotate(0deg) translate(88px, -130px) !important;
+      
+      .respond-to-min( 800px, {
+        transform: rotate( -90deg ) translate(0px, 0px) !important;
+      } );
+
+    }
   }
 
   // Colors and widths

@@ -87,7 +87,6 @@ function LineChart( props ) {
       text: props.title
     },
     chart: {
-      // marginLeft: 0,
       marginRight: 0,
       marginTop: 100,
       zoomType: 'none'
@@ -131,7 +130,6 @@ function LineChart( props ) {
       ]
     },
     legend: {
-      // align: 'right',
       enabled: true,
       floating: true,
       itemMarginTop: 10,
@@ -181,8 +179,8 @@ function LineChart( props ) {
       className: 'axis-label',
       title: {
         text: _getYAxisLabel( props.data.adjusted ) + ' of originations (in ' + _getYAxisUnits( props.data.adjusted ) + ')',
-        // offset: 0,
-        reserveSpace: true
+        offset: 0,
+        reserveSpace: false
       },
       labels: {
         formatter: function() {

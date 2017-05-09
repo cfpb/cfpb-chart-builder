@@ -17,6 +17,7 @@ function BarChart( props ) {
       text: props.title
     },
     chart: {
+      marginRight: 0,
       marginTop: 100,
       zoomType: 'none'
     },
@@ -98,23 +99,13 @@ function BarChart( props ) {
     },
     yAxis: {
       opposite: false,
-      labels: {
-        style: {
-          fontSize: '16px',
-          fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif",
-          color: '#5a5d61'
-        }
-      },
       lineColor: '#d2d3d5',
       tickColor: '#d2d3d5',
       gridLineColor: '#d2d3d5',
       title: {
         text: 'Year-over-year change (%)',
-        style: {
-          'color': '#5a5d61',
-          'font-size': '16px'
-        },
-        x: -15
+        offset: 0,
+        reserveSpace: false
       }
     },
     navigator: {

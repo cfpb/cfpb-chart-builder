@@ -41,6 +41,17 @@
     color: #5a5d61;
     text-align: right;
     transform: translate(0, -45px);
+
+    .respond-to-min( 600px, {
+      transform: translate(0, -92px);
+    });
+
+  }
+
+  &[data-chart-type='bar'] {
+    .highcharts-plot-line-label {
+      transform: translate(-280px, -60px);
+    }
   }
 
   .highcharts-legend {
@@ -79,6 +90,10 @@
       text-align: center;
       z-index: 100;
 
+      .respond-to-min( 480px, {
+        text-align: left;
+      });
+
       .respond-to-min( 800px, {
         transform: translateY(0px);
       });
@@ -90,15 +105,19 @@
   .highcharts-range-selector-buttons {
     position: relative;
     height: 45px;
-    transform: translate(-95px, 450px);
+    transform: translate(-67px, 450px);
 
     .respond-to-min( 350px, {
       transform: translate(5%, 450px);
     } );
 
+    .respond-to-min( 480px, {
+      transform: translate(-63px, 450px);
+    });
+
     .respond-to-min( 800px, {
       height: 35px;
-      transform: translateY(-400px);
+      // transform: translateY(-400px);
     } );
 
     &:after {

@@ -39,22 +39,28 @@
 
   .highcharts-plot-line-label {
     color: #5a5d61;
-    text-align: right;
-    transform: translate(0, -45px);
+    margin-left: 15px !important;
+    top: 2px !important;
+    left: 50% !important;
+    width: 50% !important;
+    max-width: 120px;
+    text-align: left;
+    white-space: normal !important;
 
     .respond-to-min( 600px, {
-      transform: translate(0, -92px);
+      // transform: translate(0, -92px);
     });
 
   }
 
   &[data-chart-type='bar'] {
     .highcharts-plot-line-label {
-      transform: translate(-280px, -60px);
+      transform: translate(-278px, -60px);
     }
   }
 
   .highcharts-legend {
+    left: 0px !important;
     transform: translate(-8px, -5px) !important;
 
     .respond-to-min( 800px, {
@@ -66,6 +72,21 @@
   }
 
   .highcharts-legend-item {
+
+    span {
+      margin-left: 25px !important;
+      top: -6px !important;
+      width: 50% !important;
+      left: initial !important;
+      display: block;
+      white-space: normal !important;
+      
+    }
+
+    &.highcharts-color-0 span {
+      top: 0 !important;
+
+    }
    
 
   }

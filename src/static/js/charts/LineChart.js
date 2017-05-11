@@ -132,9 +132,10 @@ function LineChart( props ) {
     legend: {
       enabled: true,
       floating: true,
-      itemMarginTop: 10,
+      // itemMarginTop: 0,
       layout: 'vertical',
-      verticalAlign: 'top'
+      verticalAlign: 'top',
+      useHTML: true
     },
     plotOptions: {
       series: {
@@ -168,9 +169,8 @@ function LineChart( props ) {
         value: props.data.projectedDate.timestamp,
         label: {
           text: 'Values after ' + props.data.projectedDate.label + ' are projected',
-          align: 'right',
           rotation: 0,
-          y: -15
+          useHTML: true
         }
       } ]
     },

@@ -132,7 +132,6 @@ function LineChart( props ) {
     legend: {
       enabled: true,
       floating: true,
-      // itemMarginTop: 0,
       layout: 'vertical',
       verticalAlign: 'top',
       useHTML: true
@@ -148,7 +147,6 @@ function LineChart( props ) {
     },
     navigator: {
       maskFill: 'rgba(0, 0, 0, 0.05)',
-      
       series: {
         lineWidth: 2
       }
@@ -159,8 +157,6 @@ function LineChart( props ) {
       dateTimeLabelFormats: {
         month: '%b<br/>%Y',
         year: '%b<br/>%Y'
-      },
-      labels: {
       },
       lineColor: '#d2d3d5',
       tickColor: '#d2d3d5',
@@ -177,6 +173,9 @@ function LineChart( props ) {
     yAxis: {
       opposite: false,
       className: 'axis-label',
+      lineColor: '#d2d3d5',
+      tickColor: '#d2d3d5',
+      gridLineColor: '#d2d3d5',
       title: {
         text: _getYAxisLabel( props.data.adjusted ) + ' of originations (in ' + _getYAxisUnits( props.data.adjusted ) + ')',
         offset: 0,
@@ -186,10 +185,7 @@ function LineChart( props ) {
         formatter: function() {
           return _getTickValue( this.value );
         }
-      },
-      lineColor: '#d2d3d5',
-      tickColor: '#d2d3d5',
-      gridLineColor: '#d2d3d5'
+      }
     },
     series: [
       {

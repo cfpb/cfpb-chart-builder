@@ -71,29 +71,32 @@ function BarChart( props ) {
         grouping: false
       }
     },
+    navigator: {
+      maskFill: 'rgba(0, 0, 0, 0.05)',
+      // handles: {
+      //   backgroundColor: '#fff',
+      //   borderColor: '#101820'
+      // },
+      series: {
+        lineWidth: 2
+      }
+    },
     xAxis: {
-      labels: {
-        style: {
-          fontSize: '16px',
-          fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif",
-          color: '#5a5d61'
-        }
-      },
-      lineColor: '#d2d3d5',
-      tickColor: '#d2d3d5',
-      gridLineColor: '#d2d3d5',
       startOnTick: true,
       type: 'datetime',
       dateTimeLabelFormats: {
         month: '%b<br/>%Y',
         year: '%b<br/>%Y'
       },
+      lineColor: '#d2d3d5',
+      tickColor: '#d2d3d5',
+      gridLineColor: '#d2d3d5',
       plotLines: [ {
         value: props.data.projectedDate.timestamp,
         label: {
           text: 'Values after ' + props.data.projectedDate.label + ' are projected',
           rotation: 0,
-          y: -15
+          useHTML: true
         }
       } ]
     },
@@ -106,16 +109,6 @@ function BarChart( props ) {
         text: 'Year-over-year change (%)',
         offset: 0,
         reserveSpace: false
-      }
-    },
-    navigator: {
-      maskFill: 'rgba(0, 0, 0, 0.05)',
-      handles: {
-        backgroundColor: '#fff',
-        borderColor: '#101820'
-      },
-      series: {
-        lineWidth: 2
       }
     },
     series: [ {

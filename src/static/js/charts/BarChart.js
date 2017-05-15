@@ -28,6 +28,10 @@ function BarChart( props ) {
       selected: 'all',
       height: 35,
       inputEnabled: false,
+      buttonPosition: {
+        x: 0,
+        y: 0
+      },
       buttonTheme: {
         r: 5, // border radius
         width: 70,

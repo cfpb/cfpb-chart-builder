@@ -54,10 +54,14 @@
 
   &[data-chart-type='line'] {
     .highcharts-plot-line-label {
-    margin-left: 15px !important;
-    left: 50% !important;
-    width: 50% !important;
-    max-width: 120px;
+      margin-left: 15px !important;
+      left: 50% !important;
+      width: 50% !important;
+      max-width: 120px;
+
+      .respond-to-min( 450px, {
+        max-width: 200px;
+      });
     }
   }
 
@@ -77,26 +81,37 @@
     });
   }
 
-  .highcharts-legend-box {
-  }
-
   .highcharts-legend-item {
 
     span {
       margin-left: 25px !important;
       top: -6px !important;
-      width: 50% !important;
       left: initial !important;
-      display: block;
       white-space: normal !important;
+
+      .respond-to-min( 450px, {
+        white-space: nowrap !important;
+      });
       
     }
 
     &.highcharts-color-0 span {
       top: 0 !important;
 
+      // .respond-to-min( 450px, {
+      //   top: -25px !important;
+      // });
+
     }
-   
+
+    &.highcharts-series-0 .highcharts-graph {
+      transform: translate(0px, 5px);
+
+      // .respond-to-min( 450px, {
+      //   transform: translate(0px, -20px);
+      // });
+
+    }   
 
   }
 

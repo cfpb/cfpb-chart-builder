@@ -95,21 +95,46 @@
       
     }
 
-    &.highcharts-color-0 span {
-      top: 0 !important;
+    &.highcharts-color-0 {
+      position: relative !important;
+      top: 46px !important;
 
-      // .respond-to-min( 450px, {
-      //   top: -25px !important;
-      // });
+      .respond-to-min( 450px, {
+        top: 25px !important;
+      });
 
-    }
 
-    &.highcharts-series-0 .highcharts-graph {
-      transform: translate(0px, 5px);
+      &[transform="translate(8,22)"] {
+        .highcharts-graph {
+          transform: translate(0, 28px);
 
-      // .respond-to-min( 450px, {
-      //   transform: translate(0px, -20px);
-      // });
+          .respond-to-min( 450px, {
+            transform: translate(0, 8px);
+          });
+
+        }
+      }
+
+      &[transform="translate(8,41)"] {        
+        .highcharts-graph {
+          transform: translate(0, 10px);
+        
+          .respond-to-min( 450px, {
+            transform: translate(0, -10px);
+          });
+
+        }
+      }
+
+      span {
+        position: relative !important;
+        top: 0 !important;
+
+        .respond-to-min( 450px, {
+          top: 0 !important;
+        });
+
+      }
 
     }   
 
@@ -135,7 +160,7 @@
       text-align: center;
       z-index: 100;
 
-      .respond-to-min( 480px, {
+      .respond-to-min( 450px, {
         text-align: left;
       });
 

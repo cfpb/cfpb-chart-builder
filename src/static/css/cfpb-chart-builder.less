@@ -46,10 +46,6 @@
     text-align: left;
     white-space: normal !important;
 
-    .respond-to-min( 600px, {
-      // transform: translate(0, -92px);
-    });
-
   }
 
   &[data-chart-type='line'] {
@@ -62,6 +58,16 @@
       .respond-to-min( 450px, {
         max-width: 200px;
       });
+
+      .respond-to-min( 600px, {
+        max-width: 250px;
+      });
+
+      .respond-to-min( 655px, {
+        top: 100px !important;
+        max-width: 300px;
+      });
+
     }
   }
 
@@ -69,6 +75,13 @@
     .highcharts-plot-line-label {
       top: 40px !important;
       left: 0 !important;
+
+      .respond-to-min( 600px, {
+        top: 100px !important;
+        right: 0 !important;
+        left: initial !important;
+      });
+
     }
   }
 

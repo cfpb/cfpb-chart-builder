@@ -17,6 +17,10 @@
     .respond-to-min( 600px, {
       top: 75px;
     });
+
+    .respond-to-min( 655px, {
+      top: 80px;
+    });
   }
 
   .highcharts-root,
@@ -314,11 +318,19 @@
 
       transform: rotate(0deg) translate(120px, -130px) !important;
 
-      .respond-to-min( 800px, {
-        transform: rotate( -90deg ) translate(0px, 0px) !important;
+      .respond-to-min( 655px, {
+        transform: rotate(-90deg) translate(-245px, -232px) !important;
       } );
 
     }
+
+    .highcharts-yaxis-labels {
+      transform: translate(0, 6px);
+      .respond-to-min( 655px, {
+        transform: translate(10px, 7px);
+      } );
+    }
+
   }
 
   &[data-chart-type='bar'] {

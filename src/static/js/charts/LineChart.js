@@ -157,6 +157,7 @@ function LineChart( props ) {
     },
     xAxis: {
       startOnTick: true,
+      tickLength: 5,
       type: 'datetime',
       dateTimeLabelFormats: {
         month: '%b<br/>%Y',

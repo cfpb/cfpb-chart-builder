@@ -1,5 +1,18 @@
 @import 'https://code.highcharts.com/css/highcharts.css';
+@import 'brand-palette.less';
+@import 'cf-theme-overrides.less';
 @import 'cf-core.less';
+
+// Chart colors
+
+@chart-blue-primary: @pacific;
+@chart-blue-secondary: @pacific-60;
+@chart-green-primary: @green;
+@chart-green-secondary: @green-60;
+@chart-navy-primary: @navy;
+@chart-navy-secondary: @navy-60;
+@chart-teal-primary: @teal;
+@chart-teal-secondary: @teal-60;
 
 .cfpb-chart {
   position: relative;
@@ -14,6 +27,7 @@
     width: 100%;
     height: 0;
     border-top: 2px solid #e3e4e5;
+    
     .respond-to-min( 600px, {
       top: 75px;
     });
@@ -21,21 +35,44 @@
     .respond-to-min( 655px, {
       top: 80px;
     });
+
+    .respond-to-min( 800px, {
+      top: 75px;
+    });
+
   }
 
-  .highcharts-root,
-  .highcharts-container,
-  .highcharts-legend-box,
-  .highcharts-axis-labels {
+  &[chart-type="bar"]:after  {
+    
+    .respond-to-min( 800px, {
+      top: 100px;
+    });
+
+  }
+
+
+  .chart-label {
     font-size: 16px;
     font-family: 'AvenirNextLTW01-Regular',Arial,sans-serif;
     color: #5a5d61;
     fill: #5a5d61;
   }
 
+  .highcharts-root,
+  .highcharts-container,
+  .highcharts-legend-box,
+  .highcharts-axis-labels {
+    .chart-label();
+  }
+
   .highcharts-background,
   .highcharts-legend-box {
     fill: transparent;
+  }
+
+  .highcharts-axis-line,
+  .highcharts-tick {
+    stroke: #e3e4e5;
   }
 
   .highcharts-plot-line {
@@ -94,7 +131,7 @@
     transform: translate(-8px, -5px) !important;
 
     .respond-to-min( 800px, {
-      transform: translate(184px, -5px) !important;
+      transform: translate(0px, 45px) !important;
     });
   }
 
@@ -169,6 +206,9 @@
 
     .respond-to-min( 800px, {
       transform: translateY(0px);
+      .chart-label();
+      letter-spacing: 0;
+      text-transform: none;
     });
 
     span {
@@ -227,7 +267,7 @@
     });
 
     .respond-to-min( 800px, {
-      height: 35px;
+      transform: translate(0px, 30px);
     } );
 
     &:after {
@@ -259,7 +299,7 @@
       transform: translateX(-15px);
 
       .respond-to-min( 800px, {
-        transform: translateX(0px);
+        transform: translate(-20px, 5px);
       } );
 
     }
@@ -301,9 +341,14 @@
 
     .respond-to-min( 800px, {
       display: block;
-      visibility: hidden;
+      visibility: visible;
     } );
 
+  }
+
+  .highcharts-navigator-mask-inside {
+    fill: #e3e4e5;
+    fill-opacity: 0.25;
   }
 
   .highcharts-navigator-handle {
@@ -381,8 +426,9 @@
     &[data-chart-color='blue'] {
 
       .highcharts-color-0, 
-      .highcharts-color-1 {
-        stroke: #0072ce;
+      .highcharts-color-1,
+      .highcharts-navigator-series .highcharts-graph  {
+        stroke: @chart-blue-primary;
       }
 
     }
@@ -390,8 +436,9 @@
     &[data-chart-color='green'] {
 
       .highcharts-color-0, 
-      .highcharts-color-1 {
-        stroke: #20aa3f;
+      .highcharts-color-1,
+      .highcharts-navigator-series .highcharts-graph {
+        stroke: @chart-green-primary;
       }
 
     }
@@ -400,8 +447,9 @@
 
 
       .highcharts-color-0, 
-      .highcharts-color-1 {
-        stroke: #257675;
+      .highcharts-color-1,
+      .highcharts-navigator-series .highcharts-graph  {
+        stroke: @chart-teal-primary;
       }
 
     }
@@ -409,8 +457,9 @@
     &[data-chart-color='navy'] {
 
       .highcharts-color-0, 
-      .highcharts-color-1 {
-        stroke: #254b87;
+      .highcharts-color-1,
+      .highcharts-navigator-series .highcharts-graph  {
+        stroke: @chart-navy-primary;
       }
 
     }
@@ -433,10 +482,10 @@
     &[data-chart-color='blue'] {
 
         .highcharts-point {
-          fill: #7eb7e8;
+          fill: @chart-blue-secondary;
           
           &.highcharts-data__unprojected {
-            fill: #0072ce;
+            fill: @chart-blue-primary;
           }
 
         }
@@ -446,10 +495,10 @@
     &[data-chart-color='green'] {
 
         .highcharts-point {
-          fill: #addc91;
+          fill: @chart-green-secondary;
           
           &.highcharts-data__unprojected {
-            fill: #20aa3f;
+            fill: @chart-green-primary;
           }
 
         }
@@ -459,10 +508,10 @@
     &[data-chart-color='teal'] {
 
         .highcharts-point {
-          fill: #89b6b5;
+          fill: @chart-teal-secondary;
           
           &.highcharts-data__unprojected {
-            fill: #257675;
+            fill: @chart-teal-primary;
           }
 
         }
@@ -472,16 +521,70 @@
     &[data-chart-color='navy'] {
 
         .highcharts-point {
-          fill: #889cc0;
+          fill: @chart-navy-secondary;
           
           &.highcharts-data__unprojected {
-            fill: #254b87;
+            fill: @chart-navy-primary;
           }
 
         }
         
     }
 
+
+  }
+
+  // Navigator graph (mini-graph under main graph on large screens)
+  .highcharts-navigator-series .highcharts-graph {
+    stroke-width: 2px;
+  }
+
+  &[data-chart-color='blue'] {
+
+    .highcharts-navigator-series .highcharts-graph  {
+      stroke: @chart-blue-primary;
+    }
+
+    .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
+      stroke: @chart-blue-secondary;
+    }
+
+  }
+
+  &[data-chart-color='green'] {
+
+    .highcharts-navigator-series .highcharts-graph {
+      stroke: @chart-green-primary;
+    }
+
+    .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
+      stroke: @chart-green-secondary;
+    }
+
+  }
+
+  &[data-chart-color='teal'] {
+
+
+    .highcharts-navigator-series .highcharts-graph  {
+      stroke: @chart-teal-primary;
+    }
+
+    .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
+      stroke: @chart-teal-secondary;
+    }
+
+  }
+
+  &[data-chart-color='navy'] {
+
+    .highcharts-navigator-series .highcharts-graph  {
+      stroke: @chart-navy-primary;
+    }
+
+    .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
+      stroke: @chart-navy-secondary;
+    }
 
   }
 

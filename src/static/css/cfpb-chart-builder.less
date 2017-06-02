@@ -36,10 +36,6 @@
       top: 80px;
     });
 
-    .respond-to-min( 800px, {
-      top: 75px;
-    });
-
   }
 
   &[chart-type="bar"]:after  {
@@ -63,6 +59,10 @@
   .highcharts-legend-box,
   .highcharts-axis-labels {
     .chart-label();
+  }
+
+  .highcharts-navigator-xaxis {
+    font-size: 11px;
   }
 
   .highcharts-background,
@@ -131,7 +131,7 @@
     transform: translate(-8px, -5px) !important;
 
     .respond-to-min( 800px, {
-      transform: translate(0px, 45px) !important;
+      transform: translate(465px, -6px) !important;
     });
   }
 
@@ -200,13 +200,14 @@
     transform: translateY(415px);
     width: 100%;
     color: #5a5d61;
-    font-size: 14px;
 
     .h6();
 
     .respond-to-min( 800px, {
-      transform: translateY(0px);
+      transform: translateY(-5px);
+
       .chart-label();
+
       letter-spacing: 0;
       text-transform: none;
     });
@@ -282,8 +283,6 @@
   }
 
   .highcharts-button {
-    height: 45px;
-    width: 45px;
     fill: #CCE3F5;
     font-size: 14px;
 
@@ -299,22 +298,17 @@
       transform: translateX(-15px);
 
       .respond-to-min( 800px, {
-        transform: translate(-20px, 5px);
+        transform: translate(-15px, 2px);
       } );
 
     }
-
-    .respond-to-min( 800px, {
-      width: 35px;
-      height: 35px;
-    } );
-
 
   }
 
   .highcharts-button-pressed,
   .highcharts-button-hover {
     fill: #7FB8E6;
+    font-family: "AvenirNextLTW01-Demi";
   }
 
   .highcharts-button-box {
@@ -324,11 +318,30 @@
     y: -10px;
 
     .respond-to-min( 800px, {
-      width: 35px;
-      height: 35px;
+      height: 28px;
       y: 0px;
     } );
 
+  }
+
+  .highcharts-button + .highcharts-button {
+      .respond-to-min( 800px, {
+        transform: translateX(65px);
+      } );
+
+      & + .highcharts-button {
+
+        .respond-to-min( 800px, {
+          transform: translateX(125px);
+        } );
+
+        & + .highcharts-button {
+          .respond-to-min( 800px, {
+            transform: translateX(185px);
+          } );
+        }
+
+      }
   }
 
   .highcharts-navigator,
@@ -384,7 +397,7 @@
       transform: rotate(0deg) translate(88px, -130px) !important;
       
       .respond-to-min( 800px, {
-        transform: rotate( -90deg ) translate(0px, 0px) !important;
+        transform: rotate(-90deg) translate(-245px, -232px) !important;
       } );
 
     }

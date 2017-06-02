@@ -59,6 +59,33 @@
     .chart-label();
   }
 
+  &[data-chart-type="tile_map"] {
+    .highcharts-data-label {
+
+      color: @black;
+      font-family: "AvenirNextLTW01-Demi";
+
+      .respond-to-max( 600px, {
+        margin-top: 2px;
+        font-size: 10px;
+      });
+
+      span > div > span {
+        font-family: "AvenirNextLTW01-Regular";
+        
+        .respond-to-max( 600px, {
+          display: block;
+          margin-top: -2px;
+          font-size: 9px;
+        });
+
+      }
+
+      // make default bold and the span normal weight
+
+    }
+  }
+
   .highcharts-navigator-xaxis {
     font-size: 11px;
   }

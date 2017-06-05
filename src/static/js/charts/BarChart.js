@@ -77,10 +77,6 @@ function BarChart( props ) {
     },
     navigator: {
       maskFill: 'rgba(0, 0, 0, 0.05)',
-      // handles: {
-      //   backgroundColor: '#fff',
-      //   borderColor: '#101820'
-      // },
       series: {
         lineWidth: 2
       }

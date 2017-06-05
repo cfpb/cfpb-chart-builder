@@ -34,13 +34,7 @@ function BarChart( props ) {
       },
       buttonTheme: {
         r: 5, // border radius
-        width: 70,
-        states: {
-          select: {
-            fill: '#7FB8E6',
-            fontWeight: 'bold'
-          }
-        }
+        width: 70
       },
       buttons: [ {
         type: 'year',
@@ -89,9 +83,6 @@ function BarChart( props ) {
         month: '%b<br/>%Y',
         year: '%b<br/>%Y'
       },
-      lineColor: '#d2d3d5',
-      tickColor: '#d2d3d5',
-      gridLineColor: '#d2d3d5',
       plotLines: [ {
         value: props.data.projectedDate.timestamp,
         label: {
@@ -103,9 +94,6 @@ function BarChart( props ) {
     },
     yAxis: {
       opposite: false,
-      lineColor: '#d2d3d5',
-      tickColor: '#d2d3d5',
-      gridLineColor: '#d2d3d5',
       title: {
         text: 'Year-over-year change (%)',
         offset: 0,

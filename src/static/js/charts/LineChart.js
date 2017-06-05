@@ -104,13 +104,7 @@ function LineChart( props ) {
       },
       buttonTheme: {
         r: 5, // border radius
-        width: 70,
-        states: {
-          select: {
-            fill: '#7FB8E6',
-            fontWeight: 'bold'
-          }
-        }
+        width: 70
       },
       buttons: [ {
         type: 'year',
@@ -163,9 +157,6 @@ function LineChart( props ) {
         month: '%b<br/>%Y',
         year: '%b<br/>%Y'
       },
-      lineColor: '#d2d3d5',
-      tickColor: '#d2d3d5',
-      gridLineColor: '#d2d3d5',
       plotLines: [ {
         value: props.data.projectedDate.timestamp,
         label: {
@@ -178,9 +169,6 @@ function LineChart( props ) {
     yAxis: {
       opposite: false,
       className: 'axis-label',
-      lineColor: '#d2d3d5',
-      tickColor: '#d2d3d5',
-      gridLineColor: '#d2d3d5',
       title: {
         text: _getYAxisLabel( props.data.adjusted ) + ' of originations (in ' + _getYAxisUnits( props.data.adjusted ) + ')',
         offset: 0,

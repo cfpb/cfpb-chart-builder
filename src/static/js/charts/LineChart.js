@@ -10,7 +10,6 @@ Highcharts.setOptions( {
   }
 } );
 
-
 /**
  * _getFirstNumber - get the first value that is a Number
  *

@@ -172,7 +172,7 @@
       
     }
 
-    &.highcharts-color-0 {
+    &.highcharts-color-1 {
       position: relative !important;
       top: 46px !important;
 
@@ -455,14 +455,14 @@
       stroke-dasharray: 5, 5;
     }
 
-    .highcharts-color-0 .highcharts-zone-graph-1 {
+    .highcharts-color-1 .highcharts-zone-graph-1 {
       stroke-dasharray: 3, 3;
     }
 
     &[data-chart-color='blue'] {
 
-      .highcharts-color-0, 
-      .highcharts-color-1,
+      .highcharts-color-1, 
+      .highcharts-color-0,
       .highcharts-navigator-series .highcharts-graph  {
         stroke: @chart-blue-primary;
       }
@@ -471,8 +471,8 @@
 
     &[data-chart-color='green'] {
 
-      .highcharts-color-0, 
-      .highcharts-color-1,
+      .highcharts-color-1, 
+      .highcharts-color-0,
       .highcharts-navigator-series .highcharts-graph {
         stroke: @chart-green-primary;
       }
@@ -482,8 +482,8 @@
     &[data-chart-color='teal'] {
 
 
-      .highcharts-color-0, 
-      .highcharts-color-1,
+      .highcharts-color-1, 
+      .highcharts-color-0,
       .highcharts-navigator-series .highcharts-graph  {
         stroke: @chart-teal-primary;
       }
@@ -492,8 +492,8 @@
 
     &[data-chart-color='navy'] {
 
-      .highcharts-color-0, 
-      .highcharts-color-1,
+      .highcharts-color-1, 
+      .highcharts-color-0,
       .highcharts-navigator-series .highcharts-graph  {
         stroke: @chart-navy-primary;
       }
@@ -570,7 +570,7 @@
 
   }
 
-  // Navigator graph (mini-graph under main graph on large screens)
+  // Navigator graph (mini-graph under main graph on large screens) and tooltip styles
   .highcharts-navigator-series .highcharts-graph {
     stroke-width: 2px;
   }
@@ -583,6 +583,15 @@
 
     .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
       stroke: @chart-blue-secondary;
+    }
+
+    .highcharts-tooltip {
+      .highcharts-color-1, .highcharts-color-0 {
+        fill: @chart-blue-primary;
+      }
+      .highcharts-color-0 {
+
+      }
     }
 
   }

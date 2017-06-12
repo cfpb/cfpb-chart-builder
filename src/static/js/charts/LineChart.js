@@ -181,9 +181,9 @@ function LineChart( props ) {
     },
     series: [
       {
-        name: 'Unadjusted',
-        data: props.data.unadjusted,
-        legendIndex: 2,
+        name: 'Seasonally adjusted',
+        data: props.data.adjusted,
+        legendIndex: 1,
         tooltip: {
           valueDecimals: 0
         },
@@ -193,9 +193,9 @@ function LineChart( props ) {
         } ]
       },
       {
-        name: 'Seasonally adjusted',
-        data: props.data.adjusted,
-        legendIndex: 1,
+        name: 'Unadjusted',
+        data: props.data.unadjusted,
+        legendIndex: 2,
         tooltip: {
           valueDecimals: 0
         },

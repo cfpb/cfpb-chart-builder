@@ -1,24 +1,629 @@
+@import 'https://code.highcharts.com/css/highcharts.css';
+@import 'brand-palette.less';
+@import 'cf-theme-overrides.less';
+@import 'cf-core.less';
+
+// Chart colors
+
+@chart-blue-primary: @pacific;
+@chart-blue-secondary: @pacific-60;
+@chart-green-primary: @green;
+@chart-green-secondary: @green-60;
+@chart-navy-primary: @navy;
+@chart-navy-secondary: @navy-60;
+@chart-teal-primary: @teal;
+@chart-teal-secondary: @teal-60;
+
 .cfpb-chart {
+  position: relative;
   max-width: 650px;
   height: 500px;
-  .highcharts-legend-item {
-    text {
-        font-size: 12px !important;
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 80px;
+    width: 100%;
+    height: 0;
+    border-top: 2px solid @gray-10;
+    
+    .respond-to-min( 600px, {
+      top: 75px;
+    });
+
+    .respond-to-min( 655px, {
+      top: 80px;
+    });
+
+  }
+
+  &[data-chart-type="tile_map"]:after  {
+    
+    display: none;
+
+  }
+
+
+  .chart-label {
+    font-size: 16px;
+    font-family: 'AvenirNextLTW01-Regular',Arial,sans-serif;
+    color: @gray;
+    fill: @gray;
+  }
+
+  .highcharts-root,
+  .highcharts-container,
+  .highcharts-legend-box,
+  .highcharts-axis-labels {
+    .chart-label();
+  }
+
+  &[data-chart-type="tile_map"] {
+    .highcharts-data-label {
+
+      color: @black;
+      font-family: "AvenirNextLTW01-Demi";
+
+      .respond-to-max( 600px, {
+        margin-top: 2px;
+        font-size: 10px;
+      });
+
+      span > div > span {
+        font-family: "AvenirNextLTW01-Regular";
+        
+        .respond-to-max( 600px, {
+          display: block;
+          margin-top: -2px;
+          font-size: 9px;
+        });
+
+      }
+
     }
   }
-}
 
-@media (min-width: 400px) {
-  .cfpb-chart {
-    .highcharts-legend-item {
-      text {
-          font-size: 16px !important;
+  .highcharts-navigator-xaxis {
+    font-size: 11px;
+  }
+
+  .highcharts-background,
+  .highcharts-legend-box {
+    fill: transparent;
+  }
+
+  .highcharts-axis-line,
+  .highcharts-tick {
+    stroke: @gray-20;
+  }
+
+  .highcharts-plot-line {
+    color: @gray-80;
+    stroke-width: 1px;
+    z-index: 10;
+  }
+
+  .highcharts-plot-line-label {
+    color: @gray;
+    top: 2px !important;
+    text-align: left;
+    white-space: normal !important;
+
+  }
+
+  &[data-chart-type='line'] {
+    .highcharts-plot-line-label {
+      margin-left: 15px !important;
+      left: 50% !important;
+      width: 50% !important;
+      max-width: 120px;
+
+      .respond-to-min( 450px, {
+        max-width: 200px;
+      });
+
+      .respond-to-min( 600px, {
+        max-width: 250px;
+      });
+
+      .respond-to-min( 655px, {
+        top: 100px !important;
+        max-width: 300px;
+      });
+
+    }
+  }
+
+  &[data-chart-type='bar'] {
+    .highcharts-plot-line-label {
+      top: 40px !important;
+      left: 0 !important;
+
+      .respond-to-min( 600px, {
+        top: 100px !important;
+        right: 0 !important;
+        left: initial !important;
+      });
+
+    }
+  }
+
+  .highcharts-legend {
+    left: 0px !important;
+    transform: translate(-8px, -5px) !important;
+
+    .respond-to-min( 800px, {
+      transform: translate(465px, -6px) !important;
+    });
+  }
+
+  .highcharts-legend-item {
+
+    span {
+      margin-left: 25px !important;
+      top: -6px !important;
+      left: initial !important;
+      white-space: normal !important;
+
+      .respond-to-min( 450px, {
+        white-space: nowrap !important;
+      });
+      
+    }
+
+    &.highcharts-color-0 {
+      position: relative !important;
+      top: 46px !important;
+
+      .respond-to-min( 450px, {
+        top: 25px !important;
+      });
+
+
+      &[transform="translate(8,22)"] {
+        .highcharts-graph {
+          transform: translate(0, 28px);
+
+          .respond-to-min( 450px, {
+            transform: translate(0, 8px);
+          });
+
+        }
+      }
+
+      &[transform="translate(8,41)"] {        
+        .highcharts-graph {
+          transform: translate(0, 10px);
+        
+          .respond-to-min( 450px, {
+            transform: translate(0, -10px);
+          });
+
+        }
+      }
+
+      span {
+        position: relative !important;
+        top: 0 !important;
+
+        .respond-to-min( 450px, {
+          top: 0 !important;
+        });
+
+      }
+
+    }   
+
+  }
+
+  .highcharts-range-selector-label {
+    display: table;
+    margin-top: 0 !important;
+    transform: translateY(415px);
+    width: 100%;
+    color: @gray;
+
+    .h6();
+
+    .respond-to-min( 800px, {
+      transform: translateY(-5px);
+
+      .chart-label();
+
+      letter-spacing: 0;
+      text-transform: none;
+    });
+
+    span {
+      display: table-cell;
+      position: relative !important;
+      text-align: center;
+      z-index: 100;
+
+      .respond-to-min( 480px, {
+        text-align: left;
+      });
+
+      .respond-to-min( 800px, {
+        transform: translateY(0px);
+      });
+
+    }
+
+  }
+
+  .highcharts-range-selector-buttons {
+    position: relative;
+    height: 45px;
+    transform: translate(0px, 455px);
+
+    .respond-to-min( 350px, {
+      transform: translate(5%, 455px);
+    } );
+
+    .respond-to-min( 375px, {
+      transform: translate(9%, 455px);
+    } );
+
+    .respond-to-min( 390px, {
+      transform: translate(13%, 455px);
+    } );
+
+    .respond-to-min( 400, {
+      transform: translate(15%, 455px);
+    } );
+
+    .respond-to-min( 430, {
+      transform: translate(19%, 455px);
+    } );
+
+    .respond-to-min( 450, {
+      transform: translate(20%, 455px);
+    } );
+
+    .respond-to-min( 470, {
+      transform: translate(25%, 455px);
+    } );
+
+    .respond-to-min( 480px, {
+      transform: translate(0px, 450px);
+    });
+
+    .respond-to-min( 800px, {
+      transform: translate(0px, 30px);
+    } );
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      border-bottom: 1px solid @gray-10;
+    }
+
+
+  }
+
+  .highcharts-button {
+    fill: @pacific-20;
+    font-size: 14px;
+
+    &:hover {
+      cursor: pointer;
+      .highcharts-button-box {
+        fill: @pacific-60;
+      }
+
+    }
+
+    text {
+      transform: translateX(-15px);
+
+      .respond-to-min( 800px, {
+        transform: translate(-15px, 2px);
+      } );
+
+    }
+
+  }
+
+  .highcharts-button-pressed,
+  .highcharts-button-hover {
+    fill: @pacific-60;
+    font-family: "AvenirNextLTW01-Demi";
+  }
+
+  .highcharts-button-box {
+    border-radius: 5px;
+    height: 45px;
+    width: 45px;
+    y: -10px;
+
+    .respond-to-min( 800px, {
+      height: 28px;
+      y: 0px;
+    } );
+
+  }
+
+  .highcharts-button + .highcharts-button {
+      .respond-to-min( 800px, {
+        transform: translateX(65px);
+      } );
+
+      & + .highcharts-button {
+
+        .respond-to-min( 800px, {
+          transform: translateX(125px);
+        } );
+
+        & + .highcharts-button {
+          .respond-to-min( 800px, {
+            transform: translateX(185px);
+          } );
+        }
+
+      }
+  }
+
+  .highcharts-navigator,
+  .highcharts-navigator-series,
+  .highcharts-navigator-xaxis,
+  .highcharts-navigator-yaxis,
+  .highcharts-scrollbar {
+    display: none;
+    visibility: hidden;
+
+    .respond-to-min( 800px, {
+      display: block;
+      visibility: visible;
+    } );
+
+  }
+
+  .highcharts-navigator-mask-inside {
+    fill: @gray-10;
+    fill-opacity: 0.25;
+  }
+
+  .highcharts-navigator-handle {
+    fill: @white;
+    stroke: @black;
+  }
+
+  // Axes
+  &[data-chart-type='line'] {
+
+    .highcharts-yaxis .highcharts-axis-title {
+
+      transform: rotate(0deg) translate(120px, -130px) !important;
+
+      .respond-to-min( 655px, {
+        transform: rotate(-90deg) translate(-245px, -232px) !important;
+      } );
+
+    }
+
+    .highcharts-yaxis-labels {
+      transform: translate(0, 6px);
+      .respond-to-min( 655px, {
+        transform: translate(10px, 7px);
+      } );
+    }
+
+  }
+
+  &[data-chart-type='bar'] {
+
+    .highcharts-yaxis .highcharts-axis-title {
+      transform: rotate(0deg) translate(88px, -130px) !important;
+      
+      .respond-to-min( 800px, {
+        transform: rotate(-90deg) translate(-245px, -232px) !important;
+      } );
+
+    }
+  }
+
+  // Colors and widths
+
+  &[data-chart-type='line'] {
+
+    .highcharts-tracker,
+    .highcharts-graph {
+      stroke-linejoin: miter;
+      stroke-linecap: butt;
+    }
+
+    // Unadjusted
+    .highcharts-series-0 {
+      .highcharts-graph {
+        stroke-width: 1px;
       }
     }
-    .highcharts-legend {
-      transform: translate(200,-5) !important;
+
+    // Seasonally adjusted 
+    .highcharts-series-1 {
+      .highcharts-graph {
+        stroke-width: 4px;
+      }
     }
+
+    // Projected data for last six months
+    .highcharts-zone-graph-1 {
+      stroke-dasharray: 5, 5;
+    }
+
+    .highcharts-color-0 .highcharts-zone-graph-1 {
+      stroke-dasharray: 3, 3;
+    }
+
+    &[data-chart-color='blue'] {
+
+      .highcharts-color-0, 
+      .highcharts-color-1,
+      .highcharts-navigator-series .highcharts-graph  {
+        stroke: @chart-blue-primary;
+      }
+
+    }
+
+    &[data-chart-color='green'] {
+
+      .highcharts-color-0, 
+      .highcharts-color-1,
+      .highcharts-navigator-series .highcharts-graph {
+        stroke: @chart-green-primary;
+      }
+
+    }
+
+    &[data-chart-color='teal'] {
+
+
+      .highcharts-color-0, 
+      .highcharts-color-1,
+      .highcharts-navigator-series .highcharts-graph  {
+        stroke: @chart-teal-primary;
+      }
+
+    }
+
+    &[data-chart-color='navy'] {
+
+      .highcharts-color-0, 
+      .highcharts-color-1,
+      .highcharts-navigator-series .highcharts-graph  {
+        stroke: @chart-navy-primary;
+      }
+
+    }
+
   }
+
+
+  &[data-chart-type='bar'] {
+
+    // Set defaults to gray for help in troubleshooting
+    .highcharts-point {
+      fill: @gray;
+      
+      &.highcharts-data__unprojected {
+        fill: @black;
+      }
+
+    }
+
+    &[data-chart-color='blue'] {
+
+        .highcharts-point {
+          fill: @chart-blue-secondary;
+          
+          &.highcharts-data__unprojected {
+            fill: @chart-blue-primary;
+          }
+
+        }
+        
+    }
+
+    &[data-chart-color='green'] {
+
+        .highcharts-point {
+          fill: @chart-green-secondary;
+          
+          &.highcharts-data__unprojected {
+            fill: @chart-green-primary;
+          }
+
+        }
+        
+    }
+
+    &[data-chart-color='teal'] {
+
+        .highcharts-point {
+          fill: @chart-teal-secondary;
+          
+          &.highcharts-data__unprojected {
+            fill: @chart-teal-primary;
+          }
+
+        }
+        
+    }
+
+    &[data-chart-color='navy'] {
+
+        .highcharts-point {
+          fill: @chart-navy-secondary;
+          
+          &.highcharts-data__unprojected {
+            fill: @chart-navy-primary;
+          }
+
+        }
+        
+    }
+
+
+  }
+
+  // Navigator graph (mini-graph under main graph on large screens)
+  .highcharts-navigator-series .highcharts-graph {
+    stroke-width: 2px;
+  }
+
+  &[data-chart-color='blue'] {
+
+    .highcharts-navigator-series .highcharts-graph  {
+      stroke: @chart-blue-primary;
+    }
+
+    .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
+      stroke: @chart-blue-secondary;
+    }
+
+  }
+
+  &[data-chart-color='green'] {
+
+    .highcharts-navigator-series .highcharts-graph {
+      stroke: @chart-green-primary;
+    }
+
+    .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
+      stroke: @chart-green-secondary;
+    }
+
+  }
+
+  &[data-chart-color='teal'] {
+
+
+    .highcharts-navigator-series .highcharts-graph  {
+      stroke: @chart-teal-primary;
+    }
+
+    .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
+      stroke: @chart-teal-secondary;
+    }
+
+  }
+
+  &[data-chart-color='navy'] {
+
+    .highcharts-navigator-series .highcharts-graph  {
+      stroke: @chart-navy-primary;
+    }
+
+    .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
+      stroke: @chart-navy-secondary;
+    }
+
+  }
+
 }
 
 .cfpb-chart[data-chart-type="tile_map"] {

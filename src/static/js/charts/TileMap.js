@@ -1,7 +1,7 @@
 'use strict';
 
-var Highcharts = require( 'highcharts/highmaps' );
-require( 'highcharts/modules/accessibility' )( Highcharts );
+var Highcharts = require( 'highcharts/js/highmaps' );
+require( 'highcharts/js/modules/accessibility' )( Highcharts );
 
 function _drawLegend( chart ) {
 

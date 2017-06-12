@@ -55,7 +55,8 @@
   .highcharts-root,
   .highcharts-container,
   .highcharts-legend-box,
-  .highcharts-axis-labels {
+  .highcharts-axis-labels,
+  .highcharts-tooltip text {
     .chart-label();
   }
 
@@ -467,6 +468,20 @@
         stroke: @chart-blue-primary;
       }
 
+      .highcharts-tooltip {
+        .highcharts-color-1, .highcharts-color-0 {
+          display: inline-block;
+          height: 4px;
+          width: 15px;
+          margin-bottom: 3px;
+          background: @chart-blue-primary;
+        }
+        .highcharts-color-1 {
+          height: 1px;
+          margin-bottom: 5px;
+        }
+      }
+
     }
 
     &[data-chart-color='green'] {
@@ -475,6 +490,20 @@
       .highcharts-color-0,
       .highcharts-navigator-series .highcharts-graph {
         stroke: @chart-green-primary;
+      }
+
+      .highcharts-tooltip {
+        .highcharts-color-1, .highcharts-color-0 {
+          display: inline-block;
+          height: 4px;
+          width: 15px;
+          margin-bottom: 3px;
+          background: @chart-green-primary;
+        }
+        .highcharts-color-1 {
+          height: 1px;
+          margin-bottom: 5px;
+        }
       }
 
     }
@@ -488,6 +517,20 @@
         stroke: @chart-teal-primary;
       }
 
+      .highcharts-tooltip {
+        .highcharts-color-1, .highcharts-color-0 {
+          display: inline-block;
+          height: 4px;
+          width: 15px;
+          margin-bottom: 3px;
+          background: @chart-teal-primary;
+        }
+        .highcharts-color-1 {
+          height: 1px;
+          margin-bottom: 5px;
+        }
+      }
+
     }
 
     &[data-chart-color='navy'] {
@@ -496,6 +539,20 @@
       .highcharts-color-0,
       .highcharts-navigator-series .highcharts-graph  {
         stroke: @chart-navy-primary;
+      }
+
+      .highcharts-tooltip {
+        .highcharts-color-1, .highcharts-color-0 {
+          display: inline-block;
+          height: 4px;
+          width: 15px;
+          margin-bottom: 3px;
+          background: @chart-navy-primary;
+        }
+        .highcharts-color-1 {
+          height: 1px;
+          margin-bottom: 5px;
+        }
       }
 
     }
@@ -515,6 +572,10 @@
 
     }
 
+    .highcharts-tooltip .highcharts-color-0 {
+      display: none;
+    }
+
     &[data-chart-color='blue'] {
 
         .highcharts-point {
@@ -524,6 +585,10 @@
             fill: @chart-blue-primary;
           }
 
+        }
+
+        .highcharts-tooltip-box {
+          stroke: @chart-blue-primary;
         }
         
     }
@@ -538,6 +603,10 @@
           }
 
         }
+
+        .highcharts-tooltip-box {
+          stroke: @chart-green-primary;
+        }
         
     }
 
@@ -550,6 +619,10 @@
             fill: @chart-teal-primary;
           }
 
+        }
+
+        .highcharts-tooltip-box {
+          stroke: @chart-teal-primary;
         }
         
     }
@@ -564,13 +637,17 @@
           }
 
         }
+
+        .highcharts-tooltip-box {
+          stroke: @chart-navy-primary;
+        }
         
     }
 
 
   }
 
-  // Navigator graph (mini-graph under main graph on large screens) and tooltip styles
+  // Navigator graph (mini-graph under main graph on large screens)
   .highcharts-navigator-series .highcharts-graph {
     stroke-width: 2px;
   }
@@ -585,20 +662,6 @@
       stroke: @chart-blue-secondary;
     }
 
-    .highcharts-tooltip {
-      .highcharts-color-1, .highcharts-color-0 {
-        display: inline-block;
-        height: 4px;
-        width: 15px;
-        margin-bottom: 3px;
-        background: @chart-blue-primary;
-      }
-      .highcharts-color-1 {
-        height: 1px;
-        margin-bottom: 5px;
-      }
-    }
-
   }
 
   &[data-chart-color='green'] {
@@ -609,20 +672,6 @@
 
     .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
       stroke: @chart-green-secondary;
-    }
-
-    .highcharts-tooltip {
-      .highcharts-color-1, .highcharts-color-0 {
-        display: inline-block;
-        height: 4px;
-        width: 15px;
-        margin-bottom: 3px;
-        background: @chart-green-primary;
-      }
-      .highcharts-color-1 {
-        height: 1px;
-        margin-bottom: 5px;
-      }
     }
 
   }
@@ -638,20 +687,6 @@
       stroke: @chart-teal-secondary;
     }
 
-    .highcharts-tooltip {
-      .highcharts-color-1, .highcharts-color-0 {
-        display: inline-block;
-        height: 4px;
-        width: 15px;
-        margin-bottom: 3px;
-        background: @chart-teal-primary;
-      }
-      .highcharts-color-1 {
-        height: 1px;
-        margin-bottom: 5px;
-      }
-    }
-
   }
 
   &[data-chart-color='navy'] {
@@ -662,20 +697,6 @@
 
     .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
       stroke: @chart-navy-secondary;
-    }
-
-    .highcharts-tooltip {
-      .highcharts-color-1, .highcharts-color-0 {
-        display: inline-block;
-        height: 4px;
-        width: 15px;
-        margin-bottom: 3px;
-        background: @chart-navy-primary;
-      }
-      .highcharts-color-1 {
-        height: 1px;
-        margin-bottom: 5px;
-      }
     }
 
   }

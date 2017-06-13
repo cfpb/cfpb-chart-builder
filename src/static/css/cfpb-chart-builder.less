@@ -55,7 +55,8 @@
   .highcharts-root,
   .highcharts-container,
   .highcharts-legend-box,
-  .highcharts-axis-labels {
+  .highcharts-axis-labels,
+  .highcharts-tooltip text {
     .chart-label();
   }
 
@@ -192,7 +193,7 @@
       
     }
 
-    &.highcharts-color-0 {
+    &.highcharts-color-1 {
       position: relative !important;
       top: 46px !important;
 
@@ -465,17 +466,17 @@
       stroke-linecap: butt;
     }
 
-    // Unadjusted
+    // Seasonally adjusted 
     .highcharts-series-0 {
       .highcharts-graph {
-        stroke-width: 1px;
+        stroke-width: 4px;
       }
     }
 
-    // Seasonally adjusted 
+    // Unadjusted
     .highcharts-series-1 {
       .highcharts-graph {
-        stroke-width: 4px;
+        stroke-width: 1px;
       }
     }
 
@@ -484,26 +485,54 @@
       stroke-dasharray: 5, 5;
     }
 
-    .highcharts-color-0 .highcharts-zone-graph-1 {
+    .highcharts-color-1 .highcharts-zone-graph-1 {
       stroke-dasharray: 3, 3;
     }
 
     &[data-chart-color='blue'] {
 
-      .highcharts-color-0, 
-      .highcharts-color-1,
+      .highcharts-color-1, 
+      .highcharts-color-0,
       .highcharts-navigator-series .highcharts-graph  {
         stroke: @chart-blue-primary;
+      }
+
+      .highcharts-tooltip {
+        .highcharts-color-1, .highcharts-color-0 {
+          display: inline-block;
+          height: 4px;
+          width: 15px;
+          margin-bottom: 3px;
+          background: @chart-blue-primary;
+        }
+        .highcharts-color-1 {
+          height: 1px;
+          margin-bottom: 5px;
+        }
       }
 
     }
 
     &[data-chart-color='green'] {
 
-      .highcharts-color-0, 
-      .highcharts-color-1,
+      .highcharts-color-1, 
+      .highcharts-color-0,
       .highcharts-navigator-series .highcharts-graph {
         stroke: @chart-green-primary;
+      }
+
+      .highcharts-tooltip {
+        .highcharts-color-1, .highcharts-color-0 {
+          display: inline-block;
+          height: 4px;
+          width: 15px;
+          margin-bottom: 3px;
+          background: @chart-green-primary;
+        }
+        .highcharts-color-1 {
+          height: 1px;
+          margin-bottom: 5px;
+        }
       }
 
     }
@@ -511,20 +540,48 @@
     &[data-chart-color='teal'] {
 
 
-      .highcharts-color-0, 
-      .highcharts-color-1,
+      .highcharts-color-1, 
+      .highcharts-color-0,
       .highcharts-navigator-series .highcharts-graph  {
         stroke: @chart-teal-primary;
+      }
+
+      .highcharts-tooltip {
+        .highcharts-color-1, .highcharts-color-0 {
+          display: inline-block;
+          height: 4px;
+          width: 15px;
+          margin-bottom: 3px;
+          background: @chart-teal-primary;
+        }
+        .highcharts-color-1 {
+          height: 1px;
+          margin-bottom: 5px;
+        }
       }
 
     }
 
     &[data-chart-color='navy'] {
 
-      .highcharts-color-0, 
-      .highcharts-color-1,
+      .highcharts-color-1, 
+      .highcharts-color-0,
       .highcharts-navigator-series .highcharts-graph  {
         stroke: @chart-navy-primary;
+      }
+
+      .highcharts-tooltip {
+        .highcharts-color-1, .highcharts-color-0 {
+          display: inline-block;
+          height: 4px;
+          width: 15px;
+          margin-bottom: 3px;
+          background: @chart-navy-primary;
+        }
+        .highcharts-color-1 {
+          height: 1px;
+          margin-bottom: 5px;
+        }
       }
 
     }
@@ -544,6 +601,10 @@
 
     }
 
+    .highcharts-tooltip .highcharts-color-0 {
+      display: none;
+    }
+
     &[data-chart-color='blue'] {
 
         .highcharts-point {
@@ -553,6 +614,10 @@
             fill: @chart-blue-primary;
           }
 
+        }
+
+        .highcharts-tooltip-box {
+          stroke: @chart-blue-primary;
         }
         
     }
@@ -567,6 +632,10 @@
           }
 
         }
+
+        .highcharts-tooltip-box {
+          stroke: @chart-green-primary;
+        }
         
     }
 
@@ -580,6 +649,10 @@
           }
 
         }
+
+        .highcharts-tooltip-box {
+          stroke: @chart-teal-primary;
+        }
         
     }
 
@@ -592,6 +665,10 @@
             fill: @chart-navy-primary;
           }
 
+        }
+
+        .highcharts-tooltip-box {
+          stroke: @chart-navy-primary;
         }
         
     }

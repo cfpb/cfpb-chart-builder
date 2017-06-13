@@ -100,6 +100,9 @@ function BarChart( props ) {
         reserveSpace: false
       }
     },
+    tooltip: {
+      useHTML: true
+    },
     series: [ {
       type: 'column',
       data: props.data,

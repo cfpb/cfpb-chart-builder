@@ -21,7 +21,7 @@ function _drawLegend( chart ) {
     };
   }
 
-   // args: (str, x, y, shape, anchorX, anchorY, useHTML, baseline, className)
+  // args: (str, x, y, shape, anchorX, anchorY, useHTML, baseline, className)
   chart.renderer.label('Year-over-year change (rounded to the nearest whole number)', 5, 5, null, null, null, true, false, 'label__tile-map').add();
 
 
@@ -70,15 +70,10 @@ function TileMap( props ) {
       type: 'map',
       dataLabels: {
         enabled: true,
-        color: black,
         formatter: function() {
-          return '<div style="text-align:center">' + this.point.name + '<br /><span style="font-weight:normal;">' + this.point.value + '%</span></div>';
+          return '<div class="highcharts-data-label-state-abbr">' + this.point.name + '<br /><span class=highcharts-data-label-state-value>' + this.point.value + '%</span></div>';
         },
-        useHTML: true,
-        style: {
-          fontSize: '14px',
-          lineHeight: '1.4em'
-        }
+        useHTML: true
       },
       name: props.title,
       data: props.data

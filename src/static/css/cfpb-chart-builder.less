@@ -75,13 +75,22 @@
 
       color: @black;
       font-family: "AvenirNextLTW01-Demi";
+      font-size: 14px;
+      line-height: 1.4em;
 
       .respond-to-max( 600px, {
         margin-top: 2px;
         font-size: 10px;
+        line-height: 1em;
       });
 
-      span > div > span {
+
+
+      .highcharts-data-label-state-abbr {
+        text-align: center;
+      }
+
+      .highcharts-data-label-state-value {
         font-family: "AvenirNextLTW01-Regular";
         
         .respond-to-max( 600px, {
@@ -648,6 +657,7 @@
 
 .cfpb-chart[data-chart-type="tile_map"] {
   height: 630px;
+  
   .highcharts-map-series .highcharts-point {
     stroke: @gray-80;
     &:hover,
@@ -655,6 +665,7 @@
       stroke: @black;
     }
   }
+
 }
 
 @media (max-width: 600px) {

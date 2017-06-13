@@ -4,125 +4,145 @@
     <meta charset="utf-8">
     <title>CFPB Chart Builder Demo Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../dist/static/css/cfpb-chart-builder.css">
+    
+
+    <!--[if lt IE 9]>      <link rel="stylesheet" href="../dist/static/css/main.ie8.min.css"> <![endif]-->
+    <!--[if IE 9]><link rel="stylesheet" href="../dist/static/css/main.ie9.min.css"><![endif]-->
+    <!--[if gt IE 8]><!--> <link rel="stylesheet" href="../dist/static/css/main.min.css"> <!--<![endif]-->
+
   </head>
   <body>
 
-    <h1>Some Sample CCT Charts</h1>
+   <div class="content_main">
+            <h1>Some Sample CCT Charts</h1>
 
-    <div class="cfpb-chart"
-         data-chart-type="line"
-         data-chart-title="Number of loans originated"
-         data-chart-color="blue"
-         data-chart-description="This is the chart description."
-         data-chart-source="consumer-credit-trends/num_data_AUT.csv">
-         This is the chart description.
-    </div>
+            <div class="cfpb-chart"
+                 data-chart-type="line"
+                 data-chart-title="Number of loans originated"
+                 data-chart-color="green"
+                 data-chart-description="This is the chart description."
+                 data-chart-source="consumer-credit-trends/auto-loans/num_data_AUT.csv">
+                 This is the chart description.
+            </div>
 
-    <hr>
+            <hr>
 
-    <div class="cfpb-chart"
-         data-chart-type="bar"
-         data-chart-title="Number of loans originated"
-         data-chart-color="teal"
-         data-chart-description="This is the chart description."
-         data-chart-metadata="Number of Loans"
-         data-chart-source="consumer-credit-trends/yoy_data_all_AUT.csv">
-         This is the chart description.
-    </div>
+            <div class="cfpb-chart"
+                 data-chart-type="bar"
+                 data-chart-title="Number of loans originated"
+                 data-chart-color="teal"
+                 data-chart-description="This is the chart description."
+                 data-chart-metadata="Number of Loans"
+                 data-chart-source="consumer-credit-trends/auto-loans/yoy_data_all_AUT.csv">
+                 This is the chart description.
+            </div>
 
-    <hr>
+            <hr>
 
-    <div class="cfpb-chart"
-         data-chart-type="line"
-         data-chart-title="Volume of loans originated"
-         data-chart-color="green"
-         data-chart-description="This is the chart description."
-         data-chart-source="consumer-credit-trends/vol_data_AUT.csv">
-         This is the chart description.
-    </div>
+            <div class="cfpb-chart"
+                 data-chart-type="line"
+                 data-chart-title="Volume of loans originated"
+                 data-chart-color="green"
+                 data-chart-description="This is the chart description."
+                 data-chart-source="consumer-credit-trends/auto-loans/vol_data_AUT.csv">
+                 This is the chart description.
+            </div>
 
-    <hr>
+            <hr>
 
-    <div class="cfpb-chart"
-         data-chart-type="tile_map"
-         data-chart-title="Map about something"
-         data-chart-color="navy"
-         data-chart-description="This is the chart description."
-         data-chart-source="consumer-credit-trends/map_data_AUT.csv">
-         This is the chart description.
-    </div>
+            <div class="cfpb-chart"
+                 data-chart-type="tile_map"
+                 data-chart-title="Map about something"
+                 data-chart-color="navy"
+                 data-chart-description="This is the chart description."
+                 data-chart-source="consumer-credit-trends/auto-loans/map_data_AUT.csv">
+                 This is the chart description.
+            </div>
 
-    <hr>
+            <hr>
 
-    <div class="cfpb-chart"
-         data-chart-type="bar"
-         data-chart-title="Volume of loans originated"
-         data-chart-color="blue"
-         data-chart-description="This is the chart description."
-         data-chart-metadata="Dollar Volume"
-         data-chart-source="consumer-credit-trends/yoy_data_all_AUT.csv">
-         This is the chart description.
-    </div>
+            <div class="cfpb-chart"
+                 data-chart-type="bar"
+                 data-chart-title="Volume of loans originated"
+                 data-chart-color="blue"
+                 data-chart-description="This is the chart description."
+                 data-chart-metadata="Dollar Volume"
+                 data-chart-source="consumer-credit-trends/auto-loans/yoy_data_all_AUT.csv">
+                 This is the chart description.
+            </div>
 
-    <hr>
+            <hr>
 
-    <div class="cfpb-chart"
-         data-chart-type="line"
-         data-chart-title="Deep subprime (credit scores below 580)"
-         data-chart-color="green"
-         data-chart-description="This is the chart description."
-         data-chart-metadata="Deep Subprime"
-         data-chart-source="consumer-credit-trends/volume_data_Score_Level_AUT.csv">
-         This is the chart description.
-    </div>
+            <div class="cfpb-chart"
+                 data-chart-type="line"
+                 data-chart-title="Deep subprime (credit scores below 580)"
+                 data-chart-color="green"
+                 data-chart-description="This is the chart description."
+                 data-chart-metadata="Deep subprime"
+                 data-chart-source="consumer-credit-trends/auto-loans/volume_data_Score_Level_AUT.csv">
+                 This is the chart description.
+            </div>
 
-    <hr>
+            <hr>
 
-    <div class="cfpb-chart"
-         data-chart-type="line"
-         data-chart-title="Subprime (credit scores 580 - 619)"
-         data-chart-color="teal"
-         data-chart-description="This is the chart description."
-         data-chart-metadata="Subprime"
-         data-chart-source="consumer-credit-trends/volume_data_Score_Level_AUT.csv">
-         This is the chart description.
-    </div>
+            <div class="cfpb-chart"
+                 data-chart-type="line"
+                 data-chart-title="Subprime (credit scores 580 - 619)"
+                 data-chart-color="teal"
+                 data-chart-description="This is the chart description."
+                 data-chart-metadata="Subprime"
+                 data-chart-source="consumer-credit-trends/auto-loans/volume_data_Score_Level_AUT.csv">
+                 This is the chart description.
+            </div>
 
-    <hr>
+            <hr>
 
-    <div class="cfpb-chart"
-         data-chart-type="tile_map"
-         data-chart-title="This is the tile map title"
-         data-chart-color="navy"
-         data-chart-description="This is the chart description."
-         data-chart-source="consumer-credit-trends/map_data_MTG.csv">
-         This is the chart description.
-    </div>
+            <div class="cfpb-chart"
+                 data-chart-type="tile_map"
+                 data-chart-title="This is the tile map title"
+                 data-chart-color="navy"
+                 data-chart-description="This is the chart description."
+                 data-chart-source="consumer-credit-trends/mortgages/map_data_MTG.csv">
+                 This is the chart description.
+            </div>
 
-    <hr>
+            <hr>
 
-    <div class="cfpb-chart"
-         data-chart-type="line"
-         data-chart-title="High income (relative income 120% or above)"
-         data-chart-color="blue"
-         data-chart-description="This is the chart description."
-         data-chart-metadata="High"
-         data-chart-source="consumer-credit-trends/volume_data_Income_Level_MTG.csv">
-         This is the chart description.
-    </div>
+            <div class="cfpb-chart"
+                 data-chart-type="line"
+                 data-chart-title="High income (relative income 120% or above)"
+                 data-chart-color="blue"
+                 data-chart-description="This is the chart description."
+                 data-chart-metadata="High"
+                 data-chart-source="consumer-credit-trends/mortgages/volume_data_Income_Level_MTG.csv">
+                 This is the chart description.
+            </div>
 
-    <hr>
+            <hr>
 
-    <div class="cfpb-chart"
-         data-chart-type="bar"
-         data-chart-title="Deep subprime (credit scores below 580)"
-         data-chart-color="green"
-         data-chart-description="This is the chart description."
-         data-chart-metadata="Deep Subprime"
-         data-chart-source="consumer-credit-trends/yoy_data_Score_Level_MTG.csv">
-         This is the chart description.
-    </div>
+            <div class="cfpb-chart"
+                 data-chart-type="bar"
+                 data-chart-title="Deep subprime (credit scores below 580)"
+                 data-chart-color="green"
+                 data-chart-description="This is the chart description."
+                 data-chart-metadata="Deep subprime"
+                 data-chart-source="consumer-credit-trends/mortgages/yoy_data_Score_Level_MTG.csv">
+                 This is the chart description.
+            </div>
+
+            <hr>
+
+            <div class="cfpb-chart"
+                 data-chart-type="bar"
+                 data-chart-title="Subprime"
+                 data-chart-color="green"
+                 data-chart-description="This is the chart description."
+                 data-chart-metadata="Subprime"
+                 data-chart-source="consumer-credit-trends/mortgages/yoy_data_Score_Level_MTG.csv">
+                 This is the chart description.
+            </div>
+
+        </div><!-- END .content_main -->
 
     <script type="text/javascript" src="./test-runner.js"></script>
 

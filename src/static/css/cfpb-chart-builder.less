@@ -648,6 +648,13 @@
 
 .cfpb-chart[data-chart-type="tile_map"] {
   height: 630px;
+  .highcharts-map-series .highcharts-point {
+    stroke: @gray-80;
+    &:hover,
+    &:focus {
+      stroke: @black;
+    }
+  }
 }
 
 @media (max-width: 600px) {

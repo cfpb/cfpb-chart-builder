@@ -5,19 +5,6 @@ require( 'highcharts/js/modules/accessibility' )( Highcharts );
 
 function _drawLegend( chart ) {
 
-  // var legendStyle = {
-  //   color: '#101820',
-  //   fontSize: '16px',
-  //   fontWeight: 'bold',
-  //   fontFamily: "'AvenirNextLTW01-Demi',Arial,sans-serif;"
-  // };
-
-  var textStyle = {
-    color: '#5a5d61',
-    fontSize: '16px',
-    fontFamily: "'AvenirNextLTW01-Regular',Arial,sans-serif"
-  };
-
   function _boxStyle( color ) {
     return {
       'stroke-width': 1,
@@ -29,17 +16,20 @@ function _drawLegend( chart ) {
    // args: (str, x, y, shape, anchorX, anchorY, useHTML, baseline, className)
   chart.renderer.label('Year-over-year change (rounded to the nearest whole number)', 5, 5, null, null, null, true, false, 'label__tile-map').add();
 
-  chart.renderer.rect( 10, 48, 15, 15 ).attr( _boxStyle( '#bae0a2' ) ).add();
-  chart.renderer.rect( 10, 71, 15, 15 ).attr( _boxStyle( '#e2efd8' ) ).add();
-  chart.renderer.rect( 10, 94, 15, 15 ).attr( _boxStyle( '#f7f8f9' ) ).add();
-  chart.renderer.rect( 10, 117, 15, 15 ).attr( _boxStyle( '#d6e8fa' ) ).add();
-  chart.renderer.rect( 10, 140, 15, 15 ).attr( _boxStyle( '#96c4ed' ) ).add();
 
-  chart.renderer.text( '16% or greater', 32, 61 ).css( textStyle ).add();
-  chart.renderer.text( '6% to 15%', 32, 84 ).css( textStyle ).add();
-  chart.renderer.text( '-5% to 5%', 32, 107 ).css( textStyle ).add();
-  chart.renderer.text( '-15% to -6%', 32, 130 ).css( textStyle ).add();
-  chart.renderer.text( '-16% or less', 32, 153 ).css( textStyle ).add();
+  var legend = chart.renderer.g('legend__tile-map ').add();
+
+  chart.renderer.rect( 10, 48, 15, 15 ).attr( _boxStyle( '#bae0a2' ) ).add(legend);
+  chart.renderer.rect( 10, 71, 15, 15 ).attr( _boxStyle( '#e2efd8' ) ).add(legend);
+  chart.renderer.rect( 10, 94, 15, 15 ).attr( _boxStyle( '#f7f8f9' ) ).add(legend);
+  chart.renderer.rect( 10, 117, 15, 15 ).attr( _boxStyle( '#d6e8fa' ) ).add(legend);
+  chart.renderer.rect( 10, 140, 15, 15 ).attr( _boxStyle( '#96c4ed' ) ).add(legend);
+
+  chart.renderer.text( '16% or greater', 32, 61 ).add(legend);
+  chart.renderer.text( '6% to 15%', 32, 84 ).add(legend);
+  chart.renderer.text( '-5% to 5%', 32, 107 ).add(legend);
+  chart.renderer.text( '-15% to -6%', 32, 130 ).add(legend);
+  chart.renderer.text( '-16% or less', 32, 153 ).add(legend);
 
 }
 

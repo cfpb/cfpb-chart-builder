@@ -179,11 +179,22 @@ function LineChart( props ) {
         }
       }
     },
+    tooltip: {
+      useHTML: true,
+      formatter: function() {
+        var tooltip = Highcharts.dateFormat('%B %Y', this.x);
+        for (var i = 0; i < this.points.length; i++) {
+          var point = this.points[i];
+          tooltip += "<br><span class='highcharts-color-" + point.series.colorIndex + "'></span> " + point.series.name+": " + Highcharts.numberFormat(point.y, 0);
+        }
+        return tooltip;
+      }
+    },
     series: [
       {
-        name: 'Unadjusted',
-        data: props.data.unadjusted,
-        legendIndex: 2,
+        name: 'Seasonally adjusted',
+        data: props.data.adjusted,
+        legendIndex: 1,
         tooltip: {
           valueDecimals: 0
         },
@@ -193,9 +204,9 @@ function LineChart( props ) {
         } ]
       },
       {
-        name: 'Seasonally adjusted',
-        data: props.data.adjusted,
-        legendIndex: 1,
+        name: 'Unadjusted',
+        data: props.data.unadjusted,
+        legendIndex: 2,
         tooltip: {
           valueDecimals: 0
         },

@@ -5,12 +5,12 @@ require( 'highcharts/js/modules/accessibility' )( Highcharts );
 
 function _drawLegend( chart ) {
 
-  var legendStyle = {
-    color: '#101820',
-    fontSize: '16px',
-    fontWeight: 'bold',
-    fontFamily: "'AvenirNextLTW01-Demi',Arial,sans-serif;"
-  };
+  // var legendStyle = {
+  //   color: '#101820',
+  //   fontSize: '16px',
+  //   fontWeight: 'bold',
+  //   fontFamily: "'AvenirNextLTW01-Demi',Arial,sans-serif;"
+  // };
 
   var textStyle = {
     color: '#5a5d61',
@@ -26,7 +26,8 @@ function _drawLegend( chart ) {
     };
   }
 
-  chart.renderer.text( 'Year-over-year change (rounded to the nearest whole number)', 10, 25 ).css( legendStyle ).add();
+   // args: (str, x, y, shape, anchorX, anchorY, useHTML, baseline, className)
+  chart.renderer.label('Year-over-year change (rounded to the nearest whole number)', 5, 5, null, null, null, true, false, 'label__tile-map').add();
 
   chart.renderer.rect( 10, 48, 15, 15 ).attr( _boxStyle( '#bae0a2' ) ).add();
   chart.renderer.rect( 10, 71, 15, 15 ).attr( _boxStyle( '#e2efd8' ) ).add();
@@ -64,51 +65,8 @@ function TileMap( props ) {
     legend: {
       enabled: false
     },
-    // tooltip: {
-    //   borderColor: 'rgb(117, 120, 123)',
-    //   formatter: function() {
-    //     return this.point.tooltip;
-    //   }
-    // },
     tooltip: {
       enabled: false
-    },
-    responsive: {
-      rules: [ {
-        condition: {
-          maxWidth: 500
-        },
-        chartOptions: {
-          chart: {
-            height: 400
-          },
-          series: [ {
-            type: 'map',
-            borderColor: '#75787b',
-            states: {
-              hover: {
-                brightness: 0,
-                borderColor: '#101820'
-              }
-            },
-            // borderWidth: 0.2,
-            dataLabels: {
-              enabled: true,
-              color: '#101820',
-              formatter: function() {
-                return '<div style="text-align:center">' + this.point.name + '<br /><span style="font-weight:normal;">' + this.point.value + '%</span></div>';
-              },
-              useHTML: true,
-              style: {
-                fontSize: '10px',
-                lineHeight: '1em'
-              }
-            },
-            name: props.title,
-            data: props.data
-          } ]
-        }
-      } ]
     },
     series: [ {
       type: 'map',
@@ -119,7 +77,6 @@ function TileMap( props ) {
           borderColor: '#000'
         }
       },
-      // borderWidth: 0.2,
       dataLabels: {
         enabled: true,
         color: '#101820',

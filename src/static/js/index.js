@@ -2,7 +2,6 @@
 
 var ajax = require( 'xdr' );
 var documentReady = require( './utils/document-ready' );
-var debounce = require( './utils/debounce' );
 var createChart = require( './charts' );
 var process = require( './utils/process-json' );
 
@@ -41,9 +40,8 @@ if (!Array.prototype.indexOf)
 */
 
 documentReady( function() {
+  
   buildCharts();
-
-  window.addEventListener( 'resize', debounce( buildCharts, 1000 ) );
 
 } );
 

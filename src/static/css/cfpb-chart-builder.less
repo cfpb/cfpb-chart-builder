@@ -47,7 +47,7 @@
 
   .chart-label {
     font-size: 16px;
-    font-family: 'AvenirNextLTW01-Regular',Arial,sans-serif;
+    .u-webfont-regular();
     color: @gray;
     fill: @gray;
   }
@@ -63,8 +63,7 @@
   .highcharts-label__tile-map {
     .chart-label();
     color: @black;
-    font-family: 'AvenirNextLTW01-Demi',Arial,sans-serif;
-    font-weight: bold;
+    .u-webfont-demi();
     span {
       position: relative !important;
       white-space: normal !important;
@@ -73,9 +72,8 @@
 
   &[data-chart-type="tile_map"] {
     .highcharts-data-label {
-
+      .u-webfont-demi();
       color: @black;
-      font-family: "AvenirNextLTW01-Demi";
       font-size: 14px;
       line-height: 1.4em;
 
@@ -85,14 +83,12 @@
         line-height: 1em;
       });
 
-
-
       .highcharts-data-label-state-abbr {
         text-align: center;
       }
 
       .highcharts-data-label-state-value {
-        font-family: "AvenirNextLTW01-Regular";
+        .u-webfont-regular();
         
         .respond-to-max( 600px, {
           display: block;
@@ -361,7 +357,7 @@
   .highcharts-button-pressed,
   .highcharts-button-hover {
     fill: @pacific-60;
-    font-family: "AvenirNextLTW01-Demi";
+    .u-webfont-demi();
   }
 
   .highcharts-button-box {

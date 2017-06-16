@@ -1,6 +1,6 @@
 'use strict';
 
-var statePaths = {
+var getTileMapState = {
   AL: {
     abbr: 'AL',
     path: 'M550,-337L633,-337,633,-253,550,-253,550,-337'
@@ -207,6 +207,4 @@ var statePaths = {
   }
 };
 
-module.exports = {
-  statePaths: statePaths
-};
+module.exports = getTileMapState;

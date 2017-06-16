@@ -1,5 +1,6 @@
 'use strict';
 
+var getTileMapColor = require( './get-tile-map-color' );
 var tileMapUtils = require( './tile-map' );
 
 /**
@@ -226,7 +227,7 @@ function processMapData( data ) {
       path: state.path,
       value: value,
       tooltip: tooltip,
-      color: tileMapUtils.getColor( value )
+      color: getTileMapColor.getColorByValue( value )
     };
   } );
 

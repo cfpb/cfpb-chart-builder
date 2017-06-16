@@ -2,21 +2,15 @@
 
 var Highcharts = require( 'highcharts/js/highmaps' );
 require( 'highcharts/js/modules/accessibility' )( Highcharts );
+var getTileMapColor = require( '../utils/get-tile-map-color' );
 
-var green50 = '#bae0a2';
-var green20 = '#e2efd8';
-var gray5 = '#f7f8f9';
-var pacific20 = '#d6e8fa';
-var pacific50 = '#96c4ed';
-var gray80 = '#75787b';
-var black = '#101820';
 
 function _drawLegend( chart ) {
 
   function _boxStyle( color ) {
     return {
       'stroke-width': 1,
-      'stroke': gray80,
+      'stroke': getTileMapColor.gray80,
       'fill': color
     };
   }
@@ -27,11 +21,11 @@ function _drawLegend( chart ) {
 
   var legend = chart.renderer.g('legend__tile-map ').add();
 
-  chart.renderer.rect( 10, 48, 15, 15 ).attr( _boxStyle( green50 ) ).add(legend);
-  chart.renderer.rect( 10, 71, 15, 15 ).attr( _boxStyle( green20 ) ).add(legend);
-  chart.renderer.rect( 10, 94, 15, 15 ).attr( _boxStyle( gray5 ) ).add(legend);
-  chart.renderer.rect( 10, 117, 15, 15 ).attr( _boxStyle( pacific20 ) ).add(legend);
-  chart.renderer.rect( 10, 140, 15, 15 ).attr( _boxStyle( pacific50 ) ).add(legend);
+  chart.renderer.rect( 10, 48, 15, 15 ).attr( _boxStyle( getTileMapColor.green50 ) ).add(legend);
+  chart.renderer.rect( 10, 71, 15, 15 ).attr( _boxStyle( getTileMapColor.green20 ) ).add(legend);
+  chart.renderer.rect( 10, 94, 15, 15 ).attr( _boxStyle( getTileMapColor.gray5 ) ).add(legend);
+  chart.renderer.rect( 10, 117, 15, 15 ).attr( _boxStyle( getTileMapColor.pacific20 ) ).add(legend);
+  chart.renderer.rect( 10, 140, 15, 15 ).attr( _boxStyle( getTileMapColor.pacific50 ) ).add(legend);
 
   chart.renderer.text( '16% or greater', 32, 61 ).add(legend);
   chart.renderer.text( '6% to 15%', 32, 84 ).add(legend);

@@ -1,28 +1,5 @@
 'use strict';
 
-function getColor( value ) {
-
-  var green50 = '#bae0a2';
-  var green20 = '#e2efd8';
-  var gray5 = '#f7f8f9';
-  var pacific20 = '#d6e8fa';
-  var pacific50 = '#96c4ed';
-
-  if ( value < -15 ) {
-    return pacific50;
-  }
-  if ( value < -5 ) {
-    return pacific20;
-  }
-  if ( value < 6 ) {
-    return gray5;
-  }
-  if ( value < 16 ) {
-    return green20;
-  }
-  return green50;
-}
-
 var statePaths = {
   AL: {
     abbr: 'AL',
@@ -231,6 +208,5 @@ var statePaths = {
 };
 
 module.exports = {
-  statePaths: statePaths,
-  getColor: getColor
+  statePaths: statePaths
 };

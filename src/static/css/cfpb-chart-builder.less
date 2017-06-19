@@ -46,7 +46,7 @@
 
 
   .chart-label {
-    font-size: 16px;
+    font-size: @base-font-size-px;
     .u-webfont-regular();
     color: @gray;
     fill: @gray;
@@ -74,13 +74,13 @@
     .highcharts-data-label {
       .u-webfont-demi();
       color: @black;
-      font-size: 14px;
-      line-height: 1.4em;
+      font-size: @size-v;
+      line-height: 1.4;
 
       .respond-to-max( 600px, {
         margin-top: 2px;
         font-size: 10px;
-        line-height: 1em;
+        line-height: 1;
       });
 
       .highcharts-data-label-state-abbr {
@@ -333,7 +333,7 @@
 
   .highcharts-button {
     fill: @pacific-20;
-    font-size: 14px;
+    font-size: @size-v;
 
     &:hover {
       cursor: pointer;

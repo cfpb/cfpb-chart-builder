@@ -1,6 +1,7 @@
 'use strict';
 
-var tileMapUtils = require( './tile-map' );
+var getTileMapColor = require( './get-tile-map-color' );
+var getTileMapState = require( './get-tile-map-state' );
 
 /**
  * Returns an object with the UTC timestamp number in milliseconds and human-friendly month and year for a given date in either format
@@ -218,7 +219,7 @@ function processMapData( data ) {
   } );
 
   data = data.map( function( obj, i ) {
-    var state = tileMapUtils.statePaths[obj.name],
+    var state = getTileMapState[obj.name],
         value = Math.round( obj.value ),
         tooltip = state.abbr + ' ' + ( value < 0 ? 'decreased' : 'increased' ) + ' by ' + Math.abs( value ) + '%';
     return {
@@ -226,7 +227,7 @@ function processMapData( data ) {
       path: state.path,
       value: value,
       tooltip: tooltip,
-      color: tileMapUtils.getColor( value )
+      color: getTileMapColor.getColorByValue( value )
     };
   } );
 

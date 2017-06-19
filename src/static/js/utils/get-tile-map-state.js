@@ -1,22 +1,6 @@
 'use strict';
 
-function getColor( value ) {
-  if ( value < -15 ) {
-    return '#96c4ed';
-  }
-  if ( value < -5 ) {
-    return '#d6e8fa';
-  }
-  if ( value < 6 ) {
-    return '#f7f8f9';
-  }
-  if ( value < 16 ) {
-    return '#e2efd8';
-  }
-  return '#bae0a2';
-}
-
-var statePaths = {
+var getTileMapState = {
   AL: {
     abbr: 'AL',
     path: 'M550,-337L633,-337,633,-253,550,-253,550,-337'
@@ -223,7 +207,4 @@ var statePaths = {
   }
 };
 
-module.exports = {
-  statePaths: statePaths,
-  getColor: getColor
-};
+module.exports = getTileMapState;

@@ -47,7 +47,7 @@
 
   .chart-label {
     font-size: 16px;
-    font-family: 'AvenirNextLTW01-Regular',Arial,sans-serif;
+    .u-webfont-regular();
     color: @gray;
     fill: @gray;
   }
@@ -60,19 +60,35 @@
     .chart-label();
   }
 
+  .highcharts-label__tile-map {
+    .chart-label();
+    color: @black;
+    .u-webfont-demi();
+    span {
+      position: relative !important;
+      white-space: normal !important;
+    }
+  }
+
   &[data-chart-type="tile_map"] {
     .highcharts-data-label {
-
+      .u-webfont-demi();
       color: @black;
-      font-family: "AvenirNextLTW01-Demi";
+      font-size: 14px;
+      line-height: 1.4em;
 
       .respond-to-max( 600px, {
         margin-top: 2px;
         font-size: 10px;
+        line-height: 1em;
       });
 
-      span > div > span {
-        font-family: "AvenirNextLTW01-Regular";
+      .highcharts-data-label-state-abbr {
+        text-align: center;
+      }
+
+      .highcharts-data-label-state-value {
+        .u-webfont-regular();
         
         .respond-to-max( 600px, {
           display: block;
@@ -218,6 +234,15 @@
 
   }
 
+  .highcharts-legend__tile-map {
+    transform: translateY(15px);
+
+    .respond-to-min( 500px, {
+      transform: translateY(0);
+    });
+
+  }
+
   .highcharts-range-selector-label {
     display: table;
     margin-top: 0 !important;
@@ -332,7 +357,7 @@
   .highcharts-button-pressed,
   .highcharts-button-hover {
     fill: @pacific-60;
-    font-family: "AvenirNextLTW01-Demi";
+    .u-webfont-demi();
   }
 
   .highcharts-button-box {
@@ -705,6 +730,15 @@
 
 .cfpb-chart[data-chart-type="tile_map"] {
   height: 630px;
+  
+  .highcharts-map-series .highcharts-point {
+    stroke: @gray-80;
+    &:hover,
+    &:focus {
+      stroke: @black;
+    }
+  }
+
 }
 
 @media (max-width: 600px) {

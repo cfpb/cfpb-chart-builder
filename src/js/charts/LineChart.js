@@ -75,9 +75,9 @@ function _getTickValue( value ) {
     return value;
   }
   if ( value % 1000000000 < value ) {
-    return value / 1000000000 + 'B';
+    return ( value / 1000000000 ) + 'B';
   }
-  return value / 1000000 + 'M';
+  return ( value / 1000000 ) + 'M';
 }
 
 function LineChart( props ) {

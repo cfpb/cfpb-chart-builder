@@ -1,30 +1,3 @@
-# Enable ecmascript 6 features.
-ecmaFeatures:
-  arrowFunctions: false
-  binaryLiterals: false
-  blockBindings: false
-  classes: false
-  defaultParams: false
-  destructuring: false
-  forOf: true
-  generators: false
-  modules: false
-  objectLiteralComputedProperties: false
-  objectLiteralDuplicateProperties: false
-  objectLiteralShorthandMethods: false
-  objectLiteralShorthandProperties: false
-  octalLiterals: false
-  regexUFlag: false
-  regexYFlag: false
-  restParams: true
-  spread: false
-  superInFunctions: false
-  templateStrings: false
-  unicodeCodePointEscapes: false
-  globalReturn: false
-  jsx: true
-  experimentalObjectRestSpread: false
-
 parser: espree
 
 env:
@@ -676,17 +649,6 @@ rules:
     - 1
     - 5
 
-  # Specifies maximum length of a line in your program.
-  max-len:
-    - 1
-    -
-      code: 80
-      tabWidth: 4
-      comments: 80
-      ignorePattern: ''
-      ignoreTrailingComments: true
-      ignoreUrls: true
-
   # Enforce a maximum file length.
   max-lines:
     - 0
@@ -754,9 +716,6 @@ rules:
 
   # Disallow use of the continue statement.
   no-continue: 1
-
-  # Disallows inline after code.
-  no-inline-comments: 1
 
   # Disallows if as the only statement in an else block.
   no-lonely-if: 2

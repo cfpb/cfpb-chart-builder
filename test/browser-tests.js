@@ -65,6 +65,10 @@ function startSauce(err, process) {
     }
   };
   request.post(opts, function(err, httpResponse, body) {
+    if ( err || body.message === 'Not authorized' ) {
+      return console.error( 'Error starting Sauce Labs tests.' );
+      process.exit(1);
+    }
     console.log("Tests started.");
     sauceTests = body['js tests'];
     checkSauce();

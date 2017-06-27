@@ -41,28 +41,25 @@ module.exports = {
     dest: loc.dist
   },
   styles: {
-    cwd:      loc.src + '/css',
-    src:      '/main.less',
-    dest:     loc.dist + '/css',
-    settings: {
-      paths: glob.sync( loc.lib + '/cf-*/src/' ),
-      compress: true
+    demo: {
+      src:   loc.test + '/css/demo.less',
+      dest:  loc.test + '/css/'
     }
   },
   chartStyles: {
     cwd:      loc.src + '/css',
     src:      '/cfpb-chart-builder.less',
-    dest:     loc.dist + '/css',
+    dest:     loc.dist,
     settings: {
-      paths: glob.sync( loc.lib + '/cf-*/src/' ),
+      paths: glob.sync( loc.lib + '/cf-*/src/' ).concat( [ loc.lib + '/highcharts/css/' ] ),
       compress: true
     }
   },
   scripts: {
     src: [
-      loc.src + '/js/**/*.js'
+      loc.src + '/js/index.js'
     ],
-    dest: loc.dist + '/js/',
+    dest: loc.dist,
     name: 'cfpb-chart-builder'
   },
   copy: {

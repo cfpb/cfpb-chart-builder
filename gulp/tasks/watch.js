@@ -10,6 +10,5 @@ var config = require( '../config' );
 
 gulp.task( 'watch', [ 'connect', 'browserSync' ], function() {
   gulp.watch( config.scripts.src, [ 'scripts:concat', 'test:unit' ] );
-  gulp.watch( config.styles.cwd + '/**/*.less', [ 'styles' ] );
-  gulp.watch( config.copy.html.src, [ 'copy:html' ] );
+  gulp.watch( config.chartStyles.src, [ 'styles' ] );
 } );

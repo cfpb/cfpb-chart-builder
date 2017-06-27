@@ -5,10 +5,12 @@
     <title>CFPB Chart Builder Demo Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Set some base grid and typography stuff to make the demo page pretty -->
+    <link rel="stylesheet" href="css/demo.css">
 
-    <!--[if lt IE 9]>      <link rel="stylesheet" href="css/main.ie8.min.css"> <![endif]-->
-    <!--[if IE 9]><link rel="stylesheet" href="css/main.ie9.min.css"><![endif]-->
-    <!--[if gt IE 8]><!--> <link rel="stylesheet" href="css/main.min.css"> <!--<![endif]-->
+    <!-- Our gulp connect task has both test/ and dist/ set as the root so this file
+    is automatically read from dist/ -->
+    <link rel="stylesheet" href="cfpb-chart-builder.css">
 
   </head>
   <body>
@@ -16,7 +18,7 @@
    <div class="content_main">
             <h1>Some Sample CCT Charts</h1>
 
-            <div class="cfpb-chart"
+            <!-- <div class="cfpb-chart"
                  data-chart-type="line"
                  data-chart-genre="mortgage-performance"
                  data-chart-title="Number of loans originated"
@@ -24,7 +26,7 @@
                  data-chart-description="This is the chart description."
                  data-chart-source="consumer-credit-trends/auto-loans/num_data_AUT.csv">
                  This is the chart description.
-            </div>
+            </div> -->
 
             <div class="cfpb-chart"
                  data-chart-type="line"
@@ -156,7 +158,7 @@
 
     <script type="text/javascript" src="test-runner.js"></script>
 
-    <script type="text/javascript" src="js/cfpb-chart-builder.js"></script>
+    <script type="text/javascript" src="cfpb-chart-builder.js"></script>
 
   </body>
 </html>

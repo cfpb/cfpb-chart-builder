@@ -64,5 +64,13 @@ module.exports = {
     ],
     dest: loc.dist + '/js/',
     name: 'cfpb-chart-builder'
+  },
+  copy: {
+    html: {
+      src: [
+        loc.test + '/index.html'
+      ],
+      dest: loc.dist
+    }
   }
 };

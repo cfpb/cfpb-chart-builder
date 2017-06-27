@@ -5,8 +5,8 @@ var documentReady = require( './utils/document-ready' );
 var createChart = require( './charts' );
 var process = require( './utils/process-json' );
 
-var DATA_SOURCE_BASE = window.location.protocol.indexOf( 'https' ) === -1 ?
-                      '//files.consumerfinance.gov/data/' :
+// Let browsers override the data source root (useful for localhost testing)
+var DATA_SOURCE_BASE = window.CFPB_CHART_BUILDER_DATA_SOURCE_BASE ||
                       '//s3.amazonaws.com/files.consumerfinance.gov/data/';
 
 /***

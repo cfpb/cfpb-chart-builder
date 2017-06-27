@@ -9,6 +9,7 @@ var gulp = require( 'gulp' );
 var config = require( '../config' );
 
 gulp.task( 'watch', [ 'connect', 'browserSync' ], function() {
-  gulp.watch( config.scripts.src, [ 'scripts' ] );
+  gulp.watch( config.scripts.src, [ 'scripts', 'test:unit' ] );
   gulp.watch( config.styles.cwd + '/**/*.less', [ 'styles' ] );
+  gulp.watch( config.copy.html.src, [ 'copy:html' ] );
 } );

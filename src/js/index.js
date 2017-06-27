@@ -27,7 +27,7 @@ function buildCharts() {
 
   var errorStrings = {
     parseError: 'There was an error parsing the data as JSON',
-    groupError: 'There was an error finding the group in data properties',
+    metadataError: 'There was an error finding the metadata in data properties',
     propertyError: 'There was an error finding the adjusted and/or unadjusted properties in the data'
   };
 
@@ -49,11 +49,12 @@ function buildCharts() {
       for ( var x = 0; x < urls[key].length; x++ ) {
         var chart = urls[key][x],
             type = chart.getAttribute( 'data-chart-type' ),
-            group = chart.getAttribute( 'data-chart-metadata' ),
+            genre = chart.getAttribute( 'data-chart-genre' ),
+            metadata = chart.getAttribute( 'data-chart-metadata' ),
             color = chart.getAttribute( 'data-chart-color' );
 
         // Ensure undefined attributes aren't cast as a string.
-        group = group === 'undefined' ? undefined : group;
+        metadata = metadata === 'undefined' ? undefined : metadata;
 
         var properties = {
           type: type,
@@ -61,8 +62,13 @@ function buildCharts() {
           color: color
         };
 
+        if ( genre === 'mortgage-performance' ) {
+          // Do something
+          continue;
+        }
+
         if ( type === 'line' ) {
-          properties.data = process.originations( data, group );
+          properties.data = process.originations( data, metadata );
 
           if ( typeof properties.data === 'object' ) {
             createChart.line( properties );
@@ -70,26 +76,29 @@ function buildCharts() {
             chart.setAttribute( 'data-chart-error', errorStrings[properties.data] );
             console.log( errorStrings[properties.data] );
           }
+          continue;
         }
 
         if ( type === 'bar' ) {
-          properties.data = process.yoy( data, group );
+          properties.data = process.yoy( data, metadata );
           if ( typeof properties.data === 'object' ) {
             createChart.bar( properties );
           } else {
             chart.setAttribute( 'data-chart-error', errorStrings[properties.data] );
             console.log( errorStrings[properties.data] );
           }
+          continue;
         }
 
         if ( type === 'tile_map' ) {
-          properties.data = process.map( data, group );
+          properties.data = process.map( data, metadata );
           if ( typeof properties.data === 'object' ) {
             createChart.map( properties );
           } else {
             chart.setAttribute( 'data-chart-error', errorStrings[properties.data] );
             console.log( errorStrings[properties.data] );
           }
+          continue;
         }
 
       }

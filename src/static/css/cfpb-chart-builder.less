@@ -181,10 +181,12 @@
       transform: translate(465px, -6px) !important;
     });
 
-  }
+    .lt-ie10 & {
+      .respond-to-min( 800px, {
+        left: -465px !important;
+      });
+    }
 
-  .highcharts-legend-box {
-    transform: translate(-8px, -5px) !important;
   }
 
   .highcharts-legend-item {

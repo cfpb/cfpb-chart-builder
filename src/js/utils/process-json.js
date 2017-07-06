@@ -71,7 +71,7 @@ function processNumOriginationsData( data, group ) {
 
   // Check if the returned string is valid JSON
   try {
-    data = JSON.parse( data );    
+    data = JSON.parse( data );
   } catch( error ) {
     data = 'parseError'
   }
@@ -121,6 +121,28 @@ function processNumOriginationsData( data, group ) {
 }
 
 /**
+ * Returns a data object with data starting in January 2009 for use in all line charts
+ *
+ * @param {Number} data - response from requested JSON file
+ * @param {String} group - optional parameter for specifying if the chart requires use of a "group" property in the JSON, for example the charts with a group of "Younger than 30" will filter data to only include values matching that group
+ * @returns {Obj} data - object with adjusted and unadjusted value arrays containing timestamps and a number value
+ */
+function mortgagePerformance( data, group ) {
+
+  // Check if the returned string is valid JSON
+  try {
+    data = JSON.parse( data );
+  } catch( error ) {
+    data = 'parseError'
+  }
+  if ( typeof data !== 'object' ) {
+    return data;
+  }
+
+  return data.data;
+}
+
+/**
  * Returns a data object with data starting in January 2009 for use in all bar charts
  *
  * @param {Number} data - response from requested JSON file
@@ -130,7 +152,7 @@ function processNumOriginationsData( data, group ) {
 function processYoyData( data, group ) {
   // Check if the returned string is valid JSON
   try {
-    data = JSON.parse( data );    
+    data = JSON.parse( data );
   } catch( error ) {
     data = 'parseError'
   }
@@ -205,7 +227,7 @@ function getProjectedDate( timestamp ) {
 function processMapData( data ) {
   // Check if the returned string is valid JSON
   try {
-    data = JSON.parse( data );    
+    data = JSON.parse( data );
   } catch( error ) {
     data = 'parseError'
   }
@@ -239,6 +261,7 @@ module.exports = {
   originations: processNumOriginationsData,
   yoy: processYoyData,
   map: processMapData,
+  mortgagePerformance: mortgagePerformance,
   getProjectedDate: getProjectedDate,
   getProjectedTimestamp: getProjectedTimestamp,
   convertDate: convertDate

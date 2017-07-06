@@ -63,7 +63,12 @@ function buildCharts() {
         };
 
         if ( genre === 'mortgage-performance' ) {
-          // Do something
+          properties.data = {
+            base: process.mortgagePerformance( data ),
+            comparison: process.mortgagePerformance( data )
+          }
+          
+          var mpChart = createChart.mortgagePerformance( properties );
           continue;
         }
 

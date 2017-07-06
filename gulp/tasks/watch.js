@@ -9,6 +9,6 @@ var gulp = require( 'gulp' );
 var config = require( '../config' );
 
 gulp.task( 'watch', [ 'connect', 'browserSync' ], function() {
-  gulp.watch( config.scripts.src, [ 'scripts:concat', 'test:unit' ] );
+  gulp.watch( config.test.src, [ 'scripts:concat', 'test:unit' ] );
   gulp.watch( config.chartStyles.src, [ 'styles' ] );
 } );

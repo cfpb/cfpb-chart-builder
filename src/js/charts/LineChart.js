@@ -218,7 +218,7 @@ function LineChart( props ) {
     ]
   };
 
-  Highcharts.stockChart( props.selector, options, function( chart ) {
+  return Highcharts.stockChart( props.selector, options, function( chart ) {
     // label(str, x, y, shape, anchorX, anchorY, useHTML, baseline, className)
     chart.renderer.label('Select time range', null, null, null, null, null, true, null, 'range-selector-label' )
     .add();

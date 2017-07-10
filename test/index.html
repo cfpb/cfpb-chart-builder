@@ -18,15 +18,56 @@
    <div class="content_main">
             <h1>Some Sample CCT Charts</h1>
 
+            <form method="get" id="cfpb-chart_mp_1_comparison_1">
+
+              <div class="m-form-field m-form-field__select">
+                  <label class="cfpb-chart_select" for="cfpb-chart_mp_1_comparison_1_geography">Select geography</label>
+                  <div class="cfpb-chart_select">
+                      <select id="cfpb-chart_mp_1_comparison_1_geography">
+                          <option value="national">National</option>
+                          <option value="state">State</option>
+                          <option value="msa">MSA</option>
+                          <option value="county">County</option>
+                      </select>
+                  </div>
+              </div>
+
+              <div class="m-form-field m-form-field__select">
+                  <label class="cfpb-chart_select" for="cfpb-chart_mp_1_comparison_1_state">State</label>
+                  <div class="cfpb-chart_select">
+                      <select id="cfpb-chart_mp_1_comparison_1_state">
+                          <option value="al">Alabama</option>
+                          <option value="ak">Alaska</option>
+                          <option value="ca">California</option>
+                          <option value="il">Illinois</option>
+                      </select>
+                  </div>
+              </div>
+
+              <div class="m-form-field m-form-field__select">
+                  <label class="cfpb-chart_select" for="cfpb-chart_mp_1_comparison_1_msa">MSA</label>
+                  <div class="cfpb-chart_select">
+                      <select id="cfpb-chart_mp_1_comparison_1_msa">
+                          <option value="abilene-tx">Abilene, TX</option>
+                          <option value="akron-oh">Akron, OH</option>
+                          <option value="albany-ga">Albany, GA</option>
+                          <option value="albany-or">Albany, OR</option>
+                      </select>
+                  </div>
+              </div>
+
+            </form>
+
             <div class="cfpb-chart"
-                 data-chart-type="line"
-                 data-chart-genre="mortgage-performance"
+                 data-chart-type="line-comparison"
                  data-chart-title="MP test"
                  data-chart-color="green"
                  data-chart-description="This is the chart description."
-                 data-chart-source="mortgage-performance/national_30_day_delinq_percent.json">
+                 data-chart-source="mortgage-performance/national_30_day_delinq_percent.json;mortgage-performance/counties/01001_30_day_delinq_percent.json">
                  This is the chart description.
             </div>
+
+            <hr>
 
             <div class="cfpb-chart"
                  data-chart-type="line"

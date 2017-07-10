@@ -71,7 +71,7 @@ function _getTickValue( value ) {
   if ( !value ) {
     return value;
   }
-  return .01;
+  return value * 100 + '%';
 }
 
 function MortgagePerformance( props ) {
@@ -88,37 +88,7 @@ function MortgagePerformance( props ) {
     description: props.description,
     credits: false,
     rangeSelector: {
-      selected: 'all',
-      height: 35,
-      inputEnabled: false,
-      buttonPosition: {
-        x: 0,
-        y: 0
-      },
-      buttonTheme: {
-        r: 5, // border radius
-        width: 70
-      },
-      buttons: [ {
-        type: 'year',
-        count: 1,
-        text: '1y'
-      },
-      {
-        type: 'year',
-        count: 3,
-        text: '3y'
-      },
-      {
-        type: 'year',
-        count: 5,
-        text: '5y'
-      },
-      {
-        type: 'all',
-        text: 'All'
-      }
-      ]
+      enabled: false
     },
     legend: {
       enabled: true,
@@ -137,10 +107,10 @@ function MortgagePerformance( props ) {
       }
     },
     navigator: {
-      maskFill: 'rgba(0, 0, 0, 0.05)',
-      series: {
-        lineWidth: 2
-      }
+      enabled: false
+    },
+    scrollbar: {
+      enabled: false
     },
     xAxis: {
       startOnTick: true,
@@ -154,11 +124,6 @@ function MortgagePerformance( props ) {
     yAxis: {
       opposite: false,
       className: 'axis-label',
-      title: {
-        text: _getYAxisLabel( props.data.base ) + ' of originations (in ' + _getYAxisUnits( props.data.base ) + ')',
-        offset: 0,
-        reserveSpace: false
-      },
       labels: {
         formatter: function() {
           return _getTickValue( this.value );
@@ -171,23 +136,23 @@ function MortgagePerformance( props ) {
         var tooltip = Highcharts.dateFormat('%B %Y', this.x);
         for (var i = 0; i < this.points.length; i++) {
           var point = this.points[i];
-          tooltip += "<br><span class='highcharts-color-" + point.series.colorIndex + "'></span> " + point.series.name+": " + Highcharts.numberFormat(point.y, 0);
+          tooltip += "<br><span class='highcharts-color-" + point.series.colorIndex + "'></span> " + point.series.name+": " + Math.round(point.y * 10000) / 10 + '%';
         }
         return tooltip;
       }
     },
     series: [
       {
-        name: 'One',
-        data: props.data.base,
+        name: props.data.base.label,
+        data: props.data.base.values,
         legendIndex: 1,
         tooltip: {
           valueDecimals: 0
         }
       },
       {
-        name: 'Two',
-        data: props.data.comparison,
+        name: props.data.comparison.label,
+        data: props.data.comparison.values,
         legendIndex: 2,
         tooltip: {
           valueDecimals: 0
@@ -196,11 +161,7 @@ function MortgagePerformance( props ) {
     ]
   };
 
-  return Highcharts.stockChart( props.selector, options, function( chart ) {
-    // label(str, x, y, shape, anchorX, anchorY, useHTML, baseline, className)
-    chart.renderer.label('Select time range', null, null, null, null, null, true, null, 'range-selector-label' )
-    .add();
-  } );
+  return Highcharts.stockChart( props.selector, options );
 
 }
 

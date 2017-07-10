@@ -1,6 +1,7 @@
 'use strict';
 
 var ajax = require( 'xdr' );
+var Promise = require('es6-promise').Promise;
 var documentReady = require( './utils/document-ready' );
 var createChart = require( './charts' );
 var process = require( './utils/process-json' );
@@ -45,9 +46,25 @@ function buildCharts() {
 
   for ( var key in urls ) {
 
-    loadSource( key, function( key, data ) {
-      for ( var x = 0; x < urls[key].length; x++ ) {
-        var chart = urls[key][x],
+    loadSource( key ).then( function handleData( resp ) {
+
+      var source = {
+        url: resp[0].url,
+        data: resp[0].data
+      }
+
+      // If multiple sources were loaded
+      if ( resp.length > 1 ) {
+        source.labels = [];
+        source.data = [];
+        resp.forEach( function(r) {
+          source.labels.push( JSON.parse(r.data).label );
+          source.data.push( r.data );
+        } );
+      }
+
+      for ( var x = 0; x < urls[source.url].length; x++ ) {
+        var chart = urls[source.url][x],
             type = chart.getAttribute( 'data-chart-type' ),
             genre = chart.getAttribute( 'data-chart-genre' ),
             metadata = chart.getAttribute( 'data-chart-metadata' ),
@@ -62,18 +79,24 @@ function buildCharts() {
           color: color
         };
 
-        if ( genre === 'mortgage-performance' ) {
+        if ( type === 'line-comparison' ) {
           properties.data = {
-            base: process.mortgagePerformance( data ),
-            comparison: process.mortgagePerformance( data )
+            base: {
+              label: source.labels[0],
+              values: process.mortgagePerformance( source.data[0] )
+            },
+            comparison: {
+              label: source.labels[1],
+              values: process.mortgagePerformance( source.data[1] )
+            }
           }
-          
+
           var mpChart = createChart.mortgagePerformance( properties );
           continue;
         }
 
         if ( type === 'line' ) {
-          properties.data = process.originations( data, metadata );
+          properties.data = process.originations( source.data, metadata );
 
           if ( typeof properties.data === 'object' ) {
             createChart.line( properties );
@@ -85,7 +108,7 @@ function buildCharts() {
         }
 
         if ( type === 'bar' ) {
-          properties.data = process.yoy( data, metadata );
+          properties.data = process.yoy( source.data, metadata );
           if ( typeof properties.data === 'object' ) {
             createChart.bar( properties );
           } else {
@@ -96,7 +119,7 @@ function buildCharts() {
         }
 
         if ( type === 'tile_map' ) {
-          properties.data = process.map( data, metadata );
+          properties.data = process.map( source.data, metadata );
           if ( typeof properties.data === 'object' ) {
             createChart.map( properties );
           } else {
@@ -114,8 +137,20 @@ function buildCharts() {
 // GET requests:
 
 function loadSource( key, callback ) {
-  var url = DATA_SOURCE_BASE + key.replace( '.csv', '.json' );
-  ajax( { url: url }, function( resp ) {
-    callback( key, resp.data );
+
+  var urls = key.split(';');
+
+  var promises = urls.map( function fetchUrl( url ) {
+    return new Promise( function( resolve, reject ) {
+      url = DATA_SOURCE_BASE + url.replace( '.csv', '.json' );
+      ajax( { url: url }, function( resp ) {
+        resolve( {
+          url: key,
+          data: resp.data
+        } );
+      } );
+    } );
   } );
+
+  return Promise.all( promises );
 }

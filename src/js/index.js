@@ -16,18 +16,12 @@ var DATA_SOURCE_BASE = window.CFPB_CHART_BUILDER_DATA_SOURCE_BASE ||
 */
 
 documentReady( function() {
-
-  buildCharts();
-
+  _createCharts();
 } );
-
-function _updateChart( id, attr ) {
-  document.getElementById('')
-}
 
 function _createChart( { el, type, color, metadata, source } ) {
 
-  return loadSource( source ).then( data => {
+  return _loadSource( source ).then( data => {
 
     return new Promise( function( resolve, reject ) {
 
@@ -82,7 +76,7 @@ function _createChart( { el, type, color, metadata, source } ) {
 
 }
 
-function buildCharts() {
+function _createCharts() {
 
   var charts = document.querySelectorAll( '.cfpb-chart' );
 
@@ -100,7 +94,7 @@ function buildCharts() {
 
 // GET requests:
 
-function loadSource( key, callback ) {
+function _loadSource( key, callback ) {
 
   var urls = key.split(';');
 
@@ -118,3 +112,10 @@ function loadSource( key, callback ) {
 
   return Promise.all( promises );
 }
+
+var charts = {
+  createChart: _createChart,
+  createCharts: _createCharts
+}
+
+module.exports = charts;

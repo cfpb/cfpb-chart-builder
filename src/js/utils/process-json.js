@@ -69,20 +69,10 @@ function convertDate( date ) {
  */
 function processNumOriginationsData( data, group ) {
 
-  // Check if the returned string is valid JSON
-  try {
-    data = JSON.parse( data );
-  } catch( error ) {
-    data = 'parseError'
-  }
-  if ( typeof data !== 'object' ) {
-    return data;
-  }
-
   // check for data integrity!
-  if ( group !== null && data.hasOwnProperty ( group ) ) {
+  if ( group && data.hasOwnProperty( group ) ) {
     data = data[group];
-  } else if ( group !== null && !data.hasOwnProperty ( group ) ) {
+  } else if ( group && !data.hasOwnProperty( group ) ) {
     // If group is not a property of the data, return an error
     return 'groupError';
   }
@@ -120,14 +110,14 @@ function processNumOriginationsData( data, group ) {
   return data;
 }
 
-/**
- * Returns a data object with data starting in January 2009 for use in all line charts
- *
- * @param {Number} data - response from requested JSON file
- * @param {String} group - optional parameter for specifying if the chart requires use of a "group" property in the JSON, for example the charts with a group of "Younger than 30" will filter data to only include values matching that group
- * @returns {Obj} data - object with adjusted and unadjusted value arrays containing timestamps and a number value
- */
-function mortgagePerformance( data, group ) {
+function mortgagePerformance( data ) {
+
+  for ( var x = 0; x < data.length; x++ ) {
+    if ( data[x][0] < Date.UTC( 2009, 0 ) ) {
+      data.splice( x, 1 );
+      x--; // Check array[x] again, since we removed an entry in the array
+    }
+  }
 
   // Check if the returned string is valid JSON
   try {
@@ -150,12 +140,6 @@ function mortgagePerformance( data, group ) {
  * @returns {Obj} data - object with adjusted and unadjusted value arrays containing timestamps and a number value
  */
 function processYoyData( data, group ) {
-  // Check if the returned string is valid JSON
-  try {
-    data = JSON.parse( data );
-  } catch( error ) {
-    data = 'parseError'
-  }
   if ( typeof data !== 'object' ) {
     return data;
   }
@@ -225,12 +209,6 @@ function getProjectedDate( timestamp ) {
 }
 
 function processMapData( data ) {
-  // Check if the returned string is valid JSON
-  try {
-    data = JSON.parse( data );
-  } catch( error ) {
-    data = 'parseError'
-  }
   if ( typeof data !== 'object' ) {
     return data;
   }

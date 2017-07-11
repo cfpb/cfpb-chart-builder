@@ -115,7 +115,6 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
         [ 1246406400000, 0.9 ], [ 1249084800000, 0.01 ]
       ]
     };
-    data = JSON.stringify( data );
     var test = yoy( data, 'test' );
 
     it( 'should eliminate dates before 2009', function() {

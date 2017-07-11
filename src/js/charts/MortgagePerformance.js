@@ -84,7 +84,7 @@ function MortgagePerformance( props ) {
       marginTop: 100,
       zoomType: 'none'
     },
-    className: 'cfpb-chart_mp',
+    className: 'cfpb-chart_line',
     description: props.description,
     credits: false,
     rangeSelector: {
@@ -141,27 +141,19 @@ function MortgagePerformance( props ) {
         return tooltip;
       }
     },
-    series: [
-      {
-        name: props.data.base.label,
-        data: props.data.base.values,
+    series: props.data.map(datum => {
+      return {
+        name: datum.label,
+        data: datum.data,
         legendIndex: 1,
         tooltip: {
           valueDecimals: 0
         }
-      },
-      {
-        name: props.data.comparison.label,
-        data: props.data.comparison.values,
-        legendIndex: 2,
-        tooltip: {
-          valueDecimals: 0
-        }
       }
-    ]
+    })
   };
 
-  return Highcharts.stockChart( props.selector, options );
+  return Highcharts.stockChart( props.el, options );
 
 }
 

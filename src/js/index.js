@@ -21,117 +21,81 @@ documentReady( function() {
 
 } );
 
+function _updateChart( id, attr ) {
+  document.getElementById('')
+}
+
+function _createChart( { el, type, color, metadata, source } ) {
+
+  return loadSource( source ).then( data => {
+
+    return new Promise( function( resolve, reject ) {
+
+      var chart;
+
+      if ( type === 'line-comparison' ) {
+
+        chart = createChart.mortgagePerformance( { el, type, color, data } );
+
+        // mpChart.series[0].update({
+        //   name: 'suuuuuup',
+        //   data: properties.data.base.values
+        // });
+
+      }
+
+      if ( type === 'line' ) {
+        data = process.originations( data[0], metadata );
+        if ( typeof data === 'object' ) {
+          chart = createChart.line( { el, type, color, data } );
+        } else {
+          chart.setAttribute( 'data-chart-error', errorStrings[data] );
+          console.log( errorStrings[data] );
+        }
+      }
+
+      if ( type === 'bar' ) {
+        data = process.yoy( data[0], metadata );
+        if ( typeof data === 'object' ) {
+          chart = createChart.bar( { el, type, color, data } );
+        } else {
+          chart.setAttribute( 'data-chart-error', errorStrings[data] );
+          console.log( errorStrings[data] );
+        }
+      }
+
+      if ( type === 'tile_map' ) {
+        data = process.map( data[0], metadata );
+        if ( typeof data === 'object' ) {
+          chart = createChart.map( { el, type, color, data } );
+        } else {
+          chart.setAttribute( 'data-chart-error', errorStrings[data] );
+          console.log( errorStrings[data] );
+        }
+      }
+
+      resolve( chart );
+
+    } );
+
+  } );
+
+}
+
 function buildCharts() {
 
   var charts = document.querySelectorAll( '.cfpb-chart' );
-  var urls = {};
 
-  var errorStrings = {
-    parseError: 'There was an error parsing the data as JSON',
-    metadataError: 'There was an error finding the metadata in data properties',
-    propertyError: 'There was an error finding the adjusted and/or unadjusted properties in the data'
-  };
-
-  for ( var x = 0; x < charts.length; x++ ) {
-    var chart = charts[x];
-    // Empty the chart for redraws
-    chart.innerHTML = '';
-
-    var url = chart.getAttribute( 'data-chart-source' );
-    if ( !urls.hasOwnProperty( url ) ) {
-      urls[url] = [];
-    }
-    urls[url].push( chart );
+  for (var chart of charts) {
+    _createChart({
+      el: chart,
+      type: chart.getAttribute( 'data-chart-type' ),
+      color: chart.getAttribute( 'data-chart-color' ),
+      metadata: chart.getAttribute( 'data-chart-metadata' ),
+      source: chart.getAttribute( 'data-chart-source' )
+    });
   }
 
-  for ( var key in urls ) {
-
-    loadSource( key ).then( function handleData( resp ) {
-
-      var source = {
-        url: resp[0].url,
-        data: resp[0].data
-      }
-
-      // If multiple sources were loaded
-      if ( resp.length > 1 ) {
-        source.labels = [];
-        source.data = [];
-        resp.forEach( function(r) {
-          source.labels.push( JSON.parse(r.data).label );
-          source.data.push( r.data );
-        } );
-      }
-
-      for ( var x = 0; x < urls[source.url].length; x++ ) {
-        var chart = urls[source.url][x],
-            type = chart.getAttribute( 'data-chart-type' ),
-            genre = chart.getAttribute( 'data-chart-genre' ),
-            metadata = chart.getAttribute( 'data-chart-metadata' ),
-            color = chart.getAttribute( 'data-chart-color' );
-
-        // Ensure undefined attributes aren't cast as a string.
-        metadata = metadata === 'undefined' ? undefined : metadata;
-
-        var properties = {
-          type: type,
-          selector: chart,
-          color: color
-        };
-
-        if ( type === 'line-comparison' ) {
-          properties.data = {
-            base: {
-              label: source.labels[0],
-              values: process.mortgagePerformance( source.data[0] )
-            },
-            comparison: {
-              label: source.labels[1],
-              values: process.mortgagePerformance( source.data[1] )
-            }
-          }
-
-          var mpChart = createChart.mortgagePerformance( properties );
-          continue;
-        }
-
-        if ( type === 'line' ) {
-          properties.data = process.originations( source.data, metadata );
-
-          if ( typeof properties.data === 'object' ) {
-            createChart.line( properties );
-          } else {
-            chart.setAttribute( 'data-chart-error', errorStrings[properties.data] );
-            console.log( errorStrings[properties.data] );
-          }
-          continue;
-        }
-
-        if ( type === 'bar' ) {
-          properties.data = process.yoy( source.data, metadata );
-          if ( typeof properties.data === 'object' ) {
-            createChart.bar( properties );
-          } else {
-            chart.setAttribute( 'data-chart-error', errorStrings[properties.data] );
-            console.log( errorStrings[properties.data] );
-          }
-          continue;
-        }
-
-        if ( type === 'tile_map' ) {
-          properties.data = process.map( source.data, metadata );
-          if ( typeof properties.data === 'object' ) {
-            createChart.map( properties );
-          } else {
-            chart.setAttribute( 'data-chart-error', errorStrings[properties.data] );
-            console.log( errorStrings[properties.data] );
-          }
-          continue;
-        }
-
-      }
-    } );
-  }
 }
 
 // GET requests:
@@ -144,10 +108,10 @@ function loadSource( key, callback ) {
     return new Promise( function( resolve, reject ) {
       url = DATA_SOURCE_BASE + url.replace( '.csv', '.json' );
       ajax( { url: url }, function( resp ) {
-        resolve( {
-          url: key,
-          data: resp.data
-        } );
+        if ( resp.error ) {
+          reject( resp.error );
+        }
+        resolve( JSON.parse( resp.data ) );
       } );
     } );
   } );

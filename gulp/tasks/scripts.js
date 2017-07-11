@@ -13,6 +13,15 @@ gulp.task( 'scripts:concat', function() {
   return gulp.src( configScripts.src )
     .pipe( plugins.sourcemaps.init() )
     .pipe( plugins.webpack( {
+      module: {
+        loaders: [{
+          loader: 'babel-loader',
+          exclude: /node_modules/,
+          query: {
+              presets: ['es2015']
+          }
+        }]
+      },
       output: {
         filename: configScripts.name + '.js'
       }
@@ -31,6 +40,15 @@ gulp.task( 'scripts:uglify', function() {
   return gulp.src( configScripts.src )
     .pipe( plugins.sourcemaps.init() )
     .pipe( plugins.webpack( {
+      module: {
+        loaders: [{
+          loader: 'babel-loader',
+          exclude: /node_modules/,
+          query: {
+              presets: ['es2015']
+          }
+        }]
+      },
       output: {
         filename: configScripts.name + '.js'
       }

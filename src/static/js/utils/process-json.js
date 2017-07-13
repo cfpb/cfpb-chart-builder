@@ -170,21 +170,10 @@ function processYoyData( data, group ) {
  * @returns {Number} a timestamp.
  */
 function getProjectedTimestamp( valuesList ) {
-  var mostRecentMonthOfDataAvailable = valuesList[valuesList.length - 1][0];
+  // Projected data begins six months from the latest month of data available
+  var projectedMonth = valuesList[valuesList.length - 6][0];
 
-  /*
-  152.083 days = 5 months to represent six months ago. We count 5 months back, because the timestamps are the first of each month:
-  0 - november 1
-  1 month - october 1
-  2 - sept 1
-  3 - aug 1
-  4 - jul 1
-  5 - june 1
-  For data through November, months AFTER May are projected. June through November should be projected in the UI.
-  */
-  var projectedThreshold = 60 * 60 * 24 * 152.083 * 1000;
-
-  return mostRecentMonthOfDataAvailable - projectedThreshold;
+  return convertDate(projectedMonth).timestamp;
 }
 
 /**

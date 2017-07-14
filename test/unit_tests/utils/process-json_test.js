@@ -95,12 +95,23 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
 
   describe( 'getProjectedTimestamp', function() {
 
-    it( 'should return UTC timestamp for the first month of the projected data, six months before given UTC date', function() {
+    it( 'should return UTC timestamp for the first month of the projected data, six months before given UTC date, given at least six months of data', function() {
 
-      var dataList = [[0, 0.5], [0, 0.5], [1477958400000, 0.5]]
+      var dataList = [
+        [1477958400000, 1], // nov 16
+        [1480550400000, 2], // dec
+        [1483228800000, 3], // jan 17
+        [1485907200000, 4], // feb
+        [1488326400000, 5], // mar
+        [1491004800000, 6], // apr
+        [1493596800000, 7], // may
+        [1496275200000, 8], // june
+        [1498867200000, 9], // july
+        [1501545600000, 10] // aug
+      ]
 
       expect( getProjectedTimestamp( dataList ) )
-        .to.equal( 1464818428800 );
+        .to.equal( 1488326400000 ); // march
     } );
 
   } );

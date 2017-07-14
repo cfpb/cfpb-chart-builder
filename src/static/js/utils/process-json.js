@@ -166,7 +166,7 @@ function processYoyData( data, group ) {
 /**
  * Returns a UTC timestamp number for the month when each graph's data is projected
  *
- * @param {Array} valuesList - list of values from the data, containing an array with timestamp representing the month and year at index 0, and the value at index 1
+ * @param {Array} valuesList - list of values from the data, containing an array with timestamp representing the month and year at index 0, and the value at index 1. Requires at least six months of data (six array items).
  * @returns {Number} a timestamp.
  */
 function getProjectedTimestamp( valuesList ) {

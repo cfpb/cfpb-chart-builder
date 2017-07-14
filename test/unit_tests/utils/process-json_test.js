@@ -119,11 +119,19 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
   describe( 'processYoyData', function() {
     var data = {
       test: [
-          [ 1117584000000, 100 ],
-          [ 1230768000000, 0.1 ], [ 1233446400000, -0.2 ],
-          [ 1235865600000, 0.25 ], [ 1238544000000, 0 ],
-          [ 1241136000000, -0.1 ], [ 1243814400000, 1.44 ],
-          [ 1246406400000, 0.9 ], [ 1249084800000, 0.01 ]
+          [ 1117584000000, 100 ], // jun 2005
+          [ 1230768000000, 0.1 ], // jan 2009
+          [ 1233446400000, -0.2 ], // feb 2009
+          [ 1235865600000, 0.25 ], // march 2009
+          [ 1238544000000, 0 ], // apr 2009
+          [ 1241136000000, -0.1 ], // may 2009
+          [ 1243814400000, 1.44 ], // june 2009
+          [ 1246406400000, 0.92 ], // july 2009
+          [ 1249084800000, 0.01 ], // aug 2009
+          [ 1251763200000, 0.95 ], // sept 2009
+          [ 1254355200000, 0.05 ], // oct 2009
+          [ 1257033600000, 0.93 ], // nov 2009
+          [ 1259625600000, 0.33 ] // dec 2009
         ]
       };
     data = JSON.stringify( data );
@@ -143,8 +151,9 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
     } );
 
     it( 'should assign the correct projected Dates', function() {
-      expect( test.projectedDate.timestamp ).to.equal( 1235944828800 );
-      expect( test.projectedDate.label ).to.equal( 'February 2009' );
+      expect( test.projectedDate.timestamp ).to.equal( 1246406400000 ); // July 2009
+      expect( test[test.length - 6][1] ).to.equal(92); // July 2009
+      expect( test.projectedDate.label ).to.equal( 'June 2009' ); // June 2009, the label uses the last month of data that isn't projected. For projected data starting with July, the label should say June.
     } );
 
   } );

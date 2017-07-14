@@ -146,7 +146,7 @@ function processYoyData( data, group ) {
     return 'groupError';
   }
 
-  // remove data before January 2009
+  // remove data before January 2009, convert the rest from decimal values to percentages
   for ( var x = 0; x < data.length; x++ ) {
     if ( data[x][0] < Date.UTC( 2009, 0 ) ) {
       data.splice( x, 1 );

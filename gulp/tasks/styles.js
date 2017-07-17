@@ -16,11 +16,12 @@ gulp.task( 'styles:modern', function() {
     .pipe( plugins.less( configStyles.settings ) )
     .on( 'error', handleErrors )
     .pipe( plugins.autoprefixer( {
-      browsers: [ 'last 2 version',
-                  'not ie <= 8',
-                  'android 4',
-                  'BlackBerry 7',
-                  'BlackBerry 10' ]
+      browsers: [
+        'last 2 version',
+        'not ie <= 8',
+        'android 4',
+        'BlackBerry 7',
+        'BlackBerry 10' ]
     } ) )
     .pipe( plugins.header( configBanner, { pkg: configPkg } ) )
     .pipe( plugins.rename( {
@@ -31,8 +32,6 @@ gulp.task( 'styles:modern', function() {
     .pipe( browserSync.reload( {
       stream: true
     } ) );
-    var info = plugins.autoprefixer().info();
-    console.log(info);
 } );
 
 /**
@@ -82,21 +81,18 @@ gulp.task( 'styles:stylesIE8', function() {
 gulp.task( 'styles:chartsConcat', function() {
   return gulp.src( config.chartStyles.cwd + config.chartStyles.src )
     .pipe( plugins.sourcemaps.init() )
-    .pipe( plugins.less( 
-    {
-
-        paths: config.chartStyles.settings.paths,
-        compress: false
-
-      }
-       ) )
+    .pipe( plugins.less( {
+      paths: config.chartStyles.settings.paths,
+      compress: false
+    } ) )
     .on( 'error', handleErrors )
     .pipe( plugins.autoprefixer( {
-      browsers: [ 'last 2 version',
-                  'not ie <= 8',
-                  'android 4',
-                  'BlackBerry 7',
-                  'BlackBerry 10' ]
+      browsers: [
+        'last 2 version',
+        'not ie <= 8',
+        'android 4',
+        'BlackBerry 7',
+        'BlackBerry 10' ]
     } ) )
     .pipe( gulp.dest( config.chartStyles.dest ) )
     .pipe( browserSync.reload( {
@@ -110,11 +106,12 @@ gulp.task( 'styles:chartsMinify', function() {
     .pipe( plugins.less( config.chartStyles.settings ) )
     .on( 'error', handleErrors )
     .pipe( plugins.autoprefixer( {
-      browsers: [ 'last 2 version',
-                  'not ie <= 8',
-                  'android 4',
-                  'BlackBerry 7',
-                  'BlackBerry 10' ]
+      browsers: [
+        'last 2 version',
+        'not ie <= 8',
+        'android 4',
+        'BlackBerry 7',
+        'BlackBerry 10' ]
     } ) )
     .pipe( plugins.rename( {
       suffix: '.min'
@@ -125,7 +122,7 @@ gulp.task( 'styles:chartsMinify', function() {
     } ) );
 } );
 
-gulp.task( 'styles:ie', ['styles:stylesIE8', 'styles:stylesIE9'] );
+gulp.task( 'styles:ie', [ 'styles:stylesIE8', 'styles:stylesIE9' ] );
 
 gulp.task( 'styles:charts', [
   'styles:chartsConcat',

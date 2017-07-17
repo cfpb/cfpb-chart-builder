@@ -98,17 +98,17 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
     it( 'should return UTC timestamp for the first month of the projected data, six months before given UTC date, given at least six months of data', function() {
 
       var dataList = [
-        [1477958400000, 1], // nov 16
-        [1480550400000, 2], // dec
-        [1483228800000, 3], // jan 17
-        [1485907200000, 4], // feb
-        [1488326400000, 5], // mar
-        [1491004800000, 6], // apr
-        [1493596800000, 7], // may
-        [1496275200000, 8], // june
-        [1498867200000, 9], // july
-        [1501545600000, 10] // aug
-      ]
+        [ 1477958400000, 1 ], // nov 16
+        [ 1480550400000, 2 ], // dec
+        [ 1483228800000, 3 ], // jan 17
+        [ 1485907200000, 4 ], // feb
+        [ 1488326400000, 5 ], // mar
+        [ 1491004800000, 6 ], // apr
+        [ 1493596800000, 7 ], // may
+        [ 1496275200000, 8 ], // june
+        [ 1498867200000, 9 ], // july
+        [ 1501545600000, 10 ] // aug
+      ];
 
       expect( getProjectedTimestamp( dataList ) )
         .to.equal( 1488326400000 ); // march
@@ -132,8 +132,8 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
           [ 1254355200000, 0.05 ], // oct 2009
           [ 1257033600000, 0.93 ], // nov 2009
           [ 1259625600000, 0.33 ] // dec 2009
-        ]
-      };
+      ]
+    };
     data = JSON.stringify( data );
     var test = yoy( data, 'test' );
 
@@ -152,7 +152,7 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
 
     it( 'should assign the correct projected Dates', function() {
       expect( test.projectedDate.timestamp ).to.equal( 1246406400000 ); // July 2009
-      expect( test[test.length - 6][1] ).to.equal(92); // July 2009
+      expect( test[test.length - 6][1] ).to.equal( 92 ); // July 2009
       expect( test.projectedDate.label ).to.equal( 'June 2009' ); // June 2009, the label uses the last month of data that isn't projected. For projected data starting with July, the label should say June.
     } );
 
@@ -163,28 +163,28 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
       test: {
         adjusted: [
             [ 1117584000000, 1 ],
-            [ 1230768000000, 1239123 ], 
+            [ 1230768000000, 1239123 ],
             [ 1233446400000, 888888 ],
-            [ 1235865600000, 1231125 ], 
+            [ 1235865600000, 1231125 ],
             [ 1238544000000, 82364821 ],
-            [ 1241136000000, 7654321 ], 
+            [ 1241136000000, 7654321 ],
             [ 1243814400000, 1234567 ],
-            [ 1246406400000, 1212123 ], 
+            [ 1246406400000, 1212123 ],
             [ 1249084800000, 3434343 ]
-          ],
-          unadjusted: [
+        ],
+        unadjusted: [
             [ 1117584000000, 1 ],
-            [ 1230768000000, 1239123 ], 
+            [ 1230768000000, 1239123 ],
             [ 1233446400000, 888888 ],
-            [ 1235865600000, 1231125 ], 
+            [ 1235865600000, 1231125 ],
             [ 1238544000000, 82364821 ],
-            [ 1241136000000, 7654321 ], 
+            [ 1241136000000, 7654321 ],
             [ 1243814400000, 1234567 ],
-            [ 1246406400000, 1212123 ], 
+            [ 1246406400000, 1212123 ],
             [ 1249084800000, 3434343 ]
-          ]
-        }
-      };
+        ]
+      }
+    };
     data = JSON.stringify( data );
     var test = originations( data, 'test' );
 

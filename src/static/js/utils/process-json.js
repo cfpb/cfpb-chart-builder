@@ -173,7 +173,7 @@ function getProjectedTimestamp( valuesList ) {
   // Projected data begins six months from the latest month of data available
   var projectedMonth = valuesList[valuesList.length - 6][0];
 
-  return convertDate(projectedMonth).timestamp;
+  return convertDate( projectedMonth ).timestamp;
 }
 
 /**

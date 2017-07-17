@@ -71,18 +71,18 @@ function processNumOriginationsData( data, group ) {
 
   // Check if the returned string is valid JSON
   try {
-    data = JSON.parse( data );    
-  } catch( error ) {
-    data = 'parseError'
+    data = JSON.parse( data );
+  } catch ( error ) {
+    data = 'parseError';
   }
   if ( typeof data !== 'object' ) {
     return data;
   }
 
   // check for data integrity!
-  if ( group !== null && data.hasOwnProperty ( group ) ) {
+  if ( group !== null && data.hasOwnProperty( group ) ) {
     data = data[group];
-  } else if ( group !== null && !data.hasOwnProperty ( group ) ) {
+  } else if ( group !== null && !data.hasOwnProperty( group ) ) {
     // If group is not a property of the data, return an error
     return 'groupError';
   }
@@ -130,18 +130,18 @@ function processNumOriginationsData( data, group ) {
 function processYoyData( data, group ) {
   // Check if the returned string is valid JSON
   try {
-    data = JSON.parse( data );    
-  } catch( error ) {
-    data = 'parseError'
+    data = JSON.parse( data );
+  } catch ( error ) {
+    data = 'parseError';
   }
   if ( typeof data !== 'object' ) {
     return data;
   }
 
   // check for data integrity!
-  if ( group !== null && data.hasOwnProperty ( group ) ) {
+  if ( group !== null && data.hasOwnProperty( group ) ) {
     data = data[group];
-  } else if ( group !== null && !data.hasOwnProperty ( group ) ) {
+  } else if ( group !== null && !data.hasOwnProperty( group ) ) {
     // If group is not a property of the data, return an error
     return 'groupError';
   }
@@ -205,9 +205,9 @@ function getProjectedDate( timestamp ) {
 function processMapData( data ) {
   // Check if the returned string is valid JSON
   try {
-    data = JSON.parse( data );    
-  } catch( error ) {
-    data = 'parseError'
+    data = JSON.parse( data );
+  } catch ( error ) {
+    data = 'parseError';
   }
   if ( typeof data !== 'object' ) {
     return data;

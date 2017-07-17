@@ -96,7 +96,7 @@ Helpful commands:
 - `npm run watch` - Bundle JS files whenever they're changed.
 - `npm start` - Start a local server to demo the charts at `http://localhost:8088/test`.
 - `npm test` - Run the test charts through Sauce Labs.
-- `npm run lint` - Check JS files for syntax errors using the rules in `.eslintrc`.
+- `gulp lint --fix` or `npm run lint` - Check JS files for syntax errors using the rules in `.eslintrc`.
 
 ## Testing
 

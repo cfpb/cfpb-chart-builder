@@ -10,25 +10,20 @@ var DATA_SOURCE_BASE = window.location.protocol.indexOf( 'https' ) === -1 ?
                       '//s3.amazonaws.com/files.consumerfinance.gov/data/';
 
 /**
-*   Polyfill for Array.indexOf
-*/
-if (!Array.prototype.indexOf)
-{
-  Array.prototype.indexOf = function(elt /*, from*/)
-  {
+ *   Polyfill for Array.indexOf
+ */
+if ( !Array.prototype.indexOf ) {
+  Array.prototype.indexOf = function( elt /* , from */ ) {
     var len = this.length >>> 0;
-    var from = Number(arguments[1]) || 0;
-    from = (from < 0)
-         ? Math.ceil(from)
-         : Math.floor(from);
-    if (from < 0)
-      from += len;
+    var from = Number( arguments[1] ) || 0;
+    from = from < 0 ?
+         Math.ceil( from ) :
+         Math.floor( from );
+    if ( from < 0 ) { from += len; }
 
-    for (; from < len; from++)
-    {
-      if (from in this &&
-          this[from] === elt)
-        return from;
+    for ( ; from < len; from++ ) {
+      if ( from in this &&
+          this[from] === elt ) { return from; }
     }
     return -1;
   };
@@ -40,7 +35,7 @@ if (!Array.prototype.indexOf)
 */
 
 documentReady( function() {
-  
+
   buildCharts();
 
 } );
@@ -54,7 +49,7 @@ function buildCharts() {
     parseError: 'There was an error parsing the data as JSON',
     groupError: 'There was an error finding the group in data properties',
     propertyError: 'There was an error finding the adjusted and/or unadjusted properties in the data'
-  }
+  };
 
   for ( var x = 0; x < charts.length; x++ ) {
     var chart = charts[x];

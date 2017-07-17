@@ -7,6 +7,11 @@ var gray5 = '#f7f8f9';
 var pacific20 = '#d6e8fa';
 var pacific50 = '#96c4ed';
 
+/**
+ * Returns color given a data value.
+ * @param   {number} value A numerical data value.
+ * @returns {string}       A color hex string.
+ */
 function getColorByValue( value ) {
 
   if ( value < -15 ) {

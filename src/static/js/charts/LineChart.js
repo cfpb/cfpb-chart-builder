@@ -182,10 +182,12 @@ function LineChart( props ) {
     tooltip: {
       useHTML: true,
       formatter: function() {
-        var tooltip = Highcharts.dateFormat('%B %Y', this.x);
-        for (var i = 0; i < this.points.length; i++) {
+        var tooltip = Highcharts.dateFormat( '%B %Y', this.x );
+        for ( var i = 0; i < this.points.length; i++ ) {
           var point = this.points[i];
-          tooltip += "<br><span class='highcharts-color-" + point.series.colorIndex + "'></span> " + point.series.name+": " + Highcharts.numberFormat(point.y, 0);
+          tooltip += "<br><span class='highcharts-color-" +
+                     point.series.colorIndex + "'></span> " +
+                     point.series.name + ': ' + Highcharts.numberFormat( point.y, 0 );
         }
         return tooltip;
       }
@@ -220,7 +222,7 @@ function LineChart( props ) {
 
   Highcharts.stockChart( props.selector, options, function( chart ) {
     // label(str, x, y, shape, anchorX, anchorY, useHTML, baseline, className)
-    chart.renderer.label('Select time range', null, null, null, null, null, true, null, 'range-selector-label' )
+    chart.renderer.label( 'Select time range', null, null, null, null, null, true, null, 'range-selector-label' )
     .add();
   } );
 

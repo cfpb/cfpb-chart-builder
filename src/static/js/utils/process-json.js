@@ -146,7 +146,7 @@ function processYoyData( data, group ) {
     return 'groupError';
   }
 
-  // remove data before January 2009
+  // remove data before January 2009, convert the rest from decimal values to percentages
   for ( var x = 0; x < data.length; x++ ) {
     if ( data[x][0] < Date.UTC( 2009, 0 ) ) {
       data.splice( x, 1 );
@@ -166,25 +166,14 @@ function processYoyData( data, group ) {
 /**
  * Returns a UTC timestamp number for the month when each graph's data is projected
  *
- * @param {Array} valuesList - list of values from the data, containing an array with timestamp representing the month and year at index 0, and the value at index 1
+ * @param {Array} valuesList - list of values from the data, containing an array with timestamp representing the month and year at index 0, and the value at index 1. Requires at least six months of data (six array items).
  * @returns {Number} a timestamp.
  */
 function getProjectedTimestamp( valuesList ) {
-  var mostRecentMonthOfDataAvailable = valuesList[valuesList.length - 1][0];
+  // Projected data begins six months from the latest month of data available
+  var projectedMonth = valuesList[valuesList.length - 6][0];
 
-  /*
-  152.083 days = 5 months to represent six months ago. We count 5 months back, because the timestamps are the first of each month:
-  0 - november 1
-  1 month - october 1
-  2 - sept 1
-  3 - aug 1
-  4 - jul 1
-  5 - june 1
-  For data through November, months AFTER May are projected. June through November should be projected in the UI.
-  */
-  var projectedThreshold = 60 * 60 * 24 * 152.083 * 1000;
-
-  return mostRecentMonthOfDataAvailable - projectedThreshold;
+  return convertDate(projectedMonth).timestamp;
 }
 
 /**

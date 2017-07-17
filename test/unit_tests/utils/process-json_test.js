@@ -95,12 +95,23 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
 
   describe( 'getProjectedTimestamp', function() {
 
-    it( 'should return UTC timestamp for the first month of the projected data, six months before given UTC date', function() {
+    it( 'should return UTC timestamp for the first month of the projected data, six months before given UTC date, given at least six months of data', function() {
 
-      var dataList = [ [ 0, 0.5 ], [ 0, 0.5 ], [ 1477958400000, 0.5 ] ];
+      var dataList = [
+        [1477958400000, 1], // nov 16
+        [1480550400000, 2], // dec
+        [1483228800000, 3], // jan 17
+        [1485907200000, 4], // feb
+        [1488326400000, 5], // mar
+        [1491004800000, 6], // apr
+        [1493596800000, 7], // may
+        [1496275200000, 8], // june
+        [1498867200000, 9], // july
+        [1501545600000, 10] // aug
+      ]
 
       expect( getProjectedTimestamp( dataList ) )
-        .to.equal( 1464818428800 );
+        .to.equal( 1488326400000 ); // march
     } );
 
   } );
@@ -108,13 +119,21 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
   describe( 'processYoyData', function() {
     var data = {
       test: [
-          [ 1117584000000, 100 ],
-          [ 1230768000000, 0.1 ], [ 1233446400000, -0.2 ],
-          [ 1235865600000, 0.25 ], [ 1238544000000, 0 ],
-          [ 1241136000000, -0.1 ], [ 1243814400000, 1.44 ],
-          [ 1246406400000, 0.9 ], [ 1249084800000, 0.01 ]
-      ]
-    };
+          [ 1117584000000, 100 ], // jun 2005
+          [ 1230768000000, 0.1 ], // jan 2009
+          [ 1233446400000, -0.2 ], // feb 2009
+          [ 1235865600000, 0.25 ], // march 2009
+          [ 1238544000000, 0 ], // apr 2009
+          [ 1241136000000, -0.1 ], // may 2009
+          [ 1243814400000, 1.44 ], // june 2009
+          [ 1246406400000, 0.92 ], // july 2009
+          [ 1249084800000, 0.01 ], // aug 2009
+          [ 1251763200000, 0.95 ], // sept 2009
+          [ 1254355200000, 0.05 ], // oct 2009
+          [ 1257033600000, 0.93 ], // nov 2009
+          [ 1259625600000, 0.33 ] // dec 2009
+        ]
+      };
     data = JSON.stringify( data );
     var test = yoy( data, 'test' );
 
@@ -132,8 +151,9 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
     } );
 
     it( 'should assign the correct projected Dates', function() {
-      expect( test.projectedDate.timestamp ).to.equal( 1235944828800 );
-      expect( test.projectedDate.label ).to.equal( 'February 2009' );
+      expect( test.projectedDate.timestamp ).to.equal( 1246406400000 ); // July 2009
+      expect( test[test.length - 6][1] ).to.equal(92); // July 2009
+      expect( test.projectedDate.label ).to.equal( 'June 2009' ); // June 2009, the label uses the last month of data that isn't projected. For projected data starting with July, the label should say June.
     } );
 
   } );
@@ -143,20 +163,28 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
       test: {
         adjusted: [
             [ 1117584000000, 1 ],
-            [ 1230768000000, 1239123 ], [ 1233446400000, 888888 ],
-            [ 1235865600000, 1231125 ], [ 1238544000000, 82364821 ],
-            [ 1241136000000, 7654321 ], [ 1243814400000, 1234567 ],
-            [ 1246406400000, 1212123 ], [ 1249084800000, 3434343 ]
-        ],
-        unadjusted: [
+            [ 1230768000000, 1239123 ], 
+            [ 1233446400000, 888888 ],
+            [ 1235865600000, 1231125 ], 
+            [ 1238544000000, 82364821 ],
+            [ 1241136000000, 7654321 ], 
+            [ 1243814400000, 1234567 ],
+            [ 1246406400000, 1212123 ], 
+            [ 1249084800000, 3434343 ]
+          ],
+          unadjusted: [
             [ 1117584000000, 1 ],
-            [ 1230768000000, 1239123 ], [ 1233446400000, 888888 ],
-            [ 1235865600000, 1231125 ], [ 1238544000000, 82364821 ],
-            [ 1241136000000, 7654321 ], [ 1243814400000, 1234567 ],
-            [ 1246406400000, 1212123 ], [ 1249084800000, 3434343 ]
-        ]
-      }
-    };
+            [ 1230768000000, 1239123 ], 
+            [ 1233446400000, 888888 ],
+            [ 1235865600000, 1231125 ], 
+            [ 1238544000000, 82364821 ],
+            [ 1241136000000, 7654321 ], 
+            [ 1243814400000, 1234567 ],
+            [ 1246406400000, 1212123 ], 
+            [ 1249084800000, 3434343 ]
+          ]
+        }
+      };
     data = JSON.stringify( data );
     var test = originations( data, 'test' );
 
@@ -169,7 +197,7 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
     } );
 
     it( 'should assign the correct projected Dates', function() {
-      expect( test.projectedDate.timestamp ).to.equal( 1235944828800 );
+      expect( test.projectedDate.timestamp ).to.equal( 1235865600000 );
       expect( test.projectedDate.label ).to.equal( 'February 2009' );
     } );
 

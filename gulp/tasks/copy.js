@@ -1,7 +1,7 @@
 'use strict';
 
 var gulp = require( 'gulp' );
-var plugins = require( 'gulp-load-plugins' )();
+var gulpChanged = require( 'gulp-changed' );
 var configCopy = require( '../config' ).copy;
 var handleErrors = require( '../utils/handle-errors' );
 var browserSync = require( 'browser-sync' );
@@ -9,7 +9,7 @@ var browserSync = require( 'browser-sync' );
 gulp.task( 'copy:files', function() {
   var files = configCopy.files;
   return gulp.src( files.src )
-    .pipe( plugins.changed( files.dest ) )
+    .pipe( gulpChanged( files.dest ) )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( files.dest ) )
     .pipe( browserSync.reload( {
@@ -20,7 +20,7 @@ gulp.task( 'copy:files', function() {
 gulp.task( 'copy:icons', function() {
   var icons = configCopy.icons;
   return gulp.src( icons.src )
-    .pipe( plugins.changed( icons.dest ) )
+    .pipe( gulpChanged( icons.dest ) )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( icons.dest ) )
     .pipe( browserSync.reload( {
@@ -31,7 +31,7 @@ gulp.task( 'copy:icons', function() {
 gulp.task( 'copy:vendorjs', function() {
   var vendorJs = configCopy.vendorJs;
   return gulp.src( vendorJs.src )
-    .pipe( plugins.changed( vendorJs.dest ) )
+    .pipe( gulpChanged( vendorJs.dest ) )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( vendorJs.dest ) )
     .pipe( browserSync.reload( {

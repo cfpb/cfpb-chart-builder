@@ -61,7 +61,6 @@
     "gulp-header": "1.2.2",
     "gulp-imagemin": "2.3.0",
     "gulp-less": "3.0.3",
-    "gulp-load-plugins": "1.0.0-rc.1",
     "gulp-mq-remove": "0.0.2",
     "gulp-notify": "2.2.0",
     "gulp-rename": "1.2.2",

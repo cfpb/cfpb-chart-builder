@@ -1,7 +1,11 @@
 'use strict';
 
 var gulp = require( 'gulp' );
-var plugins = require( 'gulp-load-plugins' )();
+var gulpHeader = require( 'gulp-header' );
+var gulpSourcemaps = require( 'gulp-sourcemaps' );
+var gulpRename = require( 'gulp-rename' );
+var gulpUglify = require( 'gulp-uglify' );
+var gulpWebpack = require( 'gulp-webpack' );
 var config = require( '../config' );
 var configPkg = config.pkg;
 var configBanner = config.banner;
@@ -11,15 +15,15 @@ var browserSync = require( 'browser-sync' );
 
 gulp.task( 'scripts:concat', function() {
   return gulp.src( configScripts.src )
-    .pipe( plugins.sourcemaps.init() )
-    .pipe( plugins.webpack( {
+    .pipe( gulpSourcemaps.init() )
+    .pipe( gulpWebpack( {
       output: {
         filename: configScripts.name + '.js'
       }
     } ) )
     .on( 'error', handleErrors )
-    .pipe( plugins.header( configBanner, { pkg: configPkg } ) )
-    .pipe( plugins.sourcemaps.write( '.' ) )
+    .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
+    .pipe( gulpSourcemaps.write( '.' ) )
     .pipe( gulp.dest( configScripts.dest ) )
     .pipe( browserSync.reload( {
       stream: true
@@ -29,19 +33,19 @@ gulp.task( 'scripts:concat', function() {
 
 gulp.task( 'scripts:uglify', function() {
   return gulp.src( configScripts.src )
-    .pipe( plugins.sourcemaps.init() )
-    .pipe( plugins.webpack( {
+    .pipe( gulpSourcemaps.init() )
+    .pipe( gulpWebpack( {
       output: {
         filename: configScripts.name + '.js'
       }
     } ) )
-    .pipe( plugins.uglify() )
+    .pipe( gulpUglify() )
     .on( 'error', handleErrors )
-    .pipe( plugins.header( configBanner, { pkg: configPkg } ) )
-    .pipe( plugins.rename( {
+    .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
+    .pipe( gulpRename( {
       suffix: '.min'
     } ) )
-    .pipe( plugins.sourcemaps.write( '.' ) )
+    .pipe( gulpSourcemaps.write( '.' ) )
     .pipe( gulp.dest( configScripts.dest ) )
     .pipe( browserSync.reload( {
       stream: true

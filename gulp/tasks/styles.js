@@ -1,7 +1,13 @@
 'use strict';
 
 var gulp = require( 'gulp' );
-var plugins = require( 'gulp-load-plugins' )();
+var gulpAutoprefixer = require( 'gulp-autoprefixer' );
+var gulpCssmin = require( 'gulp-cssmin' );
+var gulpHeader = require( 'gulp-header' );
+var gulpLess = require( 'gulp-less' );
+var gulpSourcemaps = require( 'gulp-sourcemaps' );
+var gulpRename = require( 'gulp-rename' );
+var gulpUglify = require( 'gulp-uglify' );
 var mqr = require( 'gulp-mq-remove' );
 var config = require( '../config' );
 var configPkg = config.pkg;
@@ -12,10 +18,10 @@ var browserSync = require( 'browser-sync' );
 
 gulp.task( 'styles:modern', function() {
   return gulp.src( configStyles.cwd + configStyles.src )
-    .pipe( plugins.sourcemaps.init() )
-    .pipe( plugins.less( configStyles.settings ) )
+    .pipe( gulpSourcemaps.init() )
+    .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
-    .pipe( plugins.autoprefixer( {
+    .pipe( gulpAutoprefixer( {
       browsers: [
         'last 2 version',
         'not ie <= 8',
@@ -23,11 +29,11 @@ gulp.task( 'styles:modern', function() {
         'BlackBerry 7',
         'BlackBerry 10' ]
     } ) )
-    .pipe( plugins.header( configBanner, { pkg: configPkg } ) )
-    .pipe( plugins.rename( {
+    .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
+    .pipe( gulpRename( {
       suffix: '.min'
     } ) )
-    .pipe( plugins.sourcemaps.write( '.' ) )
+    .pipe( gulpSourcemaps.write( '.' ) )
     .pipe( gulp.dest( configStyles.dest ) )
     .pipe( browserSync.reload( {
       stream: true
@@ -40,13 +46,13 @@ gulp.task( 'styles:modern', function() {
  */
 function stylesIE9() {
   return gulp.src( configStyles.cwd + configStyles.src )
-    .pipe( plugins.less( configStyles.settings ) )
+    .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
-    .pipe( plugins.autoprefixer( {
+    .pipe( gulpAutoprefixer( {
       browsers: [ 'ie 9' ]
     } ) )
-    .pipe( plugins.cssmin() )
-    .pipe( plugins.rename( {
+    .pipe( gulpCssmin() )
+    .pipe( gulpRename( {
       suffix:  '.ie9.min',
       extname: '.css'
     } ) )
@@ -59,16 +65,16 @@ gulp.task( 'styles:stylesIE9', stylesIE9 );
 
 gulp.task( 'styles:stylesIE8', function() {
   return gulp.src( configStyles.cwd + configStyles.src )
-    .pipe( plugins.less( configStyles.settings ) )
+    .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
-    .pipe( plugins.autoprefixer( {
+    .pipe( gulpAutoprefixer( {
       browsers: [ 'ie 7-8' ]
     } ) )
     .pipe( mqr( {
       width: '75em'
     } ) )
-    .pipe( plugins.cssmin() )
-    .pipe( plugins.rename( {
+    .pipe( gulpCssmin() )
+    .pipe( gulpRename( {
       suffix:  '.ie8.min',
       extname: '.css'
     } ) )
@@ -80,13 +86,13 @@ gulp.task( 'styles:stylesIE8', function() {
 
 gulp.task( 'styles:chartsConcat', function() {
   return gulp.src( config.chartStyles.cwd + config.chartStyles.src )
-    .pipe( plugins.sourcemaps.init() )
-    .pipe( plugins.less( {
+    .pipe( gulpSourcemaps.init() )
+    .pipe( gulpLess( {
       paths: config.chartStyles.settings.paths,
       compress: false
     } ) )
     .on( 'error', handleErrors )
-    .pipe( plugins.autoprefixer( {
+    .pipe( gulpAutoprefixer( {
       browsers: [
         'last 2 version',
         'not ie <= 8',
@@ -102,10 +108,10 @@ gulp.task( 'styles:chartsConcat', function() {
 
 gulp.task( 'styles:chartsMinify', function() {
   return gulp.src( config.chartStyles.cwd + config.chartStyles.src )
-    .pipe( plugins.sourcemaps.init() )
-    .pipe( plugins.less( config.chartStyles.settings ) )
+    .pipe( gulpSourcemaps.init() )
+    .pipe( gulpLess( config.chartStyles.settings ) )
     .on( 'error', handleErrors )
-    .pipe( plugins.autoprefixer( {
+    .pipe( gulpAutoprefixer( {
       browsers: [
         'last 2 version',
         'not ie <= 8',
@@ -113,7 +119,7 @@ gulp.task( 'styles:chartsMinify', function() {
         'BlackBerry 7',
         'BlackBerry 10' ]
     } ) )
-    .pipe( plugins.rename( {
+    .pipe( gulpRename( {
       suffix: '.min'
     } ) )
     .pipe( gulp.dest( config.chartStyles.dest ) )

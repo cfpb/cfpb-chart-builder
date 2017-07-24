@@ -217,7 +217,23 @@ function LineChart( props ) {
           value: props.data.projectedDate.timestamp
         } ]
       }
-    ]
+    ],
+    responsive: {
+      rules: [{
+        condition: {
+          minWidth: 600 // chart width, not window width
+        },
+      // Add more left margin space for vertical label on large screens
+        chartOptions: {
+          chart: {
+            marginRight: 0,
+            marginTop: 100,
+            marginLeft: 70,
+            zoomType: 'none'
+          }
+        }
+      }]
+    }
   };
 
   Highcharts.stockChart( props.selector, options, function( chart ) {

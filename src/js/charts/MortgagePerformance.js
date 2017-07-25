@@ -71,7 +71,7 @@ function _getTickValue( value ) {
   if ( !value ) {
     return value;
   }
-  return value * 100 + '%';
+  return Highcharts.numberFormat( value * 100, 1 ) + '%';
 }
 
 function MortgagePerformance( props ) {
@@ -136,7 +136,7 @@ function MortgagePerformance( props ) {
         var tooltip = Highcharts.dateFormat('%B %Y', this.x);
         for (var i = 0; i < this.points.length; i++) {
           var point = this.points[i];
-          tooltip += "<br><span class='highcharts-color-" + point.series.colorIndex + "'></span> " + point.series.name+": " + Math.round(point.y * 10000) / 10 + '%';
+          tooltip += "<br><span class='highcharts-color-" + point.series.colorIndex + "'></span> " + point.series.name+": " + Highcharts.numberFormat( point.y * 100, 1 ) + '%';
         }
         return tooltip;
       }

@@ -45,7 +45,7 @@ module.exports = {
     src:      '/main.less',
     dest:     loc.dist + '/static/css',
     settings: {
-      paths: glob.sync( loc.lib + '/cf-*/src/' ),
+      paths: glob.sync( loc.lib + '/cf-*/src/' ).concat( [ loc.lib + '/highcharts/css/' ] ),
       compress: true
     }
   },
@@ -54,7 +54,7 @@ module.exports = {
     src:      '/cfpb-chart-builder.less',
     dest:     loc.dist + '/static/css',
     settings: {
-      paths: glob.sync( loc.lib + '/cf-*/src/' ),
+      paths: glob.sync( loc.lib + '/cf-*/src/' ).concat( [ loc.lib + '/highcharts/css/' ] ),
       compress: true
     }
   },

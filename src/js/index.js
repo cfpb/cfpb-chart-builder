@@ -10,6 +10,8 @@ var process = require( './utils/process-json' );
 var DATA_SOURCE_BASE = window.CFPB_CHART_BUILDER_DATA_SOURCE_BASE ||
                       '//s3.amazonaws.com/files.consumerfinance.gov/data/';
 
+var activeCharts = [];
+
 /***
 * When the document is ready, the code for cfpb-chart-builder seeks out chart
 * blocks and generates charts inside the designated elements.
@@ -19,13 +21,32 @@ documentReady( function() {
   _createCharts();
 } );
 
-function _createChart( { el, type, color, metadata, source } ) {
+function _createChart( { el, title, type, color, metadata, source } ) {
 
   return _loadSource( source ).then( data => {
 
     return new Promise( function( resolve, reject ) {
 
       var chart;
+
+      if ( type === 'geo-map' ) {
+        var rows = data[0].data;
+        data = Object.keys(rows).map(function(row) {
+          return {
+            fips: row,
+            name: rows[row].name,
+            value: rows[row]['30'] * 100
+          };
+        });
+        if ( el.getAttribute('data-chart-number') ) {
+          chart = activeCharts[ el.getAttribute('data-chart-number') ];
+          chart.updateMap( { title, geoType: metadata, data, rawData: rows } );
+        } else {
+          chart = new createChart.GeoMap( { el, title, geoType: metadata, data, rawData: rows } );
+          activeCharts.push(chart);
+          el.setAttribute('data-chart-number', activeCharts.length - 1);
+        }
+      }
 
       if ( type === 'line-comparison' ) {
 
@@ -61,7 +82,7 @@ function _createChart( { el, type, color, metadata, source } ) {
       if ( type === 'tile_map' ) {
         data = process.map( data[0], metadata );
         if ( typeof data === 'object' ) {
-          chart = createChart.map( { el, type, color, data } );
+          chart = createChart.tileMap( { el, type, color, data } );
         } else {
           chart.setAttribute( 'data-chart-error', errorStrings[data] );
           console.log( errorStrings[data] );
@@ -83,6 +104,7 @@ function _createCharts() {
   for (var chart of charts) {
     _createChart({
       el: chart,
+      title: chart.getAttribute( 'data-chart-title' ),
       type: chart.getAttribute( 'data-chart-type' ),
       color: chart.getAttribute( 'data-chart-color' ),
       metadata: chart.getAttribute( 'data-chart-metadata' ),
@@ -100,7 +122,9 @@ function _loadSource( key, callback ) {
 
   var promises = urls.map( function fetchUrl( url ) {
     return new Promise( function( resolve, reject ) {
-      url = DATA_SOURCE_BASE + url.replace( '.csv', '.json' );
+      if ( url.indexOf('http') !== 0 ) {
+        url = DATA_SOURCE_BASE + url.replace( '.csv', '.json' );
+      }
       ajax( { url: url }, function( resp ) {
         if ( resp.error ) {
           reject( resp.error );

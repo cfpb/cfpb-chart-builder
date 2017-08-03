@@ -3,8 +3,8 @@
 var charts = {};
 charts.bar = require( './BarChart' );
 charts.line = require( './LineChart' );
-charts.map = require( './TileMap' );
-
+charts.tileMap = require( './TileMap' );
+charts.GeoMap = require( './GeoMap' );
 charts.mortgagePerformance = require( './MortgagePerformance' );
 
 module.exports = charts;

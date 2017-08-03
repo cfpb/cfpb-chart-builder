@@ -48,7 +48,7 @@ module.exports = {
   },
   chartStyles: {
     cwd:      loc.src + '/css',
-    src:      loc.src + '/cfpb-chart-builder.less',
+    src:      '/cfpb-chart-builder.less',
     dest:     loc.dist,
     settings: {
       paths: glob.sync( loc.lib + '/cf-*/src/' ).concat( [ loc.lib + '/highcharts/css/' ] ),

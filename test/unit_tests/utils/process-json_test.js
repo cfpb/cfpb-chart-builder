@@ -3,7 +3,7 @@
 var chai = require( 'chai' );
 var expect = chai.expect;
 var processJSON =
-  require( '../../../src/static/js/utils/process-json' );
+  require( '../../../src/js/utils/process-json' );
 
 describe( 'process-json', function() { // eslint-disable-line max-statements, no-inline-comments, max-len
 

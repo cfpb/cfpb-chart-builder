@@ -9,9 +9,6 @@ var gulp = require( 'gulp' );
 var config = require( '../config' );
 
 gulp.task( 'watch', [ 'connect', 'browserSync' ], function() {
-  gulp.watch( config.scripts.src, [ 'scripts' ] );
-  gulp.watch( config.styles.cwd + '/**/*.less', [ 'styles' ] );
-  gulp.watch( config.chartStyles.cwd + '/**/*.less', [ 'styles' ] );
-  gulp.watch( config.images.src, [ 'images' ] );
-  gulp.watch( config.copy.files.src, [ 'copy:files' ] );
+  gulp.watch( config.test.src, [ 'scripts:concat', 'test:unit' ] );
+  gulp.watch( config.demoStyles.cwd + config.demoStyles.src, [ 'styles' ] );
 } );

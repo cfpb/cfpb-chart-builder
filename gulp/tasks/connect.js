@@ -6,7 +6,7 @@ var connect = require( 'gulp-connect' );
 gulp.task( 'connect', function() {
   connect.server( {
     port: 8081,
-    root: 'dist'
+    root: ['test', 'dist']
   } );
 } );
 

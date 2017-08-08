@@ -49,6 +49,7 @@
     "chai": "3.5.0",
     "del": "1.2.0",
     "eslint": "3.14.1",
+    "express": "4.15.4",
     "fs": "0.0.2",
     "gulp": "3.9.1",
     "gulp-autoprefixer": "3.1.1",
@@ -78,7 +79,7 @@
     "request": "2.79.0",
     "require-dir": "0.3.2",
     "sauce-connect-launcher": "1.2.0",
-    "static-server": "2.0.4",
+    "serve-static": "1.12.4",
     "uglify-js": "2.7.5",
     "uglifyify": "3.0.4",
     "watchify": "3.8.0"

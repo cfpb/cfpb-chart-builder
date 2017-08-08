@@ -2,7 +2,7 @@
   "name": "cfpb-chart-builder",
   "version": "2.0.2",
   "description": "Charts for the Consumer Financial Protection Bureau",
-  "main": "src/static/js/index.js",
+  "main": "src/js/index.js",
   "scripts": {
     "build": "gulp build",
     "test": "gulp test && npm run browser-tests",
@@ -35,6 +35,7 @@
   },
   "homepage": "https://github.com/cfpb/cfpb-chart-builder#readme",
   "dependencies": {
+    "babel-preset-env": "1.6.0",
     "cf-core": "^4.0.1",
     "cf-grid": "^4.0.1",
     "cf-layout": "^4.0.1",

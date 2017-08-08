@@ -1,6 +1,5 @@
 'use strict';
 
-require('es6-promise').polyfill();
 require('universal-fetch');
 
 // IE9 doesn't allow XHR from different protocols so until we get files.cf.gov
@@ -20,7 +19,6 @@ const getData = sources => {
     if ( url.indexOf( 'http' ) !== 0 ) {
       url = DATA_SOURCE_BASE + url.replace( '.csv', '.json' );
     }
-    console.log(url);
     fetch( url ).then( resp => resp.json() ).then( data => {
       resolve( data );
     } ).catch( err => {

@@ -1,6 +1,7 @@
 'use strict';
 
-var Promise = require('es6-promise').Promise;
+require( 'babel-polyfill' );
+
 var documentReady = require( './utils/document-ready' );
 var createChart = require( './charts' );
 var process = require( './utils/process-json' );

@@ -68,6 +68,7 @@ function convertDate( date ) {
  * @returns {Obj} data - object with adjusted and unadjusted value arrays containing timestamps and a number value
  */
 function processNumOriginationsData( data, group ) {
+
   if ( typeof data !== 'object' ) {
     return data;
   }
@@ -121,12 +122,7 @@ function processNumOriginationsData( data, group ) {
  * @returns {Obj} data - object with adjusted and unadjusted value arrays containing timestamps and a number value
  */
 function processYoyData( data, group ) {
-  // Check if the returned string is valid JSON
-  try {
-    data = JSON.parse( data );
-  } catch ( error ) {
-    data = 'parseError';
-  }
+
   if ( typeof data !== 'object' ) {
     return data;
   }
@@ -185,12 +181,7 @@ function getProjectedDate( timestamp ) {
 }
 
 function processMapData( data ) {
-  // Check if the returned string is valid JSON
-  try {
-    data = JSON.parse( data );
-  } catch ( error ) {
-    data = 'parseError';
-  }
+
   if ( typeof data !== 'object' ) {
     return data;
   }

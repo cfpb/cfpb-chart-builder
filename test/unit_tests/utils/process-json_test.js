@@ -134,7 +134,6 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
           [ 1259625600000, 0.33 ] // dec 2009
       ]
     };
-    data = JSON.stringify( data );
     var test = yoy( data, 'test' );
 
     it( 'should eliminate dates before 2009', function() {
@@ -185,7 +184,6 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
         ]
       }
     };
-    data = JSON.stringify( data );
     var test = originations( data, 'test' );
 
     it( 'should eliminate dates before 2009', function() {
@@ -222,7 +220,6 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
         value: '70.41'
       }
     ];
-    data = JSON.stringify( data );
     var test = map( data );
 
 

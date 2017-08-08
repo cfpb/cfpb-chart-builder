@@ -11,5 +11,6 @@ var config = require( '../config' );
 gulp.task( 'watch', [ 'connect', 'browserSync' ], function() {
   gulp.watch( config.test.src, [ 'scripts:concat', 'test:unit' ] );
   gulp.watch( config.styles.cwd + config.styles.src, [ 'styles' ] );
+  gulp.watch( config.test.unit, [ 'test:unit' ] );
   gulp.watch( config.demoStyles.cwd + config.demoStyles.src, [ 'styles' ] );
 } );

@@ -74,7 +74,7 @@ function TileMap( props ) {
     } ]
   };
 
-  Highcharts.mapChart( props.selector, options, _drawLegend );
+  return Highcharts.mapChart( props.el, options, _drawLegend );
 
 }
 

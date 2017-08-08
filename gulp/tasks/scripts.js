@@ -2,10 +2,9 @@
 
 var gulp = require( 'gulp' );
 var gulpHeader = require( 'gulp-header' );
-var gulpSourcemaps = require( 'gulp-sourcemaps' );
 var gulpRename = require( 'gulp-rename' );
 var gulpUglify = require( 'gulp-uglify' );
-var gulpWebpack = require( 'gulp-webpack' );
+var webpack = require('webpack-stream');
 var config = require( '../config' );
 var configPkg = config.pkg;
 var configBanner = config.banner;
@@ -15,10 +14,8 @@ var browserSync = require( 'browser-sync' );
 
 gulp.task( 'scripts:concat', function() {
   return gulp.src( configScripts.src )
-    .pipe( gulpSourcemaps.init() )
-    .pipe( gulpWebpack( {
-      debug: true,
-      devtool: 'inline-source-map',
+    .pipe( webpack( {
+      devtool: 'eval-source-map',
       module: {
         loaders: [ {
           loader: 'babel-loader',
@@ -34,7 +31,6 @@ gulp.task( 'scripts:concat', function() {
     } ) )
     .on( 'error', handleErrors )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
-    .pipe( gulpSourcemaps.write( '.' ) )
     .pipe( gulp.dest( configScripts.dest ) )
     .pipe( browserSync.reload( {
       stream: true
@@ -44,10 +40,7 @@ gulp.task( 'scripts:concat', function() {
 
 gulp.task( 'scripts:uglify', function() {
   return gulp.src( configScripts.src )
-    .pipe( gulpSourcemaps.init() )
-    .pipe( gulpWebpack( {
-      debug: true,
-      devtool: 'inline-source-map',
+    .pipe( webpack( {
       module: {
         loaders: [ {
           loader: 'babel-loader',
@@ -67,7 +60,6 @@ gulp.task( 'scripts:uglify', function() {
     .pipe( gulpRename( {
       suffix: '.min'
     } ) )
-    .pipe( gulpSourcemaps.write( '.' ) )
     .pipe( gulp.dest( configScripts.dest ) )
     .pipe( browserSync.reload( {
       stream: true

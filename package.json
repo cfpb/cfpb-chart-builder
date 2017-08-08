@@ -75,7 +75,6 @@
     "gulp-sourcemaps": "1.5.2",
     "gulp-uglify": "1.4.1",
     "gulp-util": "3.0.6",
-    "gulp-webpack": "1.5.0",
     "http-server": "0.9.0",
     "jquery": "1.11.3",
     "less": "2.7.2",
@@ -88,6 +87,7 @@
     "serve-static": "1.12.4",
     "uglify-js": "2.7.5",
     "uglifyify": "3.0.4",
-    "watchify": "3.8.0"
+    "watchify": "3.8.0",
+    "webpack-stream": "4.0.0"
   }
 }

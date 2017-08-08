@@ -85,7 +85,6 @@ function _createChart( { el, title, type, color, metadata, source } ) {
           console.log( errorStrings[data] );
         }
       }
-      console.log(data);
 
       resolve( chart );
 

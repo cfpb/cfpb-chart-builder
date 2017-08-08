@@ -1,19 +1,10 @@
 'use strict';
 
-var ajax = require( 'xdr' );
 var Promise = require('es6-promise').Promise;
 var documentReady = require( './utils/document-ready' );
 var createChart = require( './charts' );
 var process = require( './utils/process-json' );
-
-// IE9 doesn't allow XHR from different protocols until we get files.cf.gov
-// onto HTTPS we need to choose how we use S3.
-var DATA_SOURCE_BASE = window.location.protocol.indexOf( 'https' ) === -1 ?
-                      '//files.consumerfinance.gov/data/' :
-                      '//s3.amazonaws.com/files.consumerfinance.gov/data/';
-
-// Let users override the data source root (useful for localhost testing)
-DATA_SOURCE_BASE = window.CFPB_CHART_DATA_SOURCE_BASE || DATA_SOURCE_BASE;
+var ajax = require( './utils/get-data' );
 
 /**
  *   Polyfill for Array.indexOf
@@ -46,7 +37,7 @@ documentReady( function() {
 
 function _createChart( { el, title, type, color, metadata, source } ) {
 
-  return _loadSource( source ).then( data => {
+  return ajax( source ).then( data => {
 
     return new Promise( function( resolve, reject ) {
 
@@ -109,29 +100,6 @@ function _createCharts() {
     });
   }
 
-}
-
-// GET requests:
-
-function _loadSource( key, callback ) {
-
-  var urls = key.split(';');
-
-  var promises = urls.map( function fetchUrl( url ) {
-    return new Promise( function( resolve, reject ) {
-      if ( url.indexOf('http') !== 0 ) {
-        url = DATA_SOURCE_BASE + url.replace( '.csv', '.json' );
-      }
-      ajax( { url: url }, function( resp ) {
-        if ( resp.error ) {
-          reject( resp.error );
-        }
-        resolve( JSON.parse( resp.data ) );
-      } );
-    } );
-  } );
-
-  return Promise.all( promises );
 }
 
 var charts = {

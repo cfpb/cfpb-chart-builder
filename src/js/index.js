@@ -1,13 +1,19 @@
 'use strict';
 
 var ajax = require( 'xdr' );
+var Promise = require('es6-promise').Promise;
 var documentReady = require( './utils/document-ready' );
 var createChart = require( './charts' );
 var process = require( './utils/process-json' );
 
+// IE9 doesn't allow XHR from different protocols until we get files.cf.gov
+// onto HTTPS we need to choose how we use S3.
 var DATA_SOURCE_BASE = window.location.protocol.indexOf( 'https' ) === -1 ?
                       '//files.consumerfinance.gov/data/' :
                       '//s3.amazonaws.com/files.consumerfinance.gov/data/';
+
+// Let users override the data source root (useful for localhost testing)
+DATA_SOURCE_BASE = window.CFPB_CHART_DATA_SOURCE_BASE || DATA_SOURCE_BASE;
 
 /**
  *   Polyfill for Array.indexOf
@@ -35,94 +41,103 @@ if ( !Array.prototype.indexOf ) {
 */
 
 documentReady( function() {
-
-  buildCharts();
-
+  _createCharts();
 } );
 
-function buildCharts() {
+function _createChart( { el, title, type, color, metadata, source } ) {
+
+  return _loadSource( source ).then( data => {
+
+    return new Promise( function( resolve, reject ) {
+
+      var chart;
+
+      if ( type === 'line-comparison' ) {
+        chart = createChart.lineComparison( { el, type, color, data } );
+      }
+
+      if ( type === 'line' ) {
+        data = process.originations( data[0], metadata );
+        if ( typeof data === 'object' ) {
+          chart = createChart.line( { el, type, color, data } );
+        } else {
+          chart.setAttribute( 'data-chart-error', errorStrings[data] );
+          console.log( errorStrings[data] );
+        }
+      }
+
+      if ( type === 'bar' ) {
+        data = process.yoy( data[0], metadata );
+        if ( typeof data === 'object' ) {
+          chart = createChart.bar( { el, type, color, data } );
+        } else {
+          chart.setAttribute( 'data-chart-error', errorStrings[data] );
+          console.log( errorStrings[data] );
+        }
+      }
+
+      if ( type === 'tile_map' ) {
+        data = process.map( data[0], metadata );
+        if ( typeof data === 'object' ) {
+          chart = createChart.tileMap( { el, type, color, data } );
+        } else {
+          chart.setAttribute( 'data-chart-error', errorStrings[data] );
+          console.log( errorStrings[data] );
+        }
+      }
+      console.log(data);
+
+      resolve( chart );
+
+    } );
+
+  } );
+
+}
+
+function _createCharts() {
 
   var charts = document.querySelectorAll( '.cfpb-chart' );
-  var urls = {};
 
-  var errorStrings = {
-    parseError: 'There was an error parsing the data as JSON',
-    groupError: 'There was an error finding the group in data properties',
-    propertyError: 'There was an error finding the adjusted and/or unadjusted properties in the data'
-  };
-
-  for ( var x = 0; x < charts.length; x++ ) {
-    var chart = charts[x];
-    // Empty the chart for redraws
-    chart.innerHTML = '';
-
-    var url = chart.getAttribute( 'data-chart-source' );
-    if ( !urls.hasOwnProperty( url ) ) {
-      urls[url] = [];
-    }
-    urls[url].push( chart );
+  for (var chart of charts) {
+    _createChart({
+      el: chart,
+      title: chart.getAttribute( 'data-chart-title' ),
+      type: chart.getAttribute( 'data-chart-type' ),
+      color: chart.getAttribute( 'data-chart-color' ),
+      metadata: chart.getAttribute( 'data-chart-metadata' ),
+      source: chart.getAttribute( 'data-chart-source' )
+    });
   }
 
-  for ( var key in urls ) {
-
-    loadSource( key, function( key, data ) {
-      for ( var x = 0; x < urls[key].length; x++ ) {
-        var chart = urls[key][x],
-            type = chart.getAttribute( 'data-chart-type' ),
-            group = chart.getAttribute( 'data-chart-metadata' ),
-            color = chart.getAttribute( 'data-chart-color' );
-
-        // Ensure undefined attributes aren't cast as a string.
-        group = group === 'undefined' ? undefined : group;
-
-
-        var properties = {
-          type: type,
-          selector: chart,
-          color: color
-        };
-
-        if ( type === 'line' ) {
-          properties.data = process.originations( data, group );
-
-          if ( typeof properties.data === 'object' ) {
-            createChart.line( properties );
-          } else {
-            chart.setAttribute( 'data-chart-error', errorStrings[properties.data] );
-            console.log( errorStrings[properties.data] );
-          }
-        }
-
-        if ( type === 'bar' ) {
-          properties.data = process.yoy( data, group );
-          if ( typeof properties.data === 'object' ) {
-            createChart.bar( properties );
-          } else {
-            chart.setAttribute( 'data-chart-error', errorStrings[properties.data] );
-            console.log( errorStrings[properties.data] );
-          }
-        }
-
-        if ( type === 'tile_map' ) {
-          properties.data = process.map( data, group );
-          if ( typeof properties.data === 'object' ) {
-            createChart.map( properties );
-          } else {
-            chart.setAttribute( 'data-chart-error', errorStrings[properties.data] );
-            console.log( errorStrings[properties.data] );
-          }
-        }
-
-      }
-    } );
-  }
 }
 
 // GET requests:
 
-function loadSource( key, callback ) {
-  var url = DATA_SOURCE_BASE + key.replace( '.csv', '.json' );
-  ajax( { url: url }, function( resp ) {
-    callback( key, resp.data );
+function _loadSource( key, callback ) {
+
+  var urls = key.split(';');
+
+  var promises = urls.map( function fetchUrl( url ) {
+    return new Promise( function( resolve, reject ) {
+      if ( url.indexOf('http') !== 0 ) {
+        url = DATA_SOURCE_BASE + url.replace( '.csv', '.json' );
+      }
+      ajax( { url: url }, function( resp ) {
+        if ( resp.error ) {
+          reject( resp.error );
+        }
+        resolve( JSON.parse( resp.data ) );
+      } );
+    } );
   } );
+
+  return Promise.all( promises );
 }
+
+var charts = {
+  createChart: _createChart,
+  createCharts: _createCharts
+}
+
+module.exports = charts;

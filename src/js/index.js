@@ -45,6 +45,7 @@ function _createChart( { el, title, type, color, metadata, source } ) {
       var chart;
 
       if ( type === 'line-comparison' ) {
+        data = process.delinquencies( data, metadata );
         chart = createChart.lineComparison( { el, type, color, data } );
       }
 

@@ -61,6 +61,32 @@ function convertDate( date ) {
 }
 
 /**
+ * Prepares mortgage delinquency data for Highcharts.
+ *
+ * @param {Number} data - Raw JSON from mortgage-performance API
+ * @returns {Obj} data - Nested array
+ */
+function processDelinquencies( datasets, timeSpan ) {
+
+  if ( typeof datasets !== 'object' ) {
+    return datasets;
+  }
+
+  if ( timeSpan && !datasets[0].data[0][ timeSpan ] ) {
+    return 'propertyError';
+  }
+
+  datasets = datasets.map( dataset => ( {
+    label: dataset.meta.name,
+    data: dataset.data.map( datum =>
+      [ datum.date, datum[timeSpan] ]
+    )
+  } ) );
+
+  return datasets;
+}
+
+/**
  * Returns a data object with data starting in January 2009 for use in all line charts
  *
  * @param {Number} data - response from requested JSON file
@@ -209,6 +235,7 @@ function processMapData( data ) {
 
 module.exports = {
   formatDate: formatDate,
+  delinquencies: processDelinquencies,
   originations: processNumOriginationsData,
   yoy: processYoyData,
   map: processMapData,

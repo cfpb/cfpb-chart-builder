@@ -1,3 +1,5 @@
+/* global describe it */
+
 'use strict';
 
 var chai = require( 'chai' );
@@ -9,6 +11,7 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
 
   var formatDate = processJSON.formatDate;
   var originations = processJSON.originations;
+  var delinquencies = processJSON.delinquencies;
   var yoy = processJSON.yoy;
   var map = processJSON.map;
   var getProjectedDate = processJSON.getProjectedDate;
@@ -240,6 +243,49 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
     it( 'should add the correct tooltip', function() {
       expect( test[0].name ).to.equal( 'AL' );
       expect( test[0].tooltip ).to.equal( 'AL increased by 143%' );
+    } );
+
+  } );
+
+  describe( 'processDelinquencies', function() {
+
+    var data = [
+      {
+        meta: {
+          name: 'foo'
+        },
+        data: [{
+          date: 1234,
+          pct30: 5678,
+          pct90: 9012
+        }]
+      },
+      {
+        meta: {
+          name: 'bar'
+        },
+        data: [{
+          date: 12342,
+          pct30: 56782,
+          pct90: 90122
+        }]
+      }
+    ];
+
+    it( 'assign a label', function() {
+      var test = delinquencies( data, 'pct30' );
+      expect( test[0].label ).to.equal( 'foo' );
+      expect( test[1].label ).to.equal( 'bar' );
+    } );
+
+    it( 'filter 30 day delinquencies', function() {
+      var test = delinquencies( data, 'pct30' );
+      expect( test[0].data[0][1] ).to.equal( 5678 );
+    } );
+
+    it( 'filter 90 day delinquencies', function() {
+      var test = delinquencies( data, 'pct90' );
+      expect( test[0].data[0][1] ).to.equal( 9012 );
     } );
 
   } );

@@ -67,8 +67,8 @@ function _getYAxisLabel( array ) {
  */
 
 function _getTickValue( value ) {
-  // If it's 0 or borked data gets passed in, return it.
-  if ( !value ) {
+  // If borked data gets passed in, return it.
+  if ( isNaN(value) ) {
     return value;
   }
   return Highcharts.numberFormat( value * 100, 1 ) + '%';
@@ -122,6 +122,7 @@ function LineChartComparison( props ) {
       }
     },
     yAxis: {
+      min: 0,
       opposite: false,
       className: 'axis-label',
       labels: {

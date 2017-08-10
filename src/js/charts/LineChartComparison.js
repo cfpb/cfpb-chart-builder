@@ -141,16 +141,14 @@ function LineChartComparison( props ) {
         return tooltip;
       }
     },
-    series: props.data.map(datum => {
-      return {
-        name: datum.label,
-        data: datum.data,
-        legendIndex: 1,
-        tooltip: {
-          valueDecimals: 0
-        }
+    series: props.data.map(datum => ( {
+      name: datum.label,
+      data: datum.data,
+      legendIndex: 1,
+      tooltip: {
+        valueDecimals: 0
       }
-    })
+    } ) )
   };
 
   return Highcharts.stockChart( props.el, options );

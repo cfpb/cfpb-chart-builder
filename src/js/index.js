@@ -1,6 +1,7 @@
 'use strict';
 
-require( 'babel-polyfill' );
+require('core-js/es6/symbol');
+require('core-js/es6/promise');
 
 var documentReady = require( './utils/document-ready' );
 var createChart = require( './charts' );

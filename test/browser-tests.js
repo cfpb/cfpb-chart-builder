@@ -2,12 +2,14 @@ var path = require('path');
 var fs = require('fs');
 var sauceConnectLauncher = require('sauce-connect-launcher');
 var express = require('express');
+var cors = require('cors');
 var path = require('path');
 var serveStatic = require('serve-static');
 var request = require('request');
 var config = path.join(__dirname, './config.json');
 
 var app = express();
+app.use(cors());
 
 if (!fs.existsSync(config) && !process.env.SAUCE_LABS_ACCESS_KEY) {
   console.error("Please define SAUCE_LABS_USERNAME and SAUCE_LABS_ACCESS_KEY in `test/config.js`.");

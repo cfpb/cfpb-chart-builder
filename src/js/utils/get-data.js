@@ -1,6 +1,6 @@
 'use strict';
 
-require('universal-fetch');
+const ajax = require( 'xdr' );
 
 // IE9 doesn't allow XHR from different protocols so until we get files.cf.gov
 // onto HTTPS we need to choose how we use S3.
@@ -19,10 +19,12 @@ const getData = sources => {
     if ( url.indexOf( 'http' ) !== 0 ) {
       url = DATA_SOURCE_BASE + url.replace( '.csv', '.json' );
     }
-    fetch( url ).then( resp => resp.json() ).then( data => {
-      resolve( data );
-    } ).catch( err => {
-      reject( err );
+    ajax( { url: url, type: 'json' }, function( resp ) {
+      if ( resp.error ) {
+        reject( resp.error );
+        return;
+      }
+      resolve( resp.data );
     } );
   } ) );
 

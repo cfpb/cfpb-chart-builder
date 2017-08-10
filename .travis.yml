@@ -6,3 +6,15 @@ install:
   - ./setup.sh
 script:
   - npm test
+before_deploy:
+  - cp test/index.html dist/index.html
+  - cp test/test_runner.js dist/test_runner.js
+  - cp -r test/sample_data/ dist/sample_data/
+  - cp -r test/css/ dist/css/
+deploy:
+  provider: pages
+  local_dir: dist
+  skip_cleanup: true
+  github_token: $GITHUB_GHPAGES_TOKEN
+  on:
+    branch: master

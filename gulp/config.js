@@ -24,7 +24,7 @@ module.exports = {
       ' */',
   lint: {
     src: [
-      loc.src + '/static/js/**/*.js',
+      loc.src + '/js/**/*.js',
       loc.test + '/unit_tests/**/*.js',
       loc.test + '/browser_tests/**/*.js'
     ],
@@ -34,25 +34,24 @@ module.exports = {
     ]
   },
   test: {
-    src:   loc.src + '/static/js/**/*.js',
+    src:   loc.src + '/js/**/*.js',
     tests: loc.test
   },
   clean: {
     dest: loc.dist
   },
-  styles: {
-    cwd:      loc.src + '/static/css',
-    src:      '/main.less',
-    dest:     loc.dist + '/static/css',
+  demoStyles: {
+    cwd:      loc.test + '/css',
+    src:      '/demo.less',
+    dest:     loc.test + '/css',
     settings: {
-      paths: glob.sync( loc.lib + '/cf-*/src/' ).concat( [ loc.lib + '/highcharts/css/' ] ),
-      compress: true
+      paths: glob.sync( loc.lib + '/cf-*/src/' ).concat( [ loc.lib + '/highcharts/css/' ] )
     }
   },
-  chartStyles: {
-    cwd:      loc.src + '/static/css',
+  styles: {
+    cwd:      loc.src + '/css',
     src:      '/cfpb-chart-builder.less',
-    dest:     loc.dist + '/static/css',
+    dest:     loc.dist,
     settings: {
       paths: glob.sync( loc.lib + '/cf-*/src/' ).concat( [ loc.lib + '/highcharts/css/' ] ),
       compress: true
@@ -60,37 +59,9 @@ module.exports = {
   },
   scripts: {
     src: [
-      loc.src + '/static/js/**/*.js'
+      loc.src + '/js/index.js'
     ],
-    dest: loc.dist + '/static/js/',
+    dest: loc.dist,
     name: 'cfpb-chart-builder'
-  },
-  images: {
-    src:  loc.src + '/static/img/**',
-    dest: loc.dist + '/static/img'
-  },
-  copy: {
-    files: {
-      src: [
-        loc.src + '/**/*.html',
-        loc.src + '/**/*.pdf',
-        loc.src + '/_*/**/*',
-        loc.src + '/robots.txt',
-        loc.src + '/favicon.ico',
-        '!' + loc.lib + '/**/*.html'
-      ],
-      dest: loc.dist
-    },
-    icons: {
-      src:  loc.lib + '/cf-icons/src/fonts/*',
-      dest: loc.dist + '/static/fonts/'
-    },
-    vendorJs: {
-      src: [
-        loc.lib + '/box-sizing-polyfill/boxsizing.htc',
-        loc.lib + '/html5shiv/dist/html5shiv-printshiv.min.js'
-      ],
-      dest: loc.dist + '/static/js/'
-    }
   }
 };

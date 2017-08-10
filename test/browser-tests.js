@@ -1,9 +1,13 @@
 var path = require('path');
 var fs = require('fs');
 var sauceConnectLauncher = require('sauce-connect-launcher');
-var StaticServer = require('static-server');
+var express = require('express');
+var path = require('path');
+var serveStatic = require('serve-static');
 var request = require('request');
 var config = path.join(__dirname, './config.json');
+
+var app = express();
 
 if (!fs.existsSync(config) && !process.env.SAUCE_LABS_ACCESS_KEY) {
   console.error("Please define SAUCE_LABS_USERNAME and SAUCE_LABS_ACCESS_KEY in `test/config.js`.");
@@ -27,11 +31,6 @@ var SAUCE_LABS_USERNAME = config.SAUCE_LABS_USERNAME,
     CI_ENVIRONMENT = process.env.CI_ENVIRONMENT || '',
     STATIC_SERVER_PORT = 8089;
 
-var server = new StaticServer({
-  rootPath: path.join( __dirname, '../'),
-  port: STATIC_SERVER_PORT
-});
-
 var sauceTests = [];
 
 sauceConnectLauncher({
@@ -40,7 +39,10 @@ sauceConnectLauncher({
 }, startServer);
 
 function startServer() {
-  server.start(startSauce);
+  app.use(serveStatic(path.join(__dirname)));
+  app.use(serveStatic(path.join(__dirname, '..', 'dist')));
+  app.listen(STATIC_SERVER_PORT);
+  startSauce();
 }
 
 function startSauce(err, process) {
@@ -60,7 +62,7 @@ function startSauce(err, process) {
             ["Windows 7", "firefox", "27"],
             ["Windows 7", "chrome", ""]
         ],
-        "url": "http://localhost:" + STATIC_SERVER_PORT + "/test/?ci_environment=" + CI_ENVIRONMENT,
+        "url": "http://localhost:" + STATIC_SERVER_PORT + "/?ci_environment=" + CI_ENVIRONMENT,
         "framework": "custom"
     }
   };

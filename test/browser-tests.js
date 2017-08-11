@@ -28,8 +28,8 @@ if (process.env.SAUCE_LABS_USERNAME && process.env.SAUCE_LABS_ACCESS_KEY) {
   config = require(config);
 }
 
-if (process.env.TRAVIS_PULL_REQUEST !== false && process.env.TRAVIS_BRANCH && process.env.TRAVIS_JOB_NUMBER) {
-  testName = 'Pull request #' + process.env.TRAVIS_PULL_REQUEST + ', branch: ' + process.env.TRAVIS_BRANCH + ', Travis job #' + process.env.TRAVIS_JOB_NUMBER;
+if (process.env.TRAVIS_PULL_REQUEST !== false && process.env.TRAVIS_PULL_REQUEST_BRANCH && process.env.TRAVIS_JOB_NUMBER) {
+  testName = 'Pull request #' + process.env.TRAVIS_PULL_REQUEST + ', branch: ' + process.env.TRAVIS_PULL_REQUEST_BRANCH + ', Travis job #' + process.env.TRAVIS_JOB_NUMBER;
 } else {
   testName = child_process.execSync('git rev-parse --abbrev-ref HEAD').toString();
 }

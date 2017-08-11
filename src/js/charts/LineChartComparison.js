@@ -103,6 +103,9 @@ function LineChartComparison( props ) {
           hover: {
             enabled: false
           }
+        },
+        events: {
+          legendItemClick: () => false
         }
       }
     },

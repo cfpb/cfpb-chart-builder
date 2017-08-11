@@ -9,6 +9,7 @@ var config = path.join(__dirname, './config.json');
 var child_process = require('child_process');
 
 var app = express();
+var testName;
 
 if (!fs.existsSync(config) && !process.env.SAUCE_LABS_ACCESS_KEY) {
   console.error("Please define SAUCE_LABS_USERNAME and SAUCE_LABS_ACCESS_KEY in `test/config.js`.");
@@ -25,6 +26,13 @@ if (process.env.SAUCE_LABS_USERNAME && process.env.SAUCE_LABS_ACCESS_KEY) {
 } else {
   // Read creds from config file
   config = require(config);
+}
+
+if (process.env.TRAVIS_PULL_REQUEST) {
+  // testName = process.env.TRAVIS_BRANCH + ' ' + process.env.TRAVIS_JOB_NUMBER;
+  testName = 'Pull request #' + process.env.TRAVIS_PULL_REQUEST;
+} else {
+  testName = child_process.execSync('git rev-parse --abbrev-ref HEAD').toString();
 }
 
 var SAUCE_LABS_USERNAME = config.SAUCE_LABS_USERNAME,
@@ -65,7 +73,7 @@ function startSauce(err, process) {
         ],
         "url": "http://localhost:" + STATIC_SERVER_PORT + "/?ci_environment=" + CI_ENVIRONMENT,
         "framework": "custom",
-        "name": child_process.execSync('git rev-parse --abbrev-ref HEAD').toString()
+        "name": testName
     }
   };
   request.post(opts, function(err, httpResponse, body) {

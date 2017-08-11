@@ -6,6 +6,7 @@ var path = require('path');
 var serveStatic = require('serve-static');
 var request = require('request');
 var config = path.join(__dirname, './config.json');
+var child_process = require('child_process');
 
 var app = express();
 
@@ -63,7 +64,9 @@ function startSauce(err, process) {
             ["Windows 7", "chrome", ""]
         ],
         "url": "http://localhost:" + STATIC_SERVER_PORT + "/?ci_environment=" + CI_ENVIRONMENT,
-        "framework": "custom"
+        "framework": "custom",
+        "name": "Deborah Shoshlefski"
+        // child_process.execSync('git rev-parse --abbrev-ref HEAD').toString()
     }
   };
   request.post(opts, function(err, httpResponse, body) {

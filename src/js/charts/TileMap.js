@@ -50,6 +50,7 @@ function TileMap( props ) {
     chart: {
       marginTop: 150
     },
+    title: false,
     description: props.description,
     credits: false,
     legend: {

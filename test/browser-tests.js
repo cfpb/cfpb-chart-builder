@@ -65,8 +65,7 @@ function startSauce(err, process) {
         ],
         "url": "http://localhost:" + STATIC_SERVER_PORT + "/?ci_environment=" + CI_ENVIRONMENT,
         "framework": "custom",
-        "name": "Deborah Shoshlefski"
-        // child_process.execSync('git rev-parse --abbrev-ref HEAD').toString()
+        "name": child_process.execSync('git rev-parse --abbrev-ref HEAD').toString()
     }
   };
   request.post(opts, function(err, httpResponse, body) {

@@ -16,7 +16,8 @@ const getData = sources => {
   const urls = sources.split( ';' );
 
   const promises = urls.map( url => new Promise( ( resolve, reject ) => {
-    if ( url.indexOf( 'http' ) !== 0 ) {
+    // Only prepend the data source base if it's a relative URL
+    if ( url.indexOf( 'http' ) !== 0 && url.indexOf( '/' ) !== 0 ) {
       url = DATA_SOURCE_BASE + url.replace( '.csv', '.json' );
     }
     ajax( { url: url, type: 'json' }, function( resp ) {

@@ -68,7 +68,7 @@ function _getYAxisLabel( array ) {
 
 function _getTickValue( value ) {
   // If borked data gets passed in, return it.
-  if ( isNaN(value) ) {
+  if ( isNaN( value ) ) {
     return value;
   }
   return Highcharts.numberFormat( value * 100, 1 ) + '%';
@@ -137,15 +137,15 @@ function LineChartComparison( props ) {
     tooltip: {
       useHTML: true,
       formatter: function() {
-        var tooltip = Highcharts.dateFormat('%B %Y', this.x);
-        for (var i = 0; i < this.points.length; i++) {
+        var tooltip = Highcharts.dateFormat( '%B %Y', this.x );
+        for ( var i = 0; i < this.points.length; i++ ) {
           var point = this.points[i];
-          tooltip += "<br><span class='highcharts-color-" + point.series.colorIndex + "'></span> " + point.series.name+": " + Highcharts.numberFormat( point.y * 100, 1 ) + '%';
+          tooltip += "<br><span class='highcharts-color-" + point.series.colorIndex + "'></span> " + point.series.name + ': ' + Highcharts.numberFormat( point.y * 100, 1 ) + '%';
         }
         return tooltip;
       }
     },
-    series: props.data.map(datum => ( {
+    series: props.data.map( datum => ( {
       name: datum.label,
       data: datum.data,
       legendIndex: 1,

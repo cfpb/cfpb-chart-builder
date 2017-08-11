@@ -9,11 +9,15 @@ const mock = require( 'mock-require' );
 const expect = chai.expect;
 
 mock( 'highcharts/js/highstock', {
-  setOptions: () => { },
+  setOptions: () => {
+    // do nothing
+  },
   stockChart: ( props, options ) => options
 } );
 
-mock( 'highcharts/js/modules/accessibility', () => console.log('yip!') );
+mock( 'highcharts/js/modules/accessibility', () => {
+  // do nothing
+} );
 
 const lineChart = require( '../../../src/js/charts/LineChartComparison.js' );
 let chart;

@@ -45,6 +45,11 @@ const chart = ccb.createChart({
   color: 'green'
 });
 
+// Charts can be updated and redrawn
+chart.update({
+  source: 'http://mywebsite.com/api/some-other-data.json',
+});
+
 ```
 
 ## API
@@ -85,11 +90,10 @@ Optional. Chart's color scheme. Options: `blue`, `green`, `teal`, `navy`.
 Optional. Arbitrary metadata for your chart.
 For example, `bar` charts currently require a group key (e.g. `Number of Loans`) to filter data.
 
-### `updateChart( options )`
+### `chart.update( options )`
 
 Update a CFPB chart.
-
-*Coming soon.*
+Provide any of the above options and the chart will be redrawn with those new settings.
 
 ## Contributing
 

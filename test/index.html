@@ -13,7 +13,7 @@
     <!--[if lt IE 9]><link rel="stylesheet" href="css/demo.ie8.css"><![endif]-->
     <!--[if IE 9]><link rel="stylesheet" href="css/demo.ie9.css"><![endif]-->
     <!--[if gt IE 8]><!-->
-    <link href="css/demo.css" rel="stylesheet"><!--<![endif]-->
+    <link href="static/demo.css" rel="stylesheet"><!--<![endif]-->
     <link href="cfpb-chart-builder.css" rel="stylesheet">
     <script>
         // Confirm availability of JS and remove no-js class from html
@@ -27,15 +27,14 @@
         <div class="content_wrapper">
             <div class="content_main">
                 <h1>Some Sample CCT Charts</h1>
-                <div class="cfpb-chart"
+                <div id="update-demo"
+                     class="cfpb-chart"
                      data-chart-color="blue"
-                     data-chart-description="This is the chart description."
-                     data-chart-metadata="pct30"
-                     data-chart-source="mortgage-performance/time-series/12081;mortgage-performance/time-series/national"
-                     data-chart-title="30-day Mortgage Delinquencies"
-                     data-chart-type="line-comparison">
-                     This is the chart description.
+                     data-chart-type="line-comparison"
+                     data-chart-ignore="true">
+                     This chart will be created via the script in /test/demo.js.
                 </div>
+                <div>The above chart <span id="update-demo-countdown"></span>.</div>
                 <hr>
                 <!-- This chart's sources start with a slash indicating it wants to load its data from the same domain -->
                 <div class="cfpb-chart"
@@ -157,6 +156,6 @@
         </div>
     </main>
     <script src="./test-runner.js" type="text/javascript"></script>
-    <script src="cfpb-chart-builder.js" type="text/javascript"></script>
+    <script src="static/demo-built.js" type="text/javascript"></script>
 </body>
 </html>

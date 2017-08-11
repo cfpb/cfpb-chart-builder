@@ -42,9 +42,9 @@ module.exports = {
     dest: loc.dist
   },
   demoStyles: {
-    cwd:      loc.test + '/css',
+    cwd:      loc.test + '/static',
     src:      '/demo.less',
-    dest:     loc.test + '/css',
+    dest:     loc.test + '/static',
     settings: {
       paths: glob.sync( loc.lib + '/cf-*/src/' ).concat( [ loc.lib + '/highcharts/css/' ] )
     }
@@ -57,6 +57,11 @@ module.exports = {
       paths: glob.sync( loc.lib + '/cf-*/src/' ).concat( [ loc.lib + '/highcharts/css/' ] ),
       compress: true
     }
+  },
+  demoScripts: {
+    src: loc.test + '/static/demo.js',
+    dest: loc.test + '/static',
+    name: 'demo-built'
   },
   scripts: {
     src: [

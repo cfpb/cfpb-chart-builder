@@ -1,9 +1,9 @@
 'use strict';
 
 var Highcharts = require( 'highcharts/js/highmaps' );
-require( 'highcharts/js/modules/accessibility' )( Highcharts );
 var getTileMapColor = require( '../utils/get-tile-map-color' );
-
+var process = require( '../utils/process-json' );
+require( 'highcharts/js/modules/accessibility' )( Highcharts );
 
 function _drawLegend( chart ) {
 
@@ -44,11 +44,9 @@ Highcharts.setOptions( {
 function TileMap( props ) {
 
   props = props || {};
+  props.data = process.map( props.data[0], props.metadata );
 
   var options = {
-    title: {
-      text: props.title
-    },
     chart: {
       marginTop: 150
     },

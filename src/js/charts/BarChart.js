@@ -1,6 +1,7 @@
 'use strict';
 
 var Highcharts = require( 'highcharts/js/highstock' );
+var process = require( '../utils/process-json' );
 require( 'highcharts/js/modules/accessibility' )( Highcharts );
 
 Highcharts.setOptions( {
@@ -12,10 +13,8 @@ Highcharts.setOptions( {
 
 
 function BarChart( props ) {
+  props.data = process.yoy( props.data[0], props.metadata );
   var options = {
-    title: {
-      text: props.title
-    },
     chart: {
       marginRight: 0,
       marginTop: 100,

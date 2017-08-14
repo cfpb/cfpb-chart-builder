@@ -2,7 +2,6 @@
 
 const ajax = require( 'xdr' );
 const Highcharts = require( 'highcharts/js/highmaps' );
-const shapes = require( '../utils/map-shapes' );
 require( 'highcharts/js/modules/accessibility' )( Highcharts );
 
 Highcharts.setOptions( {
@@ -11,37 +10,9 @@ Highcharts.setOptions( {
   }
 } );
 
-// var _preFetchShapes = () => {
-//   ajax( { url: shapes.states }, function( resp ) {
-//     if ( resp.error ) {
-//       console.error( resp.error );
-//     }
-//     shapes.states = JSON.parse( resp.data );
-//   } );
-//   ajax( { url: shapes.counties }, function( resp ) {
-//     if ( resp.error ) {
-//       console.error( resp.error );
-//     }
-//     shapes.counties = JSON.parse( resp.data );
-//   } );
-// };
-
-// setTimeout( _preFetchShapes, 1000 );
-
 class GeoMap {
 
   constructor( { el, metadata, data, title, desc, shapes, rawData = {}} ) {
-
-    var usMap = Highcharts.geojson( shapes ),
-        lines = Highcharts.geojson( shapes, 'mapline' )[0];
-
-    var rows = data[0].data;
-    data = Object.keys( rows ).map( row => ( {
-      fips: row,
-      name: rows[row].name,
-      // TODO: Remove this hardcoded pct30 key and rely on a 'value' field
-      value: rows[row].pct30 * 100
-    } ) );
 
     // Highcharts.each( usMap, function( mapPoint ) {
     //   if ( rawData[mapPoint.properties.id] ) {
@@ -59,6 +30,7 @@ class GeoMap {
         easing: 'easeOutBounce'
       },
       legend: false,
+      description: desc,
       mapNavigation: {
         enabled: true,
         enableMouseWheelZoom: false
@@ -111,57 +83,60 @@ class GeoMap {
           }
         ]
       },
-      series: [
-        {
-          mapData: usMap,
-          data: data,
-          joinBy: [ 'id', 'fips' ],
-          name: title,
-          tooltip: {
-            valueSuffix: '%'
-          },
-          borderWidth: 0.5,
-          states: {
-            hover: {
-              color: '#a4edba'
-            }
-          }
-        },
-        {
-          type: 'mapline',
-          name: 'Borders',
-          data: [ lines ],
-          color: 'gray'
-        }
-      ]
+      series: this.constructor.getSeries( data, shapes )
     };
 
     this.chart = Highcharts.mapChart( el, Object.assign( {}, this.chartOptions ) );
   }
 
+  static getSeries( data, shapes ) {
+
+    const usMap = Highcharts.geojson( shapes ),
+          lines = Highcharts.geojson( shapes, 'mapline' )[0];
+
+    const rows = data[0].data;
+    data = Object.keys( rows ).map( row => ( {
+      fips: row,
+      name: rows[row].name,
+      // TODO: Remove this hardcoded pct30 key and rely on a 'value' field
+      value: rows[row].pct30 * 100
+    } ) );
+
+    const series = [
+      {
+        mapData: usMap,
+        data: data,
+        joinBy: [ 'id', 'fips' ],
+        tooltip: {
+          valueSuffix: '%'
+        },
+        borderWidth: 0.5,
+        states: {
+          hover: {
+            color: '#a4edba'
+          }
+        }
+      },
+      {
+        type: 'mapline',
+        name: 'Borders',
+        data: [ lines ],
+        color: 'gray'
+      }
+    ];
+
+    return series;
+  }
+
   update ( newOptions ) {
+    if ( newOptions.data ) {
+      newOptions.series = this.constructor.getSeries( newOptions.data, newOptions.metadata );
+    }
     // Merge the old chart options with the new ones
     Object.assign( this.chartOptions, newOptions );
     this.chart.update( this.chartOptions, true, true );
     this.chart.hideLoading();
   }
-
-  // update( { title, desc, metadata, data, rawData = {}} ) {
-  //   var usMap = Highcharts.geojson( shapes[metadata] ),
-  //       lines = Highcharts.geojson( shapes[metadata], 'mapline' )[0];
-  //
-  //   Highcharts.each( usMap, function( mapPoint ) {
-  //     if ( rawData[mapPoint.properties.id] ) {
-  //       mapPoint.name = rawData[mapPoint.properties.id].name;
-  //     }
-  //   } );
-  //
-  //   mapOptions.title = title || mapOptions.title;
-  //   mapOptions.desc = desc || mapOptions.desc;
-  //   mapOptions.series[0].mapData = usMap;
-  //   mapOptions.series[0].data = data;
-  //   this.chart.update( mapOptions );
-  // }
 
 }
 

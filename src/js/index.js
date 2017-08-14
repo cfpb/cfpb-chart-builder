@@ -31,7 +31,7 @@ class Chart {
     switch ( chartOptions.type ) {
       case 'geo-map':
         shapes.fetch( chartOptions.metadata ).then( shapes => {
-          chartOptions.shapes = shapes;
+          chartOptions.shapes = shapes[0];
           this.highchart = new createChart.GeoMap( chartOptions );
         } );
         break;
@@ -70,7 +70,7 @@ class Chart {
       this.chartOptions.data = data;
       if ( needNewMapShapes ) {
         shapes.fetch( this.chartOptions.metadata ).then( shapes => {
-          this.chartOptions.shapes = shapes;
+          this.chartOptions.shapes = shapes[0];
           this.highchart.update( this.chartOptions );
         } );
         return;

@@ -37,16 +37,16 @@ describe( 'LineChartComparison', () => {
     line = new LineChart( {
       el: 'el',
       description: 'chart description!',
-      metadata: 'foo',
+      metadata: 'pct30',
       data: [
         {
           meta: {
-            name: 'foo'
+            name: 'Boston, MA'
           },
           data: [ {
             date: 1199163600000,
-            foo: 1,
-            bar: 2
+            pct30: 0.129563846384,
+            pct90: 0.264737255727
           } ]
         }
       ]
@@ -58,11 +58,11 @@ describe( 'LineChartComparison', () => {
   } );
 
   it( 'should correctly set chart series name', () => {
-    expect( line.chart.options.series[0].name ).to.equal( 'foo' );
+    expect( line.chart.options.series[0].name ).to.equal( 'Boston, MA' );
   } );
 
   it( 'should correctly set chart data', () => {
-    expect( line.chart.options.series[0].data[0] ).to.deep.equal( [ 1199163600000, 1 ] );
+    expect( line.chart.options.series[0].data[0] ).to.deep.equal( [ 1199163600000, 0.129563846384 ] );
   } );
 
   it( 'should correctly set chart attributes', () => {
@@ -78,16 +78,16 @@ describe( 'LineChartComparison', () => {
     line.update( { data: [
       {
         meta: {
-          name: 'cheeseburger'
+          name: 'Chicago, IL'
         },
         data: [ {
           date: 1199163600000,
-          foo: 1,
-          bar: 2
+          pct30: 0.129563846384,
+          pct90: 0.264737255727
         } ]
       }
     ] } );
-    expect( line.chart.options.series[0].name ).to.deep.equal( 'cheeseburger' );
+    expect( line.chart.options.series[0].name ).to.deep.equal( 'Chicago, IL' );
     expect( line.chart.options.series[0].legendIndex ).to.equal( 1 );
   } );
 

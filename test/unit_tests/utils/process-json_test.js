@@ -18,7 +18,6 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
   var getProjectedTimestamp = processJSON.getProjectedTimestamp;
   var convertDate = processJSON.convertDate;
 
-
   describe( 'formatDate', function() { // eslint-disable-line max-len
 
     it( 'should convert a month index into the correct UTC timestamp in milliseconds representing January 1 2000', function() {
@@ -252,40 +251,40 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
     var data = [
       {
         meta: {
-          name: 'foo'
+          name: 'New York, NY'
         },
         data: [ {
-          date: 1234,
-          pct30: 5678,
-          pct90: 9012
+          date: 1199163600000,
+          pct30: 0.129563846384,
+          pct90: 0.264737255727
         } ]
       },
       {
         meta: {
-          name: 'bar'
+          name: 'Miami, FL'
         },
         data: [ {
-          date: 12342,
-          pct30: 56782,
-          pct90: 90122
+          date: 1199163600000,
+          pct30: 0.546287382733,
+          pct90: 0.293846376473
         } ]
       }
     ];
 
     it( 'assign a label', function() {
       var test = delinquencies( data, 'pct30' );
-      expect( test[0].label ).to.equal( 'foo' );
-      expect( test[1].label ).to.equal( 'bar' );
+      expect( test[0].label ).to.equal( 'New York, NY' );
+      expect( test[1].label ).to.equal( 'Miami, FL' );
     } );
 
     it( 'filter 30 day delinquencies', function() {
       var test = delinquencies( data, 'pct30' );
-      expect( test[0].data[0][1] ).to.equal( 5678 );
+      expect( test[0].data[0][1] ).to.equal( 0.129563846384 );
     } );
 
     it( 'filter 90 day delinquencies', function() {
       var test = delinquencies( data, 'pct90' );
-      expect( test[0].data[0][1] ).to.equal( 9012 );
+      expect( test[0].data[0][1] ).to.equal( 0.264737255727 );
     } );
 
   } );

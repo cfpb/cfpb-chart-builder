@@ -42,3 +42,17 @@ setTimeout( () => {
     metadata: 'counties'
   });
 }, 5000 );
+
+setTimeout( () => {
+  map.update({
+    source: 'mortgage-performance/map-data/states/2009-01',
+    metadata: 'states'
+  });
+}, 7500 );
+
+setTimeout( () => {
+  map.update({
+    source: 'mortgage-performance/map-data/counties/2009-01',
+    metadata: 'counties'
+  });
+}, 10000 );

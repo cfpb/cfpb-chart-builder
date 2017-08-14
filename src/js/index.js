@@ -9,6 +9,7 @@ var documentReady = require( './utils/document-ready' );
 var createChart = require( './charts' );
 var process = require( './utils/process-json' );
 var ajax = require( './utils/get-data' );
+var shapes = require( './utils/map-shapes' );
 
 /***
 * When the document is ready, the code for cfpb-chart-builder seeks out chart
@@ -28,6 +29,12 @@ class Chart {
 
   draw( chartOptions ) {
     switch ( chartOptions.type ) {
+      case 'geo-map':
+        shapes.fetch( chartOptions.metadata ).then( shapes => {
+          chartOptions.shapes = shapes;
+          this.highchart = new createChart.GeoMap( chartOptions );
+        } );
+        break;
       case 'line-comparison':
         this.highchart = new createChart.LineComparison( chartOptions );
         break;

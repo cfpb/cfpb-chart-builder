@@ -1,128 +1,98 @@
 'use strict';
 
-var ajax = require( 'xdr' );
+require( 'core-js/es6/symbol' );
+require( 'core-js/es6/promise' );
+require( 'core-js/fn/object/assign' );
+require( 'core-js/fn/array/index-of' );
+
 var documentReady = require( './utils/document-ready' );
 var createChart = require( './charts' );
 var process = require( './utils/process-json' );
-
-var DATA_SOURCE_BASE = window.location.protocol.indexOf( 'https' ) === -1 ?
-                      '//files.consumerfinance.gov/data/' :
-                      '//s3.amazonaws.com/files.consumerfinance.gov/data/';
-
-/**
- *   Polyfill for Array.indexOf
- */
-if ( !Array.prototype.indexOf ) {
-  Array.prototype.indexOf = function( elt /* , from */ ) {
-    var len = this.length >>> 0;
-    var from = Number( arguments[1] ) || 0;
-    from = from < 0 ?
-         Math.ceil( from ) :
-         Math.floor( from );
-    if ( from < 0 ) { from += len; }
-
-    for ( ; from < len; from++ ) {
-      if ( from in this &&
-          this[from] === elt ) { return from; }
-    }
-    return -1;
-  };
-}
+var ajax = require( './utils/get-data' );
 
 /***
 * When the document is ready, the code for cfpb-chart-builder seeks out chart
 * blocks and generates charts inside the designated elements.
 */
+documentReady( _createCharts );
 
-documentReady( function() {
+class Chart {
 
-  buildCharts();
-
-} );
-
-function buildCharts() {
-
-  var charts = document.querySelectorAll( '.cfpb-chart' );
-  var urls = {};
-
-  var errorStrings = {
-    parseError: 'There was an error parsing the data as JSON',
-    groupError: 'There was an error finding the group in data properties',
-    propertyError: 'There was an error finding the adjusted and/or unadjusted properties in the data'
-  };
-
-  for ( var x = 0; x < charts.length; x++ ) {
-    var chart = charts[x];
-    // Empty the chart for redraws
-    chart.innerHTML = '';
-
-    var url = chart.getAttribute( 'data-chart-source' );
-    if ( !urls.hasOwnProperty( url ) ) {
-      urls[url] = [];
-    }
-    urls[url].push( chart );
+  constructor( chartOptions ) {
+    this.chartOptions = chartOptions;
+    ajax( chartOptions.source ).then( data => {
+      this.chartOptions.data = data;
+      this.draw( this.chartOptions );
+    } );
   }
 
-  for ( var key in urls ) {
+  draw( chartOptions ) {
+    switch ( chartOptions.type ) {
+      case 'line-comparison':
+        this.highchart = new createChart.LineComparison( chartOptions );
+        break;
+      case 'line':
+        this.highchart = createChart.line( chartOptions );
+        break;
+      case 'bar':
+        this.highchart = createChart.bar( chartOptions );
+        break;
+      case 'tile_map':
+        this.highchart = createChart.tileMap( chartOptions );
+        break;
+      default:
+    }
+  }
 
-    loadSource( key, function( key, data ) {
-      for ( var x = 0; x < urls[key].length; x++ ) {
-        var chart = urls[key][x],
-            type = chart.getAttribute( 'data-chart-type' ),
-            group = chart.getAttribute( 'data-chart-metadata' ),
-            color = chart.getAttribute( 'data-chart-color' );
+  update( newOptions ) {
+    // Merge the old chart options with the new ones
+    Object.assign( this.chartOptions, newOptions );
+    // If the source wasn't changed, we don't need to fetch new data and can
+    // immediately redraw the chart
+    if ( !newOptions.source ) {
+      return this.highchart.update( this.chartOptions );
+    }
+    // Otherwise fetch the data and redraw once it arrives
+    this.highchart.chart.showLoading( ' ' );
+    ajax( this.chartOptions.source ).then( data => {
+      this.chartOptions.data = data;
+      this.highchart.update( this.chartOptions );
+    } );
+    return this;
+  }
 
-        // Ensure undefined attributes aren't cast as a string.
-        group = group === 'undefined' ? undefined : group;
+}
 
+function _createChart( opts ) {
+  return new Chart( opts );
+}
 
-        var properties = {
-          type: type,
-          selector: chart,
-          color: color
-        };
+function _createCharts() {
+  let elements = document.querySelectorAll( '.cfpb-chart' );
+  let charts = [];
 
-        if ( type === 'line' ) {
-          properties.data = process.originations( data, group );
+  // Ignore divs with a `data-chart-ignore` data attribute
+  for ( let i = 0; i < elements.length; ++i ) {
+    if ( !elements[i].getAttribute( 'data-chart-ignore' ) ) {
+      charts.push( elements[i] );
+    }
+  }
 
-          if ( typeof properties.data === 'object' ) {
-            createChart.line( properties );
-          } else {
-            chart.setAttribute( 'data-chart-error', errorStrings[properties.data] );
-            console.log( errorStrings[properties.data] );
-          }
-        }
-
-        if ( type === 'bar' ) {
-          properties.data = process.yoy( data, group );
-          if ( typeof properties.data === 'object' ) {
-            createChart.bar( properties );
-          } else {
-            chart.setAttribute( 'data-chart-error', errorStrings[properties.data] );
-            console.log( errorStrings[properties.data] );
-          }
-        }
-
-        if ( type === 'tile_map' ) {
-          properties.data = process.map( data, group );
-          if ( typeof properties.data === 'object' ) {
-            createChart.map( properties );
-          } else {
-            chart.setAttribute( 'data-chart-error', errorStrings[properties.data] );
-            console.log( errorStrings[properties.data] );
-          }
-        }
-
-      }
+  for ( var chart of charts ) {
+    new Chart( {
+      el: chart,
+      title: chart.getAttribute( 'data-chart-title' ),
+      type: chart.getAttribute( 'data-chart-type' ),
+      color: chart.getAttribute( 'data-chart-color' ),
+      metadata: chart.getAttribute( 'data-chart-metadata' ),
+      source: chart.getAttribute( 'data-chart-source' )
     } );
   }
 }
 
-// GET requests:
+var charts = {
+  createChart: _createChart,
+  createCharts: _createCharts
+};
 
-function loadSource( key, callback ) {
-  var url = DATA_SOURCE_BASE + key.replace( '.csv', '.json' );
-  ajax( { url: url }, function( resp ) {
-    callback( key, resp.data );
-  } );
-}
+module.exports = charts;

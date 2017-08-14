@@ -1,14 +1,10 @@
 'use strict';
 
 function ready( fn ) {
-  if ( document.readyState !== 'loading' ) {
+  if ( document.attachEvent ? document.readyState === 'complete' : document.readyState !== 'loading' ) {
     fn();
-  } else if ( document.addEventListener ) {
-    document.addEventListener( 'DOMContentLoaded', fn );
   } else {
-    document.attachEvent( 'onreadystatechange', function() {
-      if ( document.readyState !== 'loading' ) { fn(); }
-    } );
+    document.addEventListener( 'DOMContentLoaded', fn );
   }
 }
 

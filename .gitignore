@@ -76,4 +76,5 @@ src/vendor/
 dist/
 test/config.json
 src/vendor/
-test/css/demo*.css*
+test/static/demo*.css*
+test/static/demo-built*

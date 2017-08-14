@@ -3,6 +3,7 @@
 var charts = {};
 charts.bar = require( './BarChart' );
 charts.line = require( './LineChart' );
-charts.map = require( './TileMap' );
+charts.LineComparison = require( './LineChartComparison' );
+charts.tileMap = require( './TileMap' );
 
 module.exports = charts;

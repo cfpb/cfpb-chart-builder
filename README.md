@@ -3,17 +3,11 @@
 
 Charts for the [Consumer Financial Protection Bureau](https://cfpb.github.io/).
 
-## Dependencies
+## Demo
 
-- [Gulp](http://gulpjs.com): task runner for pulling in assets,
-  linting and concatenating code, etc.
-- [Less](http://lesscss.org): CSS pre-processor.
-- [Capital Framework](https://cfpb.github.io/capital-framework/getting-started):
-  User interface pattern-library produced by the CFPB.
+https://cfpb.github.io/cfpb-chart-builder/
 
 ## Installation
-
-Run `npm install cfpb-chart-builder` to add this library to your project.
 
 Add a `div` with a class of `cfpb-chart` and the following data attributes to your page:
 
@@ -39,11 +33,67 @@ It'll generate a chart for you:
 
 ![Screenshot](screenshot.png)
 
-It can also do bar charts and maps.
+You can also manually initialize a chart by providing a target element:
 
-## Configuration
+```js
+const ccb = require( 'cfpb-chart-builder' );
 
-TBA: Documentation for charts options coming soon!
+const chart = ccb.createChart({
+  el: document.getElementById('my-chart-div'),
+  source: 'http://mywebsite.com/api/data.json',
+  type: 'line',
+  color: 'green'
+});
+
+// Charts can be updated and redrawn
+chart.update({
+  source: 'http://mywebsite.com/api/some-other-data.json',
+});
+
+```
+
+## API
+
+### `createChart( options )`
+
+Create a CFPB chart.
+Config options can be passed as an argument to `createChart` or as a data attribute on
+an element with a class of `cfpb-chart` (see above).
+
+**options.el**: `Element`
+
+Required. Reference to the DOM element in which to render the chart.
+
+**options.type**: `String`
+
+Required. Type of chart to render. Options: `line`, `line-comparison`, `bar` or `tile_map`.
+
+**options.source**: `String`
+
+Required. Location of data (JSON) to download and add to chart series.
+Can be relative or absolute URL.
+If relative, the value of `window.CFPB_CHART_DATA_SOURCE_BASE` will be prepended to it.
+
+Multiple data sources can be provided by separating them with semicolons.
+E.g. `mortgage/national.json;mortgage/nyc.json`.
+
+**options.title**: `String`
+
+Optional. Title of the chart.
+
+**options.color**: `String`
+
+Optional. Chart's color scheme. Options: `blue`, `green`, `teal`, `navy`.
+
+**options.metadata**: `String|Object`
+
+Optional. Arbitrary metadata for your chart.
+For example, `bar` charts currently require a group key (e.g. `Number of Loans`) to filter data.
+
+### `chart.update( options )`
+
+Update a CFPB chart.
+Provide any of the above options and the chart will be redrawn with those new settings.
 
 ## Contributing
 
@@ -53,15 +103,10 @@ for more details.
 
 ### Install locally
 
-1. Install [Node.js](http://nodejs.org) however you'd like.
-2. Install [Gulp](http://gulpjs.com) and [Bower](http://bower.io):
-  ```bash
-  npm install -g gulp bower
-  ```
-3. Next, install the dependencies and compile the project with:
-  ```bash
-  ./setup.sh
-  ```
+1. Install [Node.js 8](http://nodejs.org) however you'd like.
+2. Install [Gulp](http://gulpjs.com): `npm install -g gulp`
+3. Install the dependencies and compile the project with: `./setup.sh`
+
   __NOTE:__ To re-install and rebuild all the site’s assets run
   `./setup.sh` again. See the [usage](#usage) section on updating all the
   project dependencies.
@@ -79,54 +124,22 @@ open a terminal and run:
 gulp watch
 ```
 
-### Non gulp development workflow
-
-1. Clone this repository.
-1. `npm install`
-1. `npm run watch` to bundle the JS and output it to `dist/`.
-1. `npm start` to serve the test directory.
-1. Open `http://localhost:8088/test` in a browser to see the test page with a dozen random charts on it.
-1. Whenever a JS file in `src/` is edited, the JS will be rebundled. Refresh the page.
-
-Bonus: Visit `http://localhost:8088/test/all-charts.html` to see *all* the CCT charts.
-
-Helpful commands:
-
-- `npm run build` - Bundle and minify all assets into the `dist/` directory.
-- `npm run watch` - Bundle JS files whenever they're changed.
-- `npm start` - Start a local server to demo the charts at `http://localhost:8088/test`.
-- `npm test` - Run the test charts through Sauce Labs.
-- `gulp lint --fix` or `npm run lint` - Check JS files for syntax errors using the rules in `.eslintrc`.
-
 ## Testing
+
+`npm test` will run unit and browser tests.
 
 Sauce Labs is used to test the charts in IE 8 through 10.
 An [Open Sauce](https://saucelabs.com/open-source) account has been created for this repo.
 Its credentials can be found at https://GHE/gist/contolini/504ea71f6a19c74090c7a150aff60421.
+Add the credentials locally by doing:
 
 1. `cp test/config.json.example test/config.json`
 1. Add valid Sauce Labs credentials to `test/config.json` (see above gist).
-1. `npm test`
 
 The browser tests will take several minutes to run.
-The test script simply loads `http://localhost:8088/test` in IE VMs and reports any `window` errors.
-
-
-## How to test the software
-
-After running `./setup.sh` or compiling with Gulp,
-you can view the site in a browser by opening `/dist/index.html`.
-Alternatively, you may want to use a local server with something like
-`python -m SimpleHTTPServer`.
-
-## Known issues
-
-_Document any known significant shortcomings with the software._
+The test script simply loads `http://localhost:8089/test` in IE VMs and reports any `window` errors.
 
 ## Getting help
-
-_Instruct users how to get help with this software; this might include links
-to an issue tracker, wiki, mailing list, etc._
 
 Use the issue tracker to follow the development conversation.
 If you find a bug not listed in the issue tracker, please file a bug report.
@@ -141,20 +154,9 @@ Additionally, you may want to consider
 [contributing to the Capital Framework](https://cfpb.github.io/capital-framework/contributing/),
 which is the front-end pattern library used in this project.
 
-
 ----
 
 ## Open source licensing info
 1. [TERMS](TERMS.md)
 2. [LICENSE](LICENSE)
 3. [CFPB Source Code Policy](https://github.com/cfpb/source-code-policy/)
-
-
-----
-
-## Credits and references
-
-1. Projects that inspired you
-2. Related projects
-3. Books, papers, talks, or other sources that have meaniginful impact or
-   influence on this project

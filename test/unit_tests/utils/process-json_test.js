@@ -1,3 +1,5 @@
+/* global describe it */
+
 'use strict';
 
 var chai = require( 'chai' );
@@ -9,12 +11,12 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
 
   var formatDate = processJSON.formatDate;
   var originations = processJSON.originations;
+  var delinquencies = processJSON.delinquencies;
   var yoy = processJSON.yoy;
   var map = processJSON.map;
   var getProjectedDate = processJSON.getProjectedDate;
   var getProjectedTimestamp = processJSON.getProjectedTimestamp;
   var convertDate = processJSON.convertDate;
-
 
   describe( 'formatDate', function() { // eslint-disable-line max-len
 
@@ -32,8 +34,8 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
 
   describe( 'convertDate', function() {
 
-// 1485925200000 = February 2017
-// 1477958400000 = Nov 2016
+    // 1485925200000 = February 2017
+    // 1477958400000 = Nov 2016
 
     it( 'should convert a UTC timestamp in milliseconds to a human friendly month and year date', function() {
       expect( convertDate( 946684800000 ).humanFriendly )
@@ -119,22 +121,21 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
   describe( 'processYoyData', function() {
     var data = {
       test: [
-          [ 1117584000000, 100 ], // jun 2005
-          [ 1230768000000, 0.1 ], // jan 2009
-          [ 1233446400000, -0.2 ], // feb 2009
-          [ 1235865600000, 0.25 ], // march 2009
-          [ 1238544000000, 0 ], // apr 2009
-          [ 1241136000000, -0.1 ], // may 2009
-          [ 1243814400000, 1.44 ], // june 2009
-          [ 1246406400000, 0.92 ], // july 2009
-          [ 1249084800000, 0.01 ], // aug 2009
-          [ 1251763200000, 0.95 ], // sept 2009
-          [ 1254355200000, 0.05 ], // oct 2009
-          [ 1257033600000, 0.93 ], // nov 2009
-          [ 1259625600000, 0.33 ] // dec 2009
+        [ 1117584000000, 100 ], // jun 2005
+        [ 1230768000000, 0.1 ], // jan 2009
+        [ 1233446400000, -0.2 ], // feb 2009
+        [ 1235865600000, 0.25 ], // march 2009
+        [ 1238544000000, 0 ], // apr 2009
+        [ 1241136000000, -0.1 ], // may 2009
+        [ 1243814400000, 1.44 ], // june 2009
+        [ 1246406400000, 0.92 ], // july 2009
+        [ 1249084800000, 0.01 ], // aug 2009
+        [ 1251763200000, 0.95 ], // sept 2009
+        [ 1254355200000, 0.05 ], // oct 2009
+        [ 1257033600000, 0.93 ], // nov 2009
+        [ 1259625600000, 0.33 ] // dec 2009
       ]
     };
-    data = JSON.stringify( data );
     var test = yoy( data, 'test' );
 
     it( 'should eliminate dates before 2009', function() {
@@ -162,30 +163,29 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
     var data = {
       test: {
         adjusted: [
-            [ 1117584000000, 1 ],
-            [ 1230768000000, 1239123 ],
-            [ 1233446400000, 888888 ],
-            [ 1235865600000, 1231125 ],
-            [ 1238544000000, 82364821 ],
-            [ 1241136000000, 7654321 ],
-            [ 1243814400000, 1234567 ],
-            [ 1246406400000, 1212123 ],
-            [ 1249084800000, 3434343 ]
+          [ 1117584000000, 1 ],
+          [ 1230768000000, 1239123 ],
+          [ 1233446400000, 888888 ],
+          [ 1235865600000, 1231125 ],
+          [ 1238544000000, 82364821 ],
+          [ 1241136000000, 7654321 ],
+          [ 1243814400000, 1234567 ],
+          [ 1246406400000, 1212123 ],
+          [ 1249084800000, 3434343 ]
         ],
         unadjusted: [
-            [ 1117584000000, 1 ],
-            [ 1230768000000, 1239123 ],
-            [ 1233446400000, 888888 ],
-            [ 1235865600000, 1231125 ],
-            [ 1238544000000, 82364821 ],
-            [ 1241136000000, 7654321 ],
-            [ 1243814400000, 1234567 ],
-            [ 1246406400000, 1212123 ],
-            [ 1249084800000, 3434343 ]
+          [ 1117584000000, 1 ],
+          [ 1230768000000, 1239123 ],
+          [ 1233446400000, 888888 ],
+          [ 1235865600000, 1231125 ],
+          [ 1238544000000, 82364821 ],
+          [ 1241136000000, 7654321 ],
+          [ 1243814400000, 1234567 ],
+          [ 1246406400000, 1212123 ],
+          [ 1249084800000, 3434343 ]
         ]
       }
     };
-    data = JSON.stringify( data );
     var test = originations( data, 'test' );
 
     it( 'should eliminate dates before 2009', function() {
@@ -222,7 +222,6 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
         value: '70.41'
       }
     ];
-    data = JSON.stringify( data );
     var test = map( data );
 
 
@@ -243,6 +242,49 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
     it( 'should add the correct tooltip', function() {
       expect( test[0].name ).to.equal( 'AL' );
       expect( test[0].tooltip ).to.equal( 'AL increased by 143%' );
+    } );
+
+  } );
+
+  describe( 'processDelinquencies', function() {
+
+    var data = [
+      {
+        meta: {
+          name: 'New York, NY'
+        },
+        data: [ {
+          date: 1199163600000,
+          pct30: 0.129563846384,
+          pct90: 0.264737255727
+        } ]
+      },
+      {
+        meta: {
+          name: 'Miami, FL'
+        },
+        data: [ {
+          date: 1199163600000,
+          pct30: 0.546287382733,
+          pct90: 0.293846376473
+        } ]
+      }
+    ];
+
+    it( 'assign a label', function() {
+      var test = delinquencies( data, 'pct30' );
+      expect( test[0].label ).to.equal( 'New York, NY' );
+      expect( test[1].label ).to.equal( 'Miami, FL' );
+    } );
+
+    it( 'filter 30 day delinquencies', function() {
+      var test = delinquencies( data, 'pct30' );
+      expect( test[0].data[0][1] ).to.equal( 0.129563846384 );
+    } );
+
+    it( 'filter 90 day delinquencies', function() {
+      var test = delinquencies( data, 'pct90' );
+      expect( test[0].data[0][1] ).to.equal( 0.264737255727 );
     } );
 
   } );

@@ -34,7 +34,7 @@
     width: 100%;
     height: 0;
     border-top: 2px solid @gray-10;
-    
+
     .respond-to-min( 600px, {
       top: 75px;
     });
@@ -46,7 +46,7 @@
   }
 
   &[data-chart-type="tile_map"]:after  {
-    
+
     display: none;
 
   }
@@ -96,7 +96,7 @@
 
       .highcharts-data-label-state-value {
         .u-webfont-regular();
-        
+
         .respond-to-max( 600px, {
           display: block;
           margin-top: -2px;
@@ -136,7 +136,8 @@
 
   }
 
-  &[data-chart-type='line'] {
+  &[data-chart-type='line'],
+  &[data-chart-type='line-comparison'] {
     .highcharts-plot-line-label {
       margin-left: 15px !important;
       left: 50% !important;
@@ -226,7 +227,7 @@
         top: 8px;
         background: @chart-green-primary;
       }
-      
+
     }
 
     &.highcharts-color-1 {
@@ -249,10 +250,10 @@
         }
       }
 
-      &[transform="translate(8,41)"] {        
+      &[transform="translate(8,41)"] {
         .highcharts-graph {
           transform: translate(0, 10px);
-        
+
           .respond-to-min( 450px, {
             transform: translate(0, -10px);
           });
@@ -270,7 +271,7 @@
 
       }
 
-    }   
+    }
 
   }
 
@@ -463,7 +464,8 @@
   }
 
   // Axes
-  &[data-chart-type='line'] {
+  &[data-chart-type='line'],
+  &[data-chart-type='line-comparison'] {
 
     .highcharts-yaxis .highcharts-axis-title {
 
@@ -488,7 +490,7 @@
 
     .highcharts-yaxis .highcharts-axis-title {
       transform: rotate(0deg) translate(88px, -130px) !important;
-      
+
       .respond-to-min( 800px, {
         transform: rotate(-90deg) translate(-270px, -232px) !important;
       } );
@@ -498,7 +500,8 @@
 
   // Colors and widths
 
-  &[data-chart-type='line'] {
+  &[data-chart-type='line'],
+  &[data-chart-type='line-comparison'] {
 
     .highcharts-tracker,
     .highcharts-graph {
@@ -506,7 +509,7 @@
       stroke-linecap: butt;
     }
 
-    // Seasonally adjusted 
+    // Seasonally adjusted
     .highcharts-series-0 {
       .highcharts-graph {
         stroke-width: 3px;
@@ -536,7 +539,7 @@
 
     &[data-chart-color='blue'] {
 
-      .highcharts-color-1, 
+      .highcharts-color-1,
       .highcharts-color-0,
       .highcharts-navigator-series .highcharts-graph {
         stroke: @chart-blue-primary;
@@ -564,7 +567,7 @@
 
     &[data-chart-color='green'] {
 
-      .highcharts-color-1, 
+      .highcharts-color-1,
       .highcharts-color-0,
       .highcharts-navigator-series .highcharts-graph {
         stroke: @chart-green-primary;
@@ -589,7 +592,7 @@
     &[data-chart-color='teal'] {
 
 
-      .highcharts-color-1, 
+      .highcharts-color-1,
       .highcharts-color-0,
       .highcharts-navigator-series .highcharts-graph  {
         stroke: @chart-teal-primary;
@@ -617,7 +620,7 @@
 
     &[data-chart-color='navy'] {
 
-      .highcharts-color-1, 
+      .highcharts-color-1,
       .highcharts-color-0,
       .highcharts-navigator-series .highcharts-graph  {
         stroke: @chart-navy-primary;
@@ -651,7 +654,7 @@
     // Set defaults to gray for help in troubleshooting
     .highcharts-point {
       fill: @gray;
-      
+
       &.highcharts-data__unprojected {
         fill: @black;
       }
@@ -666,7 +669,7 @@
 
         .highcharts-point {
           fill: @chart-blue-secondary;
-          
+
           &.highcharts-data__unprojected {
             fill: @chart-blue-primary;
           }
@@ -676,14 +679,14 @@
         .highcharts-tooltip-box {
           stroke: @chart-blue-primary;
         }
-        
+
     }
 
     &[data-chart-color='green'] {
 
         .highcharts-point {
           fill: @chart-green-secondary;
-          
+
           &.highcharts-data__unprojected {
             fill: @chart-green-primary;
           }
@@ -693,14 +696,14 @@
         .highcharts-tooltip-box {
           stroke: @chart-green-primary;
         }
-        
+
     }
 
     &[data-chart-color='teal'] {
 
         .highcharts-point {
           fill: @chart-teal-secondary;
-          
+
           &.highcharts-data__unprojected {
             fill: @chart-teal-primary;
           }
@@ -710,14 +713,14 @@
         .highcharts-tooltip-box {
           stroke: @chart-teal-primary;
         }
-        
+
     }
 
     &[data-chart-color='navy'] {
 
         .highcharts-point {
           fill: @chart-navy-secondary;
-          
+
           &.highcharts-data__unprojected {
             fill: @chart-navy-primary;
           }
@@ -727,7 +730,7 @@
         .highcharts-tooltip-box {
           stroke: @chart-navy-primary;
         }
-        
+
     }
 
 
@@ -791,7 +794,7 @@
 
 .cfpb-chart[data-chart-type="tile_map"] {
   height: 630px;
-  
+
   .highcharts-map-series .highcharts-point {
     stroke: @gray-80;
     &:hover,

@@ -12,13 +12,7 @@ Highcharts.setOptions( {
 
 class GeoMap {
 
-  constructor( { el, metadata, data, title, desc, shapes, rawData = {}} ) {
-
-    // Highcharts.each( usMap, function( mapPoint ) {
-    //   if ( rawData[mapPoint.properties.id] ) {
-    //     mapPoint.name = rawData[mapPoint.properties.id].name;
-    //   }
-    // } );
+  constructor( { el, metadata, data, title, desc, shapes } ) {
 
     this.chartOptions = {
       credits: false,
@@ -90,11 +84,18 @@ class GeoMap {
   }
 
   static getSeries( data, shapes ) {
-
     const usMap = Highcharts.geojson( shapes ),
-          lines = Highcharts.geojson( shapes, 'mapline' )[0];
+          lines = Highcharts.geojson( shapes, 'mapline' )[0],
+          rows = data[0].data;
+    let points = [];
 
-    const rows = data[0].data;
+    usMap.forEach( mapPoint => {
+      if ( rows[mapPoint.properties.id] ) {
+        mapPoint.name = rows[mapPoint.properties.id].name;
+        points.push(mapPoint);
+      }
+    } );
+
     data = Object.keys( rows ).map( row => ( {
       fips: row,
       name: rows[row].name,
@@ -104,7 +105,7 @@ class GeoMap {
 
     const series = [
       {
-        mapData: usMap,
+        mapData: points,
         data: data,
         joinBy: [ 'id', 'fips' ],
         tooltip: {
@@ -121,16 +122,16 @@ class GeoMap {
         type: 'mapline',
         name: 'Borders',
         data: [ lines ],
-        color: 'gray'
+        enableMouseTracking: false
       }
     ];
 
     return series;
   }
 
-  update ( newOptions ) {
+  update( newOptions ) {
     if ( newOptions.data ) {
-      newOptions.series = this.constructor.getSeries( newOptions.data, newOptions.metadata );
+      newOptions.series = this.constructor.getSeries( newOptions.data, newOptions.shapes );
     }
     // Merge the old chart options with the new ones
     Object.assign( this.chartOptions, newOptions );

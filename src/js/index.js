@@ -52,8 +52,13 @@ class Chart {
   }
 
   update( newOptions ) {
+
+    const needNewMapShapes = this.chartOptions.type === 'geo-map' &&
+                             this.chartOptions.metadata !== newOptions.metadata;
+
     // Merge the old chart options with the new ones
     Object.assign( this.chartOptions, newOptions );
+
     // If the source wasn't changed, we don't need to fetch new data and can
     // immediately redraw the chart
     if ( !newOptions.source ) {
@@ -63,6 +68,13 @@ class Chart {
     this.highchart.chart.showLoading( ' ' );
     ajax( this.chartOptions.source ).then( data => {
       this.chartOptions.data = data;
+      if ( needNewMapShapes ) {
+        shapes.fetch( this.chartOptions.metadata ).then( shapes => {
+          this.chartOptions.shapes = shapes;
+          this.highchart.update( this.chartOptions );
+        } );
+        return;
+      }
       this.highchart.update( this.chartOptions );
     } );
     return this;

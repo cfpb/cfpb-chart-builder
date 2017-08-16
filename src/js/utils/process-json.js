@@ -68,7 +68,7 @@ function convertDate( date ) {
  * @returns {Obj} datasets - Nested array
  */
 function processDelinquencies( datasets, timeSpan ) {
-
+  console.log(timeSpan);
   if ( typeof datasets !== 'object' ) {
     return datasets;
   }

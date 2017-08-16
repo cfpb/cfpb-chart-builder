@@ -167,14 +167,26 @@ class LineChartComparison {
     return data;
   }
 
-  update( newOptions ) {
-    // The raw data needs to be converted into a format Highcharts understands
-    if ( newOptions.data ) {
-      newOptions.series = this.constructor.getSeries( newOptions.data, newOptions.metadata );
+  update( newOpts ) {
+
+    let newSeries;
+
+    // Merge the old chart options with the new ones.
+    Object.assign( this.chartOptions, newOpts );
+
+    this.chart.update( this.chartOptions );
+
+    // If there's new data involved, delete all series and recreate them.
+    if ( newOpts.data ) {
+      // Remove all series
+      while( this.chart.series.length > 0 ) {
+        this.chart.series[0].remove( true );
+      }
+      newSeries = this.constructor.getSeries( newOpts.data, newOpts.metadata );
+      newSeries.forEach( series => {
+        this.chart.addSeries( series );
+      } );
     }
-    // Merge the old chart options with the new ones
-    Object.assign( this.chartOptions, newOptions );
-    this.chart.update( this.chartOptions, true, true );
     this.chart.hideLoading();
   }
 

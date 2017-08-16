@@ -66,7 +66,7 @@ class Chart {
     }
     // Otherwise fetch the data and redraw once it arrives
     this.highchart.chart.showLoading( ' ' );
-    ajax( this.chartOptions.source ).then( data => {
+    return ajax( this.chartOptions.source ).then( data => {
       this.chartOptions.data = data;
       if ( needNewMapShapes ) {
         shapes.fetch( this.chartOptions.metadata ).then( shapes => {
@@ -77,7 +77,6 @@ class Chart {
       }
       this.highchart.update( this.chartOptions );
     } );
-    return this;
   }
 
 }

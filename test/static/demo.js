@@ -11,16 +11,17 @@ let seconds = 5;
 
 const chart = ccb.createChart( {
   el: container,
-  source: 'mortgage-performance/time-series/12081;mortgage-performance/time-series/national',
+  source: 'mortgage-performance/time-series/national',
   type: 'line-comparison',
   metadata: 'pct30'
 } );
 
 const map = ccb.createChart( {
   el: mapContainer,
-  source: 'mortgage-performance/map-data/states/2009-01',
+  source: 'mortgage-performance/map-data/metros/2009-01',
   type: 'geo-map',
-  metadata: 'states'
+  metadata: 'metros',
+  color: 'blue'
 } );
 
 const interval = setInterval( () => {
@@ -48,11 +49,18 @@ setTimeout( () => {
     source: 'mortgage-performance/map-data/states/2009-01',
     metadata: 'states'
   });
-}, 7500 );
+}, 10000 );
 
 setTimeout( () => {
   map.update({
     source: 'mortgage-performance/map-data/counties/2009-01',
     metadata: 'counties'
   });
-}, 10000 );
+}, 15000 );
+
+setTimeout( () => {
+  map.update({
+    source: 'mortgage-performance/map-data/metros/2009-01',
+    metadata: 'metros'
+  });
+}, 20000 );

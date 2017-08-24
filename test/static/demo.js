@@ -6,6 +6,7 @@ const ccb = require( '../../src/js' );
 
 const container = document.getElementById( 'update-demo' );
 const countdown = document.getElementById( 'update-demo-countdown' );
+const mapContainer = document.getElementById( 'map' );
 let seconds = 5;
 
 const chart = ccb.createChart( {
@@ -15,7 +16,12 @@ const chart = ccb.createChart( {
   metadata: 'pct30'
 } );
 
-window.chart = chart;
+const map = ccb.createChart( {
+  el: mapContainer,
+  source: 'mortgage-performance/map-data/states/2009-01',
+  type: 'geo-map',
+  metadata: 'states'
+} );
 
 const interval = setInterval( () => {
   if ( seconds > 1 ) {
@@ -31,4 +37,22 @@ setTimeout( () => {
     source: 'mortgage-performance/time-series/12031;mortgage-performance/time-series/national',
     metadata: 'pct90'
   });
+  map.update({
+    source: 'mortgage-performance/map-data/counties/2009-01',
+    metadata: 'counties'
+  });
 }, 5000 );
+
+setTimeout( () => {
+  map.update({
+    source: 'mortgage-performance/map-data/states/2009-01',
+    metadata: 'states'
+  });
+}, 7500 );
+
+setTimeout( () => {
+  map.update({
+    source: 'mortgage-performance/map-data/counties/2009-01',
+    metadata: 'counties'
+  });
+}, 10000 );

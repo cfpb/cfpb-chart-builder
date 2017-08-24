@@ -9,6 +9,7 @@ var documentReady = require( './utils/document-ready' );
 var createChart = require( './charts' );
 var process = require( './utils/process-json' );
 var ajax = require( './utils/get-data' );
+var shapes = require( './utils/map-shapes' );
 
 /***
 * When the document is ready, the code for cfpb-chart-builder seeks out chart
@@ -28,6 +29,12 @@ class Chart {
 
   draw( chartOptions ) {
     switch ( chartOptions.type ) {
+      case 'geo-map':
+        shapes.fetch( chartOptions.metadata ).then( shapes => {
+          chartOptions.shapes = shapes[0];
+          this.highchart = new createChart.GeoMap( chartOptions );
+        } );
+        break;
       case 'line-comparison':
         this.highchart = new createChart.LineComparison( chartOptions );
         break;
@@ -45,8 +52,13 @@ class Chart {
   }
 
   update( newOptions ) {
+
+    const needNewMapShapes = this.chartOptions.type === 'geo-map' &&
+                             this.chartOptions.metadata !== newOptions.metadata;
+
     // Merge the old chart options with the new ones
     Object.assign( this.chartOptions, newOptions );
+
     // If the source wasn't changed, we don't need to fetch new data and can
     // immediately redraw the chart
     if ( !newOptions.source ) {
@@ -56,6 +68,13 @@ class Chart {
     this.highchart.chart.showLoading( ' ' );
     ajax( this.chartOptions.source ).then( data => {
       this.chartOptions.data = data;
+      if ( needNewMapShapes ) {
+        shapes.fetch( this.chartOptions.metadata ).then( shapes => {
+          this.chartOptions.shapes = shapes[0];
+          this.highchart.update( this.chartOptions );
+        } );
+        return;
+      }
       this.highchart.update( this.chartOptions );
     } );
     return this;

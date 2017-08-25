@@ -6,7 +6,7 @@ require( 'jsdom-global' )();
 
 const chai = require( 'chai' );
 const mock = require( 'mock-require' );
-const shapes = require( '../sample_data/mortgage-performance/map-data/states/us-states.geo.json' );
+const shapes = require( '../sample_data/mortgage-performance/map-data/30-89/states/us-states.geo.json' );
 const expect = chai.expect;
 const noop = () => {
   // do nothing
@@ -49,14 +49,12 @@ describe( 'GeoMapComparison', () => {
           },
           data: {
             10: {
-              pct30: 0.036920278872385574,
-              name: 'California',
-              pct90: 0.022400727493179753
+              value: 0.036920278872385574,
+              name: 'California'
             },
             12: {
-              pct30: 0.05738747837483777,
-              name: 'Delaware',
-              pct90: 0.04792873873878374
+              value: 0.05738747837483777,
+              name: 'Delaware'
             }
           }
         }
@@ -69,7 +67,7 @@ describe( 'GeoMapComparison', () => {
   } );
 
   it( 'should correctly set chart data', () => {
-    expect( geoMap.chart.options.series[0].data ).to.deep.equal( [
+    expect( geoMap.chart.options.series[1].data ).to.deep.equal( [
       {
         fips: '10',
         name: 'California',
@@ -84,7 +82,7 @@ describe( 'GeoMapComparison', () => {
   } );
 
   it( 'should correctly set chart attributes', () => {
-    expect( geoMap.chart.options.series[0].borderWidth ).to.equal( 0.5 );
+    expect( geoMap.chart.options.series[0].enableMouseTracking ).to.equal( false );
   } );
 
   it( 'should be able to update its description', () => {
@@ -101,20 +99,18 @@ describe( 'GeoMapComparison', () => {
         },
         data: {
           18: {
-            pct30: 0.036920278872385574,
-            name: 'California',
-            pct90: 0.022400727493179753
+            value: 0.036920278872385574,
+            name: 'California'
           },
           22: {
-            pct30: 0.05738747837483777,
-            name: 'Delaware',
-            pct90: 0.04792873873878374
+            value: 0.05738747837483777,
+            name: 'Delaware'
           }
         }
       }
     ]} );
-    expect( geoMap.chart.options.series[0].data[0].fips ).to.equal( '18' );
-    expect( geoMap.chart.options.series[0].data[1].fips ).to.equal( '22' );
+    expect( geoMap.chart.options.series[1].data[0].fips ).to.equal( '18' );
+    expect( geoMap.chart.options.series[1].data[1].fips ).to.equal( '22' );
   } );
 
 } );

@@ -42,7 +42,7 @@ class GeoMap {
         seriesDescriptionFormatter: function( series ) {
           return '30 day delinquent mortgages';
         },
-        screenReaderSectionFormatter: chart => {
+        screenReaderSectionFormatter: () => {
           return 'Map showing 30-day delinquent mortgages in the United States.'
         }
       },
@@ -82,8 +82,7 @@ class GeoMap {
     data = Object.keys( rows ).map( row => ( {
       fips: row,
       name: rows[row].name,
-      // TODO: Remove this hardcoded pct30 key and rely on a 'value' field
-      value: rows[row].pct30 * 100
+      value: rows[row].value * 100
     } ) );
 
     const series = [

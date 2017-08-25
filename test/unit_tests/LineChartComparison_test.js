@@ -28,7 +28,7 @@ mock( 'highcharts/js/modules/accessibility', () => {
   // do nothing
 } );
 
-const LineChart = require( '../../../src/js/charts/LineChartComparison.js' );
+const LineChart = require( '../../src/js/charts/LineChartComparison.js' );
 let line;
 
 describe( 'LineChartComparison', () => {
@@ -37,7 +37,6 @@ describe( 'LineChartComparison', () => {
     line = new LineChart( {
       el: 'el',
       description: 'chart description!',
-      metadata: 'pct30',
       data: [
         {
           meta: {
@@ -45,8 +44,7 @@ describe( 'LineChartComparison', () => {
           },
           data: [ {
             date: 1199163600000,
-            pct30: 0.129563846384,
-            pct90: 0.264737255727
+            value: 0.129563846384
           } ]
         }
       ]
@@ -72,23 +70,6 @@ describe( 'LineChartComparison', () => {
   it( 'should be able to update its description', () => {
     line.update( { description: 'bananas' } );
     expect( line.chart.options.description ).to.deep.equal( 'bananas' );
-  } );
-
-  it( 'should be able to update its data', () => {
-    line.update( { data: [
-      {
-        meta: {
-          name: 'Chicago, IL'
-        },
-        data: [ {
-          date: 1199163600000,
-          pct30: 0.129563846384,
-          pct90: 0.264737255727
-        } ]
-      }
-    ] } );
-    expect( line.chart.options.series[0].name ).to.deep.equal( 'Chicago, IL' );
-    expect( line.chart.options.series[0].legendIndex ).to.equal( 1 );
   } );
 
 } );

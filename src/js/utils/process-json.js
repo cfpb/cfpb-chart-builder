@@ -64,23 +64,21 @@ function convertDate( date ) {
  * Prepares mortgage delinquency data for Highcharts.
  *
  * @param {Number} datasets - Raw JSON from mortgage-performance API
- * @param {String} timeSpan - Time span to display, currently pct30 or pct90.
  * @returns {Obj} datasets - Nested array
  */
-function processDelinquencies( datasets, timeSpan ) {
-  console.log(timeSpan);
+function processDelinquencies( datasets ) {
   if ( typeof datasets !== 'object' ) {
     return datasets;
   }
 
-  if ( timeSpan && !datasets[0].data[0][ timeSpan ] ) {
+  if ( !datasets[0].data[0].value ) {
     return 'propertyError';
   }
 
   datasets = datasets.map( dataset => ( {
     label: dataset.meta.name,
     data: dataset.data.map( datum =>
-      [ datum.date, datum[timeSpan] ]
+      [ datum.date, datum.value ]
     )
   } ) );
 

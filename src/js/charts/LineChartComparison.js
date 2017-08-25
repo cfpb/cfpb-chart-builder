@@ -77,7 +77,7 @@ function _getTickValue( value ) {
 
 class LineChartComparison {
 
-  constructor( { el, description, metadata, data } ) {
+  constructor( { el, description, data } ) {
 
     this.chartOptions = {
       chart: {
@@ -147,15 +147,15 @@ class LineChartComparison {
           return tooltip;
         }
       },
-      series: this.constructor.getSeries( data, metadata )
+      series: this.constructor.getSeries( data )
     };
 
     this.chart = Highcharts.stockChart( el, Object.assign({}, this.chartOptions) );
 
   }
 
-  static getSeries( data, metadata ) {
-    data = process.delinquencies( data, metadata );
+  static getSeries( data ) {
+    data = process.delinquencies( data );
     data = data.map( datum => ( {
       name: datum.label,
       data: datum.data,
@@ -179,10 +179,10 @@ class LineChartComparison {
     // If there's new data involved, delete all series and recreate them.
     if ( newOpts.data ) {
       // Remove all series
-      while( this.chart.series.length > 0 ) {
+      while( this.chart.series && this.chart.series.length > 0 ) {
         this.chart.series[0].remove( true );
       }
-      newSeries = this.constructor.getSeries( newOpts.data, newOpts.metadata );
+      newSeries = this.constructor.getSeries( newOpts.data );
       newSeries.forEach( series => {
         this.chart.addSeries( series );
       } );

@@ -2,10 +2,14 @@
 
 const ajax = require( './get-data' );
 
+let DATA_SOURCE_BASE = window.location.protocol.indexOf( 'https' ) === -1 ?
+                      '//files.consumerfinance.gov/data/' :
+                      '//s3.amazonaws.com/files.consumerfinance.gov/data/';
+
 let shapes = {
-  states: 'mortgage-performance/meta/us-states.geo.json',
-  metros: 'mortgage-performance/meta/us-metros.geo.json',
-  counties: 'mortgage-performance/meta/us-counties.geo.json'
+  states: `${DATA_SOURCE_BASE}mortgage-performance/meta/us-states.geo.json`,
+  metros: `${DATA_SOURCE_BASE}mortgage-performance/meta/us-metros.geo.json`,
+  counties: `${DATA_SOURCE_BASE}mortgage-performance/meta/us-counties.geo.json`
 };
 
 const fetchShapes = geoType => {

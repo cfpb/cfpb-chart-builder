@@ -255,8 +255,7 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
         },
         data: [ {
           date: 1199163600000,
-          pct30: 0.129563846384,
-          pct90: 0.264737255727
+          value: 0.129563846384
         } ]
       },
       {
@@ -265,26 +264,20 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
         },
         data: [ {
           date: 1199163600000,
-          pct30: 0.546287382733,
-          pct90: 0.293846376473
+          value: 0.546287382733
         } ]
       }
     ];
 
     it( 'assign a label', function() {
-      var test = delinquencies( data, 'pct30' );
+      var test = delinquencies( data );
       expect( test[0].label ).to.equal( 'New York, NY' );
       expect( test[1].label ).to.equal( 'Miami, FL' );
     } );
 
-    it( 'filter 30 day delinquencies', function() {
-      var test = delinquencies( data, 'pct30' );
+    it( 'filter delinquencies', function() {
+      var test = delinquencies( data );
       expect( test[0].data[0][1] ).to.equal( 0.129563846384 );
-    } );
-
-    it( 'filter 90 day delinquencies', function() {
-      var test = delinquencies( data, 'pct90' );
-      expect( test[0].data[0][1] ).to.equal( 0.264737255727 );
     } );
 
   } );

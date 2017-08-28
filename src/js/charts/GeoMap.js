@@ -2,6 +2,8 @@
 
 const ajax = require( 'xdr' );
 const Highcharts = require( 'highcharts/js/highmaps' );
+const outlines = require( '../utils/state-outlines' );
+const colorRange = require( '../utils/color-range' );
 require( 'highcharts/js/modules/accessibility' )( Highcharts );
 
 Highcharts.setOptions( {
@@ -12,7 +14,7 @@ Highcharts.setOptions( {
 
 class GeoMap {
 
-  constructor( { el, metadata, data, title, desc, shapes } ) {
+  constructor( { el, metadata, data, color, title, desc, shapes } ) {
 
     this.chartOptions = {
       credits: false,
@@ -29,10 +31,23 @@ class GeoMap {
         enabled: true,
         enableMouseWheelZoom: false
       },
+      accessibility: {
+        keyboardNavigation: {
+          skipNullPoints: true
+        },
+        pointDescriptionFormatter: function( point ) {
+          var percent = Math.round( point.value * 10 ) / 10;
+          return `${ point.name } is at ${ percent }%`;
+        },
+        seriesDescriptionFormatter: function( series ) {
+          return '30 day delinquent mortgages';
+        },
+        screenReaderSectionFormatter: () => 'Map showing 30-day delinquent mortgages in the United States.'
+      },
       tooltip: {
         headerFormat: '',
         formatter: function() {
-          var percent = Math.max( Math.round( this.point.value * 10 ) / 10, 2.8 ).toFixed( 1 );
+          var percent = Math.round( this.point.value * 10 ) / 10;
           if ( !this.point.name ) {
             return `${ percent }%`;
           }
@@ -40,42 +55,7 @@ class GeoMap {
         }
       },
       colorAxis: {
-        dataClasses: [
-          {
-            from: 0,
-            to: 0,
-            color: '#eee'
-          },
-          {
-            from: 0,
-            to: 2,
-            color: '#E2EFD8'
-          },
-          {
-            from: 2,
-            to: 4,
-            color: '#C7E5B3'
-          },
-          {
-            from: 4,
-            to: 6,
-            color: '#ADDC91'
-          },
-          {
-            from: 6,
-            to: 8,
-            color: '#66C368'
-          },
-          {
-            from: 8,
-            to: 10,
-            color: '#20AA3F'
-          },
-          {
-            from: 10,
-            color: '#1E9642'
-          }
-        ]
+        dataClasses: colorRange[color]
       },
       series: this.constructor.getSeries( data, shapes )
     };
@@ -85,44 +65,52 @@ class GeoMap {
 
   static getSeries( data, shapes ) {
     const usMap = Highcharts.geojson( shapes ),
-          lines = Highcharts.geojson( shapes, 'mapline' )[0],
-          rows = data[0].data;
-    let points = [];
+          borders = Highcharts.geojson( outlines, 'mapline' ),
+          rows = data[0].data,
+          points = [];
+
 
     usMap.forEach( mapPoint => {
       if ( rows[mapPoint.properties.id] ) {
         mapPoint.name = rows[mapPoint.properties.id].name;
-        points.push(mapPoint);
+        points.push( mapPoint );
       }
     } );
 
     data = Object.keys( rows ).map( row => ( {
       fips: row,
       name: rows[row].name,
-      // TODO: Remove this hardcoded pct30 key and rely on a 'value' field
-      value: rows[row].pct30 * 100
+      value: rows[row].value * 100
     } ) );
 
     const series = [
       {
-        mapData: points,
-        data: data,
-        joinBy: [ 'id', 'fips' ],
-        tooltip: {
-          valueSuffix: '%'
-        },
-        borderWidth: 0.5,
-        states: {
-          hover: {
-            color: '#a4edba'
-          }
-        }
-      },
-      {
         type: 'mapline',
         name: 'Borders',
-        data: [ lines ],
+        color: '#838588',
+        data: borders,
         enableMouseTracking: false
+      },
+      {
+        mapData: points,
+        data: data,
+        joinBy: [ 'id', 'fips' ]
+        // tooltip: {
+        //   valueSuffix: '%'
+        // },
+        // borderWidth: 0,
+        // states: {
+        //   hover: {
+        //     color: '#838588',
+        //     borderWidth: 0
+        //   },
+        //   select: {
+        //     color: 'red',
+        //     fillColor: 'red',
+        //     fill: 'red',
+        //     borderWidth: 10
+        //   }
+        // }
       }
     ];
 

@@ -64,23 +64,21 @@ function convertDate( date ) {
  * Prepares mortgage delinquency data for Highcharts.
  *
  * @param {Number} datasets - Raw JSON from mortgage-performance API
- * @param {String} timeSpan - Time span to display, currently pct30 or pct90.
  * @returns {Obj} datasets - Nested array
  */
-function processDelinquencies( datasets, timeSpan ) {
-
+function processDelinquencies( datasets ) {
   if ( typeof datasets !== 'object' ) {
     return datasets;
   }
 
-  if ( timeSpan && !datasets[0].data[0][ timeSpan ] ) {
+  if ( !datasets[0].data[0].value ) {
     return 'propertyError';
   }
 
   datasets = datasets.map( dataset => ( {
     label: dataset.meta.name,
     data: dataset.data.map( datum =>
-      [ datum.date, datum[timeSpan] ]
+      [ datum.date, datum.value ]
     )
   } ) );
 
@@ -120,7 +118,7 @@ function processNumOriginationsData( data, group ) {
     }
   }
 
-  for ( var x = 0; x < data.unadjusted.length; x++ ) {
+  for ( x = 0; x < data.unadjusted.length; x++ ) {
     if ( data.unadjusted[x][0] < Date.UTC( 2009, 0 ) ) {
       data.unadjusted.splice( x, 1 );
       x--; // Check array[x] again, since we removed an entry in the array

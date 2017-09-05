@@ -33,7 +33,8 @@ It'll generate a chart for you:
 
 ![Screenshot](screenshot.png)
 
-You can also manually initialize a chart by providing a target element:
+You can also manually initialize a chart by providing a target element.
+Install the library with `npm install cfpb-chart-builder` and then:
 
 ```js
 const ccb = require( 'cfpb-chart-builder' );

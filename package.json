@@ -7,8 +7,7 @@
     "build": "gulp build",
     "test": "gulp test && npm run browser-tests",
     "browser-tests": "CI_ENVIRONMENT=true node test/browser-tests.js",
-    "lint": "eslint src/**/*.js --fix",
-    "preinstall": "git config merge.ours.driver true"
+    "lint": "eslint src/**/*.js --fix"
   },
   "repository": {
     "type": "git",

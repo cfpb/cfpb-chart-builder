@@ -61,6 +61,31 @@ function convertDate( date ) {
 }
 
 /**
+ * Prepares mortgage delinquency data for Highcharts.
+ *
+ * @param {Number} datasets - Raw JSON from mortgage-performance API
+ * @returns {Obj} datasets - Nested array
+ */
+function processDelinquencies( datasets ) {
+  if ( typeof datasets !== 'object' ) {
+    return datasets;
+  }
+
+  if ( !datasets[0].data[0].value ) {
+    return 'propertyError';
+  }
+
+  datasets = datasets.map( dataset => ( {
+    label: dataset.meta.name,
+    data: dataset.data.map( datum =>
+      [ datum.date, datum.value ]
+    )
+  } ) );
+
+  return datasets;
+}
+
+/**
  * Returns a data object with data starting in January 2009 for use in all line charts
  *
  * @param {Number} data - response from requested JSON file
@@ -69,12 +94,6 @@ function convertDate( date ) {
  */
 function processNumOriginationsData( data, group ) {
 
-  // Check if the returned string is valid JSON
-  try {
-    data = JSON.parse( data );
-  } catch ( error ) {
-    data = 'parseError';
-  }
   if ( typeof data !== 'object' ) {
     return data;
   }
@@ -99,7 +118,7 @@ function processNumOriginationsData( data, group ) {
     }
   }
 
-  for ( var x = 0; x < data.unadjusted.length; x++ ) {
+  for ( x = 0; x < data.unadjusted.length; x++ ) {
     if ( data.unadjusted[x][0] < Date.UTC( 2009, 0 ) ) {
       data.unadjusted.splice( x, 1 );
       x--; // Check array[x] again, since we removed an entry in the array
@@ -128,12 +147,7 @@ function processNumOriginationsData( data, group ) {
  * @returns {Obj} data - object with adjusted and unadjusted value arrays containing timestamps and a number value
  */
 function processYoyData( data, group ) {
-  // Check if the returned string is valid JSON
-  try {
-    data = JSON.parse( data );
-  } catch ( error ) {
-    data = 'parseError';
-  }
+
   if ( typeof data !== 'object' ) {
     return data;
   }
@@ -192,12 +206,7 @@ function getProjectedDate( timestamp ) {
 }
 
 function processMapData( data ) {
-  // Check if the returned string is valid JSON
-  try {
-    data = JSON.parse( data );
-  } catch ( error ) {
-    data = 'parseError';
-  }
+
   if ( typeof data !== 'object' ) {
     return data;
   }
@@ -225,6 +234,7 @@ function processMapData( data ) {
 
 module.exports = {
   formatDate: formatDate,
+  delinquencies: processDelinquencies,
   originations: processNumOriginationsData,
   yoy: processYoyData,
   map: processMapData,

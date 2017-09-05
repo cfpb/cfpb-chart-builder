@@ -10,7 +10,7 @@ before_deploy:
   - cp test/index.html dist/index.html
   - cp test/test-runner.js dist/test-runner.js
   - cp -r test/sample_data/ dist/sample_data/
-  - cp -r test/css/ dist/css/
+  - cp -r test/static/ dist/static/
 deploy:
   provider: pages
   local_dir: dist

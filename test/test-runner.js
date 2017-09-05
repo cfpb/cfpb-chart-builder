@@ -1,3 +1,6 @@
+// Load data from localhost instead of S3
+window.CFPB_CHART_DATA_SOURCE_BASE = '/sample_data/';
+
 // Console polyfill for IE
 if ( !(window.console && console.log) ) {
   console = {

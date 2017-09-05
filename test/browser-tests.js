@@ -2,6 +2,7 @@ var path = require('path');
 var fs = require('fs');
 var sauceConnectLauncher = require('sauce-connect-launcher');
 var express = require('express');
+var cors = require('cors');
 var path = require('path');
 var serveStatic = require('serve-static');
 var request = require('request');
@@ -9,6 +10,7 @@ var config = path.join(__dirname, './config.json');
 var child_process = require('child_process');
 
 var app = express();
+app.use(cors());
 var testName;
 
 if (!fs.existsSync(config) && !process.env.SAUCE_LABS_ACCESS_KEY) {

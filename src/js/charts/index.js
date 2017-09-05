@@ -2,7 +2,9 @@
 
 var charts = {};
 charts.bar = require( './BarChart' );
+charts.GeoMap = require( './GeoMap' );
 charts.line = require( './LineChart' );
-charts.map = require( './TileMap' );
+charts.LineComparison = require( './LineChartComparison' );
+charts.tileMap = require( './TileMap' );
 
 module.exports = charts;

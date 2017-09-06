@@ -45,13 +45,18 @@ class GeoMap {
         screenReaderSectionFormatter: () => 'Map showing 30-day delinquent mortgages in the United States.'
       },
       tooltip: {
-        headerFormat: '',
+        useHTML: true,
         formatter: function() {
           var percent = Math.round( this.point.value * 10 ) / 10;
           if ( !this.point.name ) {
             return `${ percent }%`;
           }
-          return `${ this.point.name }: ${ percent }%`;
+          return `<div><h5>${ this.point.name }</h5><strong>${ percent }%<strong> mortgage delinquency rate</div>`;
+        }
+      },
+      states: {
+        hover: {
+          brightness: 0
         }
       },
       colorAxis: {
@@ -87,30 +92,23 @@ class GeoMap {
       {
         type: 'mapline',
         name: 'Borders',
-        color: '#838588',
         data: borders,
-        enableMouseTracking: false
+        enableMouseTracking: false,
+        states: {
+          hover: {
+            enabled: false
+          }
+        }
       },
       {
         mapData: points,
         data: data,
-        joinBy: [ 'id', 'fips' ]
-        // tooltip: {
-        //   valueSuffix: '%'
-        // },
-        // borderWidth: 0,
-        // states: {
-        //   hover: {
-        //     color: '#838588',
-        //     borderWidth: 0
-        //   },
-        //   select: {
-        //     color: 'red',
-        //     fillColor: 'red',
-        //     fill: 'red',
-        //     borderWidth: 10
-        //   }
-        // }
+        joinBy: [ 'id', 'fips' ],
+        states: {
+          hover: {
+            enabled: false
+          }
+        }
       }
     ];
 

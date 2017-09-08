@@ -41,6 +41,7 @@ describe( 'GeoMapComparison', () => {
       desc: 'chart description!',
       metadata: 'states',
       shapes: shapes,
+      tooltipFormatter: ( point, meta ) => [ point, meta.fips_type ],
       data: [
         {
           meta: {
@@ -79,6 +80,11 @@ describe( 'GeoMapComparison', () => {
         value: 5.7387478374837775
       }
     ] );
+  } );
+
+  it( 'should correctly set a tooltip formatter', () => {
+    expect( typeof geoMap.chart.options.tooltip.formatter ).to.equal( 'function' );
+    expect( geoMap.chart.options.tooltip.formatter()[1] ).to.equal( 'state' );
   } );
 
   it( 'should correctly set chart attributes', () => {

@@ -21,7 +21,8 @@ const map = ccb.createChart( {
   source: 'mortgage-performance/map-data/30-89/metros/2009-01',
   type: 'geo-map',
   metadata: 'metros',
-  color: 'blue'
+  color: 'blue',
+  tooltipFormatter: point => `${ point.name }: ${ Math.round( point.value * 10 ) / 10 }%`
 } );
 
 const interval = setInterval( () => {

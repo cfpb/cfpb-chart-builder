@@ -91,6 +91,11 @@ Optional. Chart's color scheme. Options: `blue`, `green`, `teal`, `navy`.
 Optional. Arbitrary metadata for your chart.
 For example, `bar` charts currently require a group key (e.g. `Number of Loans`) to filter data.
 
+**options.tooltipFormatter**: `Function`
+
+Optional. Function that returns HTML to format the chart's tooltip.
+See Highcharts' [tooltip.formatter](http://api.highcharts.com/highmaps/tooltip.formatter).
+
 ### `chart.update( options )`
 
 Update a CFPB chart.

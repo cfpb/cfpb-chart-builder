@@ -14,7 +14,7 @@ Highcharts.setOptions( {
 
 class GeoMap {
 
-  constructor( { el, metadata, data, color, title, desc, shapes } ) {
+  constructor( { el, metadata, data, color, title, desc, shapes, tooltipFormatter } ) {
 
     this.chartOptions = {
       credits: false,
@@ -44,16 +44,7 @@ class GeoMap {
         },
         screenReaderSectionFormatter: () => 'Map showing 30-day delinquent mortgages in the United States.'
       },
-      tooltip: {
-        useHTML: true,
-        formatter: function() {
-          var percent = Math.round( this.point.value * 10 ) / 10;
-          if ( !this.point.name ) {
-            return `${ percent }%`;
-          }
-          return `<div><h5>${ this.point.name }</h5><strong>${ percent }%<strong> mortgage delinquency rate</div>`;
-        }
-      },
+      tooltip: {},
       states: {
         hover: {
           brightness: 0
@@ -64,6 +55,13 @@ class GeoMap {
       },
       series: this.constructor.getSeries( data, shapes )
     };
+
+    if ( tooltipFormatter ) {
+      this.chartOptions.tooltip.useHTML = true;
+      this.chartOptions.tooltip.formatter = function() {
+        return tooltipFormatter( this.point, data[0].meta );
+      };
+    }
 
     this.chart = Highcharts.mapChart( el, Object.assign( {}, this.chartOptions ) );
   }

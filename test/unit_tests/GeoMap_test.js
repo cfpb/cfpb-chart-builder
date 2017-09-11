@@ -1,4 +1,4 @@
-/* global before describe it */
+/* global before beforeEach describe it */
 
 'use strict';
 
@@ -35,7 +35,7 @@ let geoMap;
 
 describe( 'GeoMapComparison', () => {
 
-  before( () => {
+  beforeEach( () => {
     geoMap = new GeoMap( {
       el: 'el',
       desc: 'chart description!',
@@ -85,6 +85,30 @@ describe( 'GeoMapComparison', () => {
   it( 'should correctly set a tooltip formatter', () => {
     expect( typeof geoMap.chart.options.tooltip.formatter ).to.equal( 'function' );
     expect( geoMap.chart.options.tooltip.formatter()[1] ).to.equal( 'state' );
+  } );
+
+  it( 'should correctly update a tooltip formatter', () => {
+    geoMap.update( {
+      data: [ {
+        meta: {
+          date: '2020-01-01',
+          fips_type: 'state'
+        },
+        data: {
+          18: {
+            value: 0.036920278872385574,
+            name: 'California'
+          },
+          22: {
+            value: 0.05738747837483777,
+            name: 'Delaware'
+          }
+        }
+      } ],
+      tooltipFormatter: ( point, meta ) => [ point, meta.date ]
+    } );
+    expect( typeof geoMap.chart.options.tooltip.formatter ).to.equal( 'function' );
+    expect( geoMap.chart.options.tooltip.formatter()[1] ).to.equal( '2020-01-01' );
   } );
 
   it( 'should correctly set chart attributes', () => {

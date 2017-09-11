@@ -117,6 +117,14 @@ class GeoMap {
     if ( newOptions.data ) {
       newOptions.series = this.constructor.getSeries( newOptions.data, newOptions.shapes );
     }
+    if ( newOptions.tooltipFormatter ) {
+      newOptions.tooltip = {
+        useHTML: true,
+        formatter: function() {
+          return newOptions.tooltipFormatter( this.point, newOptions.data[0].meta );
+        }
+      };
+    }
     // Merge the old chart options with the new ones
     Object.assign( this.chartOptions, newOptions );
     this.chart.update( this.chartOptions, true, true );

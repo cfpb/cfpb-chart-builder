@@ -22,7 +22,10 @@ const map = ccb.createChart( {
   type: 'geo-map',
   metadata: 'metros',
   color: 'blue',
-  tooltipFormatter: point => `${ point.name }: ${ Math.round( point.value * 10 ) / 10 }%`
+  tooltipFormatter: point => `<dl>
+    <dt>${ point.name }</dt>
+    <dd>${ point.value > 0 ? `${point.value}%` : 'Insufficient data' }</dd>
+  </dl>`
 } );
 
 const interval = setInterval( () => {

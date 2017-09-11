@@ -3,6 +3,11 @@
 const colors = {
   blue: [
     {
+      from: -1,
+      to: -1,
+      color: '#e7e8e9'
+    },
+    {
       from: 0,
       to: 0,
       color: '#dcdddf'
@@ -38,6 +43,11 @@ const colors = {
     }
   ],
   navy: [
+    {
+      from: -1,
+      to: -1,
+      color: '#e7e8e9'
+    },
     {
       from: 0,
       to: 0,

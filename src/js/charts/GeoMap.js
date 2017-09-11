@@ -83,7 +83,9 @@ class GeoMap {
     data = Object.keys( rows ).map( row => ( {
       fips: row,
       name: rows[row].name,
-      value: rows[row].value * 100
+      // Records with insufficient data are 'null' in the API.
+      // If the record's value is anything but a number, set it to -1.
+      value: typeof rows[row].value === 'number' ? rows[row].value * 100 : -1
     } ) );
 
     const series = [

@@ -31,10 +31,15 @@ class GeoMap {
         enabled: true,
         enableMouseWheelZoom: false
       },
+      plotOptions: {
+        exposeElementToA11y: true
+      },
       accessibility: {
+        enabled: true,
         keyboardNavigation: {
-          skipNullPoints: true
+          enabled: true
         },
+        skipNullPoints: true,
         pointDescriptionFormatter: function( point ) {
           var percent = Math.round( point.value * 10 ) / 10;
           return `${ point.name } is at ${ percent }%`;
@@ -53,7 +58,7 @@ class GeoMap {
       colorAxis: {
         dataClasses: colorRange[color]
       },
-      series: this.constructor.getSeries( data, shapes )
+      series: this.constructor.getSeries( data, shapes, metadata )
     };
 
     if ( tooltipFormatter ) {
@@ -66,18 +71,20 @@ class GeoMap {
     this.chart = Highcharts.mapChart( el, Object.assign( {}, this.chartOptions ) );
   }
 
-  static getSeries( data, shapes ) {
+  static getSeries( data, shapes, metadata ) {
     const usMap = Highcharts.geojson( shapes ),
           borders = Highcharts.geojson( outlines, 'mapline' ),
           rows = data[0].data,
           points = [];
 
-
     usMap.forEach( mapPoint => {
       if ( rows[mapPoint.properties.id] ) {
         mapPoint.name = rows[mapPoint.properties.id].name;
-        points.push( mapPoint );
+      } else {
+        // Preserve the map point but leave its name blank if it has no data
+        mapPoint.name = '';
       }
+      points.push( mapPoint );
     } );
 
     data = Object.keys( rows ).map( row => ( {
@@ -88,29 +95,39 @@ class GeoMap {
       value: typeof rows[row].value === 'number' ? rows[row].value * 100 : -1
     } ) );
 
-    const series = [
-      {
-        type: 'mapline',
-        name: 'Borders',
-        data: borders,
-        enableMouseTracking: false,
-        states: {
-          hover: {
-            enabled: false
-          }
-        }
-      },
-      {
-        mapData: points,
-        data: data,
-        joinBy: [ 'id', 'fips' ],
-        states: {
-          hover: {
-            enabled: false
-          }
+    const stateOutlinesLayer = {
+      type: 'mapline',
+      name: 'Borders',
+      exposeElementToA11y: false,
+      data: borders,
+      enableMouseTracking: false,
+      skipKeyboardNavigation: true,
+      states: {
+        hover: {
+          enabled: false
         }
       }
-    ];
+    };
+
+    const dataLayer = {
+      mapData: points,
+      exposeElementToA11y: true,
+      data: data,
+      nullInteraction: true,
+      joinBy: [ 'id', 'fips' ],
+      states: {
+        hover: {
+          enabled: false
+        }
+      }
+    };
+
+    const series = [ dataLayer, stateOutlinesLayer ];
+
+    // State data comes with state outlines so remove that layer
+    if ( metadata === 'states' ) {
+      series.pop();
+    }
 
     return series;
   }

@@ -14,7 +14,8 @@ Highcharts.setOptions( {
 
 class GeoMap {
 
-  constructor( { el, metadata, data, color, title, desc, shapes, tooltipFormatter } ) {
+  constructor( { el, metadata, data, color, desc, shapes, tooltipFormatter,
+    pointDescriptionFormatter, seriesDescriptionFormatter, screenReaderSectionFormatter } ) {
 
     this.chartOptions = {
       credits: false,
@@ -39,15 +40,7 @@ class GeoMap {
         keyboardNavigation: {
           enabled: true
         },
-        skipNullPoints: true,
-        pointDescriptionFormatter: function( point ) {
-          var percent = Math.round( point.value * 10 ) / 10;
-          return `${ point.name } is at ${ percent }%`;
-        },
-        seriesDescriptionFormatter: function( series ) {
-          return '30 day delinquent mortgages';
-        },
-        screenReaderSectionFormatter: () => 'Map showing 30-day delinquent mortgages in the United States.'
+        skipNullPoints: true
       },
       tooltip: {},
       states: {
@@ -63,8 +56,57 @@ class GeoMap {
 
     if ( tooltipFormatter ) {
       this.chartOptions.tooltip.useHTML = true;
+      /**
+       * pointDescriptionFormatter - Formatter function for tooltips.
+       *
+       * @returns {type} HTML string for the tooltip.
+       */
       this.chartOptions.tooltip.formatter = function() {
         return tooltipFormatter( this.point, data[0].meta );
+      };
+    }
+
+    if ( pointDescriptionFormatter ) {
+      /**
+       * pointDescriptionFormatter - Formatter function to use instead of the
+       *  default for point descriptions.
+       *
+       * @param {type} point Highcharts point to describe
+       *
+       * @returns {type} String with the description of the point for a screen
+       *  reader user.
+       */
+      this.chartOptions.pointDescriptionFormatter = function( point ) {
+        return pointDescriptionFormatter( point, data[0].meta );
+      };
+    }
+
+    if ( seriesDescriptionFormatter ) {
+      /**
+       * screenReaderSectionFormatter - Formatter function to use instead of the
+       *  default for series descriptions.
+       *
+       * @param {type} series Highcharts series to describe
+       *
+       * @returns {type} String with the description of the series for a screen
+       *  reader user.
+       */
+      this.chartOptions.seriesDescriptionFormatter = function( series ) {
+        return seriesDescriptionFormatter( series );
+      };
+    }
+
+    if ( screenReaderSectionFormatter ) {
+      /**
+       * screenReaderSectionFormatter - A formatter function to create the HTML
+       *  contents of the hidden screen reader information region.
+       *
+       * @param {type} chart Highcharts chart object
+       *
+       * @returns {type} String with the HTML content of the region.
+       */
+      this.chartOptions.screenReaderSectionFormatter = function( chart ) {
+        return screenReaderSectionFormatter( chart );
       };
     }
 
@@ -102,6 +144,7 @@ class GeoMap {
       data: borders,
       enableMouseTracking: false,
       skipKeyboardNavigation: true,
+      className: 'cfpb-chart-geo-state-outline',
       states: {
         hover: {
           enabled: false
@@ -112,6 +155,7 @@ class GeoMap {
     const dataLayer = {
       mapData: points,
       exposeElementToA11y: true,
+      className: 'cfpb-chart-geo-data-outline',
       data: data,
       nullInteraction: true,
       joinBy: [ 'id', 'fips' ],

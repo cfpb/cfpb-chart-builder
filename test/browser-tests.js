@@ -70,7 +70,8 @@ function startSauce(err, process) {
             ["Windows 7", "internet explorer", "9"],
             ["Windows 7", "internet explorer", "10"],
             ["Windows 7", "firefox", "27"],
-            ["Windows 7", "chrome", ""]
+            ["Windows 7", "chrome", ""],
+            ["Linux", "android", ""]
         ],
         "url": "http://localhost:" + STATIC_SERVER_PORT + "/?ci_environment=" + CI_ENVIRONMENT,
         "framework": "custom",

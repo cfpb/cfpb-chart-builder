@@ -14,3 +14,36 @@
 // If this project is on a non-CFPB domain,
 // use this file as a template for adding web fonts.
 @import (less) 'licensed-fonts.css';
+
+// Override some cfpb-chart-builder styles
+#map {
+  .highcharts-map-series {
+      .highcharts-point-select,
+      .highcharts-point:hover {
+          stroke: @black !important;
+          stroke-width: 2px !important;
+          transition: stroke-width 0 !important;
+      }
+      .highcharts-point {
+          stroke: @black;
+          &.highcharts-null-point {
+            stroke-width: 0 !important;
+          }
+      }
+  }
+  .cfpb-chart-geo-data-outline-metros {
+      .highcharts-point {
+          stroke: @black;
+      }
+  }
+  .cfpb-chart-geo-state-outline-metros {
+      .highcharts-point {
+          stroke: @black;
+          stroke-dasharray: 5, 5;
+      }
+  }
+  .highcharts-tooltip-box {
+      fill: @white;
+      fill-opacity: 1;
+  }
+}

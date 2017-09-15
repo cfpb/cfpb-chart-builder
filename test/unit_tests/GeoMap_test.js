@@ -42,6 +42,9 @@ describe( 'GeoMapComparison', () => {
       metadata: 'states',
       shapes: shapes,
       tooltipFormatter: ( point, meta ) => [ point, meta.fips_type ],
+      pointDescriptionFormatter: point => noop,
+      seriesDescriptionFormatter: point => noop,
+      screenReaderSectionFormatter: point => noop,
       data: [
         {
           meta: {
@@ -68,7 +71,7 @@ describe( 'GeoMapComparison', () => {
   } );
 
   it( 'should correctly set chart data', () => {
-    expect( geoMap.chart.options.series[1].data ).to.deep.equal( [
+    expect( geoMap.chart.options.series[0].data ).to.deep.equal( [
       {
         fips: '10',
         name: 'California',
@@ -111,8 +114,20 @@ describe( 'GeoMapComparison', () => {
     expect( geoMap.chart.options.tooltip.formatter()[1] ).to.equal( '2020-01-01' );
   } );
 
+  it( 'should correctly set a point description formatter', () => {
+    expect( typeof geoMap.chart.options.pointDescriptionFormatter ).to.equal( 'function' );
+  } );
+
+  it( 'should correctly set a series description formatter', () => {
+    expect( typeof geoMap.chart.options.seriesDescriptionFormatter ).to.equal( 'function' );
+  } );
+
+  it( 'should correctly set a screen reader section formatter', () => {
+    expect( typeof geoMap.chart.options.screenReaderSectionFormatter ).to.equal( 'function' );
+  } );
+
   it( 'should correctly set chart attributes', () => {
-    expect( geoMap.chart.options.series[0].enableMouseTracking ).to.equal( false );
+    expect( geoMap.chart.options.series[0].nullInteraction ).to.equal( true );
   } );
 
   it( 'should be able to update its description', () => {
@@ -139,8 +154,8 @@ describe( 'GeoMapComparison', () => {
         }
       }
     ]} );
-    expect( geoMap.chart.options.series[1].data[0].fips ).to.equal( '18' );
-    expect( geoMap.chart.options.series[1].data[1].fips ).to.equal( '22' );
+    expect( geoMap.chart.options.series[0].data[0].fips ).to.equal( '18' );
+    expect( geoMap.chart.options.series[0].data[1].fips ).to.equal( '22' );
   } );
 
 } );

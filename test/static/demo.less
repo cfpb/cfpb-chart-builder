@@ -31,8 +31,16 @@
           }
       }
   }
-  .highcharts-color-1 {
-      stroke: @black;
+  .cfpb-chart-geo-data-outline-metros {
+      .highcharts-point {
+          stroke: @black;
+      }
+  }
+  .cfpb-chart-geo-state-outline-metros {
+      .highcharts-point {
+          stroke: @black;
+          stroke-dasharray: 5, 5;
+      }
   }
   .highcharts-tooltip-box {
       fill: @white;

@@ -119,6 +119,8 @@ class GeoMap {
           rows = data[0].data,
           points = [];
 
+          console.log(metadata);
+
     usMap.forEach( mapPoint => {
       if ( rows[mapPoint.properties.id] ) {
         mapPoint.name = rows[mapPoint.properties.id].name;
@@ -144,7 +146,7 @@ class GeoMap {
       data: borders,
       enableMouseTracking: false,
       skipKeyboardNavigation: true,
-      className: 'cfpb-chart-geo-state-outline',
+      className: `cfpb-chart-geo-state-outline-${ metadata }`,
       states: {
         hover: {
           enabled: false
@@ -155,7 +157,7 @@ class GeoMap {
     const dataLayer = {
       mapData: points,
       exposeElementToA11y: true,
-      className: 'cfpb-chart-geo-data-outline',
+      className: `cfpb-chart-geo-data-outline-${ metadata }`,
       data: data,
       nullInteraction: true,
       joinBy: [ 'id', 'fips' ],
@@ -178,7 +180,7 @@ class GeoMap {
 
   update( newOptions ) {
     if ( newOptions.data ) {
-      newOptions.series = this.constructor.getSeries( newOptions.data, newOptions.shapes );
+      newOptions.series = this.constructor.getSeries( newOptions.data, newOptions.shapes, newOptions.metadata );
     }
     if ( newOptions.tooltipFormatter ) {
       newOptions.tooltip = {

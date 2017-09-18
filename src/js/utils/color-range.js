@@ -5,7 +5,7 @@ const colors = {
     {
       from: -1,
       to: -1,
-      color: '#e7e8e9'
+      color: '#f7f8f9'
     },
     {
       from: 0,
@@ -46,7 +46,7 @@ const colors = {
     {
       from: -1,
       to: -1,
-      color: '#e7e8e9'
+      color: '#f7f8f9'
     },
     {
       from: 0,

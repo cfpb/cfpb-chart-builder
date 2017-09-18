@@ -31,15 +31,25 @@
           }
       }
   }
-  .cfpb-chart-geo-data-outline-metros {
+  .cfpb-chart-geo-data-outline-metros,
+  .cfpb-chart-geo-state-outline-metros,
+  .cfpb-chart-geo-state-outline-metros,
+  .cfpb-chart-geo-state-outline-counties,
+  .cfpb-chart-geo-map-separators {
       .highcharts-point {
           stroke: @black;
       }
   }
-  .cfpb-chart-geo-state-outline-metros {
+  // A dashed outline can be used to indicate state boundaries
+  // .cfpb-chart-geo-state-outline-metros {
+  //     .highcharts-point {
+  //         stroke-dasharray: 5, 5;
+  //     }
+  // }
+  // Or metro areas can be highlighted in gray
+  .cfpb-chart-geo-data-outline-metros {
       .highcharts-point {
-          stroke: @black;
-          stroke-dasharray: 5, 5;
+          stroke: @gray-80;
       }
   }
   .highcharts-tooltip-box {

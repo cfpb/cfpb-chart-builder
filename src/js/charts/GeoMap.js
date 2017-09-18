@@ -1,8 +1,8 @@
 'use strict';
 
-const ajax = require( 'xdr' );
 const Highcharts = require( 'highcharts/js/highmaps' );
 const outlines = require( '../utils/state-outlines' );
+const separators = require( '../utils/map-separators' );
 const colorRange = require( '../utils/color-range' );
 require( 'highcharts/js/modules/accessibility' )( Highcharts );
 
@@ -116,10 +116,9 @@ class GeoMap {
   static getSeries( data, shapes, metadata ) {
     const usMap = Highcharts.geojson( shapes ),
           borders = Highcharts.geojson( outlines, 'mapline' ),
+          lines = Highcharts.geojson( separators, 'mapline' ),
           rows = data[0].data,
           points = [];
-
-          console.log(metadata);
 
     usMap.forEach( mapPoint => {
       if ( rows[mapPoint.properties.id] ) {
@@ -154,6 +153,21 @@ class GeoMap {
       }
     };
 
+    const mapSeparatorsLayer = {
+      type: 'mapline',
+      name: 'Map separators',
+      exposeElementToA11y: false,
+      data: lines,
+      enableMouseTracking: false,
+      skipKeyboardNavigation: true,
+      className: 'cfpb-chart-geo-map-separators',
+      states: {
+        hover: {
+          enabled: false
+        }
+      }
+    };
+
     const dataLayer = {
       mapData: points,
       exposeElementToA11y: true,
@@ -168,7 +182,7 @@ class GeoMap {
       }
     };
 
-    const series = [ dataLayer, stateOutlinesLayer ];
+    const series = [ dataLayer, mapSeparatorsLayer, stateOutlinesLayer ];
 
     // State data comes with state outlines so remove that layer
     if ( metadata === 'states' ) {

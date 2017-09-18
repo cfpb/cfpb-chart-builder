@@ -146,6 +146,9 @@ class GeoMap {
       enableMouseTracking: false,
       skipKeyboardNavigation: true,
       className: `cfpb-chart-geo-state-outline-${ metadata }`,
+      id: `cfpb-chart-geo-state-outline-${ metadata }`,
+      // State data comes with state outlines so remove that layer
+      visible: metadata !== 'states',
       states: {
         hover: {
           enabled: false
@@ -172,6 +175,7 @@ class GeoMap {
       mapData: points,
       exposeElementToA11y: true,
       className: `cfpb-chart-geo-data-outline-${ metadata }`,
+      id: `cfpb-chart-geo-data-outline-${ metadata }`,
       data: data,
       nullInteraction: true,
       joinBy: [ 'id', 'fips' ],
@@ -182,14 +186,7 @@ class GeoMap {
       }
     };
 
-    const series = [ dataLayer, mapSeparatorsLayer, stateOutlinesLayer ];
-
-    // State data comes with state outlines so remove that layer
-    if ( metadata === 'states' ) {
-      series.pop();
-    }
-
-    return series;
+    return [ dataLayer, mapSeparatorsLayer, stateOutlinesLayer ];
   }
 
   update( newOptions ) {
@@ -206,7 +203,7 @@ class GeoMap {
     }
     // Merge the old chart options with the new ones
     Object.assign( this.chartOptions, newOptions );
-    this.chart.update( this.chartOptions, true, true );
+    this.chart.update( this.chartOptions );
     this.chart.hideLoading();
   }
 

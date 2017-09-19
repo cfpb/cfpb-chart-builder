@@ -81,23 +81,26 @@ class LineChartComparison {
 
     this.chartOptions = {
       chart: {
-        marginRight: 0,
-        marginTop: 100,
+        marginLeft: 0,
+        marginTop: 50,
         zoomType: 'none',
         animation: false
       },
-      className: 'cfpb-chart_line',
+      className: 'cfpb-chart_line-comparison',
       description: description,
       credits: false,
       rangeSelector: {
         enabled: false
       },
       legend: {
+        align: 'left',
         enabled: true,
-        floating: true,
-        layout: 'vertical',
+        floating: false,
+        layout: 'horizontal',
         verticalAlign: 'top',
-        useHTML: true
+        useHTML: true,
+        x: 0,
+        y: 0
       },
       plotOptions: {
         series: {

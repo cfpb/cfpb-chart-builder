@@ -819,3 +819,32 @@
     fill: #101820;
   }
 }
+
+// Line comparison chart styles
+.cfpb-chart[data-chart-type="line-comparison"] {
+  .highcharts-legend {
+    left: 0px !important;
+    transform: translate(-8px, -5px) !important;
+
+    .lt-ie10 & {
+      .respond-to-min( 800px, {
+        left: 0px !important;
+      });
+    }
+
+  }
+
+  .highcharts-legend-item {
+
+    &.highcharts-color-1 {
+      position: relative !important;
+      top: 0px !important;
+
+      .respond-to-min( 450px, {
+        top: 0px !important;
+      });
+
+    }
+
+  }
+}

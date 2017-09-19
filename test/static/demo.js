@@ -23,8 +23,8 @@ const map = ccb.createChart( {
   metadata: 'metros',
   color: 'blue',
   tooltipFormatter: point => `<dl>
-    <dt>${ point.name }</dt>
-    <dd>${ point.value > 0 ? `${point.value}%` : 'Insufficient data' }</dd>
+    ${ point.name ? point.name : `<dt>${ point.name }</dt>` }
+    <dd>${ point.value > 0 ? `${ point.value }%` : 'Insufficient data for this area' }</dd>
   </dl>`
 } );
 

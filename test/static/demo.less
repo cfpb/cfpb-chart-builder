@@ -14,3 +14,46 @@
 // If this project is on a non-CFPB domain,
 // use this file as a template for adding web fonts.
 @import (less) 'licensed-fonts.css';
+
+// Override some cfpb-chart-builder styles
+#map {
+  .highcharts-map-series {
+      .highcharts-point-select,
+      .highcharts-point:hover {
+          stroke: @black !important;
+          stroke-width: 2px !important;
+          transition: stroke-width 0 !important;
+      }
+      .highcharts-point {
+          stroke: @black;
+          &.highcharts-null-point {
+            stroke-width: 0 !important;
+          }
+      }
+  }
+  .cfpb-chart-geo-data-outline-metros,
+  .cfpb-chart-geo-state-outline-metros,
+  .cfpb-chart-geo-state-outline-metros,
+  .cfpb-chart-geo-state-outline-counties,
+  .cfpb-chart-geo-map-separators {
+      .highcharts-point {
+          stroke: @black;
+      }
+  }
+  // A dashed outline can be used to indicate state boundaries
+  // .cfpb-chart-geo-state-outline-metros {
+  //     .highcharts-point {
+  //         stroke-dasharray: 5, 5;
+  //     }
+  // }
+  // Or metro areas can be highlighted in gray
+  .cfpb-chart-geo-data-outline-metros {
+      .highcharts-point {
+          stroke: @gray-80;
+      }
+  }
+  .highcharts-tooltip-box {
+      fill: @white;
+      fill-opacity: 1;
+  }
+}

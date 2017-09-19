@@ -96,6 +96,21 @@ For example, `bar` charts currently require a group key (e.g. `Number of Loans`)
 Optional. Function that returns HTML to format the chart's tooltip.
 See Highcharts' [tooltip.formatter](http://api.highcharts.com/highmaps/tooltip.formatter).
 
+**options.pointDescriptionFormatter**: `Function`
+
+Optional. Formatter function to use instead of the default for point descriptions.
+See Highcharts' [accessibility.pointDescriptionFormatter](http://api.highcharts.com/highmaps/accessibility.pointDescriptionFormatter).
+
+**options.seriesDescriptionFormatter**: `Function`
+
+Optional. Formatter function to use instead of the default for series descriptions.
+See Highcharts' [accessibility.seriesDescriptionFormatter](http://api.highcharts.com/highmaps/accessibility.seriesDescriptionFormatter).
+
+**options.screenReaderSectionFormatter**: `Function`
+
+Optional. A formatter function to create the HTML contents of the hidden screen
+reader information region. See Highcharts' [accessibility.screenReaderSectionFormatter](http://api.highcharts.com/highmaps/accessibility.screenReaderSectionFormatter).
+
 ### `chart.update( options )`
 
 Update a CFPB chart.

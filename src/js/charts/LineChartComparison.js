@@ -81,8 +81,8 @@ class LineChartComparison {
 
     this.chartOptions = {
       chart: {
-        marginLeft: 0,
-        marginTop: 50,
+        marginRight: 0,
+        marginTop: 100,
         zoomType: 'none',
         animation: false
       },

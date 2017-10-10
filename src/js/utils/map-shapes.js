@@ -1,6 +1,7 @@
 'use strict';
 
 const ajax = require( './get-data' );
+const cache = require('./session-storage');
 
 let DATA_SOURCE_BASE = window.location.protocol.indexOf( 'https' ) === -1 ?
                       '//files.consumerfinance.gov/data/' :
@@ -14,13 +15,13 @@ let shapes = {
 
 const fetchShapes = geoType => {
   // If the shapes have already been downloaded resolve the promise immediately.
-  if ( typeof shapes[geoType] === 'object' ) {
-    return Promise.resolve( shapes[geoType] );
+  if ( cache.getItem( `shapes-${ geoType }` ) ) {
+    return Promise.resolve( cache.getItem( `shapes-${ geoType }` ) );
   }
   // Otherwise, download the shapes and cache them for future requests.
   const promise = ajax( shapes[geoType] );
   promise.then( data => {
-    shapes[geoType] = data;
+    cache.setItem( `shapes-${ geoType }`, data );
   } );
   return promise;
 };

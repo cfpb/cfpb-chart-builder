@@ -15,6 +15,11 @@ const getData = ( url, data ) => {
   mock( 'xdr', ( opts, cb ) => {
     cb( { data: data } );
   } );
+  mock( '../../../src/js/utils/session-storage', {
+    getItem: () => ( { foo: 'bar' } ),
+    setItem: () => ( { foo: 'bar' } ),
+    removeItem: () => ( { foo: 'bar' } )
+  } );
   return mock.reRequire( '../../../src/js/utils/get-data' )( url );
 };
 

@@ -100,6 +100,7 @@ function _createCharts() {
     new Chart( {
       el: chart,
       title: chart.getAttribute( 'data-chart-title' ),
+      yAxisLabel: chart.getAttribute( 'data-chart-y-axis-label' ),
       type: chart.getAttribute( 'data-chart-type' ),
       color: chart.getAttribute( 'data-chart-color' ),
       metadata: chart.getAttribute( 'data-chart-metadata' ),

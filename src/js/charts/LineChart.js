@@ -49,18 +49,29 @@ function _getYAxisUnits( array ) {
 /**
  * _getYAxisLabel - Get the text of the y-axis title
  *
- * @param  {array} array  An array of values to check
+ * @param  {array} chartData  An array of values to check
+ * @param  {sting} yAxisLabel  A string to use for the y-axis label.
  * @returns {string}    Appropriate y-axis title
  */
-function _getYAxisLabel( array ) {
-  var value = _getFirstNumber( array );
-  if ( !value ) {
-    return value;
+function _getYAxisLabel( chartData, yAxisLabel ) {
+  var term = 'Number';
+  var unit = 'millions';
+  var firstChartNumber = _getFirstNumber( chartData );
+
+  if ( yAxisLabel ) {
+    return yAxisLabel;
   }
-  if ( value % 1000000000 < value ) {
-    return 'Volume';
+
+  if ( !firstChartNumber ) {
+    return firstChartNumber;
   }
-  return 'Number';
+
+  if ( firstChartNumber % 1000000000 < firstChartNumber ) {
+    term = 'Volume';
+    unit = 'billions';
+  }
+
+  return term + ' of originations (in ' + unit + ')';
 }
 
 /**
@@ -168,7 +179,7 @@ function LineChart( props ) {
       opposite: false,
       className: 'axis-label',
       title: {
-        text: _getYAxisLabel( props.data.adjusted ) + ' of originations (in ' + _getYAxisUnits( props.data.adjusted ) + ')',
+        text: _getYAxisLabel( props.data.adjusted, props.yAxisLabel ),
         offset: 0,
         reserveSpace: false
       },

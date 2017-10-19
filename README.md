@@ -15,6 +15,7 @@ Add a `div` with a class of `cfpb-chart` and the following data attributes to yo
 <div class="cfpb-chart"
      data-chart-type="line"
      data-chart-title="Number of Originations (in millions)"
+     data-chart-y-axis-label="Volume of Originations (in billons)"
      data-chart-description="Auto loan originations decreased in 2016."
      data-chart-color="green"
      data-chart-metadata="Number of Loans"

@@ -92,6 +92,7 @@ function BarChart( props ) {
       } ]
     },
     yAxis: {
+      showLastLabel: true,
       opposite: false,
       title: {
         text: 'Year-over-year change (%)',

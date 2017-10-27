@@ -176,6 +176,7 @@ function LineChart( props ) {
       } ]
     },
     yAxis: {
+      showLastLabel: true,
       opposite: false,
       className: 'axis-label',
       title: {

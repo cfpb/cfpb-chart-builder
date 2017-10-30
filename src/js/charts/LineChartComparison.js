@@ -130,6 +130,7 @@ class LineChartComparison {
         }
       },
       yAxis: {
+        showLastLabel: true,
         min: 0,
         opposite: false,
         className: 'axis-label',

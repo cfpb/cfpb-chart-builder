@@ -11,12 +11,6 @@ var process = require( './utils/process-json' );
 var ajax = require( './utils/get-data' );
 var shapes = require( './utils/map-shapes' );
 
-/***
-* When the document is ready, the code for cfpb-chart-builder seeks out chart
-* blocks and generates charts inside the designated elements.
-*/
-documentReady( _createCharts );
-
 class Chart {
 
   constructor( chartOptions ) {
@@ -108,6 +102,13 @@ function _createCharts() {
     } );
   }
 }
+
+/***
+* When the document is ready, the code for cfpb-chart-builder seeks out chart
+* blocks and generates charts inside the designated elements.
+*/
+documentReady( _createCharts );
+
 
 var charts = {
   createChart: _createChart,

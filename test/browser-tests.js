@@ -14,7 +14,7 @@ app.use(cors());
 var testName;
 
 if (!fs.existsSync(config) && !process.env.SAUCE_LABS_ACCESS_KEY) {
-  console.error("Please define SAUCE_LABS_USERNAME and SAUCE_LABS_ACCESS_KEY in `test/config.js`.");
+  console.error("Please define SAUCE_LABS_USERNAME and SAUCE_LABS_ACCESS_KEY in `test/config.json`.");
   console.error("See https://github.com/cfpb/cfpb-chart-builder#testing");
   process.exit(1);
 }

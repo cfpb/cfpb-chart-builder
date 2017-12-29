@@ -1,7 +1,5 @@
-'use strict';
-
-var Highcharts = require( 'highcharts/js/highstock' );
-var process = require( '../utils/process-json' );
+const Highcharts = require( 'highcharts/js/highstock' );
+const process = require( '../utils/process-json' );
 require( 'highcharts/js/modules/accessibility' )( Highcharts );
 
 Highcharts.setOptions( {
@@ -14,7 +12,7 @@ Highcharts.setOptions( {
 
 function BarChart( props ) {
   props.data = process.yoy( props.data[0], props.metadata );
-  var options = {
+  const options = {
     chart: {
       marginRight: 0,
       marginTop: 100,
@@ -118,11 +116,11 @@ function BarChart( props ) {
       } ]
     } ],
     responsive: {
-      rules: [{
+      rules: [ {
         condition: {
           minWidth: 600 // chart width, not window width
         },
-      // Add more left margin space for vertical label on large screens
+        // Add more left margin space for vertical label on large screens
         chartOptions: {
           chart: {
             marginRight: 0,
@@ -131,7 +129,7 @@ function BarChart( props ) {
             zoomType: 'none'
           }
         }
-      }]
+      } ]
     }
 
   };
@@ -139,7 +137,7 @@ function BarChart( props ) {
   return Highcharts.stockChart( props.el, options, function( chart ) {
     // label(str, x, y, shape, anchorX, anchorY, useHTML, baseline, className)
     chart.renderer.label( 'Select time range', null, null, null, null, null, true, null, 'range-selector-label' )
-    .add();
+      .add();
   } );
 
 }

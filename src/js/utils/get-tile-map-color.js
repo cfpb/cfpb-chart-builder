@@ -1,11 +1,9 @@
-'use strict';
-
-var green50 = '#bae0a2';
-var green20 = '#e2efd8';
-var gray80 = '#75787b';
-var gray5 = '#f7f8f9';
-var pacific20 = '#d6e8fa';
-var pacific50 = '#96c4ed';
+const green50 = '#bae0a2';
+const green20 = '#e2efd8';
+const gray80 = '#75787b';
+const gray5 = '#f7f8f9';
+const pacific20 = '#d6e8fa';
+const pacific50 = '#96c4ed';
 
 /**
  * Returns color given a data value.

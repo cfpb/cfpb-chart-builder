@@ -1,8 +1,6 @@
-'use strict';
-
-var Highcharts = require( 'highcharts/js/highmaps' );
-var getTileMapColor = require( '../utils/get-tile-map-color' );
-var process = require( '../utils/process-json' );
+const Highcharts = require( 'highcharts/js/highmaps' );
+const getTileMapColor = require( '../utils/get-tile-map-color' );
+const process = require( '../utils/process-json' );
 require( 'highcharts/js/modules/accessibility' )( Highcharts );
 
 function _drawLegend( chart ) {
@@ -19,7 +17,7 @@ function _drawLegend( chart ) {
   chart.renderer.label( 'Year-over-year change (rounded to the nearest whole number)', 5, 5, null, null, null, true, false, 'label__tile-map' ).add();
 
 
-  var legend = chart.renderer.g( 'legend__tile-map ' ).add();
+  const legend = chart.renderer.g( 'legend__tile-map ' ).add();
 
   chart.renderer.rect( 10, 48, 15, 15 ).attr( _boxStyle( getTileMapColor.green50 ) ).add( legend );
   chart.renderer.rect( 10, 71, 15, 15 ).attr( _boxStyle( getTileMapColor.green20 ) ).add( legend );
@@ -46,7 +44,7 @@ function TileMap( props ) {
   props = props || {};
   props.data = process.map( props.data[0], props.metadata );
 
-  var options = {
+  const options = {
     chart: {
       marginTop: 150
     },

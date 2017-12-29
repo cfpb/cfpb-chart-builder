@@ -1,11 +1,9 @@
-'use strict';
-
-var gulp = require( 'gulp' );
-var gulpEslint = require( 'gulp-eslint' );
-var gulpUtil = require( 'gulp-util' );
-var configLint = require( '../config' ).lint;
-var handleErrors = require( '../utils/handle-errors' );
-var minimist = require( 'minimist' );
+const gulp = require( 'gulp' );
+const gulpEslint = require( 'gulp-eslint' );
+const gulpUtil = require( 'gulp-util' );
+const configLint = require( '../config' ).lint;
+const handleErrors = require( '../utils/handle-errors' );
+const minimist = require( 'minimist' );
 
 /**
  * Generic lint a script source.

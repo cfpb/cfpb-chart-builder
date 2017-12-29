@@ -1,6 +1,4 @@
-'use strict';
-
-var getTileMapState = {
+const getTileMapState = {
   AL: {
     abbr: 'AL',
     path: 'M550,-337L633,-337,633,-253,550,-253,550,-337'

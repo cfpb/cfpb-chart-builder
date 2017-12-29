@@ -1,19 +1,16 @@
-'use strict';
-
-var gulp = require( 'gulp' );
-var gulpAutoprefixer = require( 'gulp-autoprefixer' );
-var gulpCssmin = require( 'gulp-cssmin' );
-var gulpHeader = require( 'gulp-header' );
-var gulpLess = require( 'gulp-less' );
-var gulpSourcemaps = require( 'gulp-sourcemaps' );
-var gulpRename = require( 'gulp-rename' );
-var gulpUglify = require( 'gulp-uglify' );
-var mqr = require( 'gulp-mq-remove' );
-var config = require( '../config' );
-var configPkg = config.pkg;
-var configBanner = config.banner;
-var handleErrors = require( '../utils/handle-errors' );
-var browserSync = require( 'browser-sync' );
+const gulp = require( 'gulp' );
+const gulpAutoprefixer = require( 'gulp-autoprefixer' );
+const gulpCssmin = require( 'gulp-cssmin' );
+const gulpHeader = require( 'gulp-header' );
+const gulpLess = require( 'gulp-less' );
+const gulpSourcemaps = require( 'gulp-sourcemaps' );
+const gulpRename = require( 'gulp-rename' );
+const mqr = require( 'gulp-mq-remove' );
+const config = require( '../config' );
+const configPkg = config.pkg;
+const configBanner = config.banner;
+const handleErrors = require( '../utils/handle-errors' );
+const browserSync = require( 'browser-sync' );
 
 gulp.task( 'styles:demo', function() {
   return gulp.src( config.demoStyles.cwd + config.demoStyles.src )

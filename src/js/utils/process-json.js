@@ -1,7 +1,5 @@
-'use strict';
-
-var getTileMapColor = require( './get-tile-map-color' );
-var getTileMapState = require( './get-tile-map-state' );
+const getTileMapColor = require( './get-tile-map-color' );
+const getTileMapState = require( './get-tile-map-state' );
 
 /**
  * Returns an object with the UTC timestamp number in milliseconds and human-friendly month and year for a given date in either format
@@ -10,10 +8,10 @@ var getTileMapState = require( './get-tile-map-state' );
  * @returns {Number} UTC timestamp in milliseconds representing the month and year for the given date index.
  */
 function formatDate( index ) {
-  var year = Math.floor( index / 12 ) + 2000;
-  var month = index % 12;
+  const year = Math.floor( index / 12 ) + 2000;
+  const month = index % 12;
 
-  var theDate = Date.UTC( year, month );
+  const theDate = Date.UTC( year, month );
 
   return theDate;
 }
@@ -25,11 +23,11 @@ function formatDate( index ) {
  * @returns {Obj} object with UTC timestamp in milliseconds and the human-readable version of the month and year for the given date.
  */
 function convertDate( date ) {
-  var humanFriendly = null;
-  var timestamp = null;
-  var month = null;
-  var year = null;
-  var months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+  let humanFriendly = null;
+  let timestamp = null;
+  let month = null;
+  let year = null;
+  const months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
 
   if ( typeof date === 'number' && date.toString().length >= 12 && date.toString().length <= 13 ) {
 
@@ -41,8 +39,8 @@ function convertDate( date ) {
     timestamp = date;
   } else if ( typeof date === 'string' ) {
 
-    var strLength = date.length;
-    var monthString = date.substring( 0, strLength - 5 );
+    const strLength = date.length;
+    const monthString = date.substring( 0, strLength - 5 );
 
     month = months.indexOf( monthString );
     year = date.slice( date.length - 4, date.length );
@@ -111,7 +109,8 @@ function processNumOriginationsData( data, group ) {
   }
 
   // remove data before January 2009
-  for ( var x = 0; x < data.adjusted.length; x++ ) {
+  let x;
+  for ( x = 0; x < data.adjusted.length; x++ ) {
     if ( data.adjusted[x][0] < Date.UTC( 2009, 0 ) ) {
       data.adjusted.splice( x, 1 );
       x--; // Check array[x] again, since we removed an entry in the array
@@ -161,7 +160,7 @@ function processYoyData( data, group ) {
   }
 
   // remove data before January 2009, convert the rest from decimal values to percentages
-  for ( var x = 0; x < data.length; x++ ) {
+  for ( let x = 0; x < data.length; x++ ) {
     if ( data[x][0] < Date.UTC( 2009, 0 ) ) {
       data.splice( x, 1 );
       x--; // Check array[x] again, since we removed an entry in the array
@@ -185,7 +184,7 @@ function processYoyData( data, group ) {
  */
 function getProjectedTimestamp( valuesList ) {
   // Projected data begins six months from the latest month of data available
-  var projectedMonth = valuesList[valuesList.length - 6][0];
+  const projectedMonth = valuesList[valuesList.length - 6][0];
 
   return convertDate( projectedMonth ).timestamp;
 }
@@ -198,9 +197,9 @@ function getProjectedTimestamp( valuesList ) {
  */
 function getProjectedDate( timestamp ) {
 
-  var getDate = new Date( timestamp );
+  const getDate = new Date( timestamp );
   getDate.setUTCMonth( getDate.getUTCMonth() - 1 );
-  var projectedDate = convertDate( getDate.getTime() ).humanFriendly;
+  const projectedDate = convertDate( getDate.getTime() ).humanFriendly;
 
   return projectedDate;
 }
@@ -217,7 +216,7 @@ function processMapData( data ) {
   } );
 
   data = data.map( function( obj, i ) {
-    var state = getTileMapState[obj.name],
+    let state = getTileMapState[obj.name],
         value = Math.round( obj.value ),
         tooltip = state.abbr + ' ' + ( value < 0 ? 'decreased' : 'increased' ) + ' by ' + Math.abs( value ) + '%';
     return {

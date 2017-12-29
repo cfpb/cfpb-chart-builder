@@ -1,7 +1,5 @@
-'use strict';
-
-var Highcharts = require( 'highcharts/js/highstock' );
-var process = require( '../utils/process-json' );
+const Highcharts = require( 'highcharts/js/highstock' );
+const process = require( '../utils/process-json' );
 require( 'highcharts/js/modules/accessibility' )( Highcharts );
 
 Highcharts.setOptions( {
@@ -19,8 +17,8 @@ Highcharts.setOptions( {
  */
 
 function _getFirstNumber( array ) {
-  var val;
-  for ( var x = 0; x < array.length; x++ ) {
+  let val;
+  for ( let x = 0; x < array.length; x++ ) {
     if ( !isNaN( array[x][1] ) ) {
       val = array[x][1];
       return val;
@@ -36,7 +34,7 @@ function _getFirstNumber( array ) {
  * @returns {string}    Appropriate y-axis title
  */
 function _getYAxisUnits( array ) {
-  var value = _getFirstNumber( array );
+  const value = _getFirstNumber( array );
   if ( !value ) {
     return value;
   }
@@ -54,9 +52,9 @@ function _getYAxisUnits( array ) {
  * @returns {string}    Appropriate y-axis title
  */
 function _getYAxisLabel( chartData, yAxisLabel ) {
-  var term = 'Number';
-  var unit = 'millions';
-  var firstChartNumber = _getFirstNumber( chartData );
+  let term = 'Number';
+  let unit = 'millions';
+  const firstChartNumber = _getFirstNumber( chartData );
 
   if ( yAxisLabel ) {
     return yAxisLabel;
@@ -94,7 +92,7 @@ function _getTickValue( value ) {
 
 function LineChart( props ) {
   props.data = process.originations( props.data[0], props.metadata );
-  var options = {
+  const options = {
     chart: {
       marginRight: 0,
       marginTop: 100,
@@ -193,9 +191,9 @@ function LineChart( props ) {
     tooltip: {
       useHTML: true,
       formatter: function() {
-        var tooltip = Highcharts.dateFormat( '%B %Y', this.x );
-        for ( var i = 0; i < this.points.length; i++ ) {
-          var point = this.points[i];
+        let tooltip = Highcharts.dateFormat( '%B %Y', this.x );
+        for ( let i = 0; i < this.points.length; i++ ) {
+          const point = this.points[i];
           tooltip += "<br><span class='highcharts-color-" +
                      point.series.colorIndex + "'></span> " +
                      point.series.name + ': ' + Highcharts.numberFormat( point.y, 0 );
@@ -230,11 +228,11 @@ function LineChart( props ) {
       }
     ],
     responsive: {
-      rules: [{
+      rules: [ {
         condition: {
           minWidth: 600 // chart width, not window width
         },
-      // Add more left margin space for vertical label on large screens
+        // Add more left margin space for vertical label on large screens
         chartOptions: {
           chart: {
             marginRight: 0,
@@ -243,14 +241,14 @@ function LineChart( props ) {
             zoomType: 'none'
           }
         }
-      }]
+      } ]
     }
   };
 
   return Highcharts.stockChart( props.el, options, function( chart ) {
     // label(str, x, y, shape, anchorX, anchorY, useHTML, baseline, className)
     chart.renderer.label( 'Select time range', null, null, null, null, null, true, null, 'range-selector-label' )
-    .add();
+      .add();
   } );
 
 }

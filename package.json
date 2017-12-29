@@ -7,7 +7,7 @@
     "build": "gulp build",
     "test": "gulp test && npm run browser-tests",
     "browser-tests": "CI_ENVIRONMENT=true node test/browser-tests.js",
-    "lint": "eslint src/**/*.js --fix"
+    "lint": "gulp lint --fix"
   },
   "repository": {
     "type": "git",
@@ -57,7 +57,6 @@
     "compression": "1.7.0",
     "cors": "2.8.4",
     "del": "1.2.0",
-    "eslint": "3.14.1",
     "express": "4.15.4",
     "fs": "0.0.2",
     "gulp": "3.9.1",
@@ -66,7 +65,7 @@
     "gulp-concat": "2.6.0",
     "gulp-connect": "5.0.0",
     "gulp-cssmin": "0.1.7",
-    "gulp-eslint": "3.0.1",
+    "gulp-eslint": "4.0.0",
     "gulp-header": "1.2.2",
     "gulp-imagemin": "2.3.0",
     "gulp-istanbul": "1.1.1",

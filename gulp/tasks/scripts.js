@@ -19,8 +19,16 @@ gulp.task( 'scripts:concat', function() {
         loaders: [ {
           loader: 'babel-loader',
           exclude: /node_modules/,
-          query: {
-            presets: [ 'es2015' ]
+          options: {
+            presets: [ [ 'babel-preset-env', {
+              targets: {
+                browsers: [
+                  'last 2 versions',
+                  'Explorer >= 9'
+                ]
+              },
+              debug: true
+            } ] ]
           }
         } ]
       },
@@ -44,8 +52,16 @@ gulp.task( 'scripts:demo', function() {
         loaders: [ {
           loader: 'babel-loader',
           exclude: /node_modules/,
-          query: {
-            presets: [ 'es2015' ]
+          options: {
+            presets: [ [ 'babel-preset-env', {
+              targets: {
+                browsers: [
+                  'last 2 versions',
+                  'Explorer >= 9'
+                ]
+              },
+              debug: true
+            } ] ]
           }
         } ]
       },
@@ -68,8 +84,16 @@ gulp.task( 'scripts:uglify', function() {
         loaders: [ {
           loader: 'babel-loader',
           exclude: /node_modules/,
-          query: {
-            presets: [ 'es2015' ]
+          options: {
+            presets: [ [ 'babel-preset-env', {
+              targets: {
+                browsers: [
+                  'last 2 versions',
+                  'Explorer >= 9'
+                ]
+              },
+              debug: true
+            } ] ]
           }
         } ]
       },

@@ -3,6 +3,7 @@
 /* bundleLogger
    ------------
    Provides gulp style logs to the bundle method in browserify.js
+   TODO: browserify has been removed. Check if this is needed.
 */
 
 var gutil = require( 'gulp-util' );

@@ -1,6 +1,4 @@
-'use strict';
-
-var charts = {};
+const charts = {};
 charts.bar = require( './BarChart' );
 charts.GeoMap = require( './GeoMap' );
 charts.line = require( './LineChart' );

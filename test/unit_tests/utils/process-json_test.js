@@ -1,24 +1,21 @@
 /* global describe it */
 
-'use strict';
+const chai = require( 'chai' );
+const expect = chai.expect;
+const processJSON = require( '../../../src/js/utils/process-json' );
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var processJSON =
-  require( '../../../src/js/utils/process-json' );
+describe( 'process-json', function() {
 
-describe( 'process-json', function() { // eslint-disable-line max-statements, no-inline-comments, max-len
+  const formatDate = processJSON.formatDate;
+  const originations = processJSON.originations;
+  const delinquencies = processJSON.delinquencies;
+  const yoy = processJSON.yoy;
+  const map = processJSON.map;
+  const getProjectedDate = processJSON.getProjectedDate;
+  const getProjectedTimestamp = processJSON.getProjectedTimestamp;
+  const convertDate = processJSON.convertDate;
 
-  var formatDate = processJSON.formatDate;
-  var originations = processJSON.originations;
-  var delinquencies = processJSON.delinquencies;
-  var yoy = processJSON.yoy;
-  var map = processJSON.map;
-  var getProjectedDate = processJSON.getProjectedDate;
-  var getProjectedTimestamp = processJSON.getProjectedTimestamp;
-  var convertDate = processJSON.convertDate;
-
-  describe( 'formatDate', function() { // eslint-disable-line max-len
+  describe( 'formatDate', function() {
 
     it( 'should convert a month index into the correct UTC timestamp in milliseconds representing January 1 2000', function() {
       expect( formatDate( 0 ) )
@@ -34,9 +31,8 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
 
   describe( 'convertDate', function() {
 
-    // 1485925200000 = February 2017
-    // 1477958400000 = Nov 2016
-
+    /* 1485925200000 = February 2017
+       1477958400000 = Nov 2016 */
     it( 'should convert a UTC timestamp in milliseconds to a human friendly month and year date', function() {
       expect( convertDate( 946684800000 ).humanFriendly )
         .to.equal( 'January 2000' );
@@ -62,7 +58,7 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
     } );
 
     it( 'should convert a human friendly date to a timestamp and back to a human friendly date', function() {
-      var february = convertDate( 'February 2017' ).timestamp;
+      const february = convertDate( 'February 2017' ).timestamp;
       expect( convertDate( february ).humanFriendly )
         .to.equal( 'February 2017' );
     } );
@@ -99,7 +95,7 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
 
     it( 'should return UTC timestamp for the first month of the projected data, six months before given UTC date, given at least six months of data', function() {
 
-      var dataList = [
+      const dataList = [
         [ 1477958400000, 1 ], // nov 16
         [ 1480550400000, 2 ], // dec
         [ 1483228800000, 3 ], // jan 17
@@ -119,7 +115,7 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
   } );
 
   describe( 'processYoyData', function() {
-    var data = {
+    const data = {
       test: [
         [ 1117584000000, 100 ], // jun 2005
         [ 1230768000000, 0.1 ], // jan 2009
@@ -136,7 +132,7 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
         [ 1259625600000, 0.33 ] // dec 2009
       ]
     };
-    var test = yoy( data, 'test' );
+    const test = yoy( data, 'test' );
 
     it( 'should eliminate dates before 2009', function() {
       expect( test[0][0] ).to.equal( 1230768000000 );
@@ -160,7 +156,7 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
   } );
 
   describe( 'processNumOriginationsData', function() {
-    var data = {
+    const data = {
       test: {
         adjusted: [
           [ 1117584000000, 1 ],
@@ -186,7 +182,7 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
         ]
       }
     };
-    var test = originations( data, 'test' );
+    const test = originations( data, 'test' );
 
     it( 'should eliminate dates before 2009', function() {
       expect( test.adjusted[0][0] ).to.equal( 1230768000000 );
@@ -204,7 +200,7 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
   } );
 
   describe( 'processMapData', function() {
-    var data = [
+    const data = [
       {
         name: 'AL',
         value: '142.84'
@@ -222,7 +218,7 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
         value: '70.41'
       }
     ];
-    var test = map( data );
+    const test = map( data );
 
 
     it( 'should get the correct path for a state', function() {
@@ -248,7 +244,7 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
 
   describe( 'processDelinquencies', function() {
 
-    var data = [
+    const data = [
       {
         meta: {
           name: 'New York, NY'
@@ -270,13 +266,13 @@ describe( 'process-json', function() { // eslint-disable-line max-statements, no
     ];
 
     it( 'assign a label', function() {
-      var test = delinquencies( data );
+      const test = delinquencies( data );
       expect( test[0].label ).to.equal( 'New York, NY' );
       expect( test[1].label ).to.equal( 'Miami, FL' );
     } );
 
     it( 'filter delinquencies', function() {
-      var test = delinquencies( data );
+      const test = delinquencies( data );
       expect( test[0].data[0][1] ).to.equal( 0.129563846384 );
     } );
 

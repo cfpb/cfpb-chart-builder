@@ -1,12 +1,10 @@
-'use strict';
-
-var fs = require( 'fs' );
-var glob = require( 'glob' );
+const fs = require( 'fs' );
+const glob = require( 'glob' );
 
 /**
  * Set up file paths
  */
-var loc = {
+const loc = {
   src:  './src',
   dist: './dist',
   lib:  './node_modules', // eslint-disable-line no-sync, no-inline-comments, max-len

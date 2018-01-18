@@ -1,9 +1,7 @@
-'use strict';
-
-var configTest = require( '../config' ).test;
-var gulp = require( 'gulp' );
-var gulpIstanbul = require( 'gulp-istanbul' );
-var gulpMocha = require( 'gulp-mocha' );
+const configTest = require( '../config' ).test;
+const gulp = require( 'gulp' );
+const gulpIstanbul = require( 'gulp-istanbul' );
+const gulpMocha = require( 'gulp-mocha' );
 
 /**
  * Run Mocha JavaScript unit tests.
@@ -25,8 +23,9 @@ function testUnitScripts( cb ) {
         } ) )
 
         .pipe( gulpIstanbul.enforceThresholds( {
-          // Lowering this until we finish writing tests for the charts.
-          // Otherwise gulp watch terminates when the threshold isn't met.
+
+          /* Lowering this until we finish writing tests for the charts.
+             Otherwise gulp watch terminates when the threshold isn't met. */
           thresholds: { global: 40 }
         } ) )
 

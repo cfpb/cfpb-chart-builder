@@ -1,15 +1,13 @@
-'use strict';
-
 require( 'core-js/es6/symbol' );
 require( 'core-js/es6/promise' );
 require( 'core-js/fn/object/assign' );
 require( 'core-js/fn/array/index-of' );
 
-var documentReady = require( './utils/document-ready' );
-var createChart = require( './charts' );
-var process = require( './utils/process-json' );
-var ajax = require( './utils/get-data' );
-var shapes = require( './utils/map-shapes' );
+const documentReady = require( './utils/document-ready' );
+const createChart = require( './charts' );
+const process = require( './utils/process-json' );
+const ajax = require( './utils/get-data' );
+const shapes = require( './utils/map-shapes' );
 
 class Chart {
 
@@ -53,8 +51,8 @@ class Chart {
     // Merge the old chart options with the new ones
     Object.assign( this.chartOptions, newOptions );
 
-    // If the source wasn't changed, we don't need to fetch new data and can
-    // immediately redraw the chart
+    /* If the source wasn't changed, we don't need to fetch new data and can
+       immediately redraw the chart */
     if ( !newOptions.source ) {
       return this.highchart.update( this.chartOptions );
     }
@@ -80,8 +78,8 @@ function _createChart( opts ) {
 }
 
 function _createCharts() {
-  let elements = document.querySelectorAll( '.cfpb-chart' );
-  let charts = [];
+  const elements = document.querySelectorAll( '.cfpb-chart' );
+  const charts = [];
 
   // Ignore divs with a `data-chart-ignore` data attribute
   for ( let i = 0; i < elements.length; ++i ) {
@@ -90,7 +88,7 @@ function _createCharts() {
     }
   }
 
-  for ( var chart of charts ) {
+  for ( const chart of charts ) {
     new Chart( {
       el: chart,
       title: chart.getAttribute( 'data-chart-title' ),
@@ -103,14 +101,13 @@ function _createCharts() {
   }
 }
 
-/***
-* When the document is ready, the code for cfpb-chart-builder seeks out chart
-* blocks and generates charts inside the designated elements.
-*/
+/* *
+   When the document is ready, the code for cfpb-chart-builder seeks out chart
+   blocks and generates charts inside the designated elements. */
 documentReady( _createCharts );
 
 
-var charts = {
+const charts = {
   createChart: _createChart,
   createCharts: _createCharts
 };

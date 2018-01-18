@@ -1,16 +1,14 @@
-'use strict';
-
 const ajax = require( './get-data' );
-const cache = require('./session-storage');
+const cache = require( './session-storage' );
 
-let DATA_SOURCE_BASE = window.location.protocol.indexOf( 'https' ) === -1 ?
-                      '//files.consumerfinance.gov/data/' :
-                      '//s3.amazonaws.com/files.consumerfinance.gov/data/';
+const DATA_SOURCE_BASE = window.location.protocol.indexOf( 'https' ) === -1 ?
+  '//files.consumerfinance.gov/data/' :
+  '//s3.amazonaws.com/files.consumerfinance.gov/data/';
 
-let shapes = {
-  states: `${DATA_SOURCE_BASE}mortgage-performance/meta/us-states.geo.json`,
-  metros: `${DATA_SOURCE_BASE}mortgage-performance/meta/us-metros.geo.json`,
-  counties: `${DATA_SOURCE_BASE}mortgage-performance/meta/us-counties.geo.json`
+const shapes = {
+  states: `${ DATA_SOURCE_BASE }mortgage-performance/meta/us-states.geo.json`,
+  metros: `${ DATA_SOURCE_BASE }mortgage-performance/meta/us-metros.geo.json`,
+  counties: `${ DATA_SOURCE_BASE }mortgage-performance/meta/us-counties.geo.json`
 };
 
 const fetchShapes = geoType => {

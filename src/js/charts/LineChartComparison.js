@@ -1,7 +1,5 @@
-'use strict';
-
-var Highcharts = require( 'highcharts/js/highstock' );
-var process = require( '../utils/process-json' );
+const Highcharts = require( 'highcharts/js/highstock' );
+const process = require( '../utils/process-json' );
 require( 'highcharts/js/modules/accessibility' )( Highcharts );
 
 Highcharts.setOptions( {
@@ -19,8 +17,8 @@ Highcharts.setOptions( {
  */
 
 function _getFirstNumber( array ) {
-  var val;
-  for ( var x = 0; x < array.length; x++ ) {
+  let val;
+  for ( let x = 0; x < array.length; x++ ) {
     if ( !isNaN( array[x][1] ) ) {
       val = array[x][1];
       return val;
@@ -36,7 +34,7 @@ function _getFirstNumber( array ) {
  * @returns {string}    Appropriate y-axis title
  */
 function _getYAxisUnits( array ) {
-  var value = _getFirstNumber( array );
+  const value = _getFirstNumber( array );
   if ( !value ) {
     return value;
   }
@@ -50,7 +48,7 @@ function _getYAxisUnits( array ) {
  * @returns {string}    Appropriate y-axis title
  */
 function _getYAxisLabel( array ) {
-  var value = _getFirstNumber( array );
+  const value = _getFirstNumber( array );
   if ( !value ) {
     return value;
   }
@@ -143,9 +141,9 @@ class LineChartComparison {
       tooltip: {
         useHTML: true,
         formatter: function() {
-          var tooltip = Highcharts.dateFormat( '%B %Y', this.x );
-          for ( var i = 0; i < this.points.length; i++ ) {
-            var point = this.points[i];
+          let tooltip = Highcharts.dateFormat( '%B %Y', this.x );
+          for ( let i = 0; i < this.points.length; i++ ) {
+            const point = this.points[i];
             tooltip += "<br><span class='highcharts-color-" + point.series.colorIndex + "'></span> " + point.series.name + ': ' + Highcharts.numberFormat( point.y * 100, 1 ) + '%';
           }
           return tooltip;
@@ -154,7 +152,7 @@ class LineChartComparison {
       series: this.constructor.getSeries( data )
     };
 
-    this.chart = Highcharts.stockChart( el, Object.assign({}, this.chartOptions) );
+    this.chart = Highcharts.stockChart( el, Object.assign( {}, this.chartOptions ) );
 
   }
 
@@ -183,7 +181,7 @@ class LineChartComparison {
     // If there's new data involved, delete all series and recreate them.
     if ( newOpts.data ) {
       // Remove all series
-      while( this.chart.series && this.chart.series.length > 0 ) {
+      while ( this.chart.series && this.chart.series.length > 0 ) {
         this.chart.series[0].remove( true );
       }
       newSeries = this.constructor.getSeries( newOpts.data );

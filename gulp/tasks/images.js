@@ -1,11 +1,9 @@
-'use strict';
-
-var gulp = require( 'gulp' );
-var gulpChanged = require( 'gulp-changed' );
-var gulpImagemin = require( 'gulp-imagemin' );
-var configImages = require( '../config' ).images;
-var handleErrors = require( '../utils/handle-errors' );
-var browserSync = require( 'browser-sync' );
+const gulp = require( 'gulp' );
+const gulpChanged = require( 'gulp-changed' );
+const gulpImagemin = require( 'gulp-imagemin' );
+const configImages = require( '../config' ).images;
+const handleErrors = require( '../utils/handle-errors' );
+const browserSync = require( 'browser-sync' );
 
 gulp.task( 'images', function() {
   return gulp.src( configImages.src )

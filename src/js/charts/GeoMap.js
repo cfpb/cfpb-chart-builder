@@ -1,5 +1,3 @@
-'use strict';
-
 const Highcharts = require( 'highcharts/js/highmaps' );
 const outlines = require( '../utils/state-outlines' );
 const separators = require( '../utils/map-separators' );
@@ -56,6 +54,7 @@ class GeoMap {
 
     if ( tooltipFormatter ) {
       this.chartOptions.tooltip.useHTML = true;
+
       /**
        * pointDescriptionFormatter - Formatter function for tooltips.
        *
@@ -67,6 +66,7 @@ class GeoMap {
     }
 
     if ( pointDescriptionFormatter ) {
+
       /**
        * pointDescriptionFormatter - Formatter function to use instead of the
        *  default for point descriptions.
@@ -82,6 +82,7 @@ class GeoMap {
     }
 
     if ( seriesDescriptionFormatter ) {
+
       /**
        * screenReaderSectionFormatter - Formatter function to use instead of the
        *  default for series descriptions.
@@ -97,6 +98,7 @@ class GeoMap {
     }
 
     if ( screenReaderSectionFormatter ) {
+
       /**
        * screenReaderSectionFormatter - A formatter function to create the HTML
        *  contents of the hidden screen reader information region.
@@ -133,8 +135,9 @@ class GeoMap {
     data = Object.keys( rows ).map( row => ( {
       fips: row,
       name: rows[row].name,
-      // Records with insufficient data are 'null' in the API.
-      // If the record's value is anything but a number, set it to -1.
+
+      /* Records with insufficient data are 'null' in the API.
+         If the record's value is anything but a number, set it to -1. */
       value: typeof rows[row].value === 'number' ? rows[row].value * 100 : -1
     } ) );
 

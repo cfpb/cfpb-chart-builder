@@ -1,6 +1,5 @@
 /* global describe it */
 
-'use strict';
 
 require( 'jsdom-global' )();
 

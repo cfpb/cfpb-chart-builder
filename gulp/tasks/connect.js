@@ -3,7 +3,7 @@ const connect = require( 'gulp-connect' );
 const cors = require( 'cors' );
 const compression = require( 'compression' );
 
-gulp.task( 'connect', function() {
+gulp.task( 'connect', () => {
   connect.server( {
     port: 8081,
     root: [ 'test', 'dist' ],
@@ -12,5 +12,3 @@ gulp.task( 'connect', function() {
     }
   } );
 } );
-
-gulp.task( 'default', [ 'connect' ] );

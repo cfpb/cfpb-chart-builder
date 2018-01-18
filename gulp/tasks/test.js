@@ -36,8 +36,8 @@ function testUnitScripts( cb ) {
 gulp.task( 'test:unit', testUnitScripts );
 
 gulp.task( 'test',
-  [
+  gulp.series(
     'lint',
     'test:unit'
-  ]
+  )
 );

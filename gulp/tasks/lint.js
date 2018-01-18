@@ -45,7 +45,9 @@ gulp.task( 'lint:scripts', function() {
 /**
  * Lints all the js files for errors
  */
-gulp.task( 'lint', [
-  'lint:build',
-  'lint:scripts'
-] );
+gulp.task( 'lint',
+  gulp.parallel(
+    'lint:build',
+    'lint:scripts'
+  )
+);

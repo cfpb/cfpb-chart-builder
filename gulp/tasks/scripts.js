@@ -114,8 +114,10 @@ gulp.task( 'scripts:uglify', function() {
 } );
 
 
-gulp.task( 'scripts', [
-  'scripts:concat',
-  'scripts:uglify',
-  'scripts:demo'
-] );
+gulp.task( 'scripts',
+  gulp.series(
+    'scripts:concat',
+    'scripts:uglify',
+    'scripts:demo'
+  )
+);

@@ -67,5 +67,13 @@ module.exports = {
     ],
     dest: loc.dist,
     name: 'cfpb-chart-builder'
+  },
+  browserSync: {
+    proxy: 'localhost:8081',
+    port: 5000,
+    files: [
+      loc.dist
+    ],
+    notify: true
   }
 };

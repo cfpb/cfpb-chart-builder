@@ -12,7 +12,11 @@ const configBanner = config.banner;
 const handleErrors = require( '../utils/handle-errors' );
 const browserSync = require( 'browser-sync' );
 
-gulp.task( 'styles:demo', function() {
+/**
+ * Process legacy CSS for IE9 only.
+ * @returns {PassThrough} A source stream.
+ */
+function stylesDemo() {
   return gulp.src( config.demoStyles.cwd + config.demoStyles.src )
     .pipe( gulpSourcemaps.init() )
     .pipe( gulpLess( config.demoStyles.settings ) )
@@ -31,7 +35,7 @@ gulp.task( 'styles:demo', function() {
     .pipe( browserSync.reload( {
       stream: true
     } ) );
-} );
+}
 
 /**
  * Process legacy CSS for IE9 only.
@@ -54,7 +58,6 @@ function demoStylesIE9() {
       stream: true
     } ) );
 }
-gulp.task( 'styles:demoStylesIE9', demoStylesIE9 );
 
 gulp.task( 'styles:demoStylesIE8', function() {
   return gulp.src( config.demoStyles.cwd + config.demoStyles.src )
@@ -121,18 +124,27 @@ gulp.task( 'styles:chartsMinify', function() {
     } ) );
 } );
 
-gulp.task( 'styles:demoIE', [
-  'styles:demoStylesIE8',
-  'styles:demoStylesIE9'
-] );
+gulp.task( 'styles:demo', stylesDemo );
+gulp.task( 'styles:demoStylesIE9', demoStylesIE9 );
 
-gulp.task( 'styles:charts', [
-  'styles:chartsConcat',
-  'styles:chartsMinify'
-] );
+gulp.task( 'styles:demoIE',
+  gulp.series(
+    'styles:demoStylesIE8',
+    'styles:demoStylesIE9'
+  )
+);
 
-gulp.task( 'styles', [
-  'styles:demo',
-  'styles:demoIE',
-  'styles:charts'
-] );
+gulp.task( 'styles:charts',
+  gulp.series(
+    'styles:chartsConcat',
+    'styles:chartsMinify'
+  )
+);
+
+gulp.task( 'styles',
+  gulp.series(
+    'styles:demo',
+    'styles:demoIE',
+    'styles:charts'
+  )
+);

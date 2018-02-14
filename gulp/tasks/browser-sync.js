@@ -4,7 +4,7 @@ const browserSync = require( 'browser-sync' );
 const cors = require( 'cors' );
 const compression = require( 'compression' );
 
-gulp.task( 'browserSync', function() {
+gulp.task( 'browsersync', () => {
   const port = util.env.port || '8081';
   browserSync.init( {
     proxy: 'localhost:' + port,

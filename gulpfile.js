@@ -10,7 +10,22 @@
   when you run `gulp`.
 */
 
+const gulp = require( 'gulp' );
 const requireDir = require( 'require-dir' );
 
 // Require all tasks in gulp/tasks, including subfolders
 requireDir( './gulp/tasks', { recurse: true } );
+
+gulp.task( 'build',
+  gulp.parallel(
+    'styles',
+    'scripts'
+  )
+);
+
+gulp.task( 'default',
+  gulp.series(
+    'lint:scripts',
+    'build'
+  )
+);

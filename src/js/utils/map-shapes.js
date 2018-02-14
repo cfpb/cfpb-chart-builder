@@ -1,9 +1,13 @@
 const ajax = require( './get-data' );
 const cache = require( './session-storage' );
 
-const DATA_SOURCE_BASE = window.location.protocol.indexOf( 'https' ) === -1 ?
-  '//files.consumerfinance.gov/data/' :
-  '//s3.amazonaws.com/files.consumerfinance.gov/data/';
+/* IE9 doesn't allow XHR from different protocols so we check what protocol
+   is being used and accommodate it . */
+let DATA_SOURCE_BASE = window.location.protocol.indexOf( 'https' ) === -1 ?
+  // HTTP-only endpoint
+  '//files.consumerfinance.gov.s3.amazonaws.com/data/' :
+  // HTTPS-only endpoint
+  '//files.consumerfinance.gov/data/';
 
 const shapes = {
   states: `${ DATA_SOURCE_BASE }mortgage-performance/meta/us-states.geo.json`,

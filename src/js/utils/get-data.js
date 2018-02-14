@@ -1,11 +1,13 @@
 const ajax = require( 'xdr' );
 const cache = require( './session-storage' );
 
-/* IE9 doesn't allow XHR from different protocols so until we get files.cf.gov
-   onto HTTPS we need to choose how we use S3. */
+/* IE9 doesn't allow XHR from different protocols so we check what protocol
+   is being used and accommodate it . */
 let DATA_SOURCE_BASE = window.location.protocol.indexOf( 'https' ) === -1 ?
-  '//files.consumerfinance.gov/data/' :
-  '//s3.amazonaws.com/files.consumerfinance.gov/data/';
+  // HTTP-only endpoint
+  '//files.consumerfinance.gov.s3.amazonaws.com/data/' :
+  // HTTPS-only endpoint
+  '//files.consumerfinance.gov/data/';
 
 // Let browsers override the data source root (useful for localhost testing)
 DATA_SOURCE_BASE = window.CFPB_CHART_DATA_SOURCE_BASE || DATA_SOURCE_BASE;

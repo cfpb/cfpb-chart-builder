@@ -849,3 +849,13 @@
 
   }
 }
+
+// Collapse chart containers when JS is disabled 
+.no-js {
+  .cfpb-chart {
+    height: inherit;
+    &:after {
+      border: 0;
+    }
+  }
+}

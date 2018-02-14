@@ -29,6 +29,7 @@ gulp.task( 'watch:tests', function( done ) {
  * @param {type} done Async callback
  */
 function browserSyncInit( done ) {
+  // eslint-disable-next-line no-sync
   browserSync.init( config.browserSync );
   done();
 }

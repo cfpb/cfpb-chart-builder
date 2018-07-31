@@ -139,13 +139,6 @@ Each time you fetch from the upstream repository (this repo), run `./setup.sh`.
 This setup script will remove and re-install the project dependencies and
 rebuild the site's JavaScript and CSS assets.
 
-To watch for changes in the source code and automatically update the running site,
-open a terminal and run:
-
-```bash
-gulp watch
-```
-
 ## Testing
 
 `npm test` will run unit and browser tests.

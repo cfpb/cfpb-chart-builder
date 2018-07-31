@@ -10,7 +10,6 @@ const config = require( '../config' );
 const configPkg = config.pkg;
 const configBanner = config.banner;
 const handleErrors = require( '../utils/handle-errors' );
-const browserSync = require( 'browser-sync' );
 
 /**
  * Process legacy CSS for IE9 only.
@@ -31,10 +30,7 @@ function stylesDemo() {
     } ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpSourcemaps.write( '.' ) )
-    .pipe( gulp.dest( config.demoStyles.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( config.demoStyles.dest ) );
 }
 
 /**
@@ -53,10 +49,7 @@ function demoStylesIE9() {
       suffix:  '.ie9',
       extname: '.css'
     } ) )
-    .pipe( gulp.dest( config.demoStyles.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( config.demoStyles.dest ) );
 }
 
 gulp.task( 'styles:demoStylesIE8', function() {
@@ -74,10 +67,7 @@ gulp.task( 'styles:demoStylesIE8', function() {
       suffix:  '.ie8',
       extname: '.css'
     } ) )
-    .pipe( gulp.dest( config.demoStyles.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( config.demoStyles.dest ) );
 } );
 
 gulp.task( 'styles:chartsConcat', function() {
@@ -96,10 +86,7 @@ gulp.task( 'styles:chartsConcat', function() {
         'BlackBerry 7',
         'BlackBerry 10' ]
     } ) )
-    .pipe( gulp.dest( config.styles.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( config.styles.dest ) );
 } );
 
 gulp.task( 'styles:chartsMinify', function() {
@@ -118,10 +105,7 @@ gulp.task( 'styles:chartsMinify', function() {
     .pipe( gulpRename( {
       suffix: '.min'
     } ) )
-    .pipe( gulp.dest( config.styles.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( config.styles.dest ) );
 } );
 
 gulp.task( 'styles:demo', stylesDemo );

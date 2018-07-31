@@ -24,8 +24,7 @@ function testUnitScripts( cb ) {
 
         .pipe( gulpIstanbul.enforceThresholds( {
 
-          /* Lowering this until we finish writing tests for the charts.
-             Otherwise gulp watch terminates when the threshold isn't met. */
+          // Lowering this until we finish writing tests for the charts.
           thresholds: { global: 40 }
         } ) )
 

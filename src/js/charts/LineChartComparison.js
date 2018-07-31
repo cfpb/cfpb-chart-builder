@@ -152,6 +152,8 @@ class LineChartComparison {
       series: this.constructor.getSeries( data )
     };
 
+    // TODO: remove when babel config is updated.
+    // eslint-disable-next-line prefer-object-spread
     this.chart = Highcharts.stockChart( el, Object.assign( {}, this.chartOptions ) );
 
   }

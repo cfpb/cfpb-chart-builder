@@ -112,6 +112,8 @@ class GeoMap {
       };
     }
 
+    // TODO: remove when babel config is updated.
+    // eslint-disable-next-line prefer-object-spread
     this.chart = Highcharts.mapChart( el, Object.assign( {}, this.chartOptions ) );
   }
 

@@ -118,7 +118,7 @@ function checkSauce() {
         // eslint-disable-next-line consistent-return
         body['js tests'].forEach( test => {
           let errors;
-          if ( test.result.failed > 0 ) {
+          if ( test.result && test.result.failed > 0 ) {
             // TODO: remove one nested callback.
             // eslint-disable-next-line max-nested-callbacks
             errors = test.result.tests.map( result => result.message );

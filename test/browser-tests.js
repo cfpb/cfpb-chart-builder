@@ -42,10 +42,10 @@ if ( envvars.TRAVIS_PULL_REQUEST !== false &&
   testName = child_process.execSync( 'git rev-parse --abbrev-ref HEAD' ).toString();
 }
 
-let SAUCE_LABS_USERNAME = config.SAUCE_LABS_USERNAME,
-    SAUCE_LABS_ACCESS_KEY = config.SAUCE_LABS_ACCESS_KEY,
-    CI_ENVIRONMENT = envvars.CI_ENVIRONMENT || '',
-    STATIC_SERVER_PORT = 8089;
+const SAUCE_LABS_USERNAME = config.SAUCE_LABS_USERNAME;
+const SAUCE_LABS_ACCESS_KEY = config.SAUCE_LABS_ACCESS_KEY;
+const CI_ENVIRONMENT = envvars.CI_ENVIRONMENT || '';
+const STATIC_SERVER_PORT = 8089;
 
 let sauceTests = [];
 

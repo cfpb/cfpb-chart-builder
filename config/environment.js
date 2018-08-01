@@ -1,11 +1,10 @@
 /* ==========================================================================
    Settings for project environment.
-   Used by JavaScript gulp build process and JavaScript test configuration.
    ========================================================================== */
 
 
 /**
- * Environment variable mappings in JavaScript from the project root .env file.
+ * Environment variable mappings in JavaScript from global environment vars.
  */
 const envvars = {
 

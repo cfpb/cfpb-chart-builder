@@ -58,7 +58,7 @@
     "gulp-changed": "3.2.0",
     "gulp-connect": "5.0.0",
     "gulp-cssmin": "0.2.0",
-    "gulp-eslint": "4.0.0",
+    "gulp-eslint": "5.0.0",
     "gulp-header": "2.0.1",
     "gulp-imagemin": "4.1.0",
     "gulp-istanbul": "1.1.1",
@@ -80,6 +80,7 @@
     "require-dir": "0.3.2",
     "sauce-connect-launcher": "1.2.0",
     "serve-static": "1.12.4",
+    "through2": "2.0.3",
     "webpack-stream": "4.0.0"
   }
 }

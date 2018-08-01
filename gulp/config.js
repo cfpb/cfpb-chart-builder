@@ -22,11 +22,14 @@ module.exports = {
       ' */',
   lint: {
     src: [
-      loc.src + '/js/**/*.js',
-      loc.test + '/unit_tests/**/*.js',
-      loc.test + '/browser_tests/**/*.js'
+      `${ loc.src }/js/**/*.js`
     ],
-    gulp: [
+    test: [
+      `${ loc.test }/**/*.js`,
+      `!${ loc.test }/static/**/*.js`,
+      `!${ loc.test }/unit_test_coverage/**/*.js`
+    ],
+    build: [
       'gulpfile.js',
       'gulp/**/*.js'
     ]

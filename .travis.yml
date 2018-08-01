@@ -5,6 +5,7 @@ install:
   - npm install -g gulp
   - ./setup.sh
 script:
+  - gulp lint --travis
   - npm test
 before_deploy:
   - cp test/index.html dist/index.html

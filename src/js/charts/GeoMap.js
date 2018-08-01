@@ -112,6 +112,8 @@ class GeoMap {
       };
     }
 
+    // TODO: remove when gulp build config is updated to handle spread operator.
+    // eslint-disable-next-line prefer-object-spread
     this.chart = Highcharts.mapChart( el, Object.assign( {}, this.chartOptions ) );
   }
 

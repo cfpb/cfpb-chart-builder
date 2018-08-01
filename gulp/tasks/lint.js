@@ -13,7 +13,7 @@ const through2 = require( 'through2' );
 function _genericLint( src ) {
   // Pass all command line flags to EsLint.
   const options = minimist( process.argv.slice( 2 ) );
-  const errorHandler = through2.obj();
+  let errorHandler = through2.obj();
 
   if ( options.travis ) {
     options.quiet = true;
@@ -46,10 +46,10 @@ gulp.task( 'lint:scripts', () => _genericLint( configLint.src ) );
 /**
  * Lints all the js files for errors
  */
- gulp.task( 'lint',
-   gulp.parallel(
-     'lint:build',
-     'lint:tests',
-     'lint:scripts'
-   )
- );
+gulp.task( 'lint',
+  gulp.parallel(
+    'lint:build',
+    'lint:tests',
+    'lint:scripts'
+  )
+);

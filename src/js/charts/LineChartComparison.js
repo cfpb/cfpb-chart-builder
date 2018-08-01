@@ -152,8 +152,9 @@ class LineChartComparison {
       series: this.constructor.getSeries( data )
     };
 
+    // TODO: remove when gulp build config is updated to handle spread operator.
+    // eslint-disable-next-line prefer-object-spread
     this.chart = Highcharts.stockChart( el, Object.assign( {}, this.chartOptions ) );
-
   }
 
   static getSeries( data ) {

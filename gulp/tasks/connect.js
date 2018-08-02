@@ -7,8 +7,6 @@ gulp.task( 'connect', () => {
   connect.server( {
     port: 8081,
     root: [ 'test', 'dist' ],
-    middleware: function() {
-      return [ compression(), cors() ];
-    }
+    middleware: () => [ compression(), cors() ]
   } );
 } );

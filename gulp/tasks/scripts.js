@@ -9,9 +9,8 @@ const configBanner = config.banner;
 const configScripts = config.scripts;
 const configDemoScripts = config.demoScripts;
 const handleErrors = require( '../utils/handle-errors' );
-const browserSync = require( 'browser-sync' );
 
-gulp.task( 'scripts:concat', function() {
+gulp.task( 'scripts:concat', () => {
   return gulp.src( configScripts.src )
     .pipe( webpack( {
       devtool: 'eval-source-map',
@@ -38,13 +37,10 @@ gulp.task( 'scripts:concat', function() {
     } ) )
     .on( 'error', handleErrors )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
-    .pipe( gulp.dest( configScripts.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( configScripts.dest ) );
 } );
 
-gulp.task( 'scripts:demo', function() {
+gulp.task( 'scripts:demo', () => {
   return gulp.src( configDemoScripts.src )
     .pipe( webpack( {
       devtool: 'eval-source-map',
@@ -71,13 +67,10 @@ gulp.task( 'scripts:demo', function() {
     } ) )
     .on( 'error', handleErrors )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
-    .pipe( gulp.dest( configDemoScripts.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( configDemoScripts.dest ) );
 } );
 
-gulp.task( 'scripts:uglify', function() {
+gulp.task( 'scripts:uglify', () => {
   return gulp.src( configScripts.src )
     .pipe( webpack( {
       module: {
@@ -107,10 +100,7 @@ gulp.task( 'scripts:uglify', function() {
     .pipe( gulpRename( {
       suffix: '.min'
     } ) )
-    .pipe( gulp.dest( configScripts.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( configScripts.dest ) );
 } );
 
 

@@ -1,122 +1,140 @@
-var path = require('path');
-var fs = require('fs');
-var sauceConnectLauncher = require('sauce-connect-launcher');
-var express = require('express');
-var cors = require('cors');
-var path = require('path');
-var serveStatic = require('serve-static');
-var request = require('request');
-var config = path.join(__dirname, './config.json');
-var child_process = require('child_process');
+const path = require( 'path' );
+const fs = require( 'fs' );
+const sauceConnectLauncher = require( 'sauce-connect-launcher' );
+const express = require( 'express' );
+const cors = require( 'cors' );
+const serveStatic = require( 'serve-static' );
+const request = require( 'request' );
+const configPath = path.join( __dirname, './config.json' );
+const child_process = require( 'child_process' );
+const envvars = require( '../config/environment' ).envvars;
 
-var app = express();
-app.use(cors());
-var testName;
+const app = express();
+app.use( cors() );
+let testName;
+let config;
 
-if (!fs.existsSync(config) && !process.env.SAUCE_LABS_ACCESS_KEY) {
-  console.error("Please define SAUCE_LABS_USERNAME and SAUCE_LABS_ACCESS_KEY in `test/config.json`.");
-  console.error("See https://github.com/cfpb/cfpb-chart-builder#testing");
-  process.exit(1);
+// eslint-disable-next-line no-sync
+if ( !fs.existsSync( configPath ) && !envvars.SAUCE_LABS_ACCESS_KEY ) {
+  console.error( 'Please define SAUCE_LABS_USERNAME and SAUCE_LABS_ACCESS_KEY in `test/config.json`.' );
+  console.error( 'See https://github.com/cfpb/cfpb-chart-builder#testing' );
+  process.exit( 1 );
 }
 
-if (process.env.SAUCE_LABS_USERNAME && process.env.SAUCE_LABS_ACCESS_KEY) {
+if ( envvars.SAUCE_LABS_USERNAME && envvars.SAUCE_LABS_ACCESS_KEY ) {
   // Travis has Sauce Labs creds in an environment variable
   config = {
-     SAUCE_LABS_USERNAME: process.env.SAUCE_LABS_USERNAME,
-     SAUCE_LABS_ACCESS_KEY: process.env.SAUCE_LABS_ACCESS_KEY
-  }
+    SAUCE_LABS_USERNAME: envvars.SAUCE_LABS_USERNAME,
+    SAUCE_LABS_ACCESS_KEY: envvars.SAUCE_LABS_ACCESS_KEY
+  };
 } else {
   // Read creds from config file
-  config = require(config);
+  // eslint-disable-next-line global-require
+  config = require( configPath );
 }
 
-if (process.env.TRAVIS_PULL_REQUEST !== false && process.env.TRAVIS_PULL_REQUEST_BRANCH && process.env.TRAVIS_JOB_NUMBER) {
-  testName = 'Pull request #' + process.env.TRAVIS_PULL_REQUEST + ', branch: ' + process.env.TRAVIS_PULL_REQUEST_BRANCH + ', Travis job #' + process.env.TRAVIS_JOB_NUMBER;
+if ( envvars.TRAVIS_PULL_REQUEST !== false &&
+     envvars.TRAVIS_PULL_REQUEST_BRANCH &&
+     envvars.TRAVIS_JOB_NUMBER ) {
+  testName = `Pull request #${ envvars.TRAVIS_PULL_REQUEST }, branch: ${ envvars.TRAVIS_PULL_REQUEST_BRANCH }, Travis job #${ envvars.TRAVIS_JOB_NUMBER }`;
 } else {
-  testName = child_process.execSync('git rev-parse --abbrev-ref HEAD').toString();
+  // eslint-disable-next-line no-sync
+  testName = child_process.execSync( 'git rev-parse --abbrev-ref HEAD' ).toString();
 }
 
-var SAUCE_LABS_USERNAME = config.SAUCE_LABS_USERNAME,
-    SAUCE_LABS_ACCESS_KEY = config.SAUCE_LABS_ACCESS_KEY,
-    CI_ENVIRONMENT = process.env.CI_ENVIRONMENT || '',
-    STATIC_SERVER_PORT = 8089;
+const SAUCE_LABS_USERNAME = config.SAUCE_LABS_USERNAME;
+const SAUCE_LABS_ACCESS_KEY = config.SAUCE_LABS_ACCESS_KEY;
+const CI_ENVIRONMENT = envvars.CI_ENVIRONMENT || '';
+const STATIC_SERVER_PORT = 8089;
 
-var sauceTests = [];
+let sauceTests = [];
 
-sauceConnectLauncher({
+const sauceCreds = {
   username: SAUCE_LABS_USERNAME,
   accessKey: SAUCE_LABS_ACCESS_KEY
-}, startServer);
+};
+
+sauceConnectLauncher( sauceCreds, startServer );
 
 function startServer() {
-  app.use(serveStatic(path.join(__dirname)));
-  app.use(serveStatic(path.join(__dirname, '..', 'dist')));
-  app.listen(STATIC_SERVER_PORT);
+  app.use( serveStatic( path.join( __dirname ) ) );
+  app.use( serveStatic( path.join( __dirname, '..', 'dist' ) ) );
+  app.listen( STATIC_SERVER_PORT );
   startSauce();
 }
 
-function startSauce(err, process) {
-  if (err) {
-    console.error(err.message);
+function startSauce( err, process ) {
+  if ( err ) {
+    console.error( err.message );
     return;
   }
-  console.log('Local server listening to', STATIC_SERVER_PORT);
-  console.log("Sauce Connect ready.");
-  var opts = {
-    url: `https://${SAUCE_LABS_USERNAME}:${SAUCE_LABS_ACCESS_KEY}@saucelabs.com/rest/v1/cct-sauce/js-tests`,
-    method: "POST",
+  console.log( 'Local server listening to', STATIC_SERVER_PORT );
+  console.log( 'Sauce Connect ready.' );
+  const opts = {
+    url: `https://${ SAUCE_LABS_USERNAME }:${ SAUCE_LABS_ACCESS_KEY }@saucelabs.com/rest/v1/cct-sauce/js-tests`,
+    method: 'POST',
     json: {
-        "platforms": [
-            ["Windows 7", "internet explorer", "9"],
-            ["Windows 7", "internet explorer", "10"],
-            ["Windows 7", "firefox", "27"],
-            ["Windows 7", "chrome", ""],
-            ["Linux", "android", ""]
-        ],
-        "url": "http://localhost:" + STATIC_SERVER_PORT + "/?ci_environment=" + CI_ENVIRONMENT,
-        "framework": "custom",
-        "name": testName
+      platforms: [
+        [ 'Windows 7', 'internet explorer', '9' ],
+        [ 'Windows 7', 'internet explorer', '10' ],
+        [ 'Windows 7', 'firefox', '27' ],
+        [ 'Windows 7', 'chrome', '' ],
+        [ 'Linux', 'android', '' ]
+      ],
+      url: 'http://localhost:' + STATIC_SERVER_PORT + '/?ci_environment=' + CI_ENVIRONMENT,
+      framework: 'custom',
+      name: testName
     }
   };
-  request.post(opts, function(err, httpResponse, body) {
-    console.log("Tests started.");
+  request.post( opts, function( err, httpResponse, body ) {
+    if ( err ) {
+      console.error( 'An error occurred:', err );
+    }
+    console.log( 'Tests started.' );
     sauceTests = body['js tests'];
     checkSauce();
-  });
+  } );
 }
 
 function checkSauce() {
-  var opts = {
-    url: `https://${SAUCE_LABS_USERNAME}:${SAUCE_LABS_ACCESS_KEY}@saucelabs.com/rest/v1/cct-sauce/js-tests/status`,
-    method: "POST",
+  const opts = {
+    url: `https://${ SAUCE_LABS_USERNAME }:${ SAUCE_LABS_ACCESS_KEY }@saucelabs.com/rest/v1/cct-sauce/js-tests/status`,
+    method: 'POST',
     json: {
-        "js tests": sauceTests
+      'js tests': sauceTests
     }
   };
-  setTimeout(function() {
-    request.post(opts, function(err, httpResponse, body) {
-      var failures = 0;
-      if (body.completed) {
-        console.log("Tests done.");
-        body["js tests"].forEach((test) => {
-          var errors;
-          if (test.result.failed > 0) {
-            errors = test.result.tests.map((result) => {
-              return result.message;
-            });
+  setTimeout( function() {
+    request.post( opts, function( err, httpResponse, body ) {
+      if ( err ) {
+        console.error( 'An error occurred:', err );
+      }
+
+      let failures = 0;
+
+      if ( body.completed ) {
+        console.log( 'Tests done.' );
+        // TODO: Provide a consistent return value from the function.
+        // eslint-disable-next-line consistent-return
+        body['js tests'].forEach( test => {
+          let errors;
+          if ( test.result && test.result.failed > 0 ) {
+            // TODO: remove one nested callback.
+            // eslint-disable-next-line max-nested-callbacks
+            errors = test.result.tests.map( result => result.message );
             failures++;
-            return console.log(test.platform.join(" ") + " failed: " + errors.join(" "));
+            return console.log( test.platform.join( ' ' ) + ' failed: ' + errors.join( ' ' ) );
           }
-          console.log(test.platform.join(" ") + " passed.");
-        });
-        if (failures > 0) {
-          process.exit(1);
+          console.log( test.platform.join( ' ' ) + ' passed.' );
+        } );
+        if ( failures > 0 ) {
+          process.exit( 1 );
         }
-        process.exit(0);
+        process.exit( 0 );
       } else {
-        console.log("Tests still running... See status at https://saucelabs.com/u/" + SAUCE_LABS_USERNAME);
+        console.log( 'Tests still running... See status at https://saucelabs.com/u/' + SAUCE_LABS_USERNAME );
         checkSauce();
       }
-    });
-  }, 5000);
+    } );
+  }, 5000 );
 }

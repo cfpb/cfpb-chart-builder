@@ -75,8 +75,7 @@ function processDelinquencies( datasets ) {
 
   datasets = datasets.map( dataset => ( {
     label: dataset.meta.name,
-    data: dataset.data.map( datum =>
-      [ datum.date, datum.value ]
+    data: dataset.data.map( datum => [ datum.date, datum.value ]
     )
   } ) );
 

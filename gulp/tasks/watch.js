@@ -1,27 +1,35 @@
 /* Notes:
-   - watch.js watches the source files for changes, then calls the needed task.
-   - gulp/tasks/browserSync.js reloads the browser with the compiled files.
+   Watches the source files for changes, then calls the needed task.
+   The browser-sync module reloads the browser with the compiled files.
 */
 
-const gulp = require( 'gulp' );
-const config = require( '../config' );
 const browserSync = require( 'browser-sync' ).create();
+const config = require( '../config' );
+const gulp = require( 'gulp' );
 
-gulp.task( 'watch:scripts', function( done ) {
-  gulp.watch( [ config.test.src, config.demoScripts.src ], gulp.series( 'scripts:concat', 'scripts:demo', 'test:unit' ) );
+gulp.task( 'watch:scripts', done => {
+  gulp.watch(
+    [ config.test.src, config.demoScripts.src ],
+    gulp.series( 'scripts:concat', 'scripts:demo', 'test:unit' )
+  ).on('change', browserSync.reload);
   done();
 } );
 
-gulp.task( 'watch:styles', function( done ) {
-  gulp.watch( [ config.styles.cwd + config.styles.src, config.demoStyles.cwd + config.demoStyles.src ], gulp.series( 'styles' ) );
+gulp.task( 'watch:styles', done => {
+  gulp.watch(
+    [
+      config.styles.cwd + config.styles.src,
+      config.demoStyles.cwd + config.demoStyles.src
+    ],
+    gulp.series( 'styles' )
+  );
   done();
 } );
 
-gulp.task( 'watch:tests', function( done ) {
+gulp.task( 'watch:tests', done => {
   gulp.watch( config.test.unit, gulp.series( 'test:unit' ) );
   done();
 } );
-
 
 /**
  * browserSyncInit - Initialize browser sync
@@ -29,11 +37,24 @@ gulp.task( 'watch:tests', function( done ) {
  * @param {type} done Async callback
  */
 function browserSyncInit( done ) {
+  const browserSyncSettings = {
+    proxy: 'localhost:8081',
+    port: 5000,
+    files: [ './dist' ],
+    notify: true
+  }
+
   // eslint-disable-next-line no-sync
-  browserSync.init( config.browserSync );
+  browserSync.init( browserSyncSettings );
   done();
 }
 
-gulp.task( 'browser-sync', browserSyncInit );
-
-gulp.task( 'watch', gulp.parallel( 'watch:scripts', 'watch:styles', 'watch:tests', 'connect', 'browser-sync' ) );
+gulp.task( 'watch',
+  gulp.parallel(
+    'watch:scripts',
+    'watch:styles',
+    'watch:tests',
+    'connect',
+    browserSyncInit
+  )
+);

@@ -61,14 +61,10 @@ module.exports = {
   },
   demoScripts: {
     src: loc.test + '/static/demo.js',
-    dest: loc.test + '/static',
-    name: 'demo-built'
+    dest: loc.test + '/static'
   },
   scripts: {
-    src: [
-      loc.src + '/js/index.js'
-    ],
-    dest: loc.dist,
-    name: 'cfpb-chart-builder'
+    src: loc.src + '/js/index.js',
+    dest: loc.dist
   }
 };

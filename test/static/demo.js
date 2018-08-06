@@ -1,5 +1,3 @@
-'use strict';
-
 // This file is used to test the programmatic rendering and updating of a chart
 
 const ccb = require( '../../src/js' );

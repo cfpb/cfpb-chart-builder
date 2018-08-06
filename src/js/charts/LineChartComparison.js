@@ -15,7 +15,6 @@ Highcharts.setOptions( {
  * @param  {array} array  An array of Objects with values to check
  * @returns {string}    an actual Number
  */
-
 function _getFirstNumber( array ) {
   let val;
   for ( let x = 0; x < array.length; x++ ) {
@@ -64,7 +63,6 @@ function _getYAxisLabel( array ) {
  * @param  {int} value  Data point's value
  * @returns {int}        Data point's value over million or billion.
  */
-
 function _getTickValue( value ) {
   // If borked data gets passed in, return it.
   if ( isNaN( value ) ) {
@@ -144,7 +142,10 @@ class LineChartComparison {
           let tooltip = Highcharts.dateFormat( '%B %Y', this.x );
           for ( let i = 0; i < this.points.length; i++ ) {
             const point = this.points[i];
-            tooltip += "<br><span class='highcharts-color-" + point.series.colorIndex + "'></span> " + point.series.name + ': ' + Highcharts.numberFormat( point.y * 100, 1 ) + '%';
+            tooltip += "<br><span class='highcharts-color-" +
+                       point.series.colorIndex + "'></span> " +
+                       point.series.name + ': ' +
+                       Highcharts.numberFormat( point.y * 100, 1 ) + '%';
           }
           return tooltip;
         }

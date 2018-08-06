@@ -9,7 +9,10 @@ Highcharts.setOptions( {
   }
 } );
 
-
+/**
+ * @param {Object} props - Options to pass to highcharts when creating a chart.
+ * @returns {Object} A highchart chart.
+ */
 function BarChart( props ) {
   props.data = process.yoy( props.data[0], props.metadata );
   const options = {
@@ -30,7 +33,8 @@ function BarChart( props ) {
         y: 0
       },
       buttonTheme: {
-        r: 5, // border radius
+        // border radius.
+        r: 5,
         width: 70
       },
       buttons: [ {
@@ -118,9 +122,10 @@ function BarChart( props ) {
     responsive: {
       rules: [ {
         condition: {
-          minWidth: 600 // chart width, not window width
+          // chart width, not window width.
+          minWidth: 600
         },
-        // Add more left margin space for vertical label on large screens
+        // Add more left margin space for vertical label on large screens.
         chartOptions: {
           chart: {
             marginRight: 0,
@@ -135,9 +140,18 @@ function BarChart( props ) {
   };
 
   return Highcharts.stockChart( props.el, options, function( chart ) {
-    // label(str, x, y, shape, anchorX, anchorY, useHTML, baseline, className)
-    chart.renderer.label( 'Select time range', null, null, null, null, null, true, null, 'range-selector-label' )
-      .add();
+    // label(str, x, y, shape, anchorX, anchorY, useHTML, baseline, className).
+    chart.renderer.label(
+      'Select time range',
+      null,
+      null,
+      null,
+      null,
+      null,
+      true,
+      null,
+      'range-selector-label'
+    ).add();
   } );
 
 }

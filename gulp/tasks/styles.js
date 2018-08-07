@@ -53,7 +53,7 @@ function demoStylesIE9() {
 }
 
 gulp.task( 'styles:demoStylesIE8', () => {
-  return gulp.src( config.demoStyles.cwd + config.demoStyles.src )
+  const stream = gulp.src( config.demoStyles.cwd + config.demoStyles.src )
     .pipe( gulpLess( config.demoStyles.settings ) )
     .on( 'error', handleErrors )
     .pipe( gulpAutoprefixer( {
@@ -68,10 +68,11 @@ gulp.task( 'styles:demoStylesIE8', () => {
       extname: '.css'
     } ) )
     .pipe( gulp.dest( config.demoStyles.dest ) );
+  return stream;
 } );
 
 gulp.task( 'styles:chartsConcat', () => {
-  return gulp.src( config.styles.cwd + config.styles.src )
+  const stream = gulp.src( config.styles.cwd + config.styles.src )
     .pipe( gulpSourcemaps.init() )
     .pipe( gulpLess( {
       paths: config.styles.settings.paths,
@@ -87,10 +88,11 @@ gulp.task( 'styles:chartsConcat', () => {
         'BlackBerry 10' ]
     } ) )
     .pipe( gulp.dest( config.styles.dest ) );
+  return stream;
 } );
 
 gulp.task( 'styles:chartsMinify', () => {
-  return gulp.src( config.styles.cwd + config.styles.src )
+  const stream = gulp.src( config.styles.cwd + config.styles.src )
     .pipe( gulpSourcemaps.init() )
     .pipe( gulpLess( config.styles.settings ) )
     .on( 'error', handleErrors )
@@ -106,6 +108,7 @@ gulp.task( 'styles:chartsMinify', () => {
       suffix: '.min'
     } ) )
     .pipe( gulp.dest( config.styles.dest ) );
+  return stream;
 } );
 
 gulp.task( 'styles:demo', stylesDemo );

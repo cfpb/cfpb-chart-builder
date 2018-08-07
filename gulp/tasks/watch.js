@@ -11,7 +11,7 @@ gulp.task( 'watch:scripts', done => {
   gulp.watch(
     [ config.test.src, config.demoScripts.src ],
     gulp.series( 'scripts:concat', 'scripts:demo', 'test:unit' )
-  ).on('change', browserSync.reload);
+  ).on( 'change', browserSync.reload );
   done();
 } );
 
@@ -42,7 +42,7 @@ function browserSyncInit( done ) {
     port: 5000,
     files: [ './dist' ],
     notify: true
-  }
+  };
 
   // eslint-disable-next-line no-sync
   browserSync.init( browserSyncSettings );

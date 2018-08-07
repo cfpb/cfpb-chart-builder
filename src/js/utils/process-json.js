@@ -107,19 +107,21 @@ function processNumOriginationsData( data, group ) {
     return 'propertyError';
   }
 
-  // remove data before January 2009
+  // Remove data before January 2009.
   let x;
   for ( x = 0; x < data.adjusted.length; x++ ) {
     if ( data.adjusted[x][0] < Date.UTC( 2009, 0 ) ) {
       data.adjusted.splice( x, 1 );
-      x--; // Check array[x] again, since we removed an entry in the array
+      // Check array[x] again, since we removed an entry in the array.
+      x--;
     }
   }
 
   for ( x = 0; x < data.unadjusted.length; x++ ) {
     if ( data.unadjusted[x][0] < Date.UTC( 2009, 0 ) ) {
       data.unadjusted.splice( x, 1 );
-      x--; // Check array[x] again, since we removed an entry in the array
+      // Check array[x] again, since we removed an entry in the array.
+      x--;
     }
   }
 
@@ -162,7 +164,8 @@ function processYoyData( data, group ) {
   for ( let x = 0; x < data.length; x++ ) {
     if ( data[x][0] < Date.UTC( 2009, 0 ) ) {
       data.splice( x, 1 );
-      x--; // Check array[x] again, since we removed an entry in the array
+      // Check array[x] again, since we removed an entry in the array.
+      x--;
     } else {
       data[x][1] *= 100;
     }
@@ -203,6 +206,10 @@ function getProjectedDate( timestamp ) {
   return projectedDate;
 }
 
+/**
+ * @param  {Object} data - Data to process.
+ * @returns {Object} The processed data.
+ */
 function processMapData( data ) {
 
   if ( typeof data !== 'object' ) {
@@ -215,9 +222,11 @@ function processMapData( data ) {
   } );
 
   data = data.map( function( obj, i ) {
-    let state = getTileMapState[obj.name],
-        value = Math.round( obj.value ),
-        tooltip = state.abbr + ' ' + ( value < 0 ? 'decreased' : 'increased' ) + ' by ' + Math.abs( value ) + '%';
+    const state = getTileMapState[obj.name];
+    const value = Math.round( obj.value );
+    const tooltip = state.abbr + ' ' +
+                    ( value < 0 ? 'decreased' : 'increased' ) +
+                    ' by ' + Math.abs( value ) + '%';
     return {
       name: obj.name,
       path: state.path,

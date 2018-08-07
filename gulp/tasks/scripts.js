@@ -11,7 +11,7 @@ const configDemoScripts = config.demoScripts;
 const handleErrors = require( '../utils/handle-errors' );
 
 gulp.task( 'scripts:concat', () => {
-  return gulp.src( configScripts.src )
+  const stream = gulp.src( configScripts.src )
     .pipe( webpack( {
       devtool: 'eval-source-map',
       module: {
@@ -38,10 +38,11 @@ gulp.task( 'scripts:concat', () => {
     .on( 'error', handleErrors )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulp.dest( configScripts.dest ) );
+  return stream;
 } );
 
 gulp.task( 'scripts:demo', () => {
-  return gulp.src( configDemoScripts.src )
+  const stream = gulp.src( configDemoScripts.src )
     .pipe( webpack( {
       devtool: 'eval-source-map',
       module: {
@@ -68,10 +69,11 @@ gulp.task( 'scripts:demo', () => {
     .on( 'error', handleErrors )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulp.dest( configDemoScripts.dest ) );
+  return stream;
 } );
 
 gulp.task( 'scripts:uglify', () => {
-  return gulp.src( configScripts.src )
+  const stream = gulp.src( configScripts.src )
     .pipe( webpack( {
       module: {
         loaders: [ {
@@ -101,6 +103,7 @@ gulp.task( 'scripts:uglify', () => {
       suffix: '.min'
     } ) )
     .pipe( gulp.dest( configScripts.dest ) );
+  return stream;
 } );
 
 

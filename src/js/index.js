@@ -5,7 +5,6 @@ require( 'core-js/fn/array/index-of' );
 
 const documentReady = require( './utils/document-ready' );
 const createChart = require( './charts' );
-const process = require( './utils/process-json' );
 const ajax = require( './utils/get-data' );
 const shapes = require( './utils/map-shapes' );
 
@@ -73,10 +72,19 @@ class Chart {
 
 }
 
+/**
+ * Creates a chart
+ * @param {Object} opts - Options to pass to highcharts when creating the chart.
+ * @returns {Chart} A Chart instance.
+ */
 function _createChart( opts ) {
   return new Chart( opts );
 }
 
+/**
+ * Creates several charts at once.
+ * TODO: Return array of chart instances.
+ */
 function _createCharts() {
   const elements = document.querySelectorAll( '.cfpb-chart' );
   const charts = [];

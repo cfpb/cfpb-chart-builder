@@ -3,6 +3,10 @@ const getTileMapColor = require( '../utils/get-tile-map-color' );
 const process = require( '../utils/process-json' );
 require( 'highcharts/js/modules/accessibility' )( Highcharts );
 
+/**
+ * Draw a legend on a chart
+ * @param {Object} chart A highchart chart.
+ */
 function _drawLegend( chart ) {
 
   function _boxStyle( color ) {
@@ -39,6 +43,10 @@ Highcharts.setOptions( {
   }
 } );
 
+/**
+ * @param {Object} props - Options to pass to highcharts when creating a chart.
+ * @returns {Object} A highchart chart.
+ */
 function TileMap( props ) {
 
   props = props || {};
@@ -72,7 +80,6 @@ function TileMap( props ) {
   };
 
   return Highcharts.mapChart( props.el, options, _drawLegend );
-
 }
 
 module.exports = TileMap;

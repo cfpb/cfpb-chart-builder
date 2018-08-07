@@ -15,7 +15,6 @@ Highcharts.setOptions( {
  * @param  {array} array  An array of Objects with values to check
  * @returns {string}    an actual Number
  */
-
 function _getFirstNumber( array ) {
   let val;
   for ( let x = 0; x < array.length; x++ ) {
@@ -78,7 +77,6 @@ function _getYAxisLabel( chartData, yAxisLabel ) {
  * @param  {int} value  Data point's value
  * @returns {int}        Data point's value over million or billion.
  */
-
 function _getTickValue( value ) {
   // If it's 0 or borked data gets passed in, return it.
   if ( !value ) {
@@ -90,6 +88,10 @@ function _getTickValue( value ) {
   return value / 1000000 + 'M';
 }
 
+/**
+ * @param {Object} props - Options to pass to highcharts when creating a chart.
+ * @returns {Object} A highchart chart.
+ */
 function LineChart( props ) {
   props.data = process.originations( props.data[0], props.metadata );
   const options = {
@@ -110,7 +112,8 @@ function LineChart( props ) {
         y: 0
       },
       buttonTheme: {
-        r: 5, // border radius
+        // border radius.
+        r: 5,
         width: 70
       },
       buttons: [ {
@@ -230,9 +233,10 @@ function LineChart( props ) {
     responsive: {
       rules: [ {
         condition: {
-          minWidth: 600 // chart width, not window width
+          // chart width, not window width.
+          minWidth: 600
         },
-        // Add more left margin space for vertical label on large screens
+        // Add more left margin space for vertical label on large screens.
         chartOptions: {
           chart: {
             marginRight: 0,
@@ -247,8 +251,17 @@ function LineChart( props ) {
 
   return Highcharts.stockChart( props.el, options, function( chart ) {
     // label(str, x, y, shape, anchorX, anchorY, useHTML, baseline, className)
-    chart.renderer.label( 'Select time range', null, null, null, null, null, true, null, 'range-selector-label' )
-      .add();
+    chart.renderer.label(
+      'Select time range',
+      null,
+      null,
+      null,
+      null,
+      null,
+      true,
+      null,
+      'range-selector-label'
+    ).add();
   } );
 
 }

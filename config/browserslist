@@ -2,5 +2,6 @@
 # This file (browserlist) is picked up by babel-preset-env (in webpack config).
 # See https://github.com/browserslist/browserslist#config-file
 
+last 2 versions    # Sets last two versions of major browsers.
 > 5% in US         # Sets a threshold for possible future users.
 Explorer >= 9      # Explicitly sets IE9 and above support.

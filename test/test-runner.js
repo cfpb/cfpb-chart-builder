@@ -18,14 +18,18 @@ if ( !( window.console && console.log ) ) {
   };
 }
 
-function isCI( name, url ) {
+/**
+ * Whether we're in Sauce Labs or not.
+ * @return {boolean} true if running in Sauce Labs, false otherwise.
+ */
+function isCI() {
   // TODO: Convert variables to const when IE9 support is removed.
   // eslint-disable-next-line no-var
   var regex = new RegExp( '[?&]ci_environment(=([^&#]*)|&|#|$)' );
   // eslint-disable-next-line no-var
   var results = regex.exec( window.location.href );
   if ( !results ) return false;
-  if ( !results[2] ) return false;
+  if ( results[2] !== 'test' ) return false;
   return true;
 }
 

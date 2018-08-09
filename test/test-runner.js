@@ -28,8 +28,7 @@ function isCI() {
   var regex = new RegExp( '[?&]ci_environment(=([^&#]*)|&|#|$)' );
   // eslint-disable-next-line no-var
   var results = regex.exec( window.location.href );
-  if ( !results ) return false;
-  if ( results[2] !== 'test' ) return false;
+  if ( !results || results[2] !== 'test' ) return false;
   return true;
 }
 

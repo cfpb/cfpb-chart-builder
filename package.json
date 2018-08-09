@@ -6,7 +6,7 @@
   "scripts": {
     "build": "gulp build",
     "test": "gulp test && npm run browser-tests",
-    "browser-tests": "CI_ENVIRONMENT=true node test/browser-tests.js",
+    "browser-tests": "NODE_ENV=test node test/browser-tests.js",
     "lint": "gulp lint --fix"
   },
   "repository": {

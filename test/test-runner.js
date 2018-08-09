@@ -19,8 +19,11 @@ if ( !( window.console && console.log ) ) {
 }
 
 function isCI( name, url ) {
-  let regex = new RegExp( '[?&]ci_environment(=([^&#]*)|&|#|$)' ),
-      results = regex.exec( window.location.href );
+  // TODO: Convert variables to const when IE9 support is removed.
+  // eslint-disable-next-line no-var
+  var regex = new RegExp( '[?&]ci_environment(=([^&#]*)|&|#|$)' );
+  // eslint-disable-next-line no-var
+  var results = regex.exec( window.location.href );
   if ( !results ) return false;
   if ( !results[2] ) return false;
   return true;
@@ -28,7 +31,8 @@ function isCI( name, url ) {
 
 // Catch all errors and report them to Sauce Labs.
 function getSaucy() {
-  const errors = [];
+  // eslint-disable-next-line no-var
+  var errors = [];
   window.onerror = function( message, url, lineNumber ) {
     errors.push( {
       name: 'Smoke test',

@@ -18,7 +18,6 @@ if ( !( window.console && console.log ) ) {
   };
 }
 
-function isCI( name, url ) {
 /**
  * Whether we're in Sauce Labs or not.
  * @returns {boolean} true if running in Sauce Labs, false otherwise.

@@ -15,7 +15,6 @@ const envvars = {
   TRAVIS_PULL_REQUEST: process.env.TRAVIS_PULL_REQUEST,
   TRAVIS_PULL_REQUEST_BRANCH: process.env.TRAVIS_PULL_REQUEST_BRANCH,
   TRAVIS_JOB_NUMBER: process.env.TRAVIS_JOB_NUMBER,
-  CI_ENVIRONMENT: process.env.CI_ENVIRONMENT
   /* eslint-enable no-process-env */
 };
 

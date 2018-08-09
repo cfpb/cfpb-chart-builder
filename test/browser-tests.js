@@ -44,7 +44,7 @@ if ( envvars.TRAVIS_PULL_REQUEST !== false &&
 
 const SAUCE_LABS_USERNAME = config.SAUCE_LABS_USERNAME;
 const SAUCE_LABS_ACCESS_KEY = config.SAUCE_LABS_ACCESS_KEY;
-const CI_ENVIRONMENT = envvars.CI_ENVIRONMENT || '';
+const NODE_ENV = envvars.NODE_ENV || '';
 const STATIC_SERVER_PORT = 8089;
 
 let sauceTests = [];
@@ -81,7 +81,7 @@ function startSauce( err, process ) {
         [ 'Windows 7', 'chrome', '' ],
         [ 'Linux', 'android', '' ]
       ],
-      url: 'http://localhost:' + STATIC_SERVER_PORT + '/?ci_environment=' + CI_ENVIRONMENT,
+      url: 'http://localhost:' + STATIC_SERVER_PORT + '/?ci_environment=' + NODE_ENV,
       framework: 'custom',
       name: testName
     }

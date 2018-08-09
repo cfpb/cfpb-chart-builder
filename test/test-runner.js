@@ -20,7 +20,7 @@ if ( !( window.console && console.log ) ) {
 
 /**
  * Whether we're in Sauce Labs or not.
- * @return {boolean} true if running in Sauce Labs, false otherwise.
+ * @returns {boolean} true if running in Sauce Labs, false otherwise.
  */
 function isCI() {
   // TODO: Convert variables to const when IE9 support is removed.

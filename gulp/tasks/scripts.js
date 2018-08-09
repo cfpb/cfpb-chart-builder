@@ -23,7 +23,7 @@ function _processScript( localWebpackConfig, src, dest ) {
   return gulp.src( src )
     .pipe( webpackStream( localWebpackConfig, webpack ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
-    .pipe( gulpRename( 'cfpb-chart-builder.min.js' ) )
+    .pipe( gulpRename( 'cfpb-chart-builder.js' ) )
     .on( 'error', handleErrors.bind( this, { exitProcess: true } ) )
     .pipe( gulp.dest( dest ) );
 }

@@ -36,6 +36,7 @@ function isCI() {
  * Catch all errors and report them to Sauce Labs.
  */
 function getSaucy() {
+  // TODO: Convert variables to const when IE9 support is removed.
   // eslint-disable-next-line no-var
   var errors = [];
   window.onerror = function( message, url, lineNumber ) {

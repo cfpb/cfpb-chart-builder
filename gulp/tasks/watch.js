@@ -10,7 +10,7 @@ const gulp = require( 'gulp' );
 gulp.task( 'watch:scripts', done => {
   gulp.watch(
     [ config.test.src, config.demoScripts.src ],
-    gulp.series( 'scripts:concat', 'scripts:demo', 'test:unit' )
+    gulp.series( 'scripts', 'test:unit' )
   ).on( 'change', browserSync.reload );
   done();
 } );

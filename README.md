@@ -27,7 +27,7 @@ Add a `div` with a class of `cfpb-chart` and the following data attributes to yo
 Add the library to your page:
 
 ```
-<script type="text/javascript" src="dist/cfpb-chart-builder.min.js"></script>
+<script type="text/javascript" src="dist/cfpb-chart-builder.js"></script>
 ```
 
 It'll generate a chart for you:

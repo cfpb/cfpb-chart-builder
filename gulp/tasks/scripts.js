@@ -1,116 +1,65 @@
 const gulp = require( 'gulp' );
 const gulpHeader = require( 'gulp-header' );
 const gulpRename = require( 'gulp-rename' );
-const gulpUglify = require( 'gulp-uglify' );
-const webpack = require( 'webpack-stream' );
 const config = require( '../config' );
 const configPkg = config.pkg;
 const configBanner = config.banner;
 const configScripts = config.scripts;
 const configDemoScripts = config.demoScripts;
 const handleErrors = require( '../utils/handle-errors' );
+const webpack = require( 'webpack' );
+const webpackConfig = require( '../../config/webpack-config.js' );
+const webpackStream = require( 'webpack-stream' );
 
-gulp.task( 'scripts:concat', () => {
-  const stream = gulp.src( configScripts.src )
-    .pipe( webpack( {
-      devtool: 'eval-source-map',
-      module: {
-        loaders: [ {
-          loader: 'babel-loader',
-          exclude: /node_modules/,
-          options: {
-            presets: [ [ 'babel-preset-env', {
-              targets: {
-                browsers: [
-                  'last 2 versions',
-                  'Explorer >= 9'
-                ]
-              },
-              debug: true
-            } ] ]
-          }
-        } ]
-      },
-      output: {
-        filename: configScripts.name + '.js'
-      }
-    } ) )
-    .on( 'error', handleErrors )
+/**
+ * Standardize webpack workflow for handling script
+ * configuration, source, and destination settings.
+ * @param {Object} localWebpackConfig - Settings for Webpack.
+ * @param {string} src - Source URL in the unprocessed assets directory.
+ * @param {string} dest - Destination URL in the processed assets directory.
+ * @returns {PassThrough} A source stream.
+ */
+function _processScript( localWebpackConfig, src, dest ) {
+  return gulp.src( src )
+    .pipe( webpackStream( localWebpackConfig, webpack ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
-    .pipe( gulp.dest( configScripts.dest ) );
-  return stream;
-} );
+    .pipe( gulpRename( 'cfpb-chart-builder.js' ) )
+    .on( 'error', handleErrors.bind( this, { exitProcess: true } ) )
+    .pipe( gulp.dest( dest ) );
+}
 
-gulp.task( 'scripts:demo', () => {
-  const stream = gulp.src( configDemoScripts.src )
-    .pipe( webpack( {
-      devtool: 'eval-source-map',
-      module: {
-        loaders: [ {
-          loader: 'babel-loader',
-          exclude: /node_modules/,
-          options: {
-            presets: [ [ 'babel-preset-env', {
-              targets: {
-                browsers: [
-                  'last 2 versions',
-                  'Explorer >= 9'
-                ]
-              },
-              debug: true
-            } ] ]
-          }
-        } ]
-      },
-      output: {
-        filename: configDemoScripts.name + '.js'
-      }
-    } ) )
-    .on( 'error', handleErrors )
-    .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
-    .pipe( gulp.dest( configDemoScripts.dest ) );
-  return stream;
-} );
+/**
+ * Bundle scripts in unprocessed/js/routes/
+ * and factor out common modules into common.js.
+ * @returns {PassThrough} A source stream.
+ */
+function scriptsCommon() {
+  return _processScript(
+    webpackConfig.commonConf,
+    configScripts.src,
+    configScripts.dest
+  );
+}
 
-gulp.task( 'scripts:uglify', () => {
-  const stream = gulp.src( configScripts.src )
-    .pipe( webpack( {
-      module: {
-        loaders: [ {
-          loader: 'babel-loader',
-          exclude: /node_modules/,
-          options: {
-            presets: [ [ 'babel-preset-env', {
-              targets: {
-                browsers: [
-                  'last 2 versions',
-                  'Explorer >= 9'
-                ]
-              },
-              debug: true
-            } ] ]
-          }
-        } ]
-      },
-      output: {
-        filename: configScripts.name + '.js'
-      }
-    } ) )
-    .pipe( gulpUglify() )
-    .on( 'error', handleErrors )
-    .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
-    .pipe( gulpRename( {
-      suffix: '.min'
-    } ) )
-    .pipe( gulp.dest( configScripts.dest ) );
-  return stream;
-} );
+/**
+ * Bundle scripts in unprocessed/js/routes/
+ * and factor out common modules into common.js.
+ * @returns {PassThrough} A source stream.
+ */
+function scriptsDemo() {
+  return _processScript(
+    webpackConfig.demoConf,
+    configDemoScripts.src,
+    configDemoScripts.dest
+  );
+}
 
+gulp.task( 'scripts:common', scriptsCommon );
+gulp.task( 'scripts:demo', scriptsDemo );
 
 gulp.task( 'scripts',
   gulp.series(
-    'scripts:concat',
-    'scripts:uglify',
+    'scripts:common',
     'scripts:demo'
   )
 );

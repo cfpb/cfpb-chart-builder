@@ -77,4 +77,4 @@ dist/
 test/config.json
 src/vendor/
 test/static/demo*.css*
-test/static/demo-built*
+test/static/cfpb-chart-builder*

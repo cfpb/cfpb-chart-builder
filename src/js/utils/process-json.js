@@ -85,11 +85,21 @@ function processDelinquencies( datasets ) {
 /**
  * Returns a data object with data starting in January 2009 for use in all line charts
  *
- * @param {number} data - response from requested JSON file
- * @param {string} group - optional parameter for specifying if the chart requires use of a "group" property in the JSON, for example the charts with a group of "Younger than 30" will filter data to only include values matching that group
- * @returns {Object} data - object with adjusted and unadjusted value arrays containing timestamps and a number value
+ * @param {number} data - Response from requested JSON file.
+ * @param {string} [group] -
+ *   Optional parameter for specifying if the chart requires use
+ *   of a "group" property in the JSON,
+ *   for example, the charts with a group of "Younger than 30"
+ *   will filter data to only include values matching that group.
+ * @param {string} [source] -
+ *   Optional parameter for the file url and name.
+ *   Used for inquiry index files that have 4 months
+ *   of projected data instead of 6.
+ * @returns {Object}
+ *   data - object with adjusted and unadjusted value arrays containing
+ *   timestamps and a number value.
  */
-function processNumOriginationsData( data, group ) {
+function processNumOriginationsData( data, group, source ) {
 
   if ( typeof data !== 'object' ) {
     return data;
@@ -133,7 +143,12 @@ function processNumOriginationsData( data, group ) {
   } );
 
   data.projectedDate = {};
-  data.projectedDate.timestamp = getProjectedTimestamp( data.adjusted );
+  const fileNameMatch = 'inquiry';
+  let projectedMonths = 6;
+  if ( source && source.includes( fileNameMatch ) ) {
+    projectedMonths = 4;
+  }
+  data.projectedDate.timestamp = getProjectedTimestamp( data.adjusted, projectedMonths );
   data.projectedDate.label = getProjectedDate( data.projectedDate.timestamp );
 
   return data;
@@ -172,7 +187,7 @@ function processYoyData( data, group ) {
   }
 
   data.projectedDate = {};
-  data.projectedDate.timestamp = getProjectedTimestamp( data );
+  data.projectedDate.timestamp = getProjectedTimestamp( data, 6 );
   data.projectedDate.label = getProjectedDate( data.projectedDate.timestamp );
 
   return data;
@@ -181,12 +196,21 @@ function processYoyData( data, group ) {
 /**
  * Returns a UTC timestamp number for the month when each graph's data is projected
  *
+ * For Mortgage Performance Trends data, there is no projected data.
+ * For Consumer Credit Trends data, projected data is for the last 6 months, except for inquiry index data, which is for the last 4 months, and inferred denials data, which is for the last _[@todo: add value once these charts are added]_ months.
+ *
  * @param {Array} valuesList - list of values from the data, containing an array with timestamp representing the month and year at index 0, and the value at index 1. Requires at least six months of data (six array items).
+ * @param {string} projectedRange -
+ *   Number of months in the data that is to be labeled projected.
+ *   The default is 6 months, inquiry index charts are 4 months, etc.
  * @returns {number} a timestamp.
  */
-function getProjectedTimestamp( valuesList ) {
-  // Projected data begins six months from the latest month of data available
-  const projectedMonth = valuesList[valuesList.length - 6][0];
+function getProjectedTimestamp( valuesList, projectedRange = 6 ) {
+  if ( projectedRange === 0 ) {
+    return false;
+  }
+
+  const projectedMonth = valuesList[valuesList.length - projectedRange][0];
 
   return convertDate( projectedMonth ).timestamp;
 }

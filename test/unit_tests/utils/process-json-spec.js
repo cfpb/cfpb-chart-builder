@@ -13,11 +13,13 @@ describe( 'process-json', () => {
 
   describe( 'formatDate', () => {
 
-    it( 'should convert a month index into the correct UTC timestamp in milliseconds representing January 1 2000', function() {
+    it( 'should convert a month index into the correct UTC timestamp ' +
+        'in milliseconds representing January 1 2000', () => {
       expect( formatDate( 0 ) ).toBe( 946684800000 );
     } );
 
-    it( 'should convert a month index into the correct UTC timestamp in milliseconds representing November 1st 2016', function() {
+    it( 'should convert a month index into the correct UTC timestamp ' +
+        'in milliseconds representing November 1st 2016', () => {
       expect( formatDate( 202 ) ).toBe( 1477958400000 );
     } );
 
@@ -27,7 +29,8 @@ describe( 'process-json', () => {
 
     /* 1485925200000 = February 2017
        1477958400000 = Nov 2016 */
-    it( 'should convert a UTC timestamp in milliseconds to a human friendly month and year date', function() {
+    it( 'should convert a UTC timestamp in milliseconds to a ' +
+        'human friendly month and year date', () => {
       expect( convertDate( 946684800000 ).humanFriendly )
         .toBe( 'January 2000' );
       expect( convertDate( 1477958400000 ).humanFriendly )
@@ -37,23 +40,27 @@ describe( 'process-json', () => {
 
     } );
 
-    it( 'should convert a UTC timestamp in milliseconds to a UTC timestamp in milliseconds', function() {
+    it( 'should convert a UTC timestamp in milliseconds ' +
+        'to a UTC timestamp in milliseconds', () => {
       expect( convertDate( 1477958400000 ).timestamp ).toBe( 1477958400000 );
     } );
 
-    it( 'should convert a human friendly month and year date to a UTC timestamp in milliseconds', function() {
+    it( 'should convert a human friendly month and year date ' +
+        'to a UTC timestamp in milliseconds', () => {
       expect( convertDate( 'January 2000' ).timestamp ).toBe( 946684800000 );
       expect( convertDate( 'November 2016' ).timestamp ).toBe( 1477958400000 );
       expect( convertDate( 'February 2017' ).timestamp ).toBe( 1485907200000 );
     } );
 
-    it( 'should convert a human friendly date to a timestamp and back to a human friendly date', function() {
+    it( 'should convert a human friendly date to a timestamp ' +
+        'and back to a human friendly date', () => {
       const february = convertDate( 'February 2017' ).timestamp;
       expect( convertDate( february ).humanFriendly ).toBe( 'February 2017' );
     } );
 
 
-    it( 'should convert a human friendly month and year date to a human friendly month and year date', function() {
+    it( 'should convert a human friendly month ' +
+        'and year date to a human friendly month and year date', () => {
       expect( convertDate( 'February 2017' ).humanFriendly )
         .toBe( 'February 2017' );
     } );
@@ -62,15 +69,18 @@ describe( 'process-json', () => {
 
   describe( 'getProjectedDate', () => {
 
-    it( 'should return a human readable month and year string one month before the given timestamp', function() {
+    it( 'should return a human readable month ' +
+        'and year string one month before the given timestamp', () => {
       expect( getProjectedDate( 1483228800000 ) ).toBe( 'December 2016' );
     } );
 
-    it( 'should return a human readable month and year string one month before the given timestamp', function() {
+    it( 'should return a human readable month ' +
+        'and year string one month before the given timestamp', () => {
       expect( getProjectedDate( 1477958400000 ) ).toBe( 'October 2016' );
     } );
 
-    it( 'should return a human readable month and year string one month before the given timestamp', function() {
+    it( 'should return a human readable month ' +
+        'and year string one month before the given timestamp', () => {
       expect( getProjectedDate( 1485925200000 ) ).toBe( 'January 2017' );
     } );
 
@@ -78,23 +88,41 @@ describe( 'process-json', () => {
 
   describe( 'getProjectedTimestamp', () => {
 
-    it( 'should return UTC timestamp for the first month of the projected data, six months before given UTC date, given at least six months of data', function() {
+    const dataList = [
+      [ 1477958400000, 1 ], // nov 16
+      [ 1480550400000, 2 ], // dec
+      [ 1483228800000, 3 ], // jan 17
+      [ 1485907200000, 4 ], // feb
+      [ 1488326400000, 5 ], // mar
+      [ 1491004800000, 6 ], // apr
+      [ 1493596800000, 7 ], // may
+      [ 1496275200000, 8 ], // june
+      [ 1498867200000, 9 ], // july
+      [ 1501545600000, 10 ] // aug
+    ];
 
-      const dataList = [
-        [ 1477958400000, 1 ], // nov 16
-        [ 1480550400000, 2 ], // dec
-        [ 1483228800000, 3 ], // jan 17
-        [ 1485907200000, 4 ], // feb
-        [ 1488326400000, 5 ], // mar
-        [ 1491004800000, 6 ], // apr
-        [ 1493596800000, 7 ], // may
-        [ 1496275200000, 8 ], // june
-        [ 1498867200000, 9 ], // july
-        [ 1501545600000, 10 ] // aug
-      ];
-
+    it( 'should return UTC timestamp for ' +
+        'the first month of the projected data, ' +
+        'six months before given UTC date, ' +
+        'given at least six months of data ' +
+        'and no projectedRange argument', () => {
       // Expect to be march.
       expect( getProjectedTimestamp( dataList ) ).toBe( 1488326400000 );
+    } );
+
+    it( 'should return UTC timestamp for ' +
+        'the first month of the projected data, ' +
+        'for the specified number of months before the given UTC date', () => {
+      // march
+      expect( getProjectedTimestamp( dataList, 6 ) ).toBe( 1488326400000 );
+      // may
+      expect( getProjectedTimestamp( dataList, 4 ) ).toBe( 1493596800000 );
+      // aug
+      expect( getProjectedTimestamp( dataList, 1 ) ).toBe( 1501545600000 );
+    } );
+
+    it( 'should return false if given a value of 0 months projected', () => {
+      expect( getProjectedTimestamp( dataList, 0 ) ).toBe( false );
     } );
 
   } );
@@ -132,10 +160,14 @@ describe( 'process-json', () => {
       expect( test[1][1] ).toBe( -20 );
     } );
 
-    it( 'should assign the correct projected Dates', () => {
-      expect( test.projectedDate.timestamp ).toBe( 1246406400000 ); // July 2009
-      expect( test[test.length - 6][1] ).toBe( 92 ); // July 2009
-      expect( test.projectedDate.label ).toBe( 'June 2009' ); // June 2009, the label uses the last month of data that isn't projected. For projected data starting with July, the label should say June.
+    it( 'should assign the correct projected dates, 6 months back', () => {
+      // July 2009
+      expect( test.projectedDate.timestamp ).toBe( 1246406400000 );
+      // July 2009
+      expect( test[test.length - 6][1] ).toBe( 92 );
+      /* June 2009, the label uses the last month of data that isn't projected.
+         For projected data starting with July, the label should say June. */
+      expect( test.projectedDate.label ).toBe( 'June 2009' );
     } );
 
   } );
@@ -167,7 +199,7 @@ describe( 'process-json', () => {
         ]
       }
     };
-    const test = originations( data, 'test' );
+    const test = originations( data, 'test', 'inquiry_test_file.csv' );
 
     it( 'should eliminate dates before 2009', () => {
       expect( test.adjusted[0][0] ).toBe( 1230768000000 );
@@ -177,9 +209,10 @@ describe( 'process-json', () => {
       expect( test.adjusted[0][0] ).toBe( 1230768000000 );
     } );
 
-    it( 'should assign the correct projected Dates', () => {
-      expect( test.projectedDate.timestamp ).toBe( 1235865600000 );
-      expect( test.projectedDate.label ).toBe( 'February 2009' );
+    it( 'should assign the correct projected dates, ' +
+        '4 months for inquiry index charts', () => {
+      expect( test.projectedDate.timestamp ).toBe( 1241136000000 );
+      expect( test.projectedDate.label ).toBe( 'April 2009' );
     } );
 
   } );

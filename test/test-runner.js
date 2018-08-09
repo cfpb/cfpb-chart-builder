@@ -33,7 +33,9 @@ function isCI() {
   return true;
 }
 
-// Catch all errors and report them to Sauce Labs.
+/**
+ * Catch all errors and report them to Sauce Labs.
+ */
 function getSaucy() {
   // eslint-disable-next-line no-var
   var errors = [];

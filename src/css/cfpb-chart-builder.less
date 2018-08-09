@@ -35,19 +35,17 @@
 
     .respond-to-min( 600px, {
       top: 75px;
-    });
+    } );
 
     .respond-to-min( 655px, {
       top: 80px;
-    });
+    } );
 
   }
 
   &[data-chart-type="tile_map"]:after,
   &[data-chart-type='line-comparison']:after {
-
     display: none;
-
   }
 
 
@@ -87,7 +85,7 @@
         margin-top: 2px;
         font-size: 10px;
         line-height: 1;
-      });
+      } );
 
       .highcharts-data-label-state-abbr {
         text-align: center;
@@ -100,10 +98,8 @@
           display: block;
           margin-top: -2px;
           font-size: 9px;
-        });
-
+        } );
       }
-
     }
   }
 
@@ -145,11 +141,11 @@
 
       .respond-to-min( 450px, {
         max-width: 200px;
-      });
+      } );
 
       .respond-to-min( 600px, {
         max-width: 250px;
-      });
+      } );
 
       .respond-to-min( 700px, {
         top: 100px !important;
@@ -157,8 +153,7 @@
         max-width: 500px;
         left: initial !important;
         right: 15px !important;
-      });
-
+      } );
     }
   }
 
@@ -171,31 +166,31 @@
         top: 100px !important;
         right: 30px !important;
         left: initial !important;
-      });
+      } );
 
     }
   }
 
   .highcharts-legend {
     left: 0px !important;
-    transform: translate(-8px, -5px) !important;
+    transform: translate( -8px, -5px ) !important;
 
     .respond-to-min( 800px, {
-      transform: translate(465px, -6px) !important;
-    });
+      transform: translate( 465px, -6px ) !important;
+    } );
 
     .respond-to-min( 900px, {
-      transform: translate(445px, -6px) !important;
-    });
+      transform: translate( 445px, -6px ) !important;
+    } );
 
     .respond-to-min( 926px, {
-      transform: translate(465px, -6px) !important;
-    });
+      transform: translate( 465px, -6px ) !important;
+    } );
 
     .lt-ie10 & {
       .respond-to-min( 800px, {
         left: -465px !important;
-      });
+      } );
     }
 
   }
@@ -214,7 +209,7 @@
 
       .respond-to-min( 450px, {
         white-space: nowrap !important;
-      });
+      } );
 
       .lt-ie10 &:before {
         content: '';
@@ -226,7 +221,6 @@
         top: 8px;
         background: @chart-green-primary;
       }
-
     }
 
     &.highcharts-color-1 {
@@ -235,27 +229,25 @@
 
       .respond-to-min( 450px, {
         top: 25px !important;
-      });
-
+      } );
 
       &[transform="translate(8,22)"] {
         .highcharts-graph {
-          transform: translate(0, 28px);
+          transform: translate( 0, 28px );
 
           .respond-to-min( 450px, {
-            transform: translate(0, 8px);
-          });
-
+            transform: translate( 0, 8px );
+          } );
         }
       }
 
       &[transform="translate(8,41)"] {
         .highcharts-graph {
-          transform: translate(0, 10px);
+          transform: translate( 0, 10px );
 
           .respond-to-min( 450px, {
-            transform: translate(0, -10px);
-          });
+            transform: translate( 0, -10px );
+          } );
 
         }
       }
@@ -266,40 +258,36 @@
 
         .respond-to-min( 450px, {
           top: 0 !important;
-        });
-
+        } );
       }
-
     }
-
   }
 
   .highcharts-legend__tile-map {
-    transform: translateY(15px);
+    transform: translateY( 15px );
 
     .respond-to-min( 500px, {
-      transform: translateY(0);
-    });
-
+      transform: translateY( 0 );
+    } );
   }
 
   .highcharts-range-selector-label {
     display: table;
     margin-top: 0 !important;
-    transform: translateY(415px);
+    transform: translateY( 415px );
     width: 100%;
     color: @gray;
 
     .h6();
 
     .respond-to-min( 800px, {
-      transform: translateY(-5px);
+      transform: translateY( -5px );
 
       .chart-label();
 
       letter-spacing: 0;
       text-transform: none;
-    });
+    } );
 
     .hide-on-ie9();
 
@@ -311,55 +299,53 @@
 
       .respond-to-min( 480px, {
         text-align: left;
-      });
+      } );
 
       .respond-to-min( 800px, {
-        transform: translateY(0px);
-      });
-
+        transform: translateY( 0px );
+      } );
     }
-
   }
 
   .highcharts-range-selector-buttons {
     position: relative;
     height: 45px;
-    transform: translate(0px, 455px);
+    transform: translate( 0px, 455px );
 
     .respond-to-min( 350px, {
-      transform: translate(5%, 455px);
+      transform: translate( 5%, 455px );
     } );
 
     .respond-to-min( 375px, {
-      transform: translate(9%, 455px);
+      transform: translate( 9%, 455px );
     } );
 
     .respond-to-min( 390px, {
-      transform: translate(13%, 455px);
+      transform: translate( 13%, 455px );
     } );
 
     .respond-to-min( 400, {
-      transform: translate(15%, 455px);
+      transform: translate( 15%, 455px );
     } );
 
     .respond-to-min( 430, {
-      transform: translate(19%, 455px);
+      transform: translate( 19%, 455px );
     } );
 
     .respond-to-min( 450, {
-      transform: translate(20%, 455px);
+      transform: translate( 20%, 455px );
     } );
 
     .respond-to-min( 470, {
-      transform: translate(25%, 455px);
+      transform: translate( 25%, 455px );
     } );
 
     .respond-to-min( 480px, {
-      transform: translate(0px, 450px);
-    });
+      transform: translate( 0px, 450px );
+    } );
 
     .respond-to-min( 800px, {
-      transform: translate(0px, 30px);
+      transform: translate( 0px, 30px );
     } );
 
     .hide-on-ie9();
@@ -371,8 +357,6 @@
       left: 0;
       border-bottom: 1px solid @gray-10;
     }
-
-
   }
 
   .highcharts-button {
@@ -384,18 +368,15 @@
       .highcharts-button-box {
         fill: @pacific-60;
       }
-
     }
 
     text {
-      transform: translateX(-15px);
+      transform: translateX( -15px );
 
       .respond-to-min( 800px, {
-        transform: translate(-15px, 2px);
+        transform: translate( -15px, 2px );
       } );
-
     }
-
   }
 
   .highcharts-button-pressed,
@@ -419,13 +400,13 @@
 
   .highcharts-button + .highcharts-button {
       .respond-to-min( 800px, {
-        transform: translateX(65px);
+        transform: translateX( 65px );
       } );
 
       & + .highcharts-button {
 
         .respond-to-min( 800px, {
-          transform: translateX(125px);
+          transform: translateX( 125px );
         } );
 
         & + .highcharts-button {
@@ -433,7 +414,6 @@
             transform: translateX(185px);
           } );
         }
-
       }
   }
 
@@ -449,7 +429,6 @@
       display: block;
       visibility: visible;
     } );
-
   }
 
   .highcharts-navigator-mask-inside {
@@ -468,18 +447,18 @@
 
     .highcharts-yaxis .highcharts-axis-title {
 
-      transform: rotate(0deg) translate(120px, -133px) !important;
+      transform: rotate( 0deg ) translate( 120px, -133px ) !important;
 
       .respond-to-min( 655px, {
-        transform: rotate(-90deg) translate(-255px, -232px) !important;
+        transform: rotate( -90deg ) translate( -255px, -232px ) !important;
       } );
 
     }
 
     .highcharts-yaxis-labels {
-      transform: translate(0, 6px);
+      transform: translate( 0, 6px );
       .respond-to-min( 655px, {
-        transform: translate(10px, 7px);
+        transform: translate( 10px, 7px );
       } );
     }
 
@@ -488,12 +467,11 @@
   &[data-chart-type='bar'] {
 
     .highcharts-yaxis .highcharts-axis-title {
-      transform: rotate(0deg) translate(88px, -130px) !important;
+      transform: rotate( 0deg ) translate( 88px, -130px ) !important;
 
       .respond-to-min( 800px, {
-        transform: rotate(-90deg) translate(-270px, -232px) !important;
+        transform: rotate( -90deg ) translate( -270px, -232px ) !important;
       } );
-
     }
   }
 
@@ -561,7 +539,6 @@
           margin-bottom: 5px;
         }
       }
-
     }
 
     &[data-chart-color='green'] {
@@ -585,7 +562,6 @@
           margin-bottom: 5px;
         }
       }
-
     }
 
     &[data-chart-color='teal'] {
@@ -614,7 +590,6 @@
           margin-bottom: 5px;
         }
       }
-
     }
 
     &[data-chart-color='navy'] {
@@ -642,9 +617,7 @@
           margin-bottom: 5px;
         }
       }
-
     }
-
   }
 
 
@@ -657,7 +630,6 @@
       &.highcharts-data__unprojected {
         fill: @black;
       }
-
     }
 
     .highcharts-tooltip .highcharts-color-0 {
@@ -678,7 +650,6 @@
         .highcharts-tooltip-box {
           stroke: @chart-blue-primary;
         }
-
     }
 
     &[data-chart-color='green'] {
@@ -695,7 +666,6 @@
         .highcharts-tooltip-box {
           stroke: @chart-green-primary;
         }
-
     }
 
     &[data-chart-color='teal'] {
@@ -712,7 +682,6 @@
         .highcharts-tooltip-box {
           stroke: @chart-teal-primary;
         }
-
     }
 
     &[data-chart-color='navy'] {
@@ -729,10 +698,7 @@
         .highcharts-tooltip-box {
           stroke: @chart-navy-primary;
         }
-
     }
-
-
   }
 
   // Navigator graph (mini-graph under main graph on large screens)
@@ -749,7 +715,6 @@
     .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
       stroke: @chart-blue-secondary;
     }
-
   }
 
   &[data-chart-color='green'] {
@@ -761,7 +726,6 @@
     .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
       stroke: @chart-green-secondary;
     }
-
   }
 
   &[data-chart-color='teal'] {
@@ -774,7 +738,6 @@
     .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
       stroke: @chart-teal-secondary;
     }
-
   }
 
   &[data-chart-color='navy'] {
@@ -786,9 +749,7 @@
     .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
       stroke: @chart-navy-secondary;
     }
-
   }
-
 }
 
 .cfpb-chart[data-chart-type="tile_map"] {
@@ -801,7 +762,6 @@
       stroke: @black;
     }
   }
-
 }
 
 @media (max-width: 600px) {
@@ -825,12 +785,12 @@
 .cfpb-chart[data-chart-type="line-comparison"] {
   .highcharts-legend {
     left: 0px !important;
-    transform: translate(-8px, -5px) !important;
+    transform: translate( -8px, -5px ) !important;
 
     .lt-ie10 & {
       .respond-to-min( 800px, {
         left: 0px !important;
-      });
+      } );
     }
 
   }
@@ -843,7 +803,7 @@
 
       .respond-to-min( 450px, {
         top: 0px !important;
-      });
+      } );
 
     }
 

@@ -3,7 +3,7 @@ const cache = require( './session-storage' );
 
 let DATA_SOURCE_BASE = '//files.consumerfinance.gov/data/';
 
-// Let browsers override the data source root (useful for localhost testing)
+// Let browsers override the data source root (useful for localhost testing).
 DATA_SOURCE_BASE = window.CFPB_CHART_DATA_SOURCE_BASE || DATA_SOURCE_BASE;
 
 const getData = sources => {

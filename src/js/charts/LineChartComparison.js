@@ -1,3 +1,4 @@
+const getFirstNumber = require( '../utils/calculation' ).getFirstNumber;
 const Highcharts = require( 'highcharts/js/highstock' );
 const process = require( '../utils/process-json' );
 require( 'highcharts/js/modules/accessibility' )( Highcharts );
@@ -10,30 +11,13 @@ Highcharts.setOptions( {
 } );
 
 /**
- * _getFirstNumber - get the first value that is a Number
- *
- * @param  {array} array  An array of Objects with values to check
- * @returns {string}    an actual Number
- */
-function _getFirstNumber( array ) {
-  let val;
-  for ( let x = 0; x < array.length; x++ ) {
-    if ( !isNaN( array[x][1] ) ) {
-      val = array[x][1];
-      return val;
-    }
-  }
-  return false;
-}
-
-/**
  * _getYAxisUnits - Get the text of the y-axis title
  *
  * @param  {array} array  An array of values to check
  * @returns {string}    Appropriate y-axis title
  */
 function _getYAxisUnits( array ) {
-  const value = _getFirstNumber( array );
+  const value = getFirstNumber( array );
   if ( !value ) {
     return value;
   }
@@ -47,7 +31,7 @@ function _getYAxisUnits( array ) {
  * @returns {string}    Appropriate y-axis title
  */
 function _getYAxisLabel( array ) {
-  const value = _getFirstNumber( array );
+  const value = getFirstNumber( array );
   if ( !value ) {
     return value;
   }

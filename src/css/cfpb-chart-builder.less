@@ -5,10 +5,16 @@
 
 @chart-blue-primary: @pacific;
 @chart-blue-secondary: @pacific-60;
+@chart-gold-primary: @dark-gold;
+@chart-gold-secondary: @gold-80;
 @chart-green-primary: @green;
 @chart-green-secondary: @green-60;
 @chart-navy-primary: @navy;
 @chart-navy-secondary: @navy-60;
+@chart-neutral-primary: @neutral;
+@chart-neutral-secondary: @neutral-60;
+@chart-purple-primary: @purple;
+@chart-purple-secondary: @purple-60;
 @chart-teal-primary: @teal;
 @chart-teal-secondary: @teal-60;
 
@@ -541,6 +547,33 @@
       }
     }
 
+    &[data-chart-color='gold'] {
+
+      .highcharts-color-1,
+      .highcharts-color-0,
+      .highcharts-navigator-series .highcharts-graph {
+        stroke: @chart-gold-primary;
+      }
+
+      .highcharts-legend-item span:before  {
+        background: @chart-gold-primary;
+      }
+
+      .highcharts-tooltip {
+        .highcharts-color-1, .highcharts-color-0 {
+          display: inline-block;
+          height: 4px;
+          width: 15px;
+          margin-bottom: 3px;
+          background: @chart-gold-primary;
+        }
+        .highcharts-color-1 {
+          height: 1px;
+          margin-bottom: 5px;
+        }
+      }
+    }
+
     &[data-chart-color='green'] {
 
       .highcharts-color-1,
@@ -556,6 +589,60 @@
           width: 15px;
           margin-bottom: 3px;
           background: @chart-green-primary;
+        }
+        .highcharts-color-1 {
+          height: 1px;
+          margin-bottom: 5px;
+        }
+      }
+    }
+
+    &[data-chart-color='neutral'] {
+
+      .highcharts-color-1,
+      .highcharts-color-0,
+      .highcharts-navigator-series .highcharts-graph {
+        stroke: @chart-neutral-primary;
+      }
+
+      .highcharts-legend-item span:before  {
+        background: @chart-neutral-primary;
+      }
+
+      .highcharts-tooltip {
+        .highcharts-color-1, .highcharts-color-0 {
+          display: inline-block;
+          height: 4px;
+          width: 15px;
+          margin-bottom: 3px;
+          background: @chart-neutral-primary;
+        }
+        .highcharts-color-1 {
+          height: 1px;
+          margin-bottom: 5px;
+        }
+      }
+    }
+
+    &[data-chart-color='purple'] {
+
+      .highcharts-color-1,
+      .highcharts-color-0,
+      .highcharts-navigator-series .highcharts-graph {
+        stroke: @chart-purple-primary;
+      }
+
+      .highcharts-legend-item span:before  {
+        background: @chart-purple-primary;
+      }
+
+      .highcharts-tooltip {
+        .highcharts-color-1, .highcharts-color-0 {
+          display: inline-block;
+          height: 4px;
+          width: 15px;
+          margin-bottom: 3px;
+          background: @chart-purple-primary;
         }
         .highcharts-color-1 {
           height: 1px;

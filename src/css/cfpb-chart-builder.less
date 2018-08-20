@@ -1,8 +1,8 @@
 @import (less) 'highcharts.css';
 @import (less) 'cf-core.less';
 
-// Chart colors
-
+/* Chart colors
+   TODO: Investigate using highcharts API to set chart colors. */
 @chart-blue-primary: @pacific;
 @chart-blue-secondary: @pacific-60;
 @chart-gold-primary: @dark-gold;
@@ -520,6 +520,9 @@
       stroke-dasharray: 3, 3;
     }
 
+    /* TODO: Investigate using highcharts API to set chart colors and
+       remove references to highcharts CSS classes.
+       Aim to remove all &[data-chart-color= selectors. */
     &[data-chart-color='blue'] {
 
       .highcharts-color-1,

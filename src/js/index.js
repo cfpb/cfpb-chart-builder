@@ -100,12 +100,12 @@ function _createCharts() {
   for ( const chart of charts ) {
     const chartOptions = {
       el: chart,
-      title: chart.getAttribute( 'data-chart-title' ),
-      yAxisLabel: chart.getAttribute( 'data-chart-y-axis-label' ),
       type: chart.getAttribute( 'data-chart-type' ),
+      source: chart.getAttribute( 'data-chart-source' ),
+      title: chart.getAttribute( 'data-chart-title' ),
       color: chart.getAttribute( 'data-chart-color' ),
-      metadata: chart.getAttribute( 'data-chart-metadata' ),
-      source: chart.getAttribute( 'data-chart-source' )
+      yAxisLabel: chart.getAttribute( 'data-chart-y-axis-label' ),
+      metadata: chart.getAttribute( 'data-chart-metadata' )
     };
 
     const dataAttrFormatterStr = 'data-chart-axes-formatter';

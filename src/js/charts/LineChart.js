@@ -11,77 +11,22 @@ Highcharts.setOptions( {
 } );
 
 /**
- * _getYAxisUnits - Get the text of the y-axis title
- *
- * @param  {array} array  An array of values to check
- * @returns {string}    Appropriate y-axis title
- */
-function _getYAxisUnits( array ) {
-  const value = getFirstNumber( array );
-  if ( !value ) {
-    return value;
-  }
-  if ( value % 1000000000 < value ) {
-    return 'billions';
-  }
-  return 'millions';
-}
-
-/**
- * _getYAxisLabel - Get the text of the y-axis title
- *
- * @param  {array} chartData  An array of values to check
- * @param  {sting} yAxisLabel  A string to use for the y-axis label.
- * @returns {string}    Appropriate y-axis title
- */
-function _getYAxisLabel( chartData, yAxisLabel ) {
-  if ( yAxisLabel ) {
-    return yAxisLabel;
-  }
-
-  let term = 'Number';
-  let unit = 'millions';
-  const firstChartNumber = getFirstNumber( chartData );
-
-  if ( !firstChartNumber ) {
-    return firstChartNumber;
-  }
-
-  if ( firstChartNumber % 1000000000 < firstChartNumber ) {
-    term = 'Volume';
-    unit = 'billions';
-  }
-
-  return term + ' of originations (in ' + unit + ')';
-}
-
-/**
- * _getTickValue - Convert the data point's unit to M or B.
- *
- * @param  {int} value  Data point's value
- * @returns {int}        Data point's value over million or billion.
- */
-function _getTickValue( value ) {
-  // If it's 0 or borked data gets passed in, return it.
-  if ( !value ) {
-    return value;
-  }
-
-  if ( value % 1000000000 < value ) {
-    return value / 1000000000 + 'B';
-  } else if ( value % 1000000 < value ) {
-    return value / 1000000 + 'M';
-  }
-
-  return value;
-}
-
-/**
  * @param {Object} props - Options to pass to highcharts when creating a chart.
  * @returns {Object} A highchart chart.
  */
 function LineChart( props ) {
-  props.data = process.originations( props.data[0], props.metadata );
+  const propEl = props.el;
+  const propMetadata = props.metadata;
+  const propDescription = props.description;
+  const propYAxisLabel = props.yAxisLabel;
+  const propAxisFormatter = props.axisFormatter;
+
+  let propData = props.data;
+  propData = process.originations( propData[0], propMetadata );
+
+  // Set y-axis options.
+  const yAxisOptions = propAxisFormatter.yAxisOptions( propYAxisLabel, propData.adjusted );
+
   const options = {
     chart: {
       marginRight: 0,
@@ -89,7 +34,7 @@ function LineChart( props ) {
       zoomType: 'none'
     },
     className: 'cfpb-chart_line',
-    description: props.description,
+    description: propDescription,
     credits: false,
     rangeSelector: {
       selected: 'all',
@@ -156,29 +101,15 @@ function LineChart( props ) {
         year: '%b<br/>%Y'
       },
       plotLines: [ {
-        value: props.data.projectedDate.timestamp,
+        value: propData.projectedDate.timestamp,
         label: {
-          text: 'Values after ' + props.data.projectedDate.label + ' are projected',
+          text: 'Values after ' + propData.projectedDate.label + ' are projected',
           rotation: 0,
           useHTML: true
         }
       } ]
     },
-    yAxis: {
-      showLastLabel: true,
-      opposite: false,
-      className: 'axis-label',
-      title: {
-        text: _getYAxisLabel( props.data.adjusted, props.yAxisLabel ),
-        offset: 0,
-        reserveSpace: false
-      },
-      labels: {
-        formatter: function() {
-          return _getTickValue( this.value );
-        }
-      }
-    },
+    yAxis: yAxisOptions,
     tooltip: {
       useHTML: true,
       formatter: function() {
@@ -195,26 +126,26 @@ function LineChart( props ) {
     series: [
       {
         name: 'Seasonally adjusted',
-        data: props.data.adjusted,
+        data: propData.adjusted,
         legendIndex: 1,
         tooltip: {
           valueDecimals: 0
         },
         zoneAxis: 'x',
         zones: [ {
-          value: props.data.projectedDate.timestamp
+          value: propData.projectedDate.timestamp
         } ]
       },
       {
         name: 'Unadjusted',
-        data: props.data.unadjusted,
+        data: propData.unadjusted,
         legendIndex: 2,
         tooltip: {
           valueDecimals: 0
         },
         zoneAxis: 'x',
         zones: [ {
-          value: props.data.projectedDate.timestamp
+          value: propData.projectedDate.timestamp
         } ]
       }
     ],
@@ -237,7 +168,7 @@ function LineChart( props ) {
     }
   };
 
-  return Highcharts.stockChart( props.el, options, function( chart ) {
+  return Highcharts.stockChart( propEl, options, function( chart ) {
     // label(str, x, y, shape, anchorX, anchorY, useHTML, baseline, className)
     chart.renderer.label(
       'Select time range',

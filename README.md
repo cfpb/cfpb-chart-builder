@@ -85,7 +85,9 @@ Optional. Title of the chart.
 
 **options.color**: `String`
 
-Optional. Chart's color scheme. Options: `blue`, `green`, `teal`, `navy`.
+Optional. Chart's color scheme.
+Options: `blue`, `green`, `teal`, `navy`, `purple`, `neutral`, `gold`.
+If omitted, the chart color will be black.
 
 **options.metadata**: `String|Object`
 

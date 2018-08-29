@@ -5,7 +5,7 @@ require( 'jsdom-global' )();
 
 const chai = require( 'chai' );
 const mock = require( 'mock-require' );
-const shapes = require( '../sample_data/mortgage-performance/map-data/30-89/states/us-states.geo.json' );
+const shapes = require( '../../sample_data/mortgage-performance/map-data/30-89/states/us-states.geo.json' );
 const expect = chai.expect;
 const noop = () => {
   // do nothing
@@ -29,7 +29,7 @@ mock( 'highcharts/js/modules/accessibility', () => {
   // do nothing
 } );
 
-const GeoMap = require( '../../src/js/charts/GeoMap.js' );
+const GeoMap = require( '../../../src/js/charts/GeoMap.js' );
 let geoMap;
 
 describe( 'GeoMapComparison', () => {

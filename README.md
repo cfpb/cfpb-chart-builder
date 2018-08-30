@@ -94,6 +94,10 @@ If omitted, the chart color will be black.
 Optional. Arbitrary metadata for your chart.
 For example, `bar` charts currently require a group key (e.g. `Number of Loans`) to filter data.
 
+**options.yAxisLabel**: `String`
+
+Optional. Hardcoded y-axis label for the chart.
+
 **options.tooltipFormatter**: `Function`
 
 Optional. Function that returns HTML to format the chart's tooltip.

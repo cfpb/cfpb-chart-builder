@@ -35,13 +35,13 @@ function _getYAxisUnits( array ) {
  * @returns {string}    Appropriate y-axis title
  */
 function _getYAxisLabel( chartData, yAxisLabel ) {
-  let term = 'Number';
-  let unit = 'millions';
-  const firstChartNumber = getFirstNumber( chartData );
-
   if ( yAxisLabel ) {
     return yAxisLabel;
   }
+
+  let term = 'Number';
+  let unit = 'millions';
+  const firstChartNumber = getFirstNumber( chartData );
 
   if ( !firstChartNumber ) {
     return firstChartNumber;
@@ -66,10 +66,14 @@ function _getTickValue( value ) {
   if ( !value ) {
     return value;
   }
+
   if ( value % 1000000000 < value ) {
     return value / 1000000000 + 'B';
+  } else if ( value % 1000000 < value ) {
+    return value / 1000000 + 'M';
   }
-  return value / 1000000 + 'M';
+
+  return value;
 }
 
 /**

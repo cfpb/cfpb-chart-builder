@@ -27,7 +27,7 @@ mock( 'highcharts/js/modules/accessibility', () => {
   // do nothing
 } );
 
-const LineChart = require( '../../src/js/charts/LineChartComparison.js' );
+const LineChart = require( '../../../src/js/charts/LineChartComparison.js' );
 let line;
 
 describe( 'LineChartComparison', () => {

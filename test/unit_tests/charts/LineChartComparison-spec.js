@@ -1,38 +1,24 @@
-/* global before describe it */
-
-
-require( 'jsdom-global' )();
-
-const chai = require( 'chai' );
-const mock = require( 'mock-require' );
-const expect = chai.expect;
-const noop = () => {
-  // do nothing
-};
-
-mock( 'highcharts/js/highstock', {
-  setOptions: noop,
+jest.mock( 'highcharts/js/highstock', () => ( {
+  setOptions: jest.fn(),
   stockChart: ( props, opts ) => {
     const options = opts;
     return {
       update: newOptions => Object.assign( options, newOptions ),
       options: options,
-      showLoading: noop,
-      hideLoading: noop
+      showLoading: jest.fn(),
+      hideLoading: jest.fn()
     };
   }
-} );
+} ) );
 
-mock( 'highcharts/js/modules/accessibility', () => {
-  // do nothing
-} );
+jest.mock( 'highcharts/js/modules/accessibility', () => jest.fn() );
 
 const LineChart = require( '../../../src/js/charts/LineChartComparison.js' );
 let line;
 
 describe( 'LineChartComparison', () => {
 
-  before( () => {
+  beforeEach( () => {
     line = new LineChart( {
       el: 'el',
       description: 'chart description!',
@@ -51,24 +37,25 @@ describe( 'LineChartComparison', () => {
   } );
 
   it( 'should correctly set chart description', () => {
-    expect( line.chart.options.description ).to.equal( 'chart description!' );
+    expect( line.chart.options.description ).toBe( 'chart description!' );
   } );
 
   it( 'should correctly set chart series name', () => {
-    expect( line.chart.options.series[0].name ).to.equal( 'Boston, MA' );
+    expect( line.chart.options.series[0].name ).toBe( 'Boston, MA' );
   } );
 
   it( 'should correctly set chart data', () => {
-    expect( line.chart.options.series[0].data[0] ).to.deep.equal( [ 1199163600000, 0.129563846384 ] );
+    expect( line.chart.options.series[0].data[0][0] ).toBe( 1199163600000 );
+    expect( line.chart.options.series[0].data[0][1] ).toBe( 0.129563846384 );
   } );
 
   it( 'should correctly set chart attributes', () => {
-    expect( line.chart.options.series[0].legendIndex ).to.equal( 1 );
+    expect( line.chart.options.series[0].legendIndex ).toBe( 1 );
   } );
 
   it( 'should be able to update its description', () => {
     line.update( { description: 'bananas' } );
-    expect( line.chart.options.description ).to.deep.equal( 'bananas' );
+    expect( line.chart.options.description ).toBe( 'bananas' );
   } );
 
 } );

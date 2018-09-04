@@ -1,10 +1,6 @@
-/* global describe it */
-
-const chai = require( 'chai' );
-const expect = chai.expect;
 const processJSON = require( '../../../src/js/utils/process-json' );
 
-describe( 'process-json', function() {
+describe( 'process-json', () => {
 
   const formatDate = processJSON.formatDate;
   const originations = processJSON.originations;
@@ -15,83 +11,72 @@ describe( 'process-json', function() {
   const getProjectedTimestamp = processJSON.getProjectedTimestamp;
   const convertDate = processJSON.convertDate;
 
-  describe( 'formatDate', function() {
+  describe( 'formatDate', () => {
 
     it( 'should convert a month index into the correct UTC timestamp in milliseconds representing January 1 2000', function() {
-      expect( formatDate( 0 ) )
-        .to.equal( 946684800000 );
+      expect( formatDate( 0 ) ).toBe( 946684800000 );
     } );
 
     it( 'should convert a month index into the correct UTC timestamp in milliseconds representing November 1st 2016', function() {
-      expect( formatDate( 202 ) )
-        .to.equal( 1477958400000 );
+      expect( formatDate( 202 ) ).toBe( 1477958400000 );
     } );
 
   } );
 
-  describe( 'convertDate', function() {
+  describe( 'convertDate', () => {
 
     /* 1485925200000 = February 2017
        1477958400000 = Nov 2016 */
     it( 'should convert a UTC timestamp in milliseconds to a human friendly month and year date', function() {
       expect( convertDate( 946684800000 ).humanFriendly )
-        .to.equal( 'January 2000' );
+        .toBe( 'January 2000' );
       expect( convertDate( 1477958400000 ).humanFriendly )
-        .to.equal( 'November 2016' );
+        .toBe( 'November 2016' );
       expect( convertDate( 1485925200000 ).humanFriendly )
-        .to.equal( 'February 2017' );
+        .toBe( 'February 2017' );
 
     } );
 
     it( 'should convert a UTC timestamp in milliseconds to a UTC timestamp in milliseconds', function() {
-      expect( convertDate( 1477958400000 ).timestamp )
-        .to.equal( 1477958400000 );
+      expect( convertDate( 1477958400000 ).timestamp ).toBe( 1477958400000 );
     } );
 
     it( 'should convert a human friendly month and year date to a UTC timestamp in milliseconds', function() {
-      expect( convertDate( 'January 2000' ).timestamp )
-        .to.equal( 946684800000 );
-      expect( convertDate( 'November 2016' ).timestamp )
-        .to.equal( 1477958400000 );
-      expect( convertDate( 'February 2017' ).timestamp )
-        .to.equal( 1485907200000 );
+      expect( convertDate( 'January 2000' ).timestamp ).toBe( 946684800000 );
+      expect( convertDate( 'November 2016' ).timestamp ).toBe( 1477958400000 );
+      expect( convertDate( 'February 2017' ).timestamp ).toBe( 1485907200000 );
     } );
 
     it( 'should convert a human friendly date to a timestamp and back to a human friendly date', function() {
       const february = convertDate( 'February 2017' ).timestamp;
-      expect( convertDate( february ).humanFriendly )
-        .to.equal( 'February 2017' );
+      expect( convertDate( february ).humanFriendly ).toBe( 'February 2017' );
     } );
 
 
     it( 'should convert a human friendly month and year date to a human friendly month and year date', function() {
-
       expect( convertDate( 'February 2017' ).humanFriendly )
-        .to.equal( 'February 2017' );
+        .toBe( 'February 2017' );
     } );
 
   } );
 
-  describe( 'getProjectedDate', function() {
+  describe( 'getProjectedDate', () => {
 
     it( 'should return a human readable month and year string one month before the given timestamp', function() {
-      expect( getProjectedDate( 1483228800000 ) )
-        .to.equal( 'December 2016' );
+      expect( getProjectedDate( 1483228800000 ) ).toBe( 'December 2016' );
     } );
 
     it( 'should return a human readable month and year string one month before the given timestamp', function() {
-      expect( getProjectedDate( 1477958400000 ) )
-        .to.equal( 'October 2016' );
+      expect( getProjectedDate( 1477958400000 ) ).toBe( 'October 2016' );
     } );
 
     it( 'should return a human readable month and year string one month before the given timestamp', function() {
-      expect( getProjectedDate( 1485925200000 ) )
-        .to.equal( 'January 2017' );
+      expect( getProjectedDate( 1485925200000 ) ).toBe( 'January 2017' );
     } );
 
   } );
 
-  describe( 'getProjectedTimestamp', function() {
+  describe( 'getProjectedTimestamp', () => {
 
     it( 'should return UTC timestamp for the first month of the projected data, six months before given UTC date, given at least six months of data', function() {
 
@@ -108,13 +93,13 @@ describe( 'process-json', function() {
         [ 1501545600000, 10 ] // aug
       ];
 
-      expect( getProjectedTimestamp( dataList ) )
-        .to.equal( 1488326400000 ); // march
+      // Expect to be march.
+      expect( getProjectedTimestamp( dataList ) ).toBe( 1488326400000 );
     } );
 
   } );
 
-  describe( 'processYoyData', function() {
+  describe( 'processYoyData', () => {
     const data = {
       test: [
         [ 1117584000000, 100 ], // jun 2005
@@ -134,28 +119,28 @@ describe( 'process-json', function() {
     };
     const test = yoy( data, 'test' );
 
-    it( 'should eliminate dates before 2009', function() {
-      expect( test[0][0] ).to.equal( 1230768000000 );
+    it( 'should eliminate dates before 2009', () => {
+      expect( test[0][0] ).toBe( 1230768000000 );
     } );
 
-    it( 'should identify and select the proper group', function() {
-      expect( test[0][0] ).to.equal( 1230768000000 );
+    it( 'should identify and select the proper group', () => {
+      expect( test[0][0] ).toBe( 1230768000000 );
     } );
 
-    it( 'should convert decimals to percentages', function() {
-      expect( test[0][1] ).to.equal( 10 );
-      expect( test[1][1] ).to.equal( -20 );
+    it( 'should convert decimals to percentages', () => {
+      expect( test[0][1] ).toBe( 10 );
+      expect( test[1][1] ).toBe( -20 );
     } );
 
-    it( 'should assign the correct projected Dates', function() {
-      expect( test.projectedDate.timestamp ).to.equal( 1246406400000 ); // July 2009
-      expect( test[test.length - 6][1] ).to.equal( 92 ); // July 2009
-      expect( test.projectedDate.label ).to.equal( 'June 2009' ); // June 2009, the label uses the last month of data that isn't projected. For projected data starting with July, the label should say June.
+    it( 'should assign the correct projected Dates', () => {
+      expect( test.projectedDate.timestamp ).toBe( 1246406400000 ); // July 2009
+      expect( test[test.length - 6][1] ).toBe( 92 ); // July 2009
+      expect( test.projectedDate.label ).toBe( 'June 2009' ); // June 2009, the label uses the last month of data that isn't projected. For projected data starting with July, the label should say June.
     } );
 
   } );
 
-  describe( 'processNumOriginationsData', function() {
+  describe( 'processNumOriginationsData', () => {
     const data = {
       test: {
         adjusted: [
@@ -184,22 +169,22 @@ describe( 'process-json', function() {
     };
     const test = originations( data, 'test' );
 
-    it( 'should eliminate dates before 2009', function() {
-      expect( test.adjusted[0][0] ).to.equal( 1230768000000 );
+    it( 'should eliminate dates before 2009', () => {
+      expect( test.adjusted[0][0] ).toBe( 1230768000000 );
     } );
 
-    it( 'should identify and select the proper group', function() {
-      expect( test.adjusted[0][0] ).to.equal( 1230768000000 );
+    it( 'should identify and select the proper group', () => {
+      expect( test.adjusted[0][0] ).toBe( 1230768000000 );
     } );
 
-    it( 'should assign the correct projected Dates', function() {
-      expect( test.projectedDate.timestamp ).to.equal( 1235865600000 );
-      expect( test.projectedDate.label ).to.equal( 'February 2009' );
+    it( 'should assign the correct projected Dates', () => {
+      expect( test.projectedDate.timestamp ).toBe( 1235865600000 );
+      expect( test.projectedDate.label ).toBe( 'February 2009' );
     } );
 
   } );
 
-  describe( 'processMapData', function() {
+  describe( 'processMapData', () => {
     const data = [
       {
         name: 'AL',
@@ -221,28 +206,28 @@ describe( 'process-json', function() {
     const test = map( data );
 
 
-    it( 'should get the correct path for a state', function() {
-      expect( test[0].name ).to.equal( 'AL' );
-      expect( test[0].path ).to.equal( 'M550,-337L633,-337,633,-253,550,-253,550,-337' );
+    it( 'should get the correct path for a state', () => {
+      expect( test[0].name ).toBe( 'AL' );
+      expect( test[0].path ).toBe( 'M550,-337L633,-337,633,-253,550,-253,550,-337' );
     } );
 
-    it( 'should round values', function() {
-      expect( test[0].name ).to.equal( 'AL' );
-      expect( test[0].value ).to.equal( 143 );
-      expect( test[1].name ).to.equal( 'AK' );
-      expect( test[1].value ).to.equal( 92 );
-      expect( test[2].name ).to.equal( 'AZ' );
-      expect( test[2].value ).to.equal( 73 );
+    it( 'should round values', () => {
+      expect( test[0].name ).toBe( 'AL' );
+      expect( test[0].value ).toBe( 143 );
+      expect( test[1].name ).toBe( 'AK' );
+      expect( test[1].value ).toBe( 92 );
+      expect( test[2].name ).toBe( 'AZ' );
+      expect( test[2].value ).toBe( 73 );
     } );
 
-    it( 'should add the correct tooltip', function() {
-      expect( test[0].name ).to.equal( 'AL' );
-      expect( test[0].tooltip ).to.equal( 'AL increased by 143%' );
+    it( 'should add the correct tooltip', () => {
+      expect( test[0].name ).toBe( 'AL' );
+      expect( test[0].tooltip ).toBe( 'AL increased by 143%' );
     } );
 
   } );
 
-  describe( 'processDelinquencies', function() {
+  describe( 'processDelinquencies', () => {
 
     const data = [
       {
@@ -265,15 +250,15 @@ describe( 'process-json', function() {
       }
     ];
 
-    it( 'assign a label', function() {
+    it( 'assign a label', () => {
       const test = delinquencies( data );
-      expect( test[0].label ).to.equal( 'New York, NY' );
-      expect( test[1].label ).to.equal( 'Miami, FL' );
+      expect( test[0].label ).toBe( 'New York, NY' );
+      expect( test[1].label ).toBe( 'Miami, FL' );
     } );
 
-    it( 'filter delinquencies', function() {
+    it( 'filter delinquencies', () => {
       const test = delinquencies( data );
-      expect( test[0].data[0][1] ).to.equal( 0.129563846384 );
+      expect( test[0].data[0][1] ).toBe( 0.129563846384 );
     } );
 
   } );

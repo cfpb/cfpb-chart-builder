@@ -16,6 +16,14 @@ const requireDir = require( 'require-dir' );
 // Require all tasks in gulp/tasks, including subfolders
 requireDir( './gulp/tasks', { recurse: true } );
 
+// Define the test task.
+gulp.task( 'test',
+  gulp.parallel(
+    'lint',
+    'test:unit'
+  )
+);
+
 gulp.task( 'build',
   gulp.parallel(
     'styles',

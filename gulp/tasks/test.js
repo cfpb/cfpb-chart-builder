@@ -1,43 +1,87 @@
-const configTest = require( '../config' ).test;
+const fancyLog = require( 'fancy-log' );
+const fsHelper = require( '../utils/fs-helper' );
 const gulp = require( 'gulp' );
-const gulpIstanbul = require( 'gulp-istanbul' );
-const gulpMocha = require( 'gulp-mocha' );
+const minimist = require( 'minimist' );
+const spawn = require( 'child_process' ).spawn;
+const paths = require( '../../config/environment' ).paths;
 
 /**
- * Run Mocha JavaScript unit tests.
+ * Run JavaScript unit tests.
  * @param {Function} cb - Callback function to call on completion.
  */
 function testUnitScripts( cb ) {
-  gulp.src( configTest.src )
-    .pipe( gulpIstanbul( {
-      includeUntested: false
-    } ) )
-    .pipe( gulpIstanbul.hookRequire() )
-    .on( 'finish', function() {
-      gulp.src( configTest.tests + '/unit_tests/**/*.js' )
-        .pipe( gulpMocha( {
-          reporter: configTest.reporter ? 'spec' : 'nyan'
-        } ) )
-        .pipe( gulpIstanbul.writeReports( {
-          dir: configTest.tests + '/unit_test_coverage'
-        } ) )
+  const params = minimist( process.argv.slice( 3 ) ) || {};
 
-        .pipe( gulpIstanbul.enforceThresholds( {
+  /* If --specs=path/to/js/spec flag is added on the command-line,
+     pass the value to mocha to test individual unit test files. */
+  let specs = params.specs;
 
-          /* Lowering this until we finish writing tests for the charts.
-             Otherwise gulp watch terminates when the threshold isn't met. */
-          thresholds: { global: 40 }
-        } ) )
+  /* Set path defaults for source files.
+     Remove ./ from beginning of path,
+     which collectCoverageFrom doesn't support. */
+  const pathSrc = paths.unprocessed.substring( 2 );
 
-        .on( 'end', cb );
-    } );
+  // Set regex defaults.
+  let fileTestRegex = 'unit_tests/';
+  let fileSrcPath = pathSrc + '/';
+
+  // If --specs flag is passed, adjust regex defaults.
+  if ( specs ) {
+    fileSrcPath += specs;
+    // If the --specs argument is a file, strip it off.
+    if ( specs.slice( -3 ) === '.js' ) {
+      // TODO: Perform a more robust replacement here.
+      fileSrcPath = fileSrcPath.replace( '-spec', '' );
+      fileTestRegex += specs;
+    } else {
+
+      // Ensure there's a trailing slash.
+      if ( specs.slice( -1 ) !== '/' ) {
+        specs += '/';
+      }
+
+      fileSrcPath += '**/*.js';
+      fileTestRegex += specs + '.*-spec.js';
+    }
+  } else {
+    fileSrcPath += '**/*.js';
+    fileTestRegex += '.*-spec.js';
+  }
+
+  /*
+    The --no-cache flag is needed so the transforms don't cache.
+    If they are cached, preprocessor-handlebars.js can't find handlebars. See
+    https://facebook.github.io/jest/docs/en/troubleshooting.html#caching-issues
+  */
+  const jestOptions = [
+    '--no-cache',
+    '--config=jest.config.js',
+    `--collectCoverageFrom=${ fileSrcPath }`,
+    `--testRegex=${ fileTestRegex }`
+  ];
+
+  if ( params.travis ) {
+    jestOptions.push( '--maxWorkers=2' );
+  }
+
+  spawn(
+    fsHelper.getBinary( 'jest-cli', 'jest.js', '../bin' ),
+    jestOptions,
+    { stdio: 'inherit' }
+  ).once( 'close', code => {
+    if ( code ) {
+      fancyLog( 'Unit tests exited with code ' + code );
+      process.exit( 1 );
+    }
+    fancyLog( 'Unit tests done!' );
+    cb();
+  } );
 }
 
-gulp.task( 'test:unit', testUnitScripts );
+gulp.task( 'test:unit:scripts', testUnitScripts );
 
-gulp.task( 'test',
-  gulp.series(
-    'lint',
-    'test:unit'
+gulp.task( 'test:unit',
+  gulp.parallel(
+    'test:unit:scripts'
   )
 );

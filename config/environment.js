@@ -18,6 +18,17 @@ const envvars = {
   /* eslint-enable no-process-env */
 };
 
+/**
+ * Convenience settings for various project directory paths.
+ */
+const paths = {
+  unprocessed: './src/js',
+  processed:   './dist',
+  modules:     './node_modules',
+  test:        './test'
+};
+
 module.exports = {
-  envvars
+  envvars,
+  paths
 };

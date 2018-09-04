@@ -1,33 +1,20 @@
-/* global before beforeEach describe it */
-
-
-require( 'jsdom-global' )();
-
-const chai = require( 'chai' );
-const mock = require( 'mock-require' );
 const shapes = require( '../../sample_data/mortgage-performance/map-data/30-89/states/us-states.geo.json' );
-const expect = chai.expect;
-const noop = () => {
-  // do nothing
-};
 
-mock( 'highcharts/js/highmaps', {
-  setOptions: noop,
+jest.mock( 'highcharts/js/highmaps', () => ( {
+  setOptions: jest.fn(),
   geojson: () => [],
   mapChart: ( props, opts ) => {
     const options = opts;
     return {
       update: newOptions => Object.assign( options, newOptions ),
       options: options,
-      showLoading: noop,
-      hideLoading: noop
+      showLoading: jest.fn(),
+      hideLoading: jest.fn()
     };
   }
-} );
+} ) );
 
-mock( 'highcharts/js/modules/accessibility', () => {
-  // do nothing
-} );
+jest.mock( 'highcharts/js/modules/accessibility', () => jest.fn() );
 
 const GeoMap = require( '../../../src/js/charts/GeoMap.js' );
 let geoMap;
@@ -41,9 +28,9 @@ describe( 'GeoMapComparison', () => {
       metadata: 'states',
       shapes: shapes,
       tooltipFormatter: ( point, meta ) => [ point, meta.fips_type ],
-      pointDescriptionFormatter: point => noop,
-      seriesDescriptionFormatter: point => noop,
-      screenReaderSectionFormatter: point => noop,
+      pointDescriptionFormatter: point => jest.fn(),
+      seriesDescriptionFormatter: point => jest.fn(),
+      screenReaderSectionFormatter: point => jest.fn(),
       data: [
         {
           meta: {
@@ -66,11 +53,11 @@ describe( 'GeoMapComparison', () => {
   } );
 
   it( 'should correctly set chart description', () => {
-    expect( geoMap.chart.options.description ).to.equal( 'chart description!' );
+    expect( geoMap.chart.options.description ).toBe( 'chart description!' );
   } );
 
   it( 'should correctly set chart data', () => {
-    expect( geoMap.chart.options.series[0].data ).to.deep.equal( [
+    expect( geoMap.chart.options.series[0].data ).toEqual( [
       {
         fips: '10',
         name: 'California',
@@ -85,8 +72,8 @@ describe( 'GeoMapComparison', () => {
   } );
 
   it( 'should correctly set a tooltip formatter', () => {
-    expect( typeof geoMap.chart.options.tooltip.formatter ).to.equal( 'function' );
-    expect( geoMap.chart.options.tooltip.formatter()[1] ).to.equal( 'state' );
+    expect( typeof geoMap.chart.options.tooltip.formatter ).toBe( 'function' );
+    expect( geoMap.chart.options.tooltip.formatter()[1] ).toBe( 'state' );
   } );
 
   it( 'should correctly update a tooltip formatter', () => {
@@ -109,29 +96,29 @@ describe( 'GeoMapComparison', () => {
       } ],
       tooltipFormatter: ( point, meta ) => [ point, meta.date ]
     } );
-    expect( typeof geoMap.chart.options.tooltip.formatter ).to.equal( 'function' );
-    expect( geoMap.chart.options.tooltip.formatter()[1] ).to.equal( '2020-01-01' );
+    expect( typeof geoMap.chart.options.tooltip.formatter ).toBe( 'function' );
+    expect( geoMap.chart.options.tooltip.formatter()[1] ).toBe( '2020-01-01' );
   } );
 
   it( 'should correctly set a point description formatter', () => {
-    expect( typeof geoMap.chart.options.pointDescriptionFormatter ).to.equal( 'function' );
+    expect( typeof geoMap.chart.options.pointDescriptionFormatter ).toBe( 'function' );
   } );
 
   it( 'should correctly set a series description formatter', () => {
-    expect( typeof geoMap.chart.options.seriesDescriptionFormatter ).to.equal( 'function' );
+    expect( typeof geoMap.chart.options.seriesDescriptionFormatter ).toBe( 'function' );
   } );
 
   it( 'should correctly set a screen reader section formatter', () => {
-    expect( typeof geoMap.chart.options.screenReaderSectionFormatter ).to.equal( 'function' );
+    expect( typeof geoMap.chart.options.screenReaderSectionFormatter ).toBe( 'function' );
   } );
 
   it( 'should correctly set chart attributes', () => {
-    expect( geoMap.chart.options.series[0].nullInteraction ).to.equal( true );
+    expect( geoMap.chart.options.series[0].nullInteraction ).toBe( true );
   } );
 
   it( 'should be able to update its description', () => {
     geoMap.update( { description: 'bananas' } );
-    expect( geoMap.chart.options.description ).to.deep.equal( 'bananas' );
+    expect( geoMap.chart.options.description ).toBe( 'bananas' );
   } );
 
   it( 'should be able to update its data', () => {
@@ -153,8 +140,8 @@ describe( 'GeoMapComparison', () => {
         }
       }
     ]} );
-    expect( geoMap.chart.options.series[0].data[0].fips ).to.equal( '18' );
-    expect( geoMap.chart.options.series[0].data[1].fips ).to.equal( '22' );
+    expect( geoMap.chart.options.series[0].data[0].fips ).toBe( '18' );
+    expect( geoMap.chart.options.series[0].data[1].fips ).toBe( '22' );
   } );
 
 } );

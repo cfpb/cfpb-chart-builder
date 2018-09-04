@@ -5,6 +5,7 @@ require( 'core-js/fn/array/index-of' );
 
 const documentReady = require( './utils/document-ready' );
 const createChart = require( './charts' );
+const axes = require( './charts/axes' );
 const ajax = require( './utils/get-data' );
 const shapes = require( './utils/map-shapes' );
 
@@ -97,15 +98,26 @@ function _createCharts() {
   }
 
   for ( const chart of charts ) {
-    new Chart( {
+    const chartOptions = {
       el: chart,
-      title: chart.getAttribute( 'data-chart-title' ),
-      yAxisLabel: chart.getAttribute( 'data-chart-y-axis-label' ),
       type: chart.getAttribute( 'data-chart-type' ),
+      source: chart.getAttribute( 'data-chart-source' ),
+      title: chart.getAttribute( 'data-chart-title' ),
       color: chart.getAttribute( 'data-chart-color' ),
-      metadata: chart.getAttribute( 'data-chart-metadata' ),
-      source: chart.getAttribute( 'data-chart-source' )
-    } );
+      yAxisLabel: chart.getAttribute( 'data-chart-y-axis-label' ),
+      metadata: chart.getAttribute( 'data-chart-metadata' )
+    };
+
+    const dataAttrFormatterStr = 'data-chart-axes-formatter';
+    const axisLabelFormatter = chart.getAttribute( dataAttrFormatterStr );
+
+    if ( typeof axes[axisLabelFormatter] === 'undefined' ) {
+      chartOptions.axisFormatter = axes.axisDefault;
+    } else {
+      chartOptions.axisFormatter = axes[axisLabelFormatter];
+    }
+
+    new Chart( chartOptions );
   }
 }
 

@@ -98,6 +98,11 @@ For example, `bar` charts currently require a group key (e.g. `Number of Loans`)
 
 Optional. Hardcoded y-axis label for the chart.
 
+**options.axisFormatter**: `Object`
+
+Optional. An Object that contains a `yAxisOptions` method for setting the
+chart's y-axis options.
+
 **options.tooltipFormatter**: `Function`
 
 Optional. Function that returns HTML to format the chart's tooltip.

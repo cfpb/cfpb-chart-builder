@@ -5,6 +5,7 @@ const getData = ( url, data ) => {
     setItem: () => ( { foo: 'bar' } ),
     removeItem: () => ( { foo: 'bar' } )
   } ) );
+  // eslint-disable-next-line global-require
   return require( '../../../src/js/utils/get-data' )( url );
 };
 

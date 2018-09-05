@@ -1,8 +1,9 @@
 const charts = {};
 charts.bar = require( './BarChart' );
 charts.GeoMap = require( './GeoMap' );
-charts.line = require( './LineChart' );
-charts.LineComparison = require( './LineChartComparison' );
+charts.LineChart = require( './LineChart' );
+charts.LineChartComparison = require( './LineChartComparison' );
+charts.LineChartIndex = require( './LineChartIndex' );
 charts.tileMap = require( './TileMap' );
 
 module.exports = charts;

@@ -13,8 +13,8 @@ Highcharts.setOptions( {
 /**
  * _getYAxisUnits - Get the text of the y-axis title
  *
- * @param  {array} array  An array of values to check
- * @returns {string}    Appropriate y-axis title
+ * @param {Array} array - An array of values to check
+ * @returns {string} Appropriate y-axis title
  */
 function _getYAxisUnits( array ) {
   const value = getFirstNumber( array );
@@ -44,8 +44,8 @@ function _getYAxisLabel( array ) {
 /**
  * _getTickValue - Convert the data point's unit to M or B.
  *
- * @param  {int} value  Data point's value
- * @returns {int}        Data point's value over million or billion.
+ * @param {number} value - Data point's value
+ * @returns {number} Data point's value over million or billion.
  */
 function _getTickValue( value ) {
   // If borked data gets passed in, return it.

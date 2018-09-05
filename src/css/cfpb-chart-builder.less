@@ -138,7 +138,8 @@
   }
 
   &[data-chart-type='line'],
-  &[data-chart-type='line-comparison'] {
+  &[data-chart-type='line-comparison'],
+  &[data-chart-type='line-index'] {
     .highcharts-plot-line-label {
       margin-left: 15px !important;
       left: 50% !important;
@@ -449,7 +450,8 @@
 
   // Axes
   &[data-chart-type='line'],
-  &[data-chart-type='line-comparison'] {
+  &[data-chart-type='line-comparison'],
+  &[data-chart-type='line-index'] {
 
     .highcharts-yaxis .highcharts-axis-title {
 
@@ -484,7 +486,8 @@
   // Colors and widths
 
   &[data-chart-type='line'],
-  &[data-chart-type='line-comparison'] {
+  &[data-chart-type='line-comparison'],
+  &[data-chart-type='line-index'] {
 
     .highcharts-tracker,
     .highcharts-graph {
@@ -655,7 +658,6 @@
     }
 
     &[data-chart-color='teal'] {
-
 
       .highcharts-color-1,
       .highcharts-color-0,

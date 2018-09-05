@@ -158,7 +158,7 @@ class LineChartIndex {
       }
     };
 
-    return this.chart = Highcharts.stockChart( el, options, function( chart ) {
+    this.chart = Highcharts.stockChart( el, options, function( chart ) {
       // label(str, x, y, shape, anchorX, anchorY, useHTML, baseline, className)
       chart.renderer.label(
         'Select time range',
@@ -172,6 +172,8 @@ class LineChartIndex {
         'range-selector-label'
       ).add();
     } );
+
+    return this.chart;
   }
 }
 

@@ -1,15 +1,16 @@
-const gulp = require( 'gulp' );
-const gulpAutoprefixer = require( 'gulp-autoprefixer' );
-const gulpCssmin = require( 'gulp-cssmin' );
-const gulpHeader = require( 'gulp-header' );
-const gulpLess = require( 'gulp-less' );
-const gulpSourcemaps = require( 'gulp-sourcemaps' );
-const gulpRename = require( 'gulp-rename' );
-const mqr = require( 'gulp-mq-remove' );
+const autoprefixer = require( 'autoprefixer' );
 const config = require( '../config' );
 const configPkg = config.pkg;
 const configBanner = config.banner;
 const handleErrors = require( '../utils/handle-errors' );
+const gulp = require( 'gulp' );
+const gulpCssmin = require( 'gulp-cssmin' );
+const gulpHeader = require( 'gulp-header' );
+const gulpLess = require( 'gulp-less' );
+const gulpPostcss = require( 'gulp-postcss' );
+const gulpSourcemaps = require( 'gulp-sourcemaps' );
+const gulpRename = require( 'gulp-rename' );
+const postcssUnmq = require( 'postcss-unmq' );
 
 /**
  * Process legacy CSS for IE9 only.
@@ -20,14 +21,16 @@ function stylesDemo() {
     .pipe( gulpSourcemaps.init() )
     .pipe( gulpLess( config.demoStyles.settings ) )
     .on( 'error', handleErrors )
-    .pipe( gulpAutoprefixer( {
-      browsers: [
-        'last 2 version',
-        'not ie <= 8',
-        'android 4',
-        'BlackBerry 7',
-        'BlackBerry 10' ]
-    } ) )
+    .pipe( gulpPostcss( [
+      autoprefixer( {
+        browsers: [
+          'last 2 version',
+          'not ie <= 8',
+          'android 4',
+          'BlackBerry 7',
+          'BlackBerry 10' ]
+      } )
+    ] ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpSourcemaps.write( '.' ) )
     .pipe( gulp.dest( config.demoStyles.dest ) );
@@ -41,9 +44,11 @@ function demoStylesIE9() {
   return gulp.src( config.demoStyles.cwd + config.demoStyles.src )
     .pipe( gulpLess( config.demoStyles.settings ) )
     .on( 'error', handleErrors )
-    .pipe( gulpAutoprefixer( {
-      browsers: [ 'ie 9' ]
-    } ) )
+    .pipe( gulpPostcss( [
+      autoprefixer( {
+        browsers: [ 'ie 9' ]
+      } )
+    ] ) )
     .pipe( gulpCssmin() )
     .pipe( gulpRename( {
       suffix:  '.ie9',
@@ -56,12 +61,14 @@ gulp.task( 'styles:demoStylesIE8', () => {
   const stream = gulp.src( config.demoStyles.cwd + config.demoStyles.src )
     .pipe( gulpLess( config.demoStyles.settings ) )
     .on( 'error', handleErrors )
-    .pipe( gulpAutoprefixer( {
-      browsers: [ 'ie 7-8' ]
-    } ) )
-    .pipe( mqr( {
-      width: '75em'
-    } ) )
+    .pipe( gulpPostcss( [
+      postcssUnmq( {
+        width: '75em'
+      } ),
+      autoprefixer( {
+        browsers: [ 'ie 7-8' ]
+      } )
+    ] ) )
     .pipe( gulpCssmin() )
     .pipe( gulpRename( {
       suffix:  '.ie8',
@@ -79,14 +86,16 @@ gulp.task( 'styles:chartsConcat', () => {
       compress: false
     } ) )
     .on( 'error', handleErrors )
-    .pipe( gulpAutoprefixer( {
-      browsers: [
-        'last 2 version',
-        'not ie <= 8',
-        'android 4',
-        'BlackBerry 7',
-        'BlackBerry 10' ]
-    } ) )
+    .pipe( gulpPostcss( [
+      autoprefixer( {
+        browsers: [
+          'last 2 version',
+          'not ie <= 8',
+          'android 4',
+          'BlackBerry 7',
+          'BlackBerry 10' ]
+      } )
+    ] ) )
     .pipe( gulp.dest( config.styles.dest ) );
   return stream;
 } );
@@ -96,14 +105,16 @@ gulp.task( 'styles:chartsMinify', () => {
     .pipe( gulpSourcemaps.init() )
     .pipe( gulpLess( config.styles.settings ) )
     .on( 'error', handleErrors )
-    .pipe( gulpAutoprefixer( {
-      browsers: [
-        'last 2 version',
-        'not ie <= 8',
-        'android 4',
-        'BlackBerry 7',
-        'BlackBerry 10' ]
-    } ) )
+    .pipe( gulpPostcss( [
+      autoprefixer( {
+        browsers: [
+          'last 2 version',
+          'not ie <= 8',
+          'android 4',
+          'BlackBerry 7',
+          'BlackBerry 10' ]
+      } )
+    ] ) )
     .pipe( gulpRename( {
       suffix: '.min'
     } ) )

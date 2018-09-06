@@ -9,6 +9,10 @@
 @import (less) "cf-layout.less";
 @import (less) "cf-typography.less";
 
+// Whether or not to override the local path and retrieve fonts from fonts.net.
+@use-font-cdn: true;
+@cf-fonts-path: '/fonts2'
+
 // Override some cfpb-chart-builder styles
 #map {
   .highcharts-map-series {

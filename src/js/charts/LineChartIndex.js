@@ -10,83 +10,16 @@ Highcharts.setOptions( {
   }
 } );
 
-/**
- * _getYAxisUnits - Get the text of the y-axis title
- *
- * @param {Array} array - An array of values to check.
- * @returns {string} Appropriate y-axis title.
- */
-function _getYAxisUnits( array ) {
-  const value = getFirstNumber( array );
-  if ( !value ) {
-    return value;
-  }
-  if ( value % 1000000000 < value ) {
-    return 'billions';
-  }
-  return 'millions';
-}
-
-/**
- * _getYAxisLabel - Get the text of the y-axis title.
- *
- * @param {Array} chartData - An array of values to check.
- * @param {sting} yAxisLabel - A string to use for the y-axis label.
- * @returns {string} Appropriate y-axis title.
- */
-function _getYAxisLabel( chartData, yAxisLabel ) {
-  if ( yAxisLabel ) {
-    return yAxisLabel;
-  }
-
-  let term = 'Number';
-  let unit = 'millions';
-  const firstChartNumber = getFirstNumber( chartData );
-
-  if ( !firstChartNumber ) {
-    return firstChartNumber;
-  }
-
-  if ( firstChartNumber % 1000000000 < firstChartNumber ) {
-    term = 'Volume';
-    unit = 'billions';
-  }
-
-  return term + ' of originations (in ' + unit + ')';
-}
-
-/**
- * _getTickValue - Convert the data point's unit to M or B.
- *
- * @param {number} value - Data point's value
- * @returns {number} Data point's value over million or billion.
- */
-function _getTickValue( value ) {
-  // If it's 0 or borked data gets passed in, return it.
-  if ( !value ) {
-    return value;
-  }
-
-  if ( value % 1000000000 < value ) {
-    return value / 1000000000 + 'B';
-  } else if ( value % 1000000 < value ) {
-    return value / 1000000 + 'M';
-  }
-
-  return value;
-}
-
-class LineChart {
+class LineChartIndex {
   constructor( { el, description, data, metadata, yAxisLabel } ) {
     data = process.originations( data[0], metadata );
-
     const options = {
       chart: {
         marginRight: 0,
         marginTop: 100,
         zoomType: 'none'
       },
-      className: 'cfpb-chart_line',
+      className: 'cfpb-chart_line-index',
       description: description,
       credits: false,
       rangeSelector: {
@@ -163,29 +96,25 @@ class LineChart {
         } ]
       },
       yAxis: {
+        allowDecimals: false,
         showLastLabel: true,
         opposite: false,
         className: 'axis-label',
         title: {
-          text: _getYAxisLabel( data.adjusted, yAxisLabel ),
+          text: 'Index (January 2009 = 100)',
           offset: 0,
           reserveSpace: false
-        },
-        labels: {
-          formatter: function() {
-            return _getTickValue( this.value );
-          }
         }
       },
       tooltip: {
         useHTML: true,
         formatter: function() {
           let tooltip = Highcharts.dateFormat( '%B %Y', this.x );
-          for ( let i = 0; i < this.points.length; i++ ) {
+          for ( let i = 0, len = this.points.length; i < len; i++ ) {
             const point = this.points[i];
             tooltip += "<br><span class='highcharts-color-" +
                        point.series.colorIndex + "'></span> " +
-                       point.series.name + ': ' + Highcharts.numberFormat( point.y, 0 );
+                       point.series.name + ': ' + Highcharts.numberFormat( point.y, 1 );
           }
           return tooltip;
         }
@@ -195,9 +124,6 @@ class LineChart {
           name: 'Seasonally adjusted',
           data: data.adjusted,
           legendIndex: 1,
-          tooltip: {
-            valueDecimals: 0
-          },
           zoneAxis: 'x',
           zones: [ {
             value: data.projectedDate.timestamp
@@ -207,9 +133,6 @@ class LineChart {
           name: 'Unadjusted',
           data: data.unadjusted,
           legendIndex: 2,
-          tooltip: {
-            valueDecimals: 0
-          },
           zoneAxis: 'x',
           zones: [ {
             value: data.projectedDate.timestamp
@@ -235,7 +158,7 @@ class LineChart {
       }
     };
 
-    return Highcharts.stockChart( el, options, function( chart ) {
+    this.chart = Highcharts.stockChart( el, options, function( chart ) {
       // label(str, x, y, shape, anchorX, anchorY, useHTML, baseline, className)
       chart.renderer.label(
         'Select time range',
@@ -249,7 +172,9 @@ class LineChart {
         'range-selector-label'
       ).add();
     } );
+
+    return this.chart;
   }
 }
 
-module.exports = LineChart;
+module.exports = LineChartIndex;

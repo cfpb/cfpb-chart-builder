@@ -27,10 +27,13 @@ class Chart {
         } );
         break;
       case 'line-comparison':
-        this.highchart = new createChart.LineComparison( chartOptions );
+        this.highchart = new createChart.LineChartComparison( chartOptions );
+        break;
+      case 'line-index':
+        this.highchart = new createChart.LineChartIndex( chartOptions );
         break;
       case 'line':
-        this.highchart = createChart.line( chartOptions );
+        this.highchart = new createChart.LineChart( chartOptions );
         break;
       case 'bar':
         this.highchart = createChart.bar( chartOptions );

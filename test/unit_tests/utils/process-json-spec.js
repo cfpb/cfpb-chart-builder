@@ -200,6 +200,7 @@ describe( 'process-json', () => {
       }
     };
     const test = originations( data, 'test', 'inquiry_test_file.csv' );
+    const differentTest = originations( data, 'test', 'denials_test_file.csv' );
 
     it( 'should eliminate dates before 2009', () => {
       expect( test.adjusted[0][0] ).toBe( 1230768000000 );
@@ -214,6 +215,8 @@ describe( 'process-json', () => {
       expect( test.projectedDate.timestamp ).toBe( 1241136000000 );
       expect( test.projectedDate.label ).toBe( 'April 2009' );
     } );
+
+
 
   } );
 

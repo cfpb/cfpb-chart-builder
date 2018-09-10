@@ -279,19 +279,15 @@
   .highcharts-range-selector-label {
     display: table;
     margin-top: 0 !important;
-    transform: translateY( 415px );
     width: 100%;
     color: @gray;
 
-    .h6();
+    .chart-label();
+    transform: translateY( -5px );
 
-    .respond-to-min( 800px, {
-      transform: translateY( -5px );
-
-      .chart-label();
-
-      letter-spacing: 0;
-      text-transform: none;
+    .respond-to-max( 800px, {
+        .h6();
+        transform: translateY( 415px );
     } );
 
     .hide-on-ie9();

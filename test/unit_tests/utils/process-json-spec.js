@@ -121,8 +121,8 @@ describe( 'process-json', () => {
       expect( getProjectedTimestamp( dataList, 1 ) ).toBe( 1501545600000 );
     } );
 
-    it( 'should return false if given a value of 0 months projected', () => {
-      expect( getProjectedTimestamp( dataList, 0 ) ).toBe( false );
+    it( 'should return null if given a value of 0 months projected', () => {
+      expect( getProjectedTimestamp( dataList, 0 ) ).toBe( null );
     } );
 
   } );

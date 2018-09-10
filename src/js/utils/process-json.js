@@ -153,7 +153,7 @@ function processNumOriginationsData( data, group, source ) {
   } );
 
   data.projectedDate = {};
-  const fileNameMatch = 'inquiry';
+  const fileNameMatch = 'inq';
   let projectedMonths = 6;
   if ( source && source.includes( fileNameMatch ) ) {
     projectedMonths = 4;
@@ -214,9 +214,8 @@ function processYoyData( data, group ) {
  *
  * For Mortgage Performance Trends data, there is no projected data.
  * For Consumer Credit Trends data, projected data is for the last 6 months,
- * except for inquiry index data, which is for the last 4 months,
- * and inferred denials data, which is for the last months.
- * TODO: add value once these charts are added.
+ * except for inquiry index data, which is for the last 4 months, and inferred 
+ * denials index data, which has no projected data.
  *
  * @param {Array} valuesList -
  *   List of values from the data, containing an array with timestamp
@@ -229,7 +228,7 @@ function processYoyData( data, group ) {
  */
 function getProjectedTimestamp( valuesList, projectedRange = 6 ) {
   if ( projectedRange === 0 ) {
-    return false;
+    return null;
   }
 
   const projectedMonth = valuesList[valuesList.length - projectedRange][0];

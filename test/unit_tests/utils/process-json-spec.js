@@ -125,8 +125,8 @@ describe( 'process-json', () => {
       expect( getProjectedTimestamp( data, 1 ) ).toBe( 1501545600000 );
     } );
 
-    it( 'should return null if given a value of 0 months projected', () => {
-      expect( getProjectedTimestamp( data, 0 ) ).toBe( null );
+    it( 'should return undefined if given a value of 0 months projected', () => {
+      expect( getProjectedTimestamp( data, 0 ) ).toBeUndefined();
     } );
 
   } );
@@ -226,7 +226,7 @@ describe( 'process-json', () => {
     it( 'should assign the correct projected dates, ' +
         '0 months for inquiry index charts', () => {
       const testDataDen = originations( data, 'test', 'denials_test_file.csv' );
-      expect( testDataDen.projectedDate.timestamp ).toBeNull();
+      expect( testDataDen.projectedDate.timestamp ).toBeUndefined();
       expect( testDataDen.projectedDate.label ).toBeNull();
     } );
   } );

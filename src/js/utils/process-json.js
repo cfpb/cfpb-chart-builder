@@ -1,6 +1,8 @@
 const getTileMapColor = require( './get-tile-map-color' );
 const getTileMapState = require( './get-tile-map-state' );
 
+let UNDEFINED;
+
 /**
  * Returns an object with the UTC timestamp number in milliseconds
  * and human-friendly month and year for a given date in either format.
@@ -230,7 +232,7 @@ function processYoyData( data, group ) {
  */
 function getProjectedTimestamp( valuesList, projectedRange = 6 ) {
   if ( projectedRange === 0 ) {
-    return null;
+    return UNDEFINED;
   }
 
   const projectedMonth = valuesList[valuesList.length - projectedRange][0];

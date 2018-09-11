@@ -11,8 +11,8 @@ Highcharts.setOptions( {
 } );
 
 class LineChartIndex {
-  constructor( { el, description, data, metadata, yAxisLabel } ) {
-    data = process.originations( data[0], metadata );
+  constructor( { el, description, data, metadata, source, yAxisLabel } ) {
+    data = process.originations( data[0], metadata, source );
     const options = {
       chart: {
         marginRight: 0,

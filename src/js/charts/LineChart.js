@@ -77,8 +77,8 @@ function _getTickValue( value ) {
 }
 
 class LineChart {
-  constructor( { el, description, data, metadata, source, yAxisLabel } ) {
-    data = process.originations( data[0], metadata, source );
+  constructor( { el, description, data, metadata, yAxisLabel } ) {
+    data = process.originations( data[0], metadata );
 
     const options = {
       chart: {

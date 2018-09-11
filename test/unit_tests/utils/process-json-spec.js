@@ -224,10 +224,17 @@ describe( 'process-json', () => {
     } );
 
     it( 'should assign the correct projected dates, ' +
-        '0 months for inquiry index charts', () => {
+        '0 months for inferred denial charts', () => {
       const testDataDen = originations( data, 'test', 'denials_test_file.csv' );
       expect( testDataDen.projectedDate.timestamp ).toBeUndefined();
       expect( testDataDen.projectedDate.label ).toBeNull();
+    } );
+
+    it( 'should assign the correct projected dates, ' +
+        '6 months for all other charts', () => {
+      const testDataOther = originations( data, 'test', 'other.csv' );
+      expect( testDataOther.projectedDate.timestamp ).toBe( 1235865600000 );
+      expect( testDataOther.projectedDate.label ).toBe( 'February 2009' );
     } );
   } );
 

@@ -4,11 +4,15 @@ const process = require( '../utils/process-json' );
 require( 'highcharts/js/modules/accessibility' )( Highcharts );
 
 /**
- * Draw a legend on a chart
+ * Draw a legend on a chart.
  * @param {Object} chart A highchart chart.
  */
 function _drawLegend( chart ) {
 
+  /**
+   * @param {string} color hex color code.
+   * @returns {Object} Return a hash of box fill and stroke styles.
+   */
   function _boxStyle( color ) {
     return {
       'stroke-width': 1,
@@ -18,16 +22,33 @@ function _drawLegend( chart ) {
   }
 
   // args: (str, x, y, shape, anchorX, anchorY, useHTML, baseline, className)
-  chart.renderer.label( 'Year-over-year change (rounded to the nearest whole number)', 5, 5, null, null, null, true, false, 'label__tile-map' ).add();
-
+  const labelTx = 'Year-over-year change (rounded to the nearest whole number)';
+  chart.renderer
+    .label( labelTx, 5, 5, null, null, null, true, false, 'label__tile-map' )
+    .add();
 
   const legend = chart.renderer.g( 'legend__tile-map ' ).add();
 
-  chart.renderer.rect( 10, 48, 15, 15 ).attr( _boxStyle( getTileMapColor.green50 ) ).add( legend );
-  chart.renderer.rect( 10, 71, 15, 15 ).attr( _boxStyle( getTileMapColor.green20 ) ).add( legend );
-  chart.renderer.rect( 10, 94, 15, 15 ).attr( _boxStyle( getTileMapColor.gray5 ) ).add( legend );
-  chart.renderer.rect( 10, 117, 15, 15 ).attr( _boxStyle( getTileMapColor.pacific20 ) ).add( legend );
-  chart.renderer.rect( 10, 140, 15, 15 ).attr( _boxStyle( getTileMapColor.pacific50 ) ).add( legend );
+  chart.renderer
+    .rect( 10, 48, 15, 15 )
+    .attr( _boxStyle( getTileMapColor.green50 ) )
+    .add( legend );
+  chart.renderer
+    .rect( 10, 71, 15, 15 )
+    .attr( _boxStyle( getTileMapColor.green20 ) )
+    .add( legend );
+  chart.renderer
+    .rect( 10, 94, 15, 15 )
+    .attr( _boxStyle( getTileMapColor.gray5 ) )
+    .add( legend );
+  chart.renderer
+    .rect( 10, 117, 15, 15 )
+    .attr( _boxStyle( getTileMapColor.pacific20 ) )
+    .add( legend );
+  chart.renderer
+    .rect( 10, 140, 15, 15 )
+    .attr( _boxStyle( getTileMapColor.pacific50 ) )
+    .add( legend );
 
   chart.renderer.text( '16% or greater', 32, 61 ).add( legend );
   chart.renderer.text( '6% to 15%', 32, 84 ).add( legend );

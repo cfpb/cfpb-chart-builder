@@ -27,15 +27,50 @@
         <div class="content_wrapper">
             <div class="content_main">
                 <h1>Sample CFPB Charts</h1>
+                <p>Chart types:</p>
+                <ul>
+                    <li>
+                        <a href="#section-geomap">
+                            GeoMap
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#section-tilemap">
+                            TileMap
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#section-barchart">
+                            BarChart
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#section-linechart">
+                            LineChart
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#section-linechartcomparison">
+                            LineChartComparison
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#section-linechartindex">
+                            LineChartIndex
+                        </a>
+                    </li>
+                </ul>
+
                 <hr>
-                <h2>
+                <h2 id="section-geomap">
                     GeoMap
                 </h2>
                 <div id="map">
                      Sample geo map.
                 </div>
+
                 <hr>
-                <h2>
+                <h2 id="section-tilemap">
                     TileMap
                 </h2>
                 <h3>Percentage change in the volume of new auto loans</h3>
@@ -57,31 +92,9 @@
                      data-chart-type="tile_map">
                      This is the chart description.
                 </div>
+
                 <hr>
-                <h2>
-                    LineChartComparison
-                </h2>
-                <h3>Percentage of mortgages 30–89 days delinquent</h3>
-                <div id="update-demo"
-                     class="cfpb-chart"
-                     data-chart-color="blue"
-                     data-chart-type="line-comparison"
-                     data-chart-ignore="true">
-                     This chart will be created via the script in /test/demo.js.
-                </div>
-                <div>The above chart <span id="update-demo-countdown"></span>.</div>
-                <hr>
-                <h3>Percentage of mortgages 90 or more days delinquent</h3>
-                <!-- This chart's sources start with a slash indicating it wants to load its data from the same domain -->
-                <div class="cfpb-chart"
-                     data-chart-color="navy"
-                     data-chart-description="This is the chart description."
-                     data-chart-source="/sample_data/mortgage-performance/time-series/90/12031;/sample_data/mortgage-performance/time-series/90/national"
-                     data-chart-type="line-comparison">
-                     This is the chart description.
-                </div>
-                <hr>
-                <h2>
+                <h2 id="section-barchart">
                     BarChart
                 </h2>
                 <h3>Year-over-year number of auto loans</h3>
@@ -124,8 +137,9 @@
                      data-chart-type="bar">
                      This is the chart description.
                 </div>
+
                 <hr>
-                <h2>
+                <h2 id="section-linechart">
                     LineChart
                 </h2>
                 <h3>Number of auto loans</h3>
@@ -179,8 +193,33 @@
                      data-chart-type="line">
                      This is the chart description.
                 </div>
+
                 <hr>
-                <h2>
+                <h2 id="section-linechartcomparison">
+                    LineChartComparison
+                </h2>
+                <h3>Percentage of mortgages 30–89 days delinquent</h3>
+                <div id="update-demo"
+                     class="cfpb-chart"
+                     data-chart-color="blue"
+                     data-chart-type="line-comparison"
+                     data-chart-ignore="true">
+                     This chart will be created via the script in /test/demo.js.
+                </div>
+                <div>The above chart <span id="update-demo-countdown"></span>.</div>
+                <hr>
+                <h3>Percentage of mortgages 90 or more days delinquent</h3>
+                <!-- This chart's sources start with a slash indicating it wants to load its data from the same domain -->
+                <div class="cfpb-chart"
+                     data-chart-color="navy"
+                     data-chart-description="This is the chart description."
+                     data-chart-source="/sample_data/mortgage-performance/time-series/90/12031;/sample_data/mortgage-performance/time-series/90/national"
+                     data-chart-type="line-comparison">
+                     This is the chart description.
+                </div>
+
+                <hr>
+                <h2 id="section-linechartindex">
                     LineChartIndex
                 </h2>
                 <h3>Indexed number of people with inquiries (auto)</h3>

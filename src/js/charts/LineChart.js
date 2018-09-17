@@ -1,4 +1,4 @@
-const getFirstNumber = require( '../utils/calculation' ).getFirstNumber;
+import { getFirstNumber } from '../utils/calculation';
 const Highcharts = require( 'highcharts/js/highstock' );
 const process = require( '../utils/process-json' );
 require( 'highcharts/js/modules/accessibility' )( Highcharts );

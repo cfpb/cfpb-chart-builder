@@ -7,26 +7,6 @@ let UNDEFINED;
  * Returns an object with the UTC timestamp number in milliseconds
  * and human-friendly month and year for a given date in either format.
  *
- * @param {number} index -
- *   Counter starting at 0 representing the month and year for a data point.
- *   0 is January 2000, 1 is February 2000, etc.
- * @returns {number}
- *   UTC timestamp in milliseconds representing the month and year
- *   for the given date index.
- */
-function formatDate( index ) {
-  const year = Math.floor( index / 12 ) + 2000;
-  const month = index % 12;
-
-  const theDate = Date.UTC( year, month );
-
-  return theDate;
-}
-
-/**
- * Returns an object with the UTC timestamp number in milliseconds
- * and human-friendly month and year for a given date in either format.
- *
  * @param {number|string} date -
  *   UTC timestamp in milliseconds representing the month
  *   and year for a given data point, e.g. 1477958400000,
@@ -294,7 +274,6 @@ function processMapData( data ) {
 }
 
 module.exports = {
-  formatDate: formatDate,
   delinquencies: processDelinquencies,
   originations: processNumOriginationsData,
   yoy: processYoyData,

@@ -2,7 +2,6 @@ const processJSON = require( '../../../src/js/utils/process-json' );
 
 describe( 'process-json', () => {
 
-  const formatDate = processJSON.formatDate;
   const originations = processJSON.originations;
   const delinquencies = processJSON.delinquencies;
   const yoy = processJSON.yoy;
@@ -13,20 +12,6 @@ describe( 'process-json', () => {
 
   let data;
   let testData;
-
-  describe( 'formatDate', () => {
-
-    it( 'should convert a month index into the correct UTC timestamp ' +
-        'in milliseconds representing January 1 2000', () => {
-      expect( formatDate( 0 ) ).toBe( 946684800000 );
-    } );
-
-    it( 'should convert a month index into the correct UTC timestamp ' +
-        'in milliseconds representing November 1st 2016', () => {
-      expect( formatDate( 202 ) ).toBe( 1477958400000 );
-    } );
-
-  } );
 
   describe( 'convertDate', () => {
 

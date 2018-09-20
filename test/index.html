@@ -22,59 +22,58 @@
     </script>
 </head>
 <body>
-    <main class="content" id="main" role="main">
+    <main class="content" id="main">
         <div class="content_bar"></div>
         <div class="content_wrapper">
             <div class="content_main">
-                <h1>Some Sample CFPB Charts</h1>
+                <h1>Sample CFPB Charts</h1>
+                <p>Chart types:</p>
+                <ul>
+                    <li>
+                        <a href="#section-geomap">
+                            GeoMap
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#section-tilemap">
+                            TileMap
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#section-barchart">
+                            BarChart
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#section-linechart">
+                            LineChart
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#section-linechartcomparison">
+                            LineChartComparison
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#section-linechartindex">
+                            LineChartIndex
+                        </a>
+                    </li>
+                </ul>
+
                 <hr>
+                <h2 id="section-geomap">
+                    GeoMap
+                </h2>
                 <div id="map">
                      Sample geo map.
                 </div>
+
                 <hr>
-                <div id="update-demo"
-                     class="cfpb-chart"
-                     data-chart-color="blue"
-                     data-chart-type="line-comparison"
-                     data-chart-ignore="true">
-                     This chart will be created via the script in /test/demo.js.
-                </div>
-                <div>The above chart <span id="update-demo-countdown"></span>.</div>
-                <hr>
-                <!-- This chart's sources start with a slash indicating it wants to load its data from the same domain -->
-                <div class="cfpb-chart"
-                     data-chart-color="navy"
-                     data-chart-description="This is the chart description."
-                     data-chart-source="/sample_data/mortgage-performance/time-series/90/12031;/sample_data/mortgage-performance/time-series/90/national"
-                     data-chart-type="line-comparison">
-                     This is the chart description.
-                </div>
-                <hr>
-                <div class="cfpb-chart"
-                     data-chart-color="green"
-                     data-chart-description="This is the chart description."
-                     data-chart-source="consumer-credit-trends/auto-loans/num_data_AUT.csv"
-                     data-chart-type="line">
-                     This is the chart description.
-                </div>
-                <hr>
-                <div class="cfpb-chart"
-                     data-chart-color="teal"
-                     data-chart-description="This is the chart description."
-                     data-chart-metadata="Number of Loans"
-                     data-chart-source="consumer-credit-trends/auto-loans/yoy_data_all_AUT.csv"
-                     data-chart-type="bar">
-                     This is the chart description.
-                </div>
-                <hr>
-                <div class="cfpb-chart"
-                     data-chart-color="green"
-                     data-chart-description="This is the chart description."
-                     data-chart-source="consumer-credit-trends/auto-loans/vol_data_AUT.csv"
-                     data-chart-type="line">
-                     This is the chart description.
-                </div>
-                <hr>
+                <h2 id="section-tilemap">
+                    TileMap
+                </h2>
+                <h3>Percentage change in the volume of new auto loans</h3>
                 <div class="cfpb-chart"
                      data-chart-color="navy"
                      data-chart-description="This is the chart description."
@@ -84,6 +83,31 @@
                      This is the chart description.
                 </div>
                 <hr>
+                <h3>Percentage change in the volume of new mortgages</h3>
+                <div class="cfpb-chart"
+                     data-chart-color="navy"
+                     data-chart-description="This is the chart description."
+                     data-chart-source="consumer-credit-trends/mortgages/map_data_MTG.csv"
+                     data-chart-title="This is the tile map title"
+                     data-chart-type="tile_map">
+                     This is the chart description.
+                </div>
+
+                <hr>
+                <h2 id="section-barchart">
+                    BarChart
+                </h2>
+                <h3>Year-over-year number of auto loans</h3>
+                <div class="cfpb-chart"
+                     data-chart-color="teal"
+                     data-chart-description="This is the chart description."
+                     data-chart-metadata="Number of Loans"
+                     data-chart-source="consumer-credit-trends/auto-loans/yoy_data_all_AUT.csv"
+                     data-chart-type="bar">
+                     This is the chart description.
+                </div>
+                <hr>
+                <h3>Year-over-year dollar volume of auto loans</h3>
                 <div class="cfpb-chart"
                      data-chart-color="blue"
                      data-chart-description="This is the chart description."
@@ -93,51 +117,17 @@
                      This is the chart description.
                 </div>
                 <hr>
+                <h3>Year-over-year deep subprime mortgages</h3>
                 <div class="cfpb-chart"
                      data-chart-color="green"
-                     data-chart-description="Deep subprime (credit scores below 580)."
-                     data-chart-metadata="Deep subprime"
-                     data-chart-source="consumer-credit-trends/auto-loans/volume_data_Score_Level_AUT.csv"
-                     data-chart-type="line">
-                     This is the chart description.
-                </div>
-                <hr>
-                <div class="cfpb-chart"
-                     data-chart-color="teal"
-                     data-chart-description="Subprime (credit scores 580 - 619)."
-                     data-chart-metadata="Subprime"
-                     data-chart-source="consumer-credit-trends/auto-loans/volume_data_Score_Level_AUT.csv"
-                     data-chart-type="line">
-                     This is the chart description.
-                </div>
-                <hr>
-                <div class="cfpb-chart"
-                     data-chart-color="navy"
                      data-chart-description="This is the chart description."
-                     data-chart-source="consumer-credit-trends/mortgages/map_data_MTG.csv"
-                     data-chart-title="This is the tile map title"
-                     data-chart-type="tile_map">
-                     This is the chart description.
-                </div>
-                <hr>
-                <div class="cfpb-chart"
-                     data-chart-color="blue"
-                     data-chart-description="High income (relative income 120% or above)."
-                     data-chart-metadata="High"
-                     data-chart-source="consumer-credit-trends/mortgages/volume_data_Income_Level_MTG.csv"
-                     data-chart-type="line">
-                     This is the chart description.
-                </div>
-                <hr>
-                <div class="cfpb-chart"
-                     data-chart-color="green"
-                     data-chart-description="Deep subprime (credit scores below 580)."
                      data-chart-metadata="Deep subprime"
                      data-chart-source="consumer-credit-trends/mortgages/yoy_data_Score_Level_MTG.csv"
                      data-chart-type="bar">
                      This is the chart description.
                 </div>
                 <hr>
+                <h3>Year-over-year subprime mortgages</h3>
                 <div class="cfpb-chart"
                      data-chart-color="green"
                      data-chart-description="This is the chart description."
@@ -147,7 +137,91 @@
                      data-chart-type="bar">
                      This is the chart description.
                 </div>
+
                 <hr>
+                <h2 id="section-linechart">
+                    LineChart
+                </h2>
+                <h3>Number of auto loans</h3>
+                <div class="cfpb-chart"
+                     data-chart-color="green"
+                     data-chart-description="This is the chart description."
+                     data-chart-source="consumer-credit-trends/auto-loans/num_data_AUT.csv"
+                     data-chart-type="line">
+                     This is the chart description.
+                </div>
+                <hr>
+                <h3>Volume of auto loans</h3>
+                <div class="cfpb-chart"
+                     data-chart-color="green"
+                     data-chart-description="This is the chart description."
+                     data-chart-source="consumer-credit-trends/auto-loans/vol_data_AUT.csv"
+                     data-chart-type="line">
+                     This is the chart description.
+                </div>
+                <hr>
+                <h3>Volume of auto loans below credit scores of 580</h3>
+                <div class="cfpb-chart"
+                     data-chart-color="green"
+                     data-chart-description="Deep subprime (credit scores below 580)."
+                     data-chart-metadata="Deep subprime"
+                     data-chart-source="consumer-credit-trends/auto-loans/volume_data_Score_Level_AUT.csv"
+                     data-chart-type="line">
+                     This is the chart description.
+                </div>
+                <hr>
+                <h3>
+                    Volume of auto loans below credit scores between 580 - 619
+                </h3>
+                <div class="cfpb-chart"
+                     data-chart-color="teal"
+                     data-chart-description="Subprime (credit scores 580 - 619)."
+                     data-chart-metadata="Subprime"
+                     data-chart-source="consumer-credit-trends/auto-loans/volume_data_Score_Level_AUT.csv"
+                     data-chart-type="line">
+                     This is the chart description.
+                </div>
+                <hr>
+                <h3>
+                    Volume of auto loans at relative income of 120% or above
+                </h3>
+                <div class="cfpb-chart"
+                     data-chart-color="blue"
+                     data-chart-description="High income (relative income 120% or above)."
+                     data-chart-metadata="High"
+                     data-chart-source="consumer-credit-trends/mortgages/volume_data_Income_Level_MTG.csv"
+                     data-chart-type="line">
+                     This is the chart description.
+                </div>
+
+                <hr>
+                <h2 id="section-linechartcomparison">
+                    LineChartComparison
+                </h2>
+                <h3>Percentage of mortgages 30–89 days delinquent</h3>
+                <div id="update-demo"
+                     class="cfpb-chart"
+                     data-chart-color="blue"
+                     data-chart-type="line-comparison"
+                     data-chart-ignore="true">
+                     This chart will be created via the script in /test/demo.js.
+                </div>
+                <div>The above chart <span id="update-demo-countdown"></span>.</div>
+                <hr>
+                <h3>Percentage of mortgages 90 or more days delinquent</h3>
+                <!-- This chart's sources start with a slash indicating it wants to load its data from the same domain -->
+                <div class="cfpb-chart"
+                     data-chart-color="navy"
+                     data-chart-description="This is the chart description."
+                     data-chart-source="/sample_data/mortgage-performance/time-series/90/12031;/sample_data/mortgage-performance/time-series/90/national"
+                     data-chart-type="line-comparison">
+                     This is the chart description.
+                </div>
+
+                <hr>
+                <h2 id="section-linechartindex">
+                    LineChartIndex
+                </h2>
                 <h3>Indexed number of people with inquiries (auto)</h3>
                 <div class="cfpb-chart"
                      data-chart-color="purple"

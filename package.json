@@ -38,7 +38,7 @@
     "cf-layout": "5.0.0",
     "cf-typography": "5.0.1",
     "core-js": "2.5.7",
-    "highcharts": "5.0.11",
+    "highcharts": "https://github.com/cfpb/highcharts-dist#fix-missing-plotline-label",
     "xdr": "github:contolini/xdr"
   },
   "devDependencies": {

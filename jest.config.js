@@ -1,7 +1,7 @@
 module.exports = {
   verbose: false,
   transform: {
-    '^.+\\.jsx?$': 'babel-jest'
+    '^.+\\.js?$': 'babel-jest'
   },
   collectCoverage: true,
   collectCoverageFrom: [

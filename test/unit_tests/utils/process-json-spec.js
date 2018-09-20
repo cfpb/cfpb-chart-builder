@@ -2,73 +2,15 @@ const processJSON = require( '../../../src/js/utils/process-json' );
 
 describe( 'process-json', () => {
 
-  const formatDate = processJSON.formatDate;
   const originations = processJSON.originations;
   const delinquencies = processJSON.delinquencies;
   const yoy = processJSON.yoy;
   const map = processJSON.map;
   const getProjectedDate = processJSON.getProjectedDate;
   const getProjectedTimestamp = processJSON.getProjectedTimestamp;
-  const convertDate = processJSON.convertDate;
 
   let data;
   let testData;
-
-  describe( 'formatDate', () => {
-
-    it( 'should convert a month index into the correct UTC timestamp ' +
-        'in milliseconds representing January 1 2000', () => {
-      expect( formatDate( 0 ) ).toBe( 946684800000 );
-    } );
-
-    it( 'should convert a month index into the correct UTC timestamp ' +
-        'in milliseconds representing November 1st 2016', () => {
-      expect( formatDate( 202 ) ).toBe( 1477958400000 );
-    } );
-
-  } );
-
-  describe( 'convertDate', () => {
-
-    /* 1485925200000 = February 2017
-       1477958400000 = Nov 2016 */
-    it( 'should convert a UTC timestamp in milliseconds to a ' +
-        'human friendly month and year date', () => {
-      expect( convertDate( 946684800000 ).humanFriendly )
-        .toBe( 'January 2000' );
-      expect( convertDate( 1477958400000 ).humanFriendly )
-        .toBe( 'November 2016' );
-      expect( convertDate( 1485925200000 ).humanFriendly )
-        .toBe( 'February 2017' );
-
-    } );
-
-    it( 'should convert a UTC timestamp in milliseconds ' +
-        'to a UTC timestamp in milliseconds', () => {
-      expect( convertDate( 1477958400000 ).timestamp ).toBe( 1477958400000 );
-    } );
-
-    it( 'should convert a human friendly month and year date ' +
-        'to a UTC timestamp in milliseconds', () => {
-      expect( convertDate( 'January 2000' ).timestamp ).toBe( 946684800000 );
-      expect( convertDate( 'November 2016' ).timestamp ).toBe( 1477958400000 );
-      expect( convertDate( 'February 2017' ).timestamp ).toBe( 1485907200000 );
-    } );
-
-    it( 'should convert a human friendly date to a timestamp ' +
-        'and back to a human friendly date', () => {
-      const february = convertDate( 'February 2017' ).timestamp;
-      expect( convertDate( february ).humanFriendly ).toBe( 'February 2017' );
-    } );
-
-
-    it( 'should convert a human friendly month ' +
-        'and year date to a human friendly month and year date', () => {
-      expect( convertDate( 'February 2017' ).humanFriendly )
-        .toBe( 'February 2017' );
-    } );
-
-  } );
 
   describe( 'getProjectedDate', () => {
 

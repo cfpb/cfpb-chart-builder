@@ -1,4 +1,3 @@
-const getFirstNumber = require( '../utils/calculation' ).getFirstNumber;
 const Highcharts = require( 'highcharts/js/highstock' );
 const process = require( '../utils/process-json' );
 require( 'highcharts/js/modules/accessibility' )( Highcharts );
@@ -11,7 +10,7 @@ Highcharts.setOptions( {
 } );
 
 class LineChartIndex {
-  constructor( { el, description, data, metadata, source, yAxisLabel } ) {
+  constructor( { el, description, data, metadata, source } ) {
     data = process.originations( data[0], metadata, source );
     const options = {
       chart: {

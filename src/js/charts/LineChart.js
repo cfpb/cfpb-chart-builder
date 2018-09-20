@@ -11,23 +11,6 @@ Highcharts.setOptions( {
 } );
 
 /**
- * _getYAxisUnits - Get the text of the y-axis title
- *
- * @param {Array} array - An array of values to check.
- * @returns {string} Appropriate y-axis title.
- */
-function _getYAxisUnits( array ) {
-  const value = getFirstNumber( array );
-  if ( !value ) {
-    return value;
-  }
-  if ( value % 1000000000 < value ) {
-    return 'billions';
-  }
-  return 'millions';
-}
-
-/**
  * _getYAxisLabel - Get the text of the y-axis title.
  *
  * @param {Array} chartData - An array of values to check.

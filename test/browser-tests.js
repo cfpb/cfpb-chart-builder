@@ -86,9 +86,9 @@ function startSauce( err, process ) {
       name: testName
     }
   };
-  request.post( opts, function( err, httpResponse, body ) {
-    if ( err ) {
-      console.error( 'An error occurred:', err );
+  request.post( opts, function( reqErr, httpResponse, body ) {
+    if ( reqErr ) {
+      console.error( 'An error occurred:', reqErr );
     }
     console.log( 'Tests started.' );
     sauceTests = body['js tests'];

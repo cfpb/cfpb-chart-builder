@@ -113,6 +113,7 @@ describe( 'process-json', () => {
       expect( testData.projectedDate.timestamp ).toBe( 1246406400000 );
       // July 2009
       expect( testData[testData.length - 6][1] ).toBe( 92 );
+
       /* June 2009, the label uses the last month of data that isn't projected.
          For projected data starting with July, the label should say June. */
       expect( testData.projectedDate.label ).toBe( 'June 2009' );

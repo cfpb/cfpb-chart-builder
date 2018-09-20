@@ -1,4 +1,3 @@
-import { getFirstNumber } from '../utils/calculation';
 const Highcharts = require( 'highcharts/js/highstock' );
 const process = require( '../utils/process-json' );
 require( 'highcharts/js/modules/accessibility' )( Highcharts );
@@ -9,37 +8,6 @@ Highcharts.setOptions( {
     thousandsSep: ','
   }
 } );
-
-/**
- * _getYAxisUnits - Get the text of the y-axis title
- *
- * @param {Array} array - An array of values to check
- * @returns {string} Appropriate y-axis title
- */
-function _getYAxisUnits( array ) {
-  const value = getFirstNumber( array );
-  if ( !value ) {
-    return value;
-  }
-  return 'percent';
-}
-
-/**
- * _getYAxisLabel - Get the text of the y-axis title
- *
- * @param  {array} array  An array of values to check
- * @returns {string}    Appropriate y-axis title
- */
-function _getYAxisLabel( array ) {
-  const value = getFirstNumber( array );
-  if ( !value ) {
-    return value;
-  }
-  if ( value % 1000000000 < value ) {
-    return 'Volume';
-  }
-  return 'Number';
-}
 
 /**
  * _getTickValue - Convert the data point's unit to M or B.

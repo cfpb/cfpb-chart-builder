@@ -44,7 +44,10 @@ function setItem( key, value, storage ) {
  */
 function getItem( key, storage ) {
   storage = _getStorageType( storage );
-  return storage.getItem ? JSON.parse( storage.getItem( key ) ) : JSON.parse( storage[key] );
+  if ( storage.getItem ) {
+    return JSON.parse( storage.getItem( key ) );
+  }
+  return JSON.parse( storage[key] );
 }
 
 /**

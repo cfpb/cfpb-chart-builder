@@ -149,7 +149,7 @@ describe( 'process-json', () => {
           ]
         }
       };
-      testData = originations( data, 'test', 'inquiry_test_file.csv' );
+      testData = originations( data, 'test', 'inq_test_file.csv' );
     } );
 
     it( 'should eliminate dates before 2009', () => {
@@ -168,7 +168,7 @@ describe( 'process-json', () => {
 
     it( 'should assign the correct projected dates, ' +
         '0 months for inferred denial charts', () => {
-      const testDataDen = originations( data, 'test', 'denials_test_file.csv' );
+      const testDataDen = originations( data, 'test', 'den_test_file.csv' );
       expect( testDataDen.projectedDate.timestamp ).toBeUndefined();
       expect( testDataDen.projectedDate.label ).toBeNull();
     } );

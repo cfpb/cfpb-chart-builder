@@ -90,9 +90,9 @@ function processNumOriginationsData( data, group, source ) {
   data.projectedDate = {};
   let projectedMonths = 6;
   // set number of months of projected data based on whether source filename includes 'inq' or 'den' for inquiries or denials
-  if ( source && source.includes( 'inq' ) ) {
+  if ( source && source.indexOf( 'inq_' ) !== -1 ) {
     projectedMonths = 4;
-  } else if ( source && source.includes( 'den' ) ) {
+  } else if ( source && source.indexOf( 'den_' ) !== -1 ) {
     projectedMonths = 0;
   }
   data.projectedDate.timestamp = getProjectedTimestamp( data.adjusted, projectedMonths );

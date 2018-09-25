@@ -89,10 +89,10 @@ function processNumOriginationsData( data, group, source ) {
 
   data.projectedDate = {};
   let projectedMonths = 6;
-  // set number of months of projected data based on whether source filename includes 'inq' or 'den' for inquiries or denials
+  // set number of months of projected data based on whether source filename includes 'inq' or 'crt' for inquiries or credit tightness
   if ( source && source.indexOf( 'inq_' ) !== -1 ) {
     projectedMonths = 4;
-  } else if ( source && source.indexOf( 'den_' ) !== -1 ) {
+  } else if ( source && source.indexOf( 'crt_' ) !== -1 ) {
     projectedMonths = 0;
   }
   data.projectedDate.timestamp = getProjectedTimestamp( data.adjusted, projectedMonths );
@@ -151,8 +151,8 @@ function processYoyData( data, group ) {
  *
  * For Mortgage Performance Trends data, there is no projected data.
  * For Consumer Credit Trends data, projected data is for the last 6 months,
- * except for inquiry index data, which is for the last 4 months, and inferred
- * denials index data, which has no projected data.
+ * except for inquiry index data, which is for the last 4 months, and credit
+ * tightness index data, which has no projected data.
  *
  * @param {Array} valuesList -
  *   List of values from the data, containing an array with timestamp

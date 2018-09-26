@@ -1,25 +1,26 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html lang="en" class="no-js lt-ie10 lt-ie9"> <![endif]-->
 <!--[if IE 9]>         <html lang="en" class="no-js lt-ie10"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js" lang="en">
-<!--<![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+
 <head>
     <meta charset="utf-8">
     <title>CFPB Chart Builder Demo Page</title>
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <!--[if lt IE 9]><link rel="stylesheet" href="css/demo.ie8.css"><![endif]-->
     <!--[if IE 9]><link rel="stylesheet" href="css/demo.ie9.css"><![endif]-->
-    <!--[if gt IE 8]><!-->
-    <link href="static/demo.css" rel="stylesheet"><!--<![endif]-->
+    <!--[if gt IE 9]><!-->
+        <link href="static/demo.css" rel="stylesheet">
+    <!--<![endif]-->
     <link href="cfpb-chart-builder.css" rel="stylesheet">
-    <script>
-        // Confirm availability of JS and remove no-js class from html
-        var docElement = document.documentElement;
-        docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2');
-    </script>
+    <!--[if gt IE 9]><!-->
+        <script>
+            // Confirm availability of JS and remove no-js class from html
+            var docElement = document.documentElement;
+            docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2');
+        </script>
+    <!--<![endif]-->
 </head>
 <body>
     <main class="content" id="main">
@@ -279,6 +280,8 @@
         </div>
     </main>
     <script src="./test-runner.js"></script>
-    <script src="static/cfpb-chart-builder.js"></script>
+    <!--[if gt IE 9]><!-->
+        <script src="static/cfpb-chart-builder.js"></script>
+    <!--<![endif]-->
 </body>
 </html>

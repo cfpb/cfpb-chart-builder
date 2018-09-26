@@ -1,8 +1,3 @@
-require( 'core-js/es6/symbol' );
-require( 'core-js/es6/promise' );
-require( 'core-js/fn/object/assign' );
-require( 'core-js/fn/array/index-of' );
-
 const documentReady = require( './utils/document-ready' );
 const createChart = require( './charts' );
 const ajax = require( './utils/get-data' );

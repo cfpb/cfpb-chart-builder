@@ -37,9 +37,8 @@
     "cf-core": "4.10.0",
     "cf-layout": "5.0.0",
     "cf-typography": "5.0.1",
-    "core-js": "2.5.7",
     "highcharts": "https://github.com/cfpb/highcharts-dist#fix-missing-plotline-label",
-    "xdr": "github:contolini/xdr"
+    "xdr": "0.5.3"
   },
   "devDependencies": {
     "autoprefixer": "9.1.5",
@@ -55,7 +54,6 @@
     "gulp": "4.0.0",
     "gulp-changed": "3.2.0",
     "gulp-connect": "5.5.0",
-    "gulp-cssmin": "0.2.0",
     "gulp-eslint": "5.0.0",
     "gulp-header": "2.0.5",
     "gulp-imagemin": "4.1.0",
@@ -68,7 +66,6 @@
     "jest-cli": "23.6.0",
     "less": "2.7.2",
     "minimist": "1.2.0",
-    "postcss-unmq": "1.0.2",
     "request": "2.88.0",
     "require-dir": "1.0.0",
     "sauce-connect-launcher": "1.2.4",

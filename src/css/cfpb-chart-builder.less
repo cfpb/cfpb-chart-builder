@@ -18,13 +18,6 @@
 @chart-teal-primary: @teal;
 @chart-teal-secondary: @teal-60;
 
-.hide-on-ie9 {
-  .lt-ie10 & {
-    display: none;
-    visibility: hidden;
-  }
-}
-
 .cfpb-chart {
   position: relative;
   max-width: 650px;
@@ -202,10 +195,6 @@
 
   .highcharts-legend-item {
 
-    .highcharts-graph {
-      .hide-on-ie9();
-    }
-
     span {
       margin-left: 25px !important;
       top: -6px !important;
@@ -290,8 +279,6 @@
         transform: translateY( 415px );
     } );
 
-    .hide-on-ie9();
-
     span {
       display: table-cell;
       position: relative !important;
@@ -348,8 +335,6 @@
     .respond-to-min( 800px, {
       transform: translate( 0px, 30px );
     } );
-
-    .hide-on-ie9();
 
     &:after {
       content: '';

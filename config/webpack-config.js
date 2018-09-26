@@ -10,15 +10,16 @@ const envvars = require( './environment' ).envvars;
    Runs code through Babel and uses global supported browser list. */
 const COMMON_MODULE_CONFIG = {
   rules: [ {
+    exclude: [/node_modules/],
     use: {
       loader: 'babel-loader?cacheDirectory=true',
       options: {
-        presets: [ [ 'babel-preset-env', {
+        presets: [ [ '@babel/preset-env', {
           configPath: __dirname,
           /* Use useBuiltIns: 'usage' and set `debug: true` to see what
              scripts require polyfilling. */
-          useBuiltIns: false,
-          debug: false
+          useBuiltIns: 'usage',
+          debug: true
         } ] ]
       }
     }

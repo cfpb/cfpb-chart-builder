@@ -1,6 +1,8 @@
-const Highcharts = require( 'highcharts/js/highstock' );
-const process = require( '../utils/process-json' );
-require( 'highcharts/js/modules/accessibility' )( Highcharts );
+import accessibility from 'highcharts/js/modules/accessibility';
+import Highcharts from 'highcharts/js/highstock';
+import * as process from '../utils/process-json';
+
+accessibility( Highcharts );
 
 Highcharts.setOptions( {
   lang: {
@@ -111,7 +113,7 @@ class LineChartComparison {
   }
 
   static getSeries( data ) {
-    data = process.delinquencies( data );
+    data = process.processDelinquencies( data );
     data = data.map( datum => ( {
       name: datum.label,
       data: datum.data,
@@ -148,4 +150,4 @@ class LineChartComparison {
 
 }
 
-module.exports = LineChartComparison;
+export default LineChartComparison;

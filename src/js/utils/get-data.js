@@ -1,5 +1,5 @@
-const ajax = require( 'xdr' );
-const cache = require( './session-storage' );
+import ajax from 'xdr';
+import * as cache from './session-storage';
 
 let DATA_SOURCE_BASE = 'https://files.consumerfinance.gov/data/';
 
@@ -34,4 +34,4 @@ const getData = sources => {
   return Promise.all( promises );
 };
 
-module.exports = getData;
+export default getData;

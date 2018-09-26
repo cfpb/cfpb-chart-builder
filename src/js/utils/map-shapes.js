@@ -1,5 +1,5 @@
-const ajax = require( './get-data' );
-const cache = require( './session-storage' );
+import ajax from './get-data';
+import * as cache from './session-storage';
 
 const DATA_SOURCE_BASE = 'https://files.consumerfinance.gov/data/';
 
@@ -22,6 +22,4 @@ const fetchShapes = geoType => {
   return promise;
 };
 
-module.exports = {
-  fetch: fetchShapes
-};
+export default fetchShapes;

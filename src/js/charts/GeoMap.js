@@ -214,4 +214,4 @@ class GeoMap {
 
 }
 
-module.exports = GeoMap;
+export default GeoMap;

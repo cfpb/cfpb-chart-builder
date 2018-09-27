@@ -1,5 +1,5 @@
 const Highcharts = require( 'highcharts/js/highstock' );
-const process = require( '../utils/process-json' );
+import * as process from '../utils/process-json';
 require( 'highcharts/js/modules/accessibility' )( Highcharts );
 
 Highcharts.setOptions( {
@@ -111,7 +111,7 @@ class LineChartComparison {
   }
 
   static getSeries( data ) {
-    data = process.delinquencies( data );
+    data = process.processDelinquencies( data );
     data = data.map( datum => ( {
       name: datum.label,
       data: datum.data,
@@ -148,4 +148,4 @@ class LineChartComparison {
 
 }
 
-module.exports = LineChartComparison;
+export default LineChartComparison;

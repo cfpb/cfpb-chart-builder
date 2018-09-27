@@ -1,6 +1,6 @@
 import { getFirstNumber } from '../utils/calculation';
 const Highcharts = require( 'highcharts/js/highstock' );
-const process = require( '../utils/process-json' );
+import * as process from '../utils/process-json';
 require( 'highcharts/js/modules/accessibility' )( Highcharts );
 
 Highcharts.setOptions( {
@@ -61,7 +61,7 @@ function _getTickValue( value ) {
 
 class LineChart {
   constructor( { el, description, data, metadata, yAxisLabel } ) {
-    data = process.originations( data[0], metadata );
+    data = process.processNumOriginationsData( data[0], metadata );
 
     const options = {
       chart: {
@@ -235,4 +235,4 @@ class LineChart {
   }
 }
 
-module.exports = LineChart;
+export default LineChart;

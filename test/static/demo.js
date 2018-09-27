@@ -1,20 +1,20 @@
 // This file is used to test the programmatic rendering and updating of a chart
 
-const ccb = require( '../../src/js' );
+import { createChart } from '../../src/js/';
 
 const container = document.getElementById( 'update-demo' );
 const countdown = document.getElementById( 'update-demo-countdown' );
 const mapContainer = document.getElementById( 'map' );
 let seconds = 5;
 
-const chart = ccb.createChart( {
+const chart = createChart( {
   el: container,
   source: 'mortgage-performance/time-series/30-89/national',
   type: 'line-comparison',
   metadata: 'pct30'
 } );
 
-const map = ccb.createChart( {
+const map = createChart( {
   el: mapContainer,
   source: 'mortgage-performance/map-data/30-89/metros/2009-01',
   type: 'geo-map',

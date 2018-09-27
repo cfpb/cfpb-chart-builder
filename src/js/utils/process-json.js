@@ -226,11 +226,11 @@ function processMapData( data ) {
   return data;
 }
 
-module.exports = {
-  delinquencies: processDelinquencies,
-  originations: processNumOriginationsData,
-  yoy: processYoyData,
-  map: processMapData,
-  getProjectedDate: getProjectedDate,
-  getProjectedTimestamp: getProjectedTimestamp
+export {
+  processDelinquencies,
+  processNumOriginationsData,
+  processYoyData,
+  processMapData,
+  getProjectedDate,
+  getProjectedTimestamp
 };

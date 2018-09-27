@@ -1,13 +1,7 @@
-const ajax = require( 'xdr' );
-const cache = require( './session-storage' );
+import ajax from 'xdr';
+import * as cache from './session-storage';
 
-/* IE9 doesn't allow XHR from different protocols so we check what protocol
-   is being used and accommodate it . */
-let DATA_SOURCE_BASE = window.location.protocol.indexOf( 'https' ) === -1 ?
-  // HTTP-only endpoint
-  '//files.consumerfinance.gov.s3.amazonaws.com/data/' :
-  // HTTPS-only endpoint
-  '//files.consumerfinance.gov/data/';
+let DATA_SOURCE_BASE = 'https://files.consumerfinance.gov/data/';
 
 // Let browsers override the data source root (useful for localhost testing)
 DATA_SOURCE_BASE = window.CFPB_CHART_DATA_SOURCE_BASE || DATA_SOURCE_BASE;
@@ -40,4 +34,4 @@ const getData = sources => {
   return Promise.all( promises );
 };
 
-module.exports = getData;
+export default getData;

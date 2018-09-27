@@ -1,7 +1,7 @@
 const ajax = require( './get-data' );
 const cache = require( './session-storage' );
 
-const DATA_SOURCE_BASE = '//files.consumerfinance.gov/data/';
+const DATA_SOURCE_BASE = 'https://files.consumerfinance.gov/data/';
 
 const shapes = {
   states: `${ DATA_SOURCE_BASE }mortgage-performance/meta/us-states.geo.json`,

@@ -1,6 +1,6 @@
 {
   "name": "cfpb-chart-builder",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Charts for the Consumer Financial Protection Bureau",
   "main": "src/js/index.js",
   "scripts": {
@@ -39,7 +39,7 @@
     "cf-typography": "5.0.1",
     "core-js": "2.5.7",
     "highcharts": "https://github.com/cfpb/highcharts-dist#fix-missing-plotline-label",
-    "xdr": "github:contolini/xdr"
+    "xdr": "https://github.com/contolini/xdr"
   },
   "devDependencies": {
     "autoprefixer": "9.1.5",

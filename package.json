@@ -41,12 +41,12 @@
     "xdr": "0.5.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
+    "@babel/core": "7.1.2",
     "@babel/preset-env": "^7.0.0",
     "autoprefixer": "9.1.5",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "23.6.0",
-    "babel-loader": "8.0.3",
+    "babel-loader": "8.0.4",
     "browser-sync": "2.24.7",
     "compression": "1.7.3",
     "cors": "2.8.4",
@@ -68,7 +68,7 @@
     "less": "3.8.1",
     "minimist": "1.2.0",
     "request": "2.88.0",
-    "require-dir": "1.0.0",
+    "require-dir": "1.1.0",
     "sauce-connect-launcher": "1.2.4",
     "serve-static": "1.13.2",
     "through2": "2.0.3",

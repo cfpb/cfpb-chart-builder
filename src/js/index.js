@@ -1,5 +1,5 @@
 const documentReady = require( './utils/document-ready' );
-const createChartDir = require( './charts' );
+import createChartDir from './charts';
 import ajax from './utils/get-data';
 import fetchShapes from './utils/map-shapes';
 
@@ -18,23 +18,22 @@ class Chart {
       case 'geo-map':
         fetchShapes( chartOptions.metadata ).then( shapes => {
           chartOptions.shapes = shapes[0];
-          this.highchart = new createChartDir.GeoMap.default( chartOptions );
+          this.highchart = new createChartDir.GeoMap( chartOptions );
         } );
         break;
       case 'line-comparison':
-        this.highchart = new createChartDir.LineChartComparison.default( chartOptions );
+        this.highchart = new createChartDir.LineChartComparison( chartOptions );
         break;
       case 'line-index':
-        this.highchart = new createChartDir.LineChartIndex.default( chartOptions );
+        this.highchart = new createChartDir.LineChartIndex( chartOptions );
         break;
       case 'line':
-        this.highchart = new createChartDir.LineChart.default( chartOptions );
+        this.highchart = new createChartDir.LineChart( chartOptions );
         break;
       case 'bar':
-        this.highchart = createChartDir.bar.default( chartOptions );
+        this.highchart = createChartDir.bar( chartOptions );
         break;
       case 'tile_map':
-        this.highchart = createChartDir.tileMap.default( chartOptions );
         break;
       default:
     }

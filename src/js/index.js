@@ -34,6 +34,7 @@ class Chart {
         this.highchart = createChartDir.bar( chartOptions );
         break;
       case 'tile_map':
+        this.highchart = createChartDir.tileMap( chartOptions );
         break;
       default:
     }

@@ -1,6 +1,6 @@
 // This file is used to test the programmatic rendering and updating of a chart
 
-import { createChart } from '../../src/js/';
+import { createChart } from '../../src/js/index';
 
 const container = document.getElementById( 'update-demo' );
 const countdown = document.getElementById( 'update-demo-countdown' );

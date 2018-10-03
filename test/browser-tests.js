@@ -75,7 +75,6 @@ function startSauce( err, process ) {
     method: 'POST',
     json: {
       platforms: [
-        [ 'Windows 7', 'internet explorer', '9' ],
         [ 'Windows 7', 'internet explorer', '10' ],
         [ 'Windows 7', 'firefox', '27' ],
         [ 'Windows 7', 'chrome', '' ],

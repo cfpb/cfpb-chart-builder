@@ -1,7 +1,9 @@
-const Highcharts = require( 'highcharts/js/highmaps' );
+import accessibility from 'highcharts/js/modules/accessibility';
+import Highcharts from 'highcharts/js/highmaps';
 const getTileMapColor = require( '../utils/get-tile-map-color' );
 import * as process from '../utils/process-json';
-require( 'highcharts/js/modules/accessibility' )( Highcharts );
+
+accessibility( Highcharts );
 
 /**
  * Draw a legend on a chart.

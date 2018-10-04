@@ -1,6 +1,8 @@
-const Highcharts = require( 'highcharts/js/highstock' );
+import accessibility from 'highcharts/js/modules/accessibility';
+import Highcharts from 'highcharts/js/highstock';
 import * as process from '../utils/process-json';
-require( 'highcharts/js/modules/accessibility' )( Highcharts );
+
+accessibility( Highcharts );
 
 Highcharts.setOptions( {
   lang: {

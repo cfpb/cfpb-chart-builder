@@ -3,10 +3,12 @@ node_js:
   - 8
 install:
   - npm install -g gulp
+  - npm install -g codecov
   - ./setup.sh
 script:
   - gulp lint --travis
   - npm test
+  - codecov
 before_deploy:
   - cp test/index.html dist/index.html
   - cp test/test-runner.js dist/test-runner.js

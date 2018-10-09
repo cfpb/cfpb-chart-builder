@@ -1,5 +1,5 @@
 
-# CFPB Chart Builder [![Build Status](https://travis-ci.org/cfpb/cfpb-chart-builder.svg?branch=master)](https://travis-ci.org/cfpb/cfpb-chart-builder) [![Coverage Status](https://coveralls.io/repos/github/cfpb/cfpb-chart-builder/badge.svg?branch=master)](https://coveralls.io/github/cfpb/cfpb-chart-builder?branch=master) [![Sauce Test Status](https://saucelabs.com/browser-matrix/cct-sauce.svg)](https://saucelabs.com/u/cct-sauce)
+# CFPB Chart Builder [![Build Status](https://travis-ci.org/cfpb/cfpb-chart-builder.svg?branch=master)](https://travis-ci.org/cfpb/cfpb-chart-builder) [![codecov](https://codecov.io/gh/cfpb/cfpb-chart-builder/branch/master/graph/badge.svg)](https://codecov.io/gh/cfpb/cfpb-chart-builder) [![Sauce Test Status](https://saucelabs.com/browser-matrix/cct-sauce.svg)](https://saucelabs.com/u/cct-sauce)
 
 Charts for the [Consumer Financial Protection Bureau](https://cfpb.github.io/).
 

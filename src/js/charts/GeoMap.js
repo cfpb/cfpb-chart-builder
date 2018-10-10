@@ -1,8 +1,10 @@
-const Highcharts = require( 'highcharts/js/highmaps' );
+import accessibility from 'highcharts/js/modules/accessibility';
+import Highcharts from 'highcharts/js/highmaps';
 const outlines = require( '../utils/state-outlines' );
 const separators = require( '../utils/map-separators' );
 const colorRange = require( '../utils/color-range' );
-require( 'highcharts/js/modules/accessibility' )( Highcharts );
+
+accessibility( Highcharts );
 
 Highcharts.setOptions( {
   lang: {
@@ -214,4 +216,4 @@ class GeoMap {
 
 }
 
-module.exports = GeoMap;
+export default GeoMap;

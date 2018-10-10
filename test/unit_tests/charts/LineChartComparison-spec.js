@@ -13,7 +13,7 @@ jest.mock( 'highcharts/js/highstock', () => ( {
 
 jest.mock( 'highcharts/js/modules/accessibility', () => jest.fn() );
 
-const LineChart = require( '../../../src/js/charts/LineChartComparison.js' );
+import LineChart from '../../../src/js/charts/LineChartComparison';
 let line;
 
 describe( 'LineChartComparison', () => {

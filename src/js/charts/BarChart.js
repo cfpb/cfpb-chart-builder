@@ -1,6 +1,8 @@
-const Highcharts = require( 'highcharts/js/highstock' );
-const process = require( '../utils/process-json' );
-require( 'highcharts/js/modules/accessibility' )( Highcharts );
+import accessibility from 'highcharts/js/modules/accessibility';
+import Highcharts from 'highcharts/js/highstock';
+import * as process from '../utils/process-json';
+
+accessibility( Highcharts );
 
 Highcharts.setOptions( {
   lang: {
@@ -14,7 +16,7 @@ Highcharts.setOptions( {
  * @returns {Object} A highchart chart.
  */
 function BarChart( props ) {
-  props.data = process.yoy( props.data[0], props.metadata );
+  props.data = process.processYoyData( props.data[0], props.metadata );
   const options = {
     chart: {
       marginRight: 0,
@@ -156,4 +158,4 @@ function BarChart( props ) {
 
 }
 
-module.exports = BarChart;
+export default BarChart;

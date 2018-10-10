@@ -2,10 +2,10 @@ const processJSON = require( '../../../src/js/utils/process-json' );
 
 describe( 'process-json', () => {
 
-  const originations = processJSON.originations;
-  const delinquencies = processJSON.delinquencies;
-  const yoy = processJSON.yoy;
-  const map = processJSON.map;
+  const originations = processJSON.processNumOriginationsData;
+  const delinquencies = processJSON.processDelinquencies;
+  const yoy = processJSON.processYoyData;
+  const map = processJSON.processMapData;
   const getProjectedDate = processJSON.getProjectedDate;
   const getProjectedTimestamp = processJSON.getProjectedTimestamp;
 

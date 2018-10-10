@@ -75,6 +75,8 @@ class LineChart {
       description: description,
       credits: false,
       rangeSelector: {
+        floating: true,
+        y: 100,
         selected: 'all',
         height: 35,
         inputEnabled: false,
@@ -87,25 +89,26 @@ class LineChart {
           r: 5,
           width: 70
         },
-        buttons: [ {
-          type: 'year',
-          count: 1,
-          text: '1y'
-        },
-        {
-          type: 'year',
-          count: 3,
-          text: '3y'
-        },
-        {
-          type: 'year',
-          count: 5,
-          text: '5y'
-        },
-        {
-          type: 'all',
-          text: 'All'
-        }
+        buttons: [
+          {
+            type: 'year',
+            count: 1,
+            text: '1y'
+          },
+          {
+            type: 'year',
+            count: 3,
+            text: '3y'
+          },
+          {
+            type: 'year',
+            count: 5,
+            text: '5y'
+          },
+          {
+            type: 'all',
+            text: 'All'
+          }
         ]
       },
       legend: {

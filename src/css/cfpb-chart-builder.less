@@ -296,8 +296,16 @@
   }
 
   .highcharts-range-selector-buttons {
+    display: table;
     position: relative;
     height: 45px;
+    //transform: translate( -70px, -55px );
+
+    .respond-to-min( 350px, {
+      //transform: translate( 5%, 355px );
+    } );
+
+    /*
     transform: translate( 0px, 455px );
 
     .respond-to-min( 350px, {
@@ -334,7 +342,7 @@
 
     .respond-to-min( 800px, {
       transform: translate( 0px, 30px );
-    } );
+    } );*/
 
     &:after {
       content: '';
@@ -372,19 +380,24 @@
   }
 
   .highcharts-button-box {
+    outline: 2px solid blue;
     border-radius: 5px;
     height: 45px;
     width: 45px;
-    y: -10px;
+    //transform: translateY(-85px);
 
     .respond-to-min( 800px, {
       height: 28px;
-      y: 0px;
     } );
 
   }
 
   .highcharts-button + .highcharts-button {
+
+    outline: 1px solid red;
+  }
+
+  /*.highcharts-button + .highcharts-button {
       .respond-to-min( 800px, {
         transform: translateX( 65px );
       } );
@@ -401,7 +414,7 @@
           } );
         }
       }
-  }
+  }*/
 
   .highcharts-navigator,
   .highcharts-navigator-series,

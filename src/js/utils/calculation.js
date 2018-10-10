@@ -68,7 +68,7 @@ function getFirstNumber( array ) {
   return false;
 }
 
-module.exports = {
+export {
   convertDate,
   getFirstNumber
 };

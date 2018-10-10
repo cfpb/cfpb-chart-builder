@@ -1,9 +1,16 @@
-const charts = {};
-charts.bar = require( './BarChart' );
-charts.GeoMap = require( './GeoMap' );
-charts.LineChart = require( './LineChart' );
-charts.LineChartComparison = require( './LineChartComparison' );
-charts.LineChartIndex = require( './LineChartIndex' );
-charts.tileMap = require( './TileMap' );
+import BarChart from './BarChart';
+import GeoMap from './GeoMap';
+import LineChart from './LineChart';
+import LineChartComparison from './LineChartComparison';
+import LineChartIndex from './LineChartIndex';
+import TileMap from './TileMap';
 
-module.exports = charts;
+const charts = {};
+charts.bar = BarChart;
+charts.GeoMap = GeoMap;
+charts.LineChart = LineChart;
+charts.LineChartComparison = LineChartComparison;
+charts.LineChartIndex = LineChartIndex;
+charts.tileMap = TileMap;
+
+export default charts;

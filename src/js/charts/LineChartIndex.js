@@ -1,6 +1,8 @@
-const Highcharts = require( 'highcharts/js/highstock' );
-const process = require( '../utils/process-json' );
-require( 'highcharts/js/modules/accessibility' )( Highcharts );
+import accessibility from 'highcharts/js/modules/accessibility';
+import Highcharts from 'highcharts/js/highstock';
+import * as process from '../utils/process-json';
+
+accessibility( Highcharts );
 
 Highcharts.setOptions( {
   lang: {
@@ -11,7 +13,7 @@ Highcharts.setOptions( {
 
 class LineChartIndex {
   constructor( { el, description, data, metadata, source } ) {
-    data = process.originations( data[0], metadata, source );
+    data = process.processNumOriginationsData( data[0], metadata, source );
     const options = {
       chart: {
         marginRight: 0,
@@ -176,4 +178,4 @@ class LineChartIndex {
   }
 }
 
-module.exports = LineChartIndex;
+export default LineChartIndex;

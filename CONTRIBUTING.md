@@ -50,15 +50,8 @@ We configure [Autoprefixer](#autoprefixer) and [Babel](#babel) to support the fo
     - Chrome for Android
     - Firefox for Android
     - Samsung Internet
-- Internet Explorer 9
 
-http://browserl.ist/?q=last+2+versions%2C+Explorer+%3E%3D+9
-
-As well as additional Autoprefixer support for:
-
-- Internet Explorer 8
-
-http://browserl.ist/?q=last+2+versions%2C+Explorer+%3E%3D+8
+https://browserl.ist/?q=last+2+versions
 
 What this means to the end-user is we've added a level of backward
 compatability for modern features as much as possible. This doesn't
@@ -79,7 +72,7 @@ following list of browsers:
 - Chrome
 - Firefox
 - Safari
-- Internet Explorer 8, 9, 10, and 11
+- Internet Explorer 10, and 11
 - Edge
 - iOS Safari
 - Chrome for Android

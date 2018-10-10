@@ -47,7 +47,7 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "23.6.0",
     "babel-loader": "8.0.4",
-    "browser-sync": "2.24.7",
+    "browser-sync": "2.26.0",
     "compression": "1.7.3",
     "cors": "2.8.4",
     "del": "3.0.0",

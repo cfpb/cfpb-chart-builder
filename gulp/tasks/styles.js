@@ -11,7 +11,6 @@ const gulpSourcemaps = require( 'gulp-sourcemaps' );
 const gulpRename = require( 'gulp-rename' );
 
 /**
- * Process legacy CSS for IE9 only.
  * @returns {PassThrough} A source stream.
  */
 function stylesDemo() {

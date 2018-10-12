@@ -1,7 +1,9 @@
-const Highcharts = require( 'highcharts/js/highmaps' );
+import accessibility from 'highcharts/js/modules/accessibility';
+import Highcharts from 'highcharts/js/highmaps';
 const getTileMapColor = require( '../utils/get-tile-map-color' );
-const process = require( '../utils/process-json' );
-require( 'highcharts/js/modules/accessibility' )( Highcharts );
+import * as process from '../utils/process-json';
+
+accessibility( Highcharts );
 
 /**
  * Draw a legend on a chart.
@@ -71,7 +73,7 @@ Highcharts.setOptions( {
 function TileMap( props ) {
 
   props = props || {};
-  props.data = process.map( props.data[0], props.metadata );
+  props.data = process.processMapData( props.data[0], props.metadata );
 
   const options = {
     chart: {
@@ -103,4 +105,4 @@ function TileMap( props ) {
   return Highcharts.mapChart( props.el, options, _drawLegend );
 }
 
-module.exports = TileMap;
+export default TileMap;

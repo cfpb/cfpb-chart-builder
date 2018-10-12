@@ -16,7 +16,7 @@ jest.mock( 'highcharts/js/highmaps', () => ( {
 
 jest.mock( 'highcharts/js/modules/accessibility', () => jest.fn() );
 
-const GeoMap = require( '../../../src/js/charts/GeoMap.js' );
+import GeoMap from '../../../src/js/charts/GeoMap';
 let geoMap;
 
 describe( 'GeoMapComparison', () => {

@@ -1,12 +1,7 @@
-require( 'core-js/es6/symbol' );
-require( 'core-js/es6/promise' );
-require( 'core-js/fn/object/assign' );
-require( 'core-js/fn/array/index-of' );
-
 const documentReady = require( './utils/document-ready' );
-const createChart = require( './charts' );
-const ajax = require( './utils/get-data' );
-const shapes = require( './utils/map-shapes' );
+import createChartDir from './charts';
+import ajax from './utils/get-data';
+import fetchShapes from './utils/map-shapes';
 
 class Chart {
 
@@ -21,25 +16,25 @@ class Chart {
   draw( chartOptions ) {
     switch ( chartOptions.type ) {
       case 'geo-map':
-        shapes.fetch( chartOptions.metadata ).then( shapes => {
+        fetchShapes( chartOptions.metadata ).then( shapes => {
           chartOptions.shapes = shapes[0];
-          this.highchart = new createChart.GeoMap( chartOptions );
+          this.highchart = new createChartDir.GeoMap( chartOptions );
         } );
         break;
       case 'line-comparison':
-        this.highchart = new createChart.LineChartComparison( chartOptions );
+        this.highchart = new createChartDir.LineChartComparison( chartOptions );
         break;
       case 'line-index':
-        this.highchart = new createChart.LineChartIndex( chartOptions );
+        this.highchart = new createChartDir.LineChartIndex( chartOptions );
         break;
       case 'line':
-        this.highchart = new createChart.LineChart( chartOptions );
+        this.highchart = new createChartDir.LineChart( chartOptions );
         break;
       case 'bar':
-        this.highchart = createChart.bar( chartOptions );
+        this.highchart = createChartDir.bar( chartOptions );
         break;
       case 'tile_map':
-        this.highchart = createChart.tileMap( chartOptions );
+        this.highchart = createChartDir.tileMap( chartOptions );
         break;
       default:
     }
@@ -63,7 +58,7 @@ class Chart {
     return ajax( this.chartOptions.source ).then( data => {
       this.chartOptions.data = data;
       if ( needNewMapShapes ) {
-        shapes.fetch( this.chartOptions.metadata ).then( shapes => {
+        fetchShapes( this.chartOptions.metadata ).then( shapes => {
           this.chartOptions.shapes = shapes[0];
           this.highchart.update( this.chartOptions );
         } );
@@ -80,7 +75,7 @@ class Chart {
  * @param {Object} opts - Options to pass to highcharts when creating the chart.
  * @returns {Chart} A Chart instance.
  */
-function _createChart( opts ) {
+function createChart( opts ) {
   return new Chart( opts );
 }
 
@@ -88,7 +83,7 @@ function _createChart( opts ) {
  * Creates several charts at once.
  * TODO: Return array of chart instances.
  */
-function _createCharts() {
+function createCharts() {
   const elements = document.querySelectorAll( '.cfpb-chart' );
   const charts = [];
 
@@ -115,12 +110,9 @@ function _createCharts() {
 /* *
    When the document is ready, the code for cfpb-chart-builder seeks out chart
    blocks and generates charts inside the designated elements. */
-documentReady( _createCharts );
+documentReady( createCharts );
 
-
-const charts = {
-  createChart: _createChart,
-  createCharts: _createCharts
+export {
+  createChart,
+  createCharts
 };
-
-module.exports = charts;

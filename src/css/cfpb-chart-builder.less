@@ -447,10 +447,13 @@
 
     .highcharts-yaxis .highcharts-axis-title {
 
-      transform: rotate( 0deg ) translate( 120px, -133px ) !important;
+      transform: rotate( 0deg ) /* translate( 120px, -133px )*/ !important;
+      white-space: nowrap !important;
 
       .respond-to-min( 655px, {
-        transform: rotate( -90deg ) translate( -255px, -232px ) !important;
+        transform: rotate( -90deg ) !important;
+        top: 280px !important;
+        left: -50px !important;
       } );
 
     }

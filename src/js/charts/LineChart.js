@@ -157,7 +157,8 @@ class LineChart {
         title: {
           text: _getYAxisLabel( data.adjusted, yAxisLabel ),
           offset: 0,
-          reserveSpace: false
+          reserveSpace: false,
+          useHTML: true
         },
         labels: {
           formatter: function() {

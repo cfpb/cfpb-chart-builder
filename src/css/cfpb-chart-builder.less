@@ -1,4 +1,6 @@
 @import (less) '../../node_modules/highcharts/css/highcharts.css';
+
+// cf-core is included for cf-brand-colors and media queries.
 @import (less) 'cf-core.less';
 
 /* Chart colors
@@ -18,11 +20,27 @@
 @chart-teal-primary: @teal;
 @chart-teal-secondary: @teal-60;
 
+/*
+Updating the charts:
+Set the positioning of the chart UI elements using the JavaScript API,
+then add in styles below that aren't possible through the API.
+ */
+
+.u-chart-label {
+  font-size: @base-font-size-px;
+  font-family: inherit;
+  color: @gray;
+  //fill: @gray;
+}
+
 .cfpb-chart {
   position: relative;
   max-width: 650px;
+  min-width: 320px;
   height: 500px;
+  margin-bottom: 25px;
 
+  // Create a horizontal rule.
   &:after {
     content: '';
     display: block;
@@ -39,321 +57,101 @@
     .respond-to-min( 655px, {
       top: 80px;
     } );
+  }
+}
 
+.highcharts-root,
+.highcharts-container,
+.highcharts-legend-box,
+.highcharts-axis-labels,
+.highcharts-tooltip text {
+  .u-chart-label();
+}
+
+&[data-chart-type="line"] {
+
+  // Center "Select time range" label.
+  .highcharts-range-selector-label {
+    left: calc( 50% - 64px ) !important;
   }
 
-  &[data-chart-type="tile_map"]:after,
-  &[data-chart-type='line-comparison']:after {
-    display: none;
-  }
-
-
-  .chart-label {
-    font-size: @base-font-size-px;
-    font-family: inherit;
-    color: @gray;
-    fill: @gray;
-  }
-
-  .highcharts-root,
-  .highcharts-container,
-  .highcharts-legend-box,
-  .highcharts-axis-labels,
-  .highcharts-tooltip text {
-    .chart-label();
-  }
-
-  .highcharts-label__tile-map {
-    .chart-label();
-    color: @black;
-    font-weight: 600;
-    span {
-      position: relative !important;
-      white-space: normal !important;
-    }
-  }
-
-  &[data-chart-type="tile_map"] {
-    .highcharts-data-label {
-      font-weight: 600;
-      color: @black;
-      font-size: @size-v;
-      line-height: 1.3;
-
-      .respond-to-max( 600px, {
-        margin-top: 2px;
-        font-size: 10px;
-        line-height: 1;
-      } );
-
-      .highcharts-data-label-state-abbr {
-        text-align: center;
-      }
-
-      .highcharts-data-label-state-value {
-        .respond-to-max( 600px, {
-          display: block;
-          margin-top: -2px;
-          font-size: 9px;
-        } );
-      }
-    }
-  }
-
-  .highcharts-navigator-xaxis {
-    font-size: 11px;
-  }
-
-  .highcharts-background,
-  .highcharts-legend-box {
-    fill: transparent;
-  }
-
-  .highcharts-axis-line,
-  .highcharts-tick {
-    stroke: @gray-20;
-  }
-
-  .highcharts-plot-line {
-    color: @gray-80;
-    stroke-width: 1px;
-    z-index: 10;
+  .highcharts-axis-title {
+    /* The y-axis title will be positioned to the left edge of the
+       y-axis label width. This overrides that auto-layout so that
+       independent of the y-axis label width the title will always
+       be the same distance from the left-hand edge of the chart,
+       which aligns it with the legend in the upper-left.
+    */
+    left: 0 !important;
+    min-width: 300px;
+    //text-align: center;
+    //outline: 1px solid red;
   }
 
   .highcharts-plot-line-label {
-    color: @gray;
-    top: 2px !important;
-    text-align: left;
     white-space: normal !important;
-
+    left: 50% !important;
+    width: 50% !important;
   }
 
-  &[data-chart-type='line'],
-  &[data-chart-type='line-comparison'],
-  &[data-chart-type='line-index'] {
-    .highcharts-plot-line-label {
-      margin-left: 15px !important;
-      left: 50% !important;
-      width: 50% !important;
-      max-width: 120px;
+  /*********
+   * LEGEND
+   *********/
 
-      .respond-to-min( 450px, {
-        max-width: 200px;
-      } );
+   // The vertical gap between the two legend items. Set on the label and line.
+   @chart-legend-vert-gap: 10px;
 
-      .respond-to-min( 600px, {
-        max-width: 250px;
-      } );
+   // "Seasonally adjusted" and "Unadjusted" labels.
+   div.highcharts-legend {
 
-      .respond-to-min( 700px, {
-        top: 100px !important;
-        margin-left: 0 !important;
-        max-width: 500px;
-        left: initial !important;
-        right: 15px !important;
-      } );
-    }
-  }
+     // "Seasonally adjusted" label.
+     .highcharts-color-0 span {
+       white-space: normal !important;
+     }
 
-  &[data-chart-type='bar'] {
-    .highcharts-plot-line-label {
-      top: 40px !important;
-      left: 0 !important;
+     // "Unadjusted" label.
+     .highcharts-color-1 span {
+       transform: translateY( @chart-legend-vert-gap );
+     }
+   }
 
-      .respond-to-min( 600px, {
-        top: 100px !important;
-        right: 30px !important;
-        left: initial !important;
-      } );
+   // SVG legend lines.
+   .highcharts-root {
 
-    }
-  }
+     .highcharts-legend {
 
-  .highcharts-legend {
-    left: 0px !important;
-    transform: translate( -8px, -5px ) !important;
+       // Seasonally adjusted legend line.
+       .highcharts-legend-item.highcharts-color-0 .highcharts-graph {
+         stroke-width: 3px;
+       }
 
-    .respond-to-min( 800px, {
-      transform: translate( 465px, -6px ) !important;
-    } );
+       // Unadjusted legend line.
+       .highcharts-legend-item.highcharts-color-1 .highcharts-graph {
+         transform: translateY( @chart-legend-vert-gap );
+         stroke-width: 1px;
+       }
+     }
 
-    .respond-to-min( 900px, {
-      transform: translate( 445px, -6px ) !important;
-    } );
+     .highcharts-tracker,
+     .highcharts-graph {
+       stroke-linejoin: miter;
+       stroke-linecap: butt;
+     }
 
-    .respond-to-min( 926px, {
-      transform: translate( 465px, -6px ) !important;
-    } );
+   }
 
-    .lt-ie10 & {
-      .respond-to-min( 800px, {
-        left: -465px !important;
-      } );
-    }
-
-  }
-
-  .highcharts-legend-item {
-
-    span {
-      margin-left: 25px !important;
-      top: -6px !important;
-      left: initial !important;
-      white-space: normal !important;
-
-      .respond-to-min( 450px, {
-        white-space: nowrap !important;
-      } );
-
-      .lt-ie10 &:before {
-        content: '';
-        display: block;
-        position: absolute;
-        width: 15px;
-        height: 4px;
-        left: -25px;
-        top: 8px;
-        background: @chart-green-primary;
-      }
-    }
-
-    &.highcharts-color-1 {
-      position: relative !important;
-      top: 46px !important;
-
-      .respond-to-min( 450px, {
-        top: 25px !important;
-      } );
-
-      &[transform="translate(8,22)"] {
-        .highcharts-graph {
-          transform: translate( 0, 28px );
-
-          .respond-to-min( 450px, {
-            transform: translate( 0, 8px );
-          } );
-        }
-      }
-
-      &[transform="translate(8,41)"] {
-        .highcharts-graph {
-          transform: translate( 0, 10px );
-
-          .respond-to-min( 450px, {
-            transform: translate( 0, -10px );
-          } );
-
-        }
-      }
-
-      span {
-        position: relative !important;
-        top: 0 !important;
-
-        .respond-to-min( 450px, {
-          top: 0 !important;
-        } );
-      }
-    }
-  }
-
-  .highcharts-legend__tile-map {
-    transform: translateY( 15px );
-
-    .respond-to-min( 500px, {
-      transform: translateY( 0 );
-    } );
-  }
-
-  .highcharts-range-selector-label {
-    display: table;
-    margin-top: 0 !important;
-    width: 100%;
-    color: @gray;
-
-    .chart-label();
-    transform: translateY( -5px );
-
-    .respond-to-max( 800px, {
-        .h6();
-        transform: translateY( 415px );
-    } );
-
-    span {
-      display: table-cell;
-      position: relative !important;
-      text-align: center;
-      z-index: 100;
-
-      .respond-to-min( 480px, {
-        text-align: left;
-      } );
-
-      .respond-to-min( 800px, {
-        transform: translateY( 0px );
-      } );
-    }
-  }
-
-  .highcharts-range-selector-buttons {
-    display: table;
-    position: relative;
-    height: 45px;
-    //transform: translate( -70px, -55px );
-
-    .respond-to-min( 350px, {
-      //transform: translate( 5%, 355px );
-    } );
-
-    /*
-    transform: translate( 0px, 455px );
-
-    .respond-to-min( 350px, {
-      transform: translate( 5%, 455px );
-    } );
-
-    .respond-to-min( 375px, {
-      transform: translate( 9%, 455px );
-    } );
-
-    .respond-to-min( 390px, {
-      transform: translate( 13%, 455px );
-    } );
-
-    .respond-to-min( 400, {
-      transform: translate( 15%, 455px );
-    } );
-
-    .respond-to-min( 430, {
-      transform: translate( 19%, 455px );
-    } );
-
-    .respond-to-min( 450, {
-      transform: translate( 20%, 455px );
-    } );
-
-    .respond-to-min( 470, {
-      transform: translate( 25%, 455px );
-    } );
-
-    .respond-to-min( 480px, {
-      transform: translate( 0px, 450px );
-    } );
-
-    .respond-to-min( 800px, {
-      transform: translate( 0px, 30px );
-    } );*/
-
-    &:after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      border-bottom: 1px solid @gray-10;
-    }
-  }
-
+   /*****************
+    * RANGE SELECTOR
+    ****************/
   .highcharts-button {
+
+    & text {
+      /*
+      This vertically aligns the button text, but in IE11 the y value will
+      not be overridden. https://github.com/highcharts/highcharts/issues/1285
+      */
+      transform: translateY( 13px );
+    }
     fill: @pacific-20;
     font-size: @size-v;
 
@@ -363,14 +161,6 @@
         fill: @pacific-60;
       }
     }
-
-    text {
-      transform: translateX( -15px );
-
-      .respond-to-min( 800px, {
-        transform: translate( -15px, 2px );
-      } );
-    }
   }
 
   .highcharts-button-pressed,
@@ -379,43 +169,60 @@
     font-weight: 600;
   }
 
-  .highcharts-button-box {
-    outline: 2px solid blue;
-    border-radius: 5px;
-    height: 45px;
-    width: 45px;
-    //transform: translateY(-85px);
-
-    .respond-to-min( 800px, {
-      height: 28px;
-    } );
-
+  // Seasonally adjusted
+  .highcharts-series-0 {
+    .highcharts-graph {
+      stroke-width: 3px;
+    }
   }
 
-  .highcharts-button + .highcharts-button {
-
-    outline: 1px solid red;
-  }
-
-  /*.highcharts-button + .highcharts-button {
-      .respond-to-min( 800px, {
-        transform: translateX( 65px );
-      } );
-
-      & + .highcharts-button {
-
-        .respond-to-min( 800px, {
-          transform: translateX( 125px );
-        } );
-
-        & + .highcharts-button {
-          .respond-to-min( 800px, {
-            transform: translateX(185px);
-          } );
-        }
+  // Unadjusted
+  .highcharts-series-1 {
+    .highcharts-graph {
+      stroke-width: 1px;
+    }
+    span {
+      .lt-ie10 &:before {
+        height: 1px;
       }
-  }*/
+    }
+  }
 
+  // Projected data for last six months
+  .highcharts-zone-graph-1 {
+    stroke-dasharray: 5, 5;
+  }
+
+  .highcharts-color-1 .highcharts-zone-graph-1 {
+    stroke-dasharray: 3, 3;
+  }
+
+  &[data-chart-color='green'] {
+
+    .highcharts-color-1,
+    .highcharts-color-0,
+    .highcharts-navigator-series .highcharts-graph {
+      stroke: @chart-green-primary;
+    }
+
+    .highcharts-tooltip-box {
+      .highcharts-color-1,
+      .highcharts-color-0 {
+        display: inline-block;
+        height: 4px;
+        width: 15px;
+        margin-bottom: 3px;
+        background: @chart-green-primary;
+      }
+      .highcharts-color-1 {
+        height: 1px;
+        margin-bottom: 5px;
+      }
+    }
+  }
+
+  /* Using navigator { enabled: false } also disables the pressed state of the
+     range selector buttons, so instead we hide the navigator at small sizes. */
   .highcharts-navigator,
   .highcharts-navigator-series,
   .highcharts-navigator-xaxis,
@@ -430,476 +237,4 @@
     } );
   }
 
-  .highcharts-navigator-mask-inside {
-    fill: @gray-10;
-    fill-opacity: 0.25;
-  }
-
-  .highcharts-navigator-handle {
-    fill: @white;
-    stroke: @black;
-  }
-
-  // Axes
-  &[data-chart-type='line'],
-  &[data-chart-type='line-comparison'],
-  &[data-chart-type='line-index'] {
-
-    .highcharts-yaxis .highcharts-axis-title {
-
-      transform: rotate( 0deg ) translate( 120px, -133px ) !important;
-
-      .respond-to-min( 655px, {
-        transform: rotate( -90deg ) translate( -255px, -232px ) !important;
-      } );
-
-    }
-
-    .highcharts-yaxis-labels {
-      transform: translate( 0, 6px );
-      .respond-to-min( 655px, {
-        transform: translate( 10px, 7px );
-      } );
-    }
-
-  }
-
-  &[data-chart-type='bar'] {
-
-    .highcharts-yaxis .highcharts-axis-title {
-      transform: rotate( 0deg ) translate( 88px, -130px ) !important;
-
-      .respond-to-min( 800px, {
-        transform: rotate( -90deg ) translate( -270px, -232px ) !important;
-      } );
-    }
-  }
-
-  // Colors and widths
-
-  &[data-chart-type='line'],
-  &[data-chart-type='line-comparison'],
-  &[data-chart-type='line-index'] {
-
-    .highcharts-tracker,
-    .highcharts-graph {
-      stroke-linejoin: miter;
-      stroke-linecap: butt;
-    }
-
-    // Seasonally adjusted
-    .highcharts-series-0 {
-      .highcharts-graph {
-        stroke-width: 3px;
-      }
-    }
-
-    // Unadjusted
-    .highcharts-series-1 {
-      .highcharts-graph {
-        stroke-width: 1px;
-      }
-      span {
-        .lt-ie10 &:before {
-          height: 1px;
-        }
-      }
-    }
-
-    // Projected data for last six months
-    .highcharts-zone-graph-1 {
-      stroke-dasharray: 5, 5;
-    }
-
-    .highcharts-color-1 .highcharts-zone-graph-1 {
-      stroke-dasharray: 3, 3;
-    }
-
-    /* TODO: Investigate using highcharts API to set chart colors and
-       remove references to highcharts CSS classes.
-       Aim to remove all &[data-chart-color= selectors. */
-    &[data-chart-color='blue'] {
-
-      .highcharts-color-1,
-      .highcharts-color-0,
-      .highcharts-navigator-series .highcharts-graph {
-        stroke: @chart-blue-primary;
-      }
-
-      .highcharts-legend-item span:before  {
-        background: @chart-blue-primary;
-      }
-
-      .highcharts-tooltip {
-        .highcharts-color-1, .highcharts-color-0 {
-          display: inline-block;
-          height: 4px;
-          width: 15px;
-          margin-bottom: 3px;
-          background: @chart-blue-primary;
-        }
-        .highcharts-color-1 {
-          height: 1px;
-          margin-bottom: 5px;
-        }
-      }
-    }
-
-    &[data-chart-color='gold'] {
-
-      .highcharts-color-1,
-      .highcharts-color-0,
-      .highcharts-navigator-series .highcharts-graph {
-        stroke: @chart-gold-primary;
-      }
-
-      .highcharts-legend-item span:before  {
-        background: @chart-gold-primary;
-      }
-
-      .highcharts-tooltip {
-        .highcharts-color-1, .highcharts-color-0 {
-          display: inline-block;
-          height: 4px;
-          width: 15px;
-          margin-bottom: 3px;
-          background: @chart-gold-primary;
-        }
-        .highcharts-color-1 {
-          height: 1px;
-          margin-bottom: 5px;
-        }
-      }
-    }
-
-    &[data-chart-color='green'] {
-
-      .highcharts-color-1,
-      .highcharts-color-0,
-      .highcharts-navigator-series .highcharts-graph {
-        stroke: @chart-green-primary;
-      }
-
-      .highcharts-tooltip {
-        .highcharts-color-1, .highcharts-color-0 {
-          display: inline-block;
-          height: 4px;
-          width: 15px;
-          margin-bottom: 3px;
-          background: @chart-green-primary;
-        }
-        .highcharts-color-1 {
-          height: 1px;
-          margin-bottom: 5px;
-        }
-      }
-    }
-
-    &[data-chart-color='neutral'] {
-
-      .highcharts-color-1,
-      .highcharts-color-0,
-      .highcharts-navigator-series .highcharts-graph {
-        stroke: @chart-neutral-primary;
-      }
-
-      .highcharts-legend-item span:before  {
-        background: @chart-neutral-primary;
-      }
-
-      .highcharts-tooltip {
-        .highcharts-color-1, .highcharts-color-0 {
-          display: inline-block;
-          height: 4px;
-          width: 15px;
-          margin-bottom: 3px;
-          background: @chart-neutral-primary;
-        }
-        .highcharts-color-1 {
-          height: 1px;
-          margin-bottom: 5px;
-        }
-      }
-    }
-
-    &[data-chart-color='purple'] {
-
-      .highcharts-color-1,
-      .highcharts-color-0,
-      .highcharts-navigator-series .highcharts-graph {
-        stroke: @chart-purple-primary;
-      }
-
-      .highcharts-legend-item span:before  {
-        background: @chart-purple-primary;
-      }
-
-      .highcharts-tooltip {
-        .highcharts-color-1, .highcharts-color-0 {
-          display: inline-block;
-          height: 4px;
-          width: 15px;
-          margin-bottom: 3px;
-          background: @chart-purple-primary;
-        }
-        .highcharts-color-1 {
-          height: 1px;
-          margin-bottom: 5px;
-        }
-      }
-    }
-
-    &[data-chart-color='teal'] {
-
-      .highcharts-color-1,
-      .highcharts-color-0,
-      .highcharts-navigator-series .highcharts-graph  {
-        stroke: @chart-teal-primary;
-      }
-
-      .highcharts-legend-item span:before  {
-        background: @chart-teal-primary;
-      }
-
-      .highcharts-tooltip {
-        .highcharts-color-1, .highcharts-color-0 {
-          display: inline-block;
-          height: 4px;
-          width: 15px;
-          margin-bottom: 3px;
-          background: @chart-teal-primary;
-        }
-        .highcharts-color-1 {
-          height: 1px;
-          margin-bottom: 5px;
-        }
-      }
-    }
-
-    &[data-chart-color='navy'] {
-
-      .highcharts-color-1,
-      .highcharts-color-0,
-      .highcharts-navigator-series .highcharts-graph  {
-        stroke: @chart-navy-primary;
-      }
-
-      .highcharts-legend-item span:before  {
-        background: @chart-navy-primary;
-      }
-
-      .highcharts-tooltip {
-        .highcharts-color-1, .highcharts-color-0 {
-          display: inline-block;
-          height: 4px;
-          width: 15px;
-          margin-bottom: 3px;
-          background: @chart-navy-primary;
-        }
-        .highcharts-color-1 {
-          height: 1px;
-          margin-bottom: 5px;
-        }
-      }
-    }
-  }
-
-
-  &[data-chart-type='bar'] {
-
-    // Set defaults to gray for help in troubleshooting
-    .highcharts-point {
-      fill: @gray;
-
-      &.highcharts-data__unprojected {
-        fill: @black;
-      }
-    }
-
-    .highcharts-tooltip .highcharts-color-0 {
-      display: none;
-    }
-
-    &[data-chart-color='blue'] {
-
-        .highcharts-point {
-          fill: @chart-blue-secondary;
-
-          &.highcharts-data__unprojected {
-            fill: @chart-blue-primary;
-          }
-
-        }
-
-        .highcharts-tooltip-box {
-          stroke: @chart-blue-primary;
-        }
-    }
-
-    &[data-chart-color='green'] {
-
-        .highcharts-point {
-          fill: @chart-green-secondary;
-
-          &.highcharts-data__unprojected {
-            fill: @chart-green-primary;
-          }
-
-        }
-
-        .highcharts-tooltip-box {
-          stroke: @chart-green-primary;
-        }
-    }
-
-    &[data-chart-color='teal'] {
-
-        .highcharts-point {
-          fill: @chart-teal-secondary;
-
-          &.highcharts-data__unprojected {
-            fill: @chart-teal-primary;
-          }
-
-        }
-
-        .highcharts-tooltip-box {
-          stroke: @chart-teal-primary;
-        }
-    }
-
-    &[data-chart-color='navy'] {
-
-        .highcharts-point {
-          fill: @chart-navy-secondary;
-
-          &.highcharts-data__unprojected {
-            fill: @chart-navy-primary;
-          }
-
-        }
-
-        .highcharts-tooltip-box {
-          stroke: @chart-navy-primary;
-        }
-    }
-  }
-
-  // Navigator graph (mini-graph under main graph on large screens)
-  .highcharts-navigator-series .highcharts-graph {
-    stroke-width: 2px;
-  }
-
-  &[data-chart-color='blue'] {
-
-    .highcharts-navigator-series .highcharts-graph  {
-      stroke: @chart-blue-primary;
-    }
-
-    .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
-      stroke: @chart-blue-secondary;
-    }
-  }
-
-  &[data-chart-color='green'] {
-
-    .highcharts-navigator-series .highcharts-graph {
-      stroke: @chart-green-primary;
-    }
-
-    .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
-      stroke: @chart-green-secondary;
-    }
-  }
-
-  &[data-chart-color='teal'] {
-
-
-    .highcharts-navigator-series .highcharts-graph  {
-      stroke: @chart-teal-primary;
-    }
-
-    .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
-      stroke: @chart-teal-secondary;
-    }
-  }
-
-  &[data-chart-color='navy'] {
-
-    .highcharts-navigator-series .highcharts-graph  {
-      stroke: @chart-navy-primary;
-    }
-
-    .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
-      stroke: @chart-navy-secondary;
-    }
-  }
-}
-
-.cfpb-chart[data-chart-type="tile_map"] {
-  height: 630px;
-
-  .highcharts-map-series .highcharts-point {
-    stroke: @gray-80;
-    &:hover,
-    &:focus {
-      stroke: @black;
-    }
-  }
-}
-
-@media (max-width: 600px) {
-  .cfpb-chart {
-    height: 500px;
-  }
-  .cfpb-chart[data-chart-type="tile_map"] {
-    height: 400px;
-  }
-}
-
-// Geo map styles
-.cfpb-chart[data-chart-type='geo-map'] {
-  .highcharts-point-select {
-    color: #101820;
-    fill: #101820;
-  }
-}
-
-// Line comparison chart styles
-.cfpb-chart[data-chart-type="line-comparison"] {
-  .highcharts-legend {
-    left: 0px !important;
-    transform: translate( -8px, -5px ) !important;
-
-    .lt-ie10 & {
-      .respond-to-min( 800px, {
-        left: 0px !important;
-      } );
-    }
-
-  }
-
-  .highcharts-legend-item {
-
-    &.highcharts-color-1 {
-      position: relative !important;
-      top: 0px !important;
-
-      .respond-to-min( 450px, {
-        top: 0px !important;
-      } );
-
-    }
-
-  }
-}
-
-// Collapse chart containers when JS is disabled
-.no-js {
-  .cfpb-chart {
-    height: inherit;
-    &:after {
-      border: 0;
-    }
-  }
 }

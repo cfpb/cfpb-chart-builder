@@ -62,13 +62,15 @@ function _getTickValue( value ) {
 }
 
 class LineChart {
-  constructor( { el, description, data, metadata, yAxisLabel } ) {
+  constructor( { el, description, color, data, metadata, yAxisLabel } ) {
     data = process.processNumOriginationsData( data[0], metadata );
 
     const options = {
       chart: {
-        marginRight: 0,
-        marginTop: 100,
+        marginTop: 80,
+        marginBottom: 100,
+        marginLeft: 60,
+        marginRight: 20,
         zoomType: 'none'
       },
       className: 'cfpb-chart_line',
@@ -76,18 +78,20 @@ class LineChart {
       credits: false,
       rangeSelector: {
         floating: true,
-        y: 100,
         selected: 'all',
         height: 35,
         inputEnabled: false,
+        verticalAlign: 'bottom',
         buttonPosition: {
-          x: 0,
-          y: 0
+          align: 'center',
+          x: -64
         },
+        buttonSpacing: 30,
         buttonTheme: {
           // border radius.
           r: 5,
-          width: 70
+          width: 45,
+          height: 45
         },
         buttons: [
           {
@@ -112,11 +116,14 @@ class LineChart {
         ]
       },
       legend: {
+        align: 'left',
         enabled: true,
         floating: true,
         layout: 'vertical',
         verticalAlign: 'top',
-        useHTML: true
+        useHTML: true,
+        x: -16,
+        y: -16
       },
       plotOptions: {
         series: {
@@ -126,6 +133,9 @@ class LineChart {
             }
           }
         }
+      },
+      scrollbar: {
+        enabled: false
       },
       navigator: {
         maskFill: 'rgba(0, 0, 0, 0.05)',
@@ -146,7 +156,9 @@ class LineChart {
           label: {
             text: 'Values after ' + data.projectedDate.label + ' are projected',
             rotation: 0,
-            useHTML: true
+            useHTML: true,
+            x: -300,
+            y: -126
           }
         } ]
       },
@@ -156,8 +168,14 @@ class LineChart {
         className: 'axis-label',
         title: {
           text: _getYAxisLabel( data.adjusted, yAxisLabel ),
+          align: 'high',
+          // useHTML true value is needed to set width beyond chart marginTop.
+          useHTML: true,
+          rotation: 0,
           offset: 0,
-          reserveSpace: false
+          reserveSpace: false,
+          x: 300,
+          y: -33
         },
         labels: {
           formatter: function() {
@@ -169,11 +187,12 @@ class LineChart {
         useHTML: true,
         formatter: function() {
           let tooltip = Highcharts.dateFormat( '%B %Y', this.x );
-          for ( let i = 0; i < this.points.length; i++ ) {
+          for ( let i = 0, len = this.points.length; i < len; i++ ) {
             const point = this.points[i];
             tooltip += "<br><span class='highcharts-color-" +
                        point.series.colorIndex + "'></span> " +
-                       point.series.name + ': ' + Highcharts.numberFormat( point.y, 0 );
+                       point.series.name + ': ' +
+                       Highcharts.numberFormat( point.y, 0 );
           }
           return tooltip;
         }
@@ -205,21 +224,23 @@ class LineChart {
         }
       ],
       responsive: {
-        rules: [ {
-          condition: {
-            // chart width, not window width.
-            minWidth: 600
-          },
-          // Add more left margin space for vertical label on large screens.
-          chartOptions: {
-            chart: {
-              marginRight: 0,
-              marginTop: 100,
-              marginLeft: 70,
-              zoomType: 'none'
+        rules: [
+          /*{
+            condition: {
+              // Chart width, not window width.
+              minWidth: 600
+            },
+            // Add more left margin space for vertical label on large screens.
+            chartOptions: {
+              chart: {
+                marginRight: 0,
+                marginTop: 140,
+                marginLeft: 90,
+                zoomType: 'none'
+              }
             }
-          }
-        } ]
+          }*/
+        ]
       }
     };
 
@@ -228,7 +249,7 @@ class LineChart {
       chart.renderer.label(
         'Select time range',
         null,
-        null,
+        400,
         null,
         null,
         null,

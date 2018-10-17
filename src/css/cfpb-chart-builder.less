@@ -184,13 +184,6 @@
     .respond-to-min( 926px, {
       transform: translate( 465px, -6px ) !important;
     } );
-
-    .lt-ie10 & {
-      .respond-to-min( 800px, {
-        left: -465px !important;
-      } );
-    }
-
   }
 
   .highcharts-legend-item {
@@ -204,17 +197,6 @@
       .respond-to-min( 450px, {
         white-space: nowrap !important;
       } );
-
-      .lt-ie10 &:before {
-        content: '';
-        display: block;
-        position: absolute;
-        width: 15px;
-        height: 4px;
-        left: -25px;
-        top: 8px;
-        background: @chart-green-primary;
-      }
     }
 
     &.highcharts-color-1 {
@@ -485,11 +467,6 @@
     .highcharts-series-1 {
       .highcharts-graph {
         stroke-width: 1px;
-      }
-      span {
-        .lt-ie10 &:before {
-          height: 1px;
-        }
       }
     }
 
@@ -857,13 +834,6 @@
   .highcharts-legend {
     left: 0px !important;
     transform: translate( -8px, -5px ) !important;
-
-    .lt-ie10 & {
-      .respond-to-min( 800px, {
-        left: 0px !important;
-      } );
-    }
-
   }
 
   .highcharts-legend-item {

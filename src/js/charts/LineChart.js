@@ -249,7 +249,7 @@ class LineChart {
       chart.renderer.label(
         'Select time range',
         null,
-        400,
+        370,
         null,
         null,
         null,

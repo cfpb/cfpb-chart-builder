@@ -72,7 +72,11 @@ then add in styles below that aren't possible through the API.
 
   // Center "Select time range" label.
   .highcharts-range-selector-label {
-    left: calc( 50% - 64px ) !important;
+
+    .respond-to-max( 800px, {
+        .h6();
+        left: calc( 50% - 64px ) !important;
+    } );
   }
 
   .highcharts-axis-title {

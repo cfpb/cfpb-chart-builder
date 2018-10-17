@@ -31,12 +31,6 @@
     stroke: @color-primary;
   }
 
-  /*
-  .highcharts-legend-item span:before  {
-    background: @color;
-  }
-  */
-
   .highcharts-tooltip {
     .highcharts-color-1, .highcharts-color-0 {
       display: inline-block;
@@ -583,9 +577,6 @@
 
 
   &[data-chart-type='bar'] {
-
-    // Set defaults to gray for help in troubleshooting
-    .u-chart-colorizer-bar( @black, @gray );
 
     &[data-chart-color='blue'] {
       .u-chart-colorizer-bar( @chart-blue-primary, @chart-blue-secondary );

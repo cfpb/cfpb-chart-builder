@@ -1,8 +1,7 @@
 @import (less) 'highcharts.css';
 @import (less) 'cf-core.less';
 
-/* Chart colors
-   TODO: Investigate using highcharts API to set chart colors. */
+// Chart colors.
 @chart-blue-primary: @pacific;
 @chart-blue-secondary: @pacific-60;
 @chart-gold-primary: @dark-gold;
@@ -17,6 +16,65 @@
 @chart-purple-secondary: @purple-60;
 @chart-teal-primary: @teal;
 @chart-teal-secondary: @teal-60;
+
+.u-chart-label {
+  font-size: @base-font-size-px;
+  font-family: inherit;
+  color: @gray;
+  fill: @gray;
+}
+
+.u-chart-colorizer-line( @color-primary ) {
+  .highcharts-color-1,
+  .highcharts-color-0,
+  .highcharts-navigator-series .highcharts-graph  {
+    stroke: @color-primary;
+  }
+
+  /*
+  .highcharts-legend-item span:before  {
+    background: @color;
+  }
+  */
+
+  .highcharts-tooltip {
+    .highcharts-color-1, .highcharts-color-0 {
+      display: inline-block;
+      height: 4px;
+      width: 15px;
+      margin-bottom: 3px;
+      background: @color-primary;
+    }
+    .highcharts-color-1 {
+      height: 1px;
+      margin-bottom: 5px;
+    }
+  }
+}
+
+.u-chart-colorizer-bar( @color-primary, @color-secondary ) {
+  .highcharts-point {
+    fill: @color-secondary;
+
+    &.highcharts-data__unprojected {
+      fill: @color-primary;
+    }
+  }
+
+  .highcharts-tooltip-box {
+    stroke: @color-primary;
+  }
+}
+
+.u-chart-colorizer-navigator( @color-primary, @color-secondary ) {
+  .highcharts-navigator-series .highcharts-graph  {
+    stroke: @color-primary;
+  }
+
+  .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
+    stroke: @color-secondary;
+  }
+}
 
 .cfpb-chart {
   position: relative;
@@ -47,24 +105,16 @@
     display: none;
   }
 
-
-  .chart-label {
-    font-size: @base-font-size-px;
-    font-family: inherit;
-    color: @gray;
-    fill: @gray;
-  }
-
   .highcharts-root,
   .highcharts-container,
   .highcharts-legend-box,
   .highcharts-axis-labels,
   .highcharts-tooltip text {
-    .chart-label();
+    .u-chart-label();
   }
 
   .highcharts-label__tile-map {
-    .chart-label();
+    .u-chart-label();
     color: @black;
     font-weight: 600;
     span {
@@ -271,7 +321,7 @@
     width: 100%;
     color: @gray;
 
-    .chart-label();
+    .u-chart-label();
     transform: translateY( -5px );
 
     .respond-to-max( 800px, {
@@ -502,192 +552,32 @@
       stroke-dasharray: 3, 3;
     }
 
-    /* TODO: Investigate using highcharts API to set chart colors and
-       remove references to highcharts CSS classes.
-       Aim to remove all &[data-chart-color= selectors. */
     &[data-chart-color='blue'] {
-
-      .highcharts-color-1,
-      .highcharts-color-0,
-      .highcharts-navigator-series .highcharts-graph {
-        stroke: @chart-blue-primary;
-      }
-
-      .highcharts-legend-item span:before  {
-        background: @chart-blue-primary;
-      }
-
-      .highcharts-tooltip {
-        .highcharts-color-1, .highcharts-color-0 {
-          display: inline-block;
-          height: 4px;
-          width: 15px;
-          margin-bottom: 3px;
-          background: @chart-blue-primary;
-        }
-        .highcharts-color-1 {
-          height: 1px;
-          margin-bottom: 5px;
-        }
-      }
+      .u-chart-colorizer-line( @chart-blue-primary );
     }
 
     &[data-chart-color='gold'] {
-
-      .highcharts-color-1,
-      .highcharts-color-0,
-      .highcharts-navigator-series .highcharts-graph {
-        stroke: @chart-gold-primary;
-      }
-
-      .highcharts-legend-item span:before  {
-        background: @chart-gold-primary;
-      }
-
-      .highcharts-tooltip {
-        .highcharts-color-1, .highcharts-color-0 {
-          display: inline-block;
-          height: 4px;
-          width: 15px;
-          margin-bottom: 3px;
-          background: @chart-gold-primary;
-        }
-        .highcharts-color-1 {
-          height: 1px;
-          margin-bottom: 5px;
-        }
-      }
+      .u-chart-colorizer-line( @chart-gold-primary );
     }
 
     &[data-chart-color='green'] {
-
-      .highcharts-color-1,
-      .highcharts-color-0,
-      .highcharts-navigator-series .highcharts-graph {
-        stroke: @chart-green-primary;
-      }
-
-      .highcharts-tooltip {
-        .highcharts-color-1, .highcharts-color-0 {
-          display: inline-block;
-          height: 4px;
-          width: 15px;
-          margin-bottom: 3px;
-          background: @chart-green-primary;
-        }
-        .highcharts-color-1 {
-          height: 1px;
-          margin-bottom: 5px;
-        }
-      }
+      .u-chart-colorizer-line( @chart-green-primary );
     }
 
     &[data-chart-color='neutral'] {
-
-      .highcharts-color-1,
-      .highcharts-color-0,
-      .highcharts-navigator-series .highcharts-graph {
-        stroke: @chart-neutral-primary;
-      }
-
-      .highcharts-legend-item span:before  {
-        background: @chart-neutral-primary;
-      }
-
-      .highcharts-tooltip {
-        .highcharts-color-1, .highcharts-color-0 {
-          display: inline-block;
-          height: 4px;
-          width: 15px;
-          margin-bottom: 3px;
-          background: @chart-neutral-primary;
-        }
-        .highcharts-color-1 {
-          height: 1px;
-          margin-bottom: 5px;
-        }
-      }
+      .u-chart-colorizer-line( @chart-neutral-primary );
     }
 
     &[data-chart-color='purple'] {
-
-      .highcharts-color-1,
-      .highcharts-color-0,
-      .highcharts-navigator-series .highcharts-graph {
-        stroke: @chart-purple-primary;
-      }
-
-      .highcharts-legend-item span:before  {
-        background: @chart-purple-primary;
-      }
-
-      .highcharts-tooltip {
-        .highcharts-color-1, .highcharts-color-0 {
-          display: inline-block;
-          height: 4px;
-          width: 15px;
-          margin-bottom: 3px;
-          background: @chart-purple-primary;
-        }
-        .highcharts-color-1 {
-          height: 1px;
-          margin-bottom: 5px;
-        }
-      }
+      .u-chart-colorizer-line( @chart-purple-primary );
     }
 
     &[data-chart-color='teal'] {
-
-      .highcharts-color-1,
-      .highcharts-color-0,
-      .highcharts-navigator-series .highcharts-graph  {
-        stroke: @chart-teal-primary;
-      }
-
-      .highcharts-legend-item span:before  {
-        background: @chart-teal-primary;
-      }
-
-      .highcharts-tooltip {
-        .highcharts-color-1, .highcharts-color-0 {
-          display: inline-block;
-          height: 4px;
-          width: 15px;
-          margin-bottom: 3px;
-          background: @chart-teal-primary;
-        }
-        .highcharts-color-1 {
-          height: 1px;
-          margin-bottom: 5px;
-        }
-      }
+      .u-chart-colorizer-line( @chart-teal-primary );
     }
 
     &[data-chart-color='navy'] {
-
-      .highcharts-color-1,
-      .highcharts-color-0,
-      .highcharts-navigator-series .highcharts-graph  {
-        stroke: @chart-navy-primary;
-      }
-
-      .highcharts-legend-item span:before  {
-        background: @chart-navy-primary;
-      }
-
-      .highcharts-tooltip {
-        .highcharts-color-1, .highcharts-color-0 {
-          display: inline-block;
-          height: 4px;
-          width: 15px;
-          margin-bottom: 3px;
-          background: @chart-navy-primary;
-        }
-        .highcharts-color-1 {
-          height: 1px;
-          margin-bottom: 5px;
-        }
-      }
+      .u-chart-colorizer-line( @chart-navy-primary );
     }
   }
 
@@ -695,80 +585,22 @@
   &[data-chart-type='bar'] {
 
     // Set defaults to gray for help in troubleshooting
-    .highcharts-point {
-      fill: @gray;
-
-      &.highcharts-data__unprojected {
-        fill: @black;
-      }
-    }
-
-    .highcharts-tooltip .highcharts-color-0 {
-      display: none;
-    }
+    .u-chart-colorizer-bar( @black, @gray );
 
     &[data-chart-color='blue'] {
-
-        .highcharts-point {
-          fill: @chart-blue-secondary;
-
-          &.highcharts-data__unprojected {
-            fill: @chart-blue-primary;
-          }
-
-        }
-
-        .highcharts-tooltip-box {
-          stroke: @chart-blue-primary;
-        }
+      .u-chart-colorizer-bar( @chart-blue-primary, @chart-blue-secondary );
     }
 
     &[data-chart-color='green'] {
-
-        .highcharts-point {
-          fill: @chart-green-secondary;
-
-          &.highcharts-data__unprojected {
-            fill: @chart-green-primary;
-          }
-
-        }
-
-        .highcharts-tooltip-box {
-          stroke: @chart-green-primary;
-        }
+      .u-chart-colorizer-bar( @chart-green-primary, @chart-green-secondary );
     }
 
     &[data-chart-color='teal'] {
-
-        .highcharts-point {
-          fill: @chart-teal-secondary;
-
-          &.highcharts-data__unprojected {
-            fill: @chart-teal-primary;
-          }
-
-        }
-
-        .highcharts-tooltip-box {
-          stroke: @chart-teal-primary;
-        }
+      .u-chart-colorizer-bar( @chart-teal-primary, @chart-teal-secondary );
     }
 
     &[data-chart-color='navy'] {
-
-        .highcharts-point {
-          fill: @chart-navy-secondary;
-
-          &.highcharts-data__unprojected {
-            fill: @chart-navy-primary;
-          }
-
-        }
-
-        .highcharts-tooltip-box {
-          stroke: @chart-navy-primary;
-        }
+      .u-chart-colorizer-bar( @chart-navy-primary, @chart-navy-secondary );
     }
   }
 
@@ -778,48 +610,19 @@
   }
 
   &[data-chart-color='blue'] {
-
-    .highcharts-navigator-series .highcharts-graph  {
-      stroke: @chart-blue-primary;
-    }
-
-    .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
-      stroke: @chart-blue-secondary;
-    }
+    .u-chart-colorizer-navigator( @chart-blue-primary, @chart-blue-secondary );
   }
 
   &[data-chart-color='green'] {
-
-    .highcharts-navigator-series .highcharts-graph {
-      stroke: @chart-green-primary;
-    }
-
-    .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
-      stroke: @chart-green-secondary;
-    }
+    .u-chart-colorizer-navigator( @chart-green-primary, @chart-green-secondary );
   }
 
   &[data-chart-color='teal'] {
-
-
-    .highcharts-navigator-series .highcharts-graph  {
-      stroke: @chart-teal-primary;
-    }
-
-    .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
-      stroke: @chart-teal-secondary;
-    }
+    .u-chart-colorizer-navigator( @chart-teal-primary, @chart-teal-secondary );
   }
 
   &[data-chart-color='navy'] {
-
-    .highcharts-navigator-series .highcharts-graph  {
-      stroke: @chart-navy-primary;
-    }
-
-    .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
-      stroke: @chart-navy-secondary;
-    }
+    .u-chart-colorizer-navigator( @chart-navy-primary, @chart-navy-secondary );
   }
 }
 

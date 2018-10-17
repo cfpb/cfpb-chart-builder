@@ -151,6 +151,9 @@ class LineChart {
           month: '%b<br/>%Y',
           year: '%b<br/>%Y'
         },
+        labels: {
+          useHTML: true
+        },
         plotLines: [ {
           value: data.projectedDate.timestamp,
           label: {

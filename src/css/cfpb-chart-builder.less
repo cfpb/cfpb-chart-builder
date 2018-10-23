@@ -40,20 +40,70 @@ then add in styles below that aren't possible through the API.
     stroke: @color-primary;
   }
 
-  .highcharts-tooltip-box {
+  .highcharts-tooltip {
+    margin-left: 3px;
+    .u-chart-label();
+    .highcharts-header {
+      .u-chart-label();
+      margin-left: -5px;
+    }
+
+    .highcharts-strong {
+      font-weight: normal;
+    }
+
     .highcharts-color-0,
     .highcharts-color-1 {
+      position: relative;
+
+      /* We want a dash next to each series label in tooltip as a key.
+         By default, highcharts adds a bullet next to the series label.
+         This hack moves that bullet far off screen, we then offset the
+         dash back the other direction with a 4px adjustment to position it.
+      */
+      left: -9999px;
+
+      &::before {
+        position: absolute;
+        // This value offsets the value sent in the parent position.
+        left: 9995px;
+
+        content: '';
+        padding-top: 3px;
+        width: 15px;
+        margin-top: 8px;
+        /* Using an SVG prevents an issue where the 1px dash line will disappear
+           at certain heights due to rounding off of single pixels.
+        */
+        @svg-url: %( "data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.1' width='14' height='4' viewBox='0 0 14 4'%3E%3Cpath d='M 0.5 0.5 L 261.5 0.5 261.5 79.5 0.5 79.5 Z' style='fill: %a'%3E%3C/path%3E%3C/svg%3E", escape( @color-primary ) );
+        background-image: url( "@{svg-url}" );
+        background-repeat: no-repeat;
+      }
+    }
+
+    .highcharts-color-1 {
+      &::before {
+        padding-top: 1.5px;
+      }
+    }
+  }
+
+  /*.highcharts-tooltip-box {
+    .highcharts-color-0,
+    .highcharts-color-1 {
+      list-style:none;
       display: inline-block;
       height: 4px;
       width: 15px;
       margin-bottom: 3px;
-      background: @color-primary;
+      box-shadow: 15px 4px inset @color-primary;
+      //background: @color-primary;
     }
     .highcharts-color-1 {
       height: 1px;
       margin-bottom: 5px;
     }
-  }
+  }*/
 }
 
 .u-chart-colorizer-bar( @color-primary, @color-secondary ) {
@@ -106,6 +156,24 @@ then add in styles below that aren't possible through the API.
     } );
   }
 
+  /* Set the layering of the chart relative to the components that have
+     `useHTML: true` set in the JavaScript. We need to bring the SVG chart
+     in front of everything else, and then hide the background fill so the
+     HTML labels show through, and then move the tooltip labels to the top.
+   */
+  .highcharts-root {
+    position: relative;
+    z-index: 2000;
+  }
+
+  .highcharts-background {
+    opacity: 0;
+  }
+
+  .highcharts-tooltip {
+    z-index: 3000;
+  }
+
   .highcharts-root,
   .highcharts-container,
   .highcharts-legend-box,
@@ -134,10 +202,9 @@ then add in styles below that aren't possible through the API.
       */
       left: 0 !important;
       min-width: 300px;
-      //text-align: center;
-      //outline: 1px solid red;
     }
 
+    // The "Values after … are projected" label.
     .highcharts-plot-line-label {
       white-space: normal !important;
       left: 50% !important;
@@ -169,7 +236,6 @@ then add in styles below that aren't possible through the API.
      .highcharts-root {
 
        .highcharts-legend {
-
          // Seasonally adjusted legend line.
          .highcharts-legend-item.highcharts-color-0 .highcharts-graph {
            stroke-width: 3px;
@@ -233,7 +299,7 @@ then add in styles below that aren't possible through the API.
       }
     }
 
-    // Projected data for last six months
+    // Projected data for last six months.
     .highcharts-zone-graph-1 {
       stroke-dasharray: 5, 5;
     }

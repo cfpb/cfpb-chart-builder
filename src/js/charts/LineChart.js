@@ -188,17 +188,10 @@ class LineChart {
       },
       tooltip: {
         useHTML: true,
-        formatter: function() {
-          let tooltip = Highcharts.dateFormat( '%B %Y', this.x );
-          for ( let i = 0, len = this.points.length; i < len; i++ ) {
-            const point = this.points[i];
-            tooltip += "<br><span class='highcharts-color-" +
-                       point.series.colorIndex + "'></span> " +
-                       point.series.name + ': ' +
-                       Highcharts.numberFormat( point.y, 0 );
-          }
-          return tooltip;
-        }
+        shape: 'square',
+        shared: true,
+        split: false,
+        padding: 10
       },
       series: [
         {

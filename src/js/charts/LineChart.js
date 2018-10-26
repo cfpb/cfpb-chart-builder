@@ -67,13 +67,13 @@ class LineChart {
 
     const options = {
       chart: {
+        className: 'cfpb-chart_line__small',
         marginTop: 80,
         marginBottom: 100,
         marginLeft: 60,
         marginRight: 20,
         zoomType: 'none'
       },
-      className: 'cfpb-chart_line',
       description: description,
       credits: false,
       rangeSelector: {
@@ -168,7 +168,6 @@ class LineChart {
       yAxis: {
         showLastLabel: true,
         opposite: false,
-        className: 'axis-label',
         title: {
           text: _getYAxisLabel( data.adjusted, yAxisLabel ),
           align: 'high',
@@ -183,7 +182,8 @@ class LineChart {
         labels: {
           formatter: function() {
             return _getTickValue( this.value );
-          }
+          },
+          y: 4
         }
       },
       tooltip: {
@@ -221,21 +221,63 @@ class LineChart {
       ],
       responsive: {
         rules: [
-          /*{
+          {
             condition: {
               // Chart width, not window width.
-              minWidth: 600
+              minWidth: 650
             },
             // Add more left margin space for vertical label on large screens.
             chartOptions: {
               chart: {
-                marginRight: 0,
-                marginTop: 140,
-                marginLeft: 90,
-                zoomType: 'none'
-              }
+                className: 'cfpb-chart_line__large',
+                marginTop: 90,
+                marginBottom: 60,
+                marginLeft: 80,
+              },
+              xAxis: {
+                plotLines: [ {
+                  value: data.projectedDate.timestamp,
+                  label: {
+                    text: 'Values after ' + data.projectedDate.label + ' are projected',
+                    rotation: 0,
+                    useHTML: true,
+                    x: -300,
+                    y: -24
+                  }
+                } ]
+              },
+              yAxis: {
+                title: {
+                  align: 'middle',
+                  rotation: 270,
+                  x: -40,
+                  y: 0
+                }
+              },
+              rangeSelector: {
+                verticalAlign: 'top',
+                buttonPosition: {
+                  align: 'left',
+                  x: -40,
+                  y: -59
+                },
+                buttonSpacing: 10,
+                buttonTheme: {
+                  // border radius.
+                  r: 5,
+                  width: 45,
+                  height: 28
+                },
+                x: 0,
+                y: 0
+              },
+              legend: {
+                align: 'center',
+                x: 200,
+                y: -16
+              },
             }
-          }*/
+          }
         ]
       }
     };
@@ -245,7 +287,7 @@ class LineChart {
       chart.renderer.label(
         'Select time range',
         null,
-        370,
+        null,
         null,
         null,
         null,

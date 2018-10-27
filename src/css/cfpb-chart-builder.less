@@ -3,8 +3,7 @@
 // cf-core is included for cf-brand-colors and media queries.
 @import (less) 'cf-core.less';
 
-/* Chart colors
-   TODO: Investigate using highcharts API to set chart colors. */
+// Chart colors.
 @chart-blue-primary: @pacific;
 @chart-blue-secondary: @pacific-60;
 @chart-gold-primary: @dark-gold;
@@ -26,109 +25,7 @@ Set the positioning of the chart UI elements using the JavaScript API,
 then add in styles below that aren't possible through the API.
  */
 
-.u-chart-label {
-  font-size: @base-font-size-px;
-  font-family: inherit;
-  color: @gray;
-  //fill: @gray;
-}
-
-.u-chart-colorizer-line( @color-primary ) {
-  .highcharts-color-0,
-  .highcharts-color-1,
-  .highcharts-navigator-series .highcharts-graph  {
-    stroke: @color-primary;
-  }
-
-  .highcharts-tooltip {
-    margin-left: 3px;
-    .u-chart-label();
-    .highcharts-header {
-      .u-chart-label();
-      margin-left: -5px;
-    }
-
-    .highcharts-strong {
-      font-weight: normal;
-    }
-
-    .highcharts-color-0,
-    .highcharts-color-1 {
-      position: relative;
-
-      /* We want a dash next to each series label in tooltip as a key.
-         By default, highcharts adds a bullet next to the series label.
-         This hack moves that bullet far off screen, we then offset the
-         dash back the other direction with a 4px adjustment to position it.
-      */
-      left: -9999px;
-
-      &::before {
-        position: absolute;
-        // This value offsets the value sent in the parent position.
-        left: 9995px;
-
-        content: '';
-        padding-top: 3px;
-        width: 15px;
-        margin-top: 8px;
-        /* Using an SVG prevents an issue where the 1px dash line will disappear
-           at certain heights due to rounding off of single pixels.
-        */
-        @svg-url: %( "data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.1' width='14' height='4' viewBox='0 0 14 4'%3E%3Cpath d='M 0.5 0.5 L 261.5 0.5 261.5 79.5 0.5 79.5 Z' style='fill: %a'%3E%3C/path%3E%3C/svg%3E", escape( @color-primary ) );
-        background-image: url( "@{svg-url}" );
-        background-repeat: no-repeat;
-      }
-    }
-
-    .highcharts-color-1 {
-      &::before {
-        padding-top: 1.5px;
-      }
-    }
-  }
-
-  /*.highcharts-tooltip-box {
-    .highcharts-color-0,
-    .highcharts-color-1 {
-      list-style:none;
-      display: inline-block;
-      height: 4px;
-      width: 15px;
-      margin-bottom: 3px;
-      box-shadow: 15px 4px inset @color-primary;
-      //background: @color-primary;
-    }
-    .highcharts-color-1 {
-      height: 1px;
-      margin-bottom: 5px;
-    }
-  }*/
-}
-
-.u-chart-colorizer-bar( @color-primary, @color-secondary ) {
-  .highcharts-point {
-    fill: @color-secondary;
-
-    &.highcharts-data__unprojected {
-      fill: @color-primary;
-    }
-  }
-
-  .highcharts-tooltip-box {
-    stroke: @color-primary;
-  }
-}
-
-.u-chart-colorizer-navigator( @color-primary, @color-secondary ) {
-  .highcharts-navigator-series .highcharts-graph  {
-    stroke: @color-primary;
-  }
-
-  .highcharts-navigator-series .highcharts-graph.highcharts-zone-graph-1  {
-    stroke: @color-secondary;
-  }
-}
+@import (less) './mixins.less';
 
 .cfpb-chart {
   position: relative;
@@ -155,6 +52,7 @@ then add in styles below that aren't possible through the API.
     z-index: 3000;
   }
 
+  // Set default base label appearance.
   .highcharts-root,
   .highcharts-container,
   .highcharts-legend-box,
@@ -163,44 +61,198 @@ then add in styles below that aren't possible through the API.
     .u-chart-label();
   }
 
+  // Set colors for navigator used across chart types.
+  &[data-chart-type='line'],
+  &[data-chart-type='line-index'],
   &[data-chart-type='bar'] {
 
+    // Create a horizontal rule.
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 80px;
+      width: 100%;
+      height: 0;
+      border-top: 2px solid @gray-10;
+    }
+
+    // Center "Select time range" label.
+    .cfpb-chart__small {
+      .highcharts-range-selector-label {
+        .h6();
+        transform: translateY( 370px );
+        left: calc( 50% - 64px ) !important;
+      }
+
+      .highcharts-axis-title {
+        /* The y-axis title will be positioned to the left edge of the
+           y-axis label width. This overrides that auto-layout so that
+           independent of the y-axis label width the title will always
+           be the same distance from the left-hand edge of the chart,
+           which aligns it with the legend in the upper-left.
+        */
+        left: 0 !important;
+        text-align: left;
+      }
+    }
+
+    .cfpb-chart__large {
+      position: relative;
+
+      .highcharts-range-selector-label {
+        // Shift "Select time range" text to align with legend label y position.
+        transform: translateY( -2px );
+      }
+
+      .highcharts-axis-title {
+        transform-origin: 0 !important;
+        left: 10px !important;
+        top: 400px !important;
+        text-align: center;
+      }
+    }
+
+    .highcharts-axis-title {
+      // Sets the mininum width so that the y-axis title doesn't wrap.
+      min-width: 320px;
+    }
+
+    /*****************
+     * RANGE SELECTOR
+     ****************/
+
+    // Small screen size.
+    .cfpb-chart__small {
+      .highcharts-button text {
+        /*
+        This vertically aligns the button text, but in IE11 the y value will
+        not be overridden. https://github.com/highcharts/highcharts/issues/1285
+        */
+        transform: translateY( 13px );
+      }
+    }
+
+    // Large screen size.
+    .cfpb-chart__large {
+      .highcharts-button text {
+        /*
+        This vertically aligns the button text, but in IE11 the y value will
+        not be overridden. https://github.com/highcharts/highcharts/issues/1285
+        */
+        transform: translateY( 4px );
+      }
+    }
+
+    .highcharts-button {
+      fill: @pacific-20;
+      font-size: @size-v;
+
+      &:hover {
+        cursor: pointer;
+        .highcharts-button-box {
+          fill: @pacific-60;
+        }
+      }
+    }
+
+    .highcharts-button-pressed,
+    .highcharts-button-hover {
+      fill: @pacific-60;
+      font-weight: 600;
+    }
+
+    /*****************
+     * NAVIGATOR
+     ****************/
+
+    /* Setting `navigator { enabled: false }` in JavaScript
+       also disables the pressed state of the range selector buttons,
+       so instead we hide the navigator via CSS. */
+    .highcharts-navigator,
+    .highcharts-navigator-series,
+    .highcharts-navigator-xaxis,
+    .highcharts-navigator-yaxis,
+    .highcharts-scrollbar {
+      display: none;
+      visibility: hidden;
+    }
+
+    .cfpb-chart__large {
+      .highcharts-navigator,
+      .highcharts-navigator-series,
+      .highcharts-navigator-xaxis,
+      .highcharts-navigator-yaxis,
+      .highcharts-scrollbar {
+        display: block;
+        visibility: visible;
+      }
+
+      .highcharts-navigator {
+        // The border around the navigator.
+        stroke: @gray-40;
+      }
+
+      .highcharts-navigator-mask-inside {
+        fill: @gray-10;
+        fill-opacity: 0.25;
+      }
+
+      .highcharts-navigator-handle {
+        fill: @white;
+        stroke: @black;
+      }
+
+      .highcharts-navigator-xaxis {
+        font-size: 11px;
+      }
+
+      .highcharts-navigator-series .highcharts-graph {
+        stroke-width: 2px;
+      }
+    }
+
+    /*****************
+     * TOOLTIP
+     ****************/
+
+     // Set default label settings.
+    .highcharts-tooltip,
+    .highcharts-tooltip .highcharts-header {
+      .u-chart-label();
+    }
+
+    // Set colors.
     &[data-chart-color='blue'] {
-      .u-chart-colorizer-bar( @chart-blue-primary, @chart-blue-secondary );
       .u-chart-colorizer-navigator( @chart-blue-primary, @chart-blue-secondary );
     }
 
+    &[data-chart-color='gold'] {
+      .u-chart-colorizer-navigator( @chart-gold-primary, @chart-gold-secondary );
+    }
+
     &[data-chart-color='green'] {
-      .u-chart-colorizer-bar( @chart-green-primary, @chart-green-secondary );
       .u-chart-colorizer-navigator( @chart-green-primary, @chart-green-secondary );
     }
 
+    &[data-chart-color='neutral'] {
+      .u-chart-colorizer-navigator( @chart-neutral-primary, @chart-neutral-secondary );
+    }
+
+    &[data-chart-color='purple'] {
+      .u-chart-colorizer-navigator( @chart-purple-primary, @chart-purple-secondary );
+    }
+
     &[data-chart-color='teal'] {
-      .u-chart-colorizer-bar( @chart-teal-primary, @chart-teal-secondary );
       .u-chart-colorizer-navigator( @chart-teal-primary, @chart-teal-secondary );
     }
 
     &[data-chart-color='navy'] {
-      .u-chart-colorizer-bar( @chart-navy-primary, @chart-navy-secondary );
       .u-chart-colorizer-navigator( @chart-navy-primary, @chart-navy-secondary );
     }
   }
-
-  &[data-chart-color='blue'] {
-    .u-chart-colorizer-navigator( @chart-blue-primary, @chart-blue-secondary );
-  }
-
-  &[data-chart-color='green'] {
-    .u-chart-colorizer-navigator( @chart-green-primary, @chart-green-secondary );
-  }
-
-  &[data-chart-color='teal'] {
-    .u-chart-colorizer-navigator( @chart-teal-primary, @chart-teal-secondary );
-  }
-
-  &[data-chart-color='navy'] {
-    .u-chart-colorizer-navigator( @chart-navy-primary, @chart-navy-secondary );
-  }
 }
 
-@import (less) './line-charts.less';
+// Import chart-type specific styling.
+@import (less) './chart-line.less';
+@import (less) './chart-bar.less';

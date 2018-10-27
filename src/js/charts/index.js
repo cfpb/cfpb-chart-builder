@@ -6,11 +6,11 @@ import LineChartIndex from './LineChartIndex';
 import TileMap from './TileMap';
 
 const charts = {};
-charts.bar = BarChart;
+charts.BarChart = BarChart;
 charts.GeoMap = GeoMap;
 charts.LineChart = LineChart;
 charts.LineChartComparison = LineChartComparison;
 charts.LineChartIndex = LineChartIndex;
-charts.tileMap = TileMap;
+charts.TileMap = TileMap;
 
 export default charts;

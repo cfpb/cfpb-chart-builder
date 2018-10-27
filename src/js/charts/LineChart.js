@@ -67,7 +67,7 @@ class LineChart {
 
     const options = {
       chart: {
-        className: 'cfpb-chart_line__small',
+        className: 'cfpb-chart__small',
         marginTop: 80,
         marginBottom: 100,
         marginLeft: 60,
@@ -229,10 +229,10 @@ class LineChart {
             // Add more left margin space for vertical label on large screens.
             chartOptions: {
               chart: {
-                className: 'cfpb-chart_line__large',
+                className: 'cfpb-chart__large',
                 marginTop: 90,
                 marginBottom: 60,
-                marginLeft: 80,
+                marginLeft: 80
               },
               xAxis: {
                 plotLines: [ {
@@ -275,14 +275,14 @@ class LineChart {
                 align: 'center',
                 x: 200,
                 y: -16
-              },
+              }
             }
           }
         ]
       }
     };
 
-    return Highcharts.stockChart( el, options, function( chart ) {
+    this.chart = Highcharts.stockChart( el, options, function( chart ) {
       // label(str, x, y, shape, anchorX, anchorY, useHTML, baseline, className)
       chart.renderer.label(
         'Select time range',
@@ -296,6 +296,8 @@ class LineChart {
         'range-selector-label'
       ).add();
     } );
+
+    return this.chart;
   }
 }
 

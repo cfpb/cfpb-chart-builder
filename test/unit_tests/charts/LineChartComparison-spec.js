@@ -16,11 +16,22 @@ jest.mock( 'highcharts/js/modules/accessibility', () => jest.fn() );
 import LineChart from '../../../src/js/charts/LineChartComparison';
 let line;
 
+const HTML_SNIPPET = `
+  <div id="update-demo"
+     class="cfpb-chart"
+     data-chart-color="blue"
+     data-chart-type="line-comparison"
+     data-chart-ignore="true">
+     This chart will be created via the script in /test/demo.js.
+  </div>
+`;
+
 describe( 'LineChartComparison', () => {
 
   beforeEach( () => {
+    document.body.innerHTML = HTML_SNIPPET;
     line = new LineChart( {
-      el: 'el',
+      el: document.querySelector( '#update-demo' ),
       description: 'chart description!',
       data: [
         {

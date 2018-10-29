@@ -14,8 +14,20 @@ Highcharts.setOptions( {
 
 class GeoMap {
 
-  constructor( { el, metadata, data, color, desc, shapes, tooltipFormatter,
-    pointDescriptionFormatter, seriesDescriptionFormatter, screenReaderSectionFormatter } ) {
+  constructor(
+    {
+      el,
+      metadata,
+      data,
+      color,
+      desc,
+      shapes,
+      tooltipFormatter,
+      pointDescriptionFormatter,
+      seriesDescriptionFormatter,
+      screenReaderSectionFormatter
+    }
+  ) {
 
     this.chartOptions = {
       credits: false,
@@ -124,11 +136,11 @@ class GeoMap {
   }
 
   static getSeries( data, shapes, metadata ) {
-    const usMap = Highcharts.geojson( shapes ),
-          borders = Highcharts.geojson( outlines, 'mapline' ),
-          lines = Highcharts.geojson( separators, 'mapline' ),
-          rows = data[0].data,
-          points = [];
+    const usMap = Highcharts.geojson( shapes );
+    const borders = Highcharts.geojson( outlines, 'mapline' );
+    const lines = Highcharts.geojson( separators, 'mapline' );
+    const rows = data[0].data;
+    const points = [];
 
     usMap.forEach( mapPoint => {
       if ( rows[mapPoint.properties.id] ) {

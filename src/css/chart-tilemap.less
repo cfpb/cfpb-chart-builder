@@ -1,6 +1,24 @@
 .cfpb-chart[data-chart-type="tile_map"] {
   height: 630px;
 
+  .highcharts-label__tile-map {
+    .u-chart-label();
+    color: @black;
+    font-weight: 600;
+    span {
+      position: relative !important;
+      white-space: normal !important;
+    }
+  }
+
+  .highcharts-legend__tile-map {
+    transform: translateY( 15px );
+
+    .respond-to-min( 500px, {
+      transform: translateY( 0 );
+    } );
+  }
+
   .highcharts-map-series .highcharts-point {
     stroke: @gray-80;
     &:hover,

@@ -1,6 +1,11 @@
 .cfpb-chart[data-chart-type='geo-map'] {
   .highcharts-point-select {
-    color: #101820;
-    fill: #101820;
+    color: @black;
+    fill: @black;
+  }
+
+  // Remove drop-shadow filter from tooltip text.
+  div.highcharts-tooltip {
+    filter: unset;
   }
 }

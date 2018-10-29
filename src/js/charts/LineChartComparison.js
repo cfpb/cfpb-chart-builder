@@ -77,6 +77,9 @@ class LineChartComparison {
         dateTimeLabelFormats: {
           month: '%b<br/>%Y',
           year: '%b<br/>%Y'
+        },
+        labels: {
+          useHTML: true
         }
       },
       yAxis: {
@@ -92,17 +95,8 @@ class LineChartComparison {
       },
       tooltip: {
         useHTML: true,
-        formatter: function() {
-          let tooltip = Highcharts.dateFormat( '%B %Y', this.x );
-          for ( let i = 0; i < this.points.length; i++ ) {
-            const point = this.points[i];
-            tooltip += "<br><span class='highcharts-color-" +
-                       point.series.colorIndex + "'></span> " +
-                       point.series.name + ': ' +
-                       Highcharts.numberFormat( point.y * 100, 1 ) + '%';
-          }
-          return tooltip;
-        }
+        shared: true,
+        split: false
       },
       series: this.constructor.getSeries( data )
     };

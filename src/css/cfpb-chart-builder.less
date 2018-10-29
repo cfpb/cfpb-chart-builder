@@ -61,11 +61,9 @@ then add in styles below that aren't possible through the API.
     .u-chart-label();
   }
 
-  // Set colors for navigator used across chart types.
   &[data-chart-type='line'],
   &[data-chart-type='line-index'],
   &[data-chart-type='bar'] {
-
     // Create a horizontal rule.
     &:after {
       content: '';
@@ -76,6 +74,12 @@ then add in styles below that aren't possible through the API.
       height: 0;
       border-top: 2px solid @gray-10;
     }
+  }
+
+  &[data-chart-type='line'],
+  &[data-chart-type='line-index'],
+  &[data-chart-type='line-comparison'],
+  &[data-chart-type='bar'] {
 
     // Center "Select time range" label.
     .cfpb-chart__small {
@@ -256,3 +260,14 @@ then add in styles below that aren't possible through the API.
 // Import chart-type specific styling.
 @import (less) './chart-line.less';
 @import (less) './chart-bar.less';
+@import (less) './chart-tilemap.less';
+
+// Collapse chart containers when JS is disabled
+.no-js {
+  .cfpb-chart {
+    height: inherit;
+    &:after {
+      border: 0;
+    }
+  }
+}

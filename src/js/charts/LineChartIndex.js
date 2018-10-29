@@ -129,6 +129,9 @@ class LineChartIndex {
           reserveSpace: false,
           x: 300,
           y: -33
+        },
+        labels: {
+          y: 4
         }
       },
       tooltip: {

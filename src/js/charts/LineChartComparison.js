@@ -90,7 +90,8 @@ class LineChartComparison {
         labels: {
           formatter: function() {
             return _getTickValue( this.value );
-          }
+          },
+          y: 4
         }
       },
       tooltip: {

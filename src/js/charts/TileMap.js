@@ -85,6 +85,7 @@ class TileMap {
       },
       series: [ {
         type: 'map',
+        clip: false,
         dataLabels: {
           enabled: true,
           formatter: function() {

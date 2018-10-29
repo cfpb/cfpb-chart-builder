@@ -1,6 +1,19 @@
 .cfpb-chart[data-chart-type="tile_map"] {
   height: 630px;
 
+  // Change tile border width on hover.
+  .highcharts-series path {
+    &:focus,
+    &:hover {
+      stroke-width: 2px !important;
+    }
+  }
+
+  // Ignore mouse events on text on labels so hover on square tile works.
+  .highcharts-label {
+    pointer-events: none;
+  }
+
   .highcharts-label__tile-map {
     .u-chart-label();
     color: @black;
@@ -24,6 +37,7 @@
     &:hover,
     &:focus {
       stroke: @black;
+      cursor: default;
     }
   }
 
@@ -41,6 +55,7 @@
 
     .highcharts-data-label-state-abbr {
       text-align: center;
+      cursor: default;
     }
 
     .highcharts-data-label-state-value {

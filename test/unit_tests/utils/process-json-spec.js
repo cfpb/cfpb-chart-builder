@@ -167,10 +167,10 @@ describe( 'process-json', () => {
     } );
 
     it( 'should assign the correct projected dates, ' +
-        '0 months for inferred denial charts', () => {
-      const testDataDen = originations( data, 'test', 'den_test_file.csv' );
-      expect( testDataDen.projectedDate.timestamp ).toBeUndefined();
-      expect( testDataDen.projectedDate.label ).toBeNull();
+        '0 months for credit tightness charts', () => {
+      const testDataTightness = originations( data, 'test', 'crt_test_file.csv' );
+      expect( testDataTightness.projectedDate.timestamp ).toBeUndefined();
+      expect( testDataTightness.projectedDate.label ).toBeNull();
     } );
 
     it( 'should assign the correct projected dates, ' +

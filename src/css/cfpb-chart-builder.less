@@ -34,24 +34,6 @@ then add in styles below that aren't possible through the API.
   height: 500px;
   margin-bottom: 25px;
 
-  /* Set the layering of the chart relative to the components that have
-     `useHTML: true` set in the JavaScript. We need to bring the SVG chart
-     in front of everything else, and then hide the background fill so the
-     HTML labels show through, and then move the tooltip labels to the top.
-   */
-  .highcharts-root {
-    position: relative;
-    z-index: 2000;
-  }
-
-  .highcharts-background {
-    opacity: 0;
-  }
-
-  .highcharts-tooltip {
-    z-index: 3000;
-  }
-
   // Set default base label appearance.
   .highcharts-root,
   .highcharts-container,
@@ -64,6 +46,25 @@ then add in styles below that aren't possible through the API.
   &[data-chart-type='line'],
   &[data-chart-type='line-index'],
   &[data-chart-type='bar'] {
+
+    /* Set the layering of the chart relative to the components that have
+       `useHTML: true` set in the JavaScript. We need to bring the SVG chart
+       in front of everything else, and then hide the background fill so the
+       HTML labels show through, and then move the tooltip labels to the top.
+     */
+    .highcharts-root {
+      position: relative;
+      z-index: 2000;
+    }
+
+    .highcharts-background {
+      opacity: 0;
+    }
+
+    .highcharts-tooltip {
+      z-index: 3000;
+    }
+
     // Create a horizontal rule.
     &:after {
       content: '';

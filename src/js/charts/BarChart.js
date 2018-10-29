@@ -104,7 +104,7 @@ class BarChart {
             rotation: 0,
             useHTML: true,
             x: -300,
-            y: -70
+            y: -90
           }
         } ]
       },

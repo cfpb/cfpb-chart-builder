@@ -21,9 +21,11 @@
 
 /*
 Updating the charts:
-Set the positioning of the chart UI elements using the JavaScript API,
-then add in styles below that aren't possible through the API.
- */
+1. Set the positioning of the chart UI elements using the JavaScript API.
+2. Add in styles below that aren't possible through the API.
+This appears to handle responsive changes the best, since the JS sets
+x/y positioning on the SVG elements.
+*/
 
 @import (less) './mixins.less';
 
@@ -81,6 +83,14 @@ then add in styles below that aren't possible through the API.
   &[data-chart-type='line-index'],
   &[data-chart-type='line-comparison'],
   &[data-chart-type='bar'] {
+
+    /*********
+     * X AXIS
+     ********/
+
+    .highcharts-xaxis-labels {
+      text-align: center;
+    }
 
     // Center "Select time range" label.
     .cfpb-chart__small {

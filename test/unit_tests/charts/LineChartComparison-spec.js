@@ -18,11 +18,7 @@ let line;
 
 const HTML_SNIPPET = `
   <div id="update-demo"
-     class="cfpb-chart"
-     data-chart-color="blue"
-     data-chart-type="line-comparison"
-     data-chart-ignore="true">
-     This chart will be created via the script in /test/demo.js.
+     data-chart-type="line-comparison">
   </div>
 `;
 

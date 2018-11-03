@@ -30,9 +30,9 @@ class GeoMap {
   ) {
 
   // Add the color attribute if needed so we can hook into it with the CSS.
-  if ( color && el.getAttribute( 'data-chart-color' ) === null ) {
-    el.setAttribute( 'data-chart-color', color );
-  }
+    if ( color && el.getAttribute( 'data-chart-color' ) === null ) {
+      el.setAttribute( 'data-chart-color', color );
+    }
 
     this.chartOptions = {
       credits: false,

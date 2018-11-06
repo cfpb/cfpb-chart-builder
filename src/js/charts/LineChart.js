@@ -54,7 +54,7 @@ function _getTickValue( value ) {
 
   if ( value % 1000000000 < value ) {
     return value / 1000000000 + 'B';
-  } else if ( value % 1000000 < value ) {
+  } else if ( value % 10000 < value ) {
     return value / 1000000 + 'M';
   }
 

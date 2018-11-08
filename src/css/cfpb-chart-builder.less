@@ -49,6 +49,23 @@ x/y positioning on the SVG elements.
   &[data-chart-type='line-index'],
   &[data-chart-type='bar'] {
 
+    // Create a horizontal rule.
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 80px;
+      width: 100%;
+      height: 0;
+      border-top: 2px solid @gray-10;
+    }
+  }
+
+  &[data-chart-type='line'],
+  &[data-chart-type='line-index'],
+  &[data-chart-type='line-comparison'],
+  &[data-chart-type='bar'] {
+
     /* Set the layering of the chart relative to the components that have
        `useHTML: true` set in the JavaScript. We need to bring the SVG chart
        in front of everything else, and then hide the background fill so the
@@ -66,23 +83,6 @@ x/y positioning on the SVG elements.
     .highcharts-tooltip {
       z-index: 3000;
     }
-
-    // Create a horizontal rule.
-    &:after {
-      content: '';
-      display: block;
-      position: absolute;
-      top: 80px;
-      width: 100%;
-      height: 0;
-      border-top: 2px solid @gray-10;
-    }
-  }
-
-  &[data-chart-type='line'],
-  &[data-chart-type='line-index'],
-  &[data-chart-type='line-comparison'],
-  &[data-chart-type='bar'] {
 
     /*********
      * X AXIS

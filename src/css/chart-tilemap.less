@@ -3,14 +3,6 @@
 .cfpb-chart[data-chart-type="tile_map"] {
   height: 630px;
 
-  // Change tile border width on hover.
-  .highcharts-series path {
-    &:focus,
-    &:hover {
-      stroke-width: 2px !important;
-    }
-  }
-
   // Ignore mouse events on text on labels so hover on square tile works.
   .highcharts-label {
     pointer-events: none;
@@ -34,13 +26,25 @@
     } );
   }
 
+  // Utility for setting the hover/focus state of a tile.
+  .u-point-hover-state {
+    stroke: @black;
+    cursor: default;
+    stroke-width: 4px !important;
+    stroke-linecap: square;
+  }
+
   .highcharts-map-series .highcharts-point {
     stroke: @gray-80;
     &:hover,
     &:focus {
-      stroke: @black;
-      cursor: default;
+      .u-point-hover-state();
     }
+  }
+
+  // Provide this for Firefox.
+  .highcharts-map-series .highcharts-point-hover {
+    .u-point-hover-state();
   }
 
   .highcharts-data-label {

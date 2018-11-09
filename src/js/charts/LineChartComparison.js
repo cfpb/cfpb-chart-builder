@@ -95,6 +95,7 @@ class LineChartComparison {
         }
       },
       tooltip: {
+        animation: false,
         useHTML: true,
         formatter: function() {
           let tooltip = Highcharts.dateFormat( '%B %Y', this.x );

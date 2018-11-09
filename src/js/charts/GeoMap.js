@@ -59,7 +59,10 @@ class GeoMap {
         },
         skipNullPoints: true
       },
-      tooltip: {},
+      tooltip: {
+        animation: false,
+        followPointer: false
+      },
       states: {
         hover: {
           brightness: 0
@@ -225,6 +228,8 @@ class GeoMap {
     if ( newOptions.tooltipFormatter ) {
       newOptions.tooltip = {
         useHTML: true,
+        followPointer: false,
+        animation: false,
         formatter: function() {
           return newOptions.tooltipFormatter( this.point, newOptions.data[0].meta );
         }

@@ -187,6 +187,7 @@ class LineChart {
         }
       },
       tooltip: {
+        animation: false,
         useHTML: true,
         shape: 'square',
         shared: true,

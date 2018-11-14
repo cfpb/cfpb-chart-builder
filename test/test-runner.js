@@ -1,29 +1,12 @@
 // Load data from localhost instead of S3
 window.CFPB_CHART_DATA_SOURCE_BASE = '/sample_data/';
 
-function NO_OP() {
-  // Noop function.
-}
-
-// Console polyfill for IE */
-if ( !( window.console && console.log ) ) {
-  // TODO: remove when legacy IE support is removed.
-  // eslint-disable-next-line no-global-assign
-  console = {
-    log: NO_OP,
-    debug: NO_OP,
-    info: NO_OP,
-    warn: NO_OP,
-    error: NO_OP
-  };
-}
-
 /**
  * Whether we're in Sauce Labs or not.
  * @returns {boolean} true if running in Sauce Labs, false otherwise.
  */
 function isCI() {
-  // TODO: Convert variables to const when IE9 support is removed.
+  // TODO: Convert variables to const when IE10 support is removed.
   // eslint-disable-next-line no-var
   var regex = new RegExp( '[?&]ci_environment(=([^&#]*)|&|#|$)' );
   // eslint-disable-next-line no-var
@@ -36,7 +19,7 @@ function isCI() {
  * Catch all errors and report them to Sauce Labs.
  */
 function getSaucy() {
-  // TODO: Convert variables to const when IE9 support is removed.
+  // TODO: Convert variables to const when IE10 support is removed.
   // eslint-disable-next-line no-var
   var errors = [];
   window.onerror = function( message, url, lineNumber ) {

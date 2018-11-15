@@ -19,11 +19,18 @@ jest.mock( 'highcharts/js/modules/accessibility', () => jest.fn() );
 import GeoMap from '../../../src/js/charts/GeoMap';
 let geoMap;
 
+const HTML_SNIPPET = `
+  <div id="map">
+     Sample geo map.
+  </div>
+`;
+
 describe( 'GeoMapComparison', () => {
 
   beforeEach( () => {
+    document.body.innerHTML = HTML_SNIPPET;
     geoMap = new GeoMap( {
-      el: 'el',
+      el: document.querySelector( '#map' ),
       desc: 'chart description!',
       metadata: 'states',
       shapes: shapes,
@@ -50,6 +57,7 @@ describe( 'GeoMapComparison', () => {
         }
       ]
     } );
+
   } );
 
   it( 'should correctly set chart description', () => {

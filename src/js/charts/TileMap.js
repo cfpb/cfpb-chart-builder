@@ -66,43 +66,43 @@ Highcharts.setOptions( {
   }
 } );
 
-/**
- * @param {Object} props - Options to pass to highcharts when creating a chart.
- * @returns {Object} A highchart chart.
- */
-function TileMap( props ) {
+class TileMap {
+  constructor( { el, description, data, metadata, title } ) {
+    data = process.processMapData( data[0], metadata );
 
-  props = props || {};
-  props.data = process.processMapData( props.data[0], props.metadata );
-
-  const options = {
-    chart: {
-      marginTop: 150
-    },
-    title: false,
-    description: props.description,
-    credits: false,
-    legend: {
-      enabled: false
-    },
-    tooltip: {
-      enabled: false
-    },
-    series: [ {
-      type: 'map',
-      dataLabels: {
-        enabled: true,
-        formatter: function() {
-          return '<div class="highcharts-data-label-state-abbr">' + this.point.name + '<br /><span class=highcharts-data-label-state-value>' + this.point.value + '%</span></div>';
-        },
-        useHTML: true
+    const options = {
+      chart: {
+        marginTop: 150
       },
-      name: props.title,
-      data: props.data
-    } ]
-  };
+      title: false,
+      description: description,
+      credits: false,
+      legend: {
+        enabled: false
+      },
+      tooltip: {
+        enabled: false
+      },
+      series: [ {
+        type: 'map',
+        clip: false,
+        dataLabels: {
+          enabled: true,
+          formatter: function() {
+            return '<div class="highcharts-data-label-state-abbr">' +
+                   this.point.name +
+                   '<br /><span class=highcharts-data-label-state-value>' +
+                   this.point.value + '%</span></div>';
+          },
+          useHTML: true
+        },
+        name: title,
+        data: data
+      } ]
+    };
 
-  return Highcharts.mapChart( props.el, options, _drawLegend );
+    return Highcharts.mapChart( el, options, _drawLegend );
+  }
 }
 
 export default TileMap;

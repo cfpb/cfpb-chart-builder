@@ -31,10 +31,10 @@ class Chart {
         this.highchart = new createChartDir.LineChart( chartOptions );
         break;
       case 'bar':
-        this.highchart = createChartDir.bar( chartOptions );
+        this.highchart = new createChartDir.BarChart( chartOptions );
         break;
       case 'tile_map':
-        this.highchart = createChartDir.tileMap( chartOptions );
+        this.highchart = new createChartDir.TileMap( chartOptions );
         break;
       default:
     }

@@ -18,7 +18,7 @@ gulp.task( 'watch:scripts', done => {
 gulp.task( 'watch:styles', done => {
   gulp.watch(
     [
-      config.styles.cwd + config.styles.src,
+      config.styles.cwd + '/*.less',
       config.demoStyles.cwd + config.demoStyles.src
     ],
     gulp.series( 'styles' )

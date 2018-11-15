@@ -14,8 +14,25 @@ Highcharts.setOptions( {
 
 class GeoMap {
 
-  constructor( { el, metadata, data, color, desc, shapes, tooltipFormatter,
-    pointDescriptionFormatter, seriesDescriptionFormatter, screenReaderSectionFormatter } ) {
+  constructor(
+    {
+      el,
+      metadata,
+      data,
+      color,
+      desc,
+      shapes,
+      tooltipFormatter,
+      pointDescriptionFormatter,
+      seriesDescriptionFormatter,
+      screenReaderSectionFormatter
+    }
+  ) {
+
+  // Add the color attribute if needed so we can hook into it with the CSS.
+    if ( color && el.getAttribute( 'data-chart-color' ) === null ) {
+      el.setAttribute( 'data-chart-color', color );
+    }
 
     this.chartOptions = {
       credits: false,
@@ -42,14 +59,18 @@ class GeoMap {
         },
         skipNullPoints: true
       },
-      tooltip: {},
+      tooltip: {
+        animation: false,
+        followPointer: false
+      },
       states: {
         hover: {
           brightness: 0
         }
       },
       colorAxis: {
-        dataClasses: colorRange[color]
+        dataClasses: colorRange[color],
+        dataClassColor: 'category'
       },
       series: this.constructor.getSeries( data, shapes, metadata )
     };
@@ -114,17 +135,21 @@ class GeoMap {
       };
     }
 
+    // Set the chart type in the markup so CSS can pick it and be applied.
+    el.classList.add( 'cfpb-chart' );
+    el.setAttribute( 'data-chart-type', 'geo-map' );
+
     // TODO: remove when gulp build config is updated to handle spread operator.
     // eslint-disable-next-line prefer-object-spread
     this.chart = Highcharts.mapChart( el, Object.assign( {}, this.chartOptions ) );
   }
 
   static getSeries( data, shapes, metadata ) {
-    const usMap = Highcharts.geojson( shapes ),
-          borders = Highcharts.geojson( outlines, 'mapline' ),
-          lines = Highcharts.geojson( separators, 'mapline' ),
-          rows = data[0].data,
-          points = [];
+    const usMap = Highcharts.geojson( shapes );
+    const borders = Highcharts.geojson( outlines, 'mapline' );
+    const lines = Highcharts.geojson( separators, 'mapline' );
+    const rows = data[0].data;
+    const points = [];
 
     usMap.forEach( mapPoint => {
       if ( rows[mapPoint.properties.id] ) {
@@ -203,6 +228,8 @@ class GeoMap {
     if ( newOptions.tooltipFormatter ) {
       newOptions.tooltip = {
         useHTML: true,
+        followPointer: false,
+        animation: false,
         formatter: function() {
           return newOptions.tooltipFormatter( this.point, newOptions.data[0].meta );
         }

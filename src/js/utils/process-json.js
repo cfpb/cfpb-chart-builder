@@ -1,7 +1,6 @@
-const getTileMapColor = require( './get-tile-map-color' );
-const getTileMapState = require( './get-tile-map-state' );
-
 import { convertDate } from './calculation';
+import getTileMapColor from './get-tile-map-color';
+import getTileMapState from './get-tile-map-state';
 
 let UNDEFINED;
 

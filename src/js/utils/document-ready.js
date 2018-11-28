@@ -10,4 +10,4 @@ function ready( fn ) {
   }
 }
 
-module.exports = ready;
+export default ready;

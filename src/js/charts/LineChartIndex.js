@@ -1,6 +1,6 @@
 import accessibility from 'highcharts/js/modules/accessibility';
 import Highcharts from 'highcharts/js/highstock';
-import * as process from '../utils/process-json';
+import { processNumOriginationsData } from '../utils/process-json';
 
 accessibility( Highcharts );
 
@@ -13,7 +13,7 @@ Highcharts.setOptions( {
 
 class LineChartIndex {
   constructor( { el, description, data, metadata, source } ) {
-    data = process.processNumOriginationsData( data[0], metadata, source );
+    data = processNumOriginationsData( data[0], metadata, source );
 
     const options = {
       chart: {

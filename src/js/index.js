@@ -1,4 +1,4 @@
-const documentReady = require( './utils/document-ready' );
+import documentReady from './utils/document-ready';
 import createChartDir from './charts';
 import ajax from './utils/get-data';
 import fetchShapes from './utils/map-shapes';

@@ -1,6 +1,6 @@
 import accessibility from 'highcharts/js/modules/accessibility';
 import Highcharts from 'highcharts/js/highstock';
-import * as process from '../utils/process-json';
+import { processDelinquencies } from '../utils/process-json';
 
 accessibility( Highcharts );
 
@@ -120,7 +120,7 @@ class LineChartComparison {
   }
 
   static getSeries( data ) {
-    data = process.processDelinquencies( data );
+    data = processDelinquencies( data );
     data = data.map( datum => ( {
       name: datum.label,
       data: datum.data,

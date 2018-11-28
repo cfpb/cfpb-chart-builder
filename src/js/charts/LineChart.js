@@ -1,7 +1,7 @@
 import accessibility from 'highcharts/js/modules/accessibility';
 import Highcharts from 'highcharts/js/highstock';
 import { getFirstNumber } from '../utils/calculation';
-import * as process from '../utils/process-json';
+import { processNumOriginationsData } from '../utils/process-json';
 
 accessibility( Highcharts );
 
@@ -63,7 +63,7 @@ function _getTickValue( value ) {
 
 class LineChart {
   constructor( { el, description, color, data, metadata, yAxisLabel } ) {
-    data = process.processNumOriginationsData( data[0], metadata );
+    data = processNumOriginationsData( data[0], metadata );
 
     const options = {
       chart: {

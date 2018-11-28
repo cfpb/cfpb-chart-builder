@@ -1,8 +1,8 @@
 import accessibility from 'highcharts/js/modules/accessibility';
 import Highcharts from 'highcharts/js/highmaps';
-const outlines = require( '../utils/state-outlines' );
-const separators = require( '../utils/map-separators' );
-const colorRange = require( '../utils/color-range' );
+import outlines from '../utils/state-outlines';
+import separators from '../utils/map-separators';
+import colorRange from '../utils/color-range';
 
 accessibility( Highcharts );
 

@@ -1,5 +1,5 @@
-import accessibility from 'highcharts/js/modules/accessibility';
 import Highcharts from 'highcharts/js/highstock';
+import accessibility from 'highcharts/js/modules/accessibility';
 import { processNumOriginationsData } from '../utils/process-json';
 
 accessibility( Highcharts );

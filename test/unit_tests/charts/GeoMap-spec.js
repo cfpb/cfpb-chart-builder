@@ -35,9 +35,9 @@ describe( 'GeoMapComparison', () => {
       metadata: 'states',
       shapes: shapes,
       tooltipFormatter: ( point, meta ) => [ point, meta.fips_type ],
-      pointDescriptionFormatter: point => jest.fn(),
-      seriesDescriptionFormatter: point => jest.fn(),
-      screenReaderSectionFormatter: point => jest.fn(),
+      pointDescriptionFormatter: () => jest.fn(),
+      seriesDescriptionFormatter: () => jest.fn(),
+      screenReaderSectionFormatter: () => jest.fn(),
       data: [
         {
           meta: {

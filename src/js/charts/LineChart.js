@@ -1,5 +1,5 @@
-import accessibility from 'highcharts/js/modules/accessibility';
 import Highcharts from 'highcharts/js/highstock';
+import accessibility from 'highcharts/js/modules/accessibility';
 import { getFirstNumber } from '../utils/calculation';
 import { processNumOriginationsData } from '../utils/process-json';
 
@@ -53,16 +53,16 @@ function _getTickValue( value ) {
   }
 
   if ( value % 1000000000 < value ) {
-    return value / 1000000000 + 'B';
+    return ( value / 1000000000 ) + 'B';
   } else if ( value % 10000 < value ) {
-    return value / 1000000 + 'M';
+    return ( value / 1000000 ) + 'M';
   }
 
   return value;
 }
 
 class LineChart {
-  constructor( { el, description, color, data, metadata, yAxisLabel } ) {
+  constructor( { el, description, data, metadata, yAxisLabel } ) {
     data = processNumOriginationsData( data[0], metadata );
 
     const options = {

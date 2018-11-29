@@ -1,5 +1,5 @@
-import accessibility from 'highcharts/js/modules/accessibility';
 import Highcharts from 'highcharts/js/highmaps';
+import accessibility from 'highcharts/js/modules/accessibility';
 import getTileMapColor from '../utils/get-tile-map-color';
 import { processMapData } from '../utils/process-json';
 

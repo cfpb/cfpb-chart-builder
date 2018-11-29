@@ -29,8 +29,10 @@ let readyList = [];
 let readyFired = false;
 let readyEventHandlersInstalled = false;
 
-/* Call this when the document is ready.
-   This function protects itself against being called more than once. */
+/**
+ * Call this when the document is ready.
+ * This function protects itself against being called more than once.
+ */
 function docReady() {
   if ( !readyFired ) {
     // This must be set to true before we start calling callbacks.
@@ -49,6 +51,9 @@ function docReady() {
   }
 }
 
+/**
+ * Event handler function for when the load state changes.
+ */
 function readyStateChange() {
   if ( document.readyState === 'complete' ) {
     docReady();

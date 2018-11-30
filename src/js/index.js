@@ -1,6 +1,6 @@
-import documentReady from './utils/document-ready';
-import createChartDir from './charts';
 import ajax from './utils/get-data';
+import createChartDir from './charts';
+import documentReady from './utils/document-ready';
 import fetchShapes from './utils/map-shapes';
 
 class Chart {
@@ -81,30 +81,32 @@ function createChart( opts ) {
 
 /**
  * Creates several charts at once.
- * TODO: Return array of chart instances.
+ * @returns {Array} List of chart instances.
  */
 function createCharts() {
   const elements = document.querySelectorAll( '.cfpb-chart' );
   const charts = [];
 
   // Ignore divs with a `data-chart-ignore` data attribute
-  for ( let i = 0; i < elements.length; ++i ) {
+  let element;
+  let chart;
+  for ( let i = 0, len = elements.length; i < len; i++ ) {
     if ( !elements[i].getAttribute( 'data-chart-ignore' ) ) {
-      charts.push( elements[i] );
+      element = elements[i];
+      chart = new Chart( {
+        el: element,
+        title: element.getAttribute( 'data-chart-title' ),
+        yAxisLabel: element.getAttribute( 'data-chart-y-axis-label' ),
+        type: element.getAttribute( 'data-chart-type' ),
+        color: element.getAttribute( 'data-chart-color' ),
+        metadata: element.getAttribute( 'data-chart-metadata' ),
+        source: element.getAttribute( 'data-chart-source' )
+      } );
+      charts.push( chart );
     }
   }
 
-  for ( const chart of charts ) {
-    new Chart( {
-      el: chart,
-      title: chart.getAttribute( 'data-chart-title' ),
-      yAxisLabel: chart.getAttribute( 'data-chart-y-axis-label' ),
-      type: chart.getAttribute( 'data-chart-type' ),
-      color: chart.getAttribute( 'data-chart-color' ),
-      metadata: chart.getAttribute( 'data-chart-metadata' ),
-      source: chart.getAttribute( 'data-chart-source' )
-    } );
-  }
+  return charts;
 }
 
 /* *

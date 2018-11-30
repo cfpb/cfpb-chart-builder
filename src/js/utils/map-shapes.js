@@ -1,5 +1,5 @@
 import ajax from './get-data';
-import * as cache from './session-storage';
+import cache from './session-storage';
 
 const DATA_SOURCE_BASE = 'https://files.consumerfinance.gov/data/';
 

@@ -6,7 +6,7 @@ const cors = require( 'cors' );
 const serveStatic = require( 'serve-static' );
 const request = require( 'request' );
 const configPath = path.join( __dirname, './config.json' );
-const child_process = require( 'child_process' );
+const childProcess = require( 'child_process' );
 const envvars = require( '../config/environment' ).envvars;
 
 const app = express();
@@ -39,7 +39,7 @@ if ( envvars.TRAVIS_PULL_REQUEST !== false &&
   testName = `Pull request #${ envvars.TRAVIS_PULL_REQUEST }, branch: ${ envvars.TRAVIS_PULL_REQUEST_BRANCH }, Travis job #${ envvars.TRAVIS_JOB_NUMBER }`;
 } else {
   // eslint-disable-next-line no-sync
-  testName = child_process.execSync( 'git rev-parse --abbrev-ref HEAD' ).toString();
+  testName = childProcess.execSync( 'git rev-parse --abbrev-ref HEAD' ).toString();
 }
 
 const SAUCE_LABS_USERNAME = config.SAUCE_LABS_USERNAME;
@@ -56,6 +56,9 @@ const sauceCreds = {
 
 sauceConnectLauncher( sauceCreds, startServer );
 
+/**
+ * Starts a local server and connects to Sauce Labs.
+ */
 function startServer() {
   app.use( serveStatic( path.join( __dirname ) ) );
   app.use( serveStatic( path.join( __dirname, '..', 'dist' ) ) );
@@ -63,11 +66,10 @@ function startServer() {
   startSauce();
 }
 
-function startSauce( err, process ) {
-  if ( err ) {
-    console.error( err.message );
-    return;
-  }
+/**
+ * Starts the connect to Sauce Labs.
+ */
+function startSauce() {
   console.log( 'Local server listening to', STATIC_SERVER_PORT );
   console.log( 'Sauce Connect ready.' );
   const opts = {
@@ -95,6 +97,9 @@ function startSauce( err, process ) {
   } );
 }
 
+/**
+ * Check if the tests are still running on Sauce Labs.
+ */
 function checkSauce() {
   const opts = {
     url: `https://${ SAUCE_LABS_USERNAME }:${ SAUCE_LABS_ACCESS_KEY }@saucelabs.com/rest/v1/cct-sauce/js-tests/status`,

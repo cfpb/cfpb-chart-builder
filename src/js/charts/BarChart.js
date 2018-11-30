@@ -1,6 +1,6 @@
-import accessibility from 'highcharts/js/modules/accessibility';
 import Highcharts from 'highcharts/js/highstock';
-import * as process from '../utils/process-json';
+import accessibility from 'highcharts/js/modules/accessibility';
+import { processYoyData } from '../utils/process-json';
 
 accessibility( Highcharts );
 
@@ -13,7 +13,7 @@ Highcharts.setOptions( {
 
 class BarChart {
   constructor( { el, description, data, metadata } ) {
-    data = process.processYoyData( data[0], metadata );
+    data = processYoyData( data[0], metadata );
 
     const options = {
       chart: {

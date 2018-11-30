@@ -104,7 +104,7 @@ function _getStorageType( storage ) {
 }
 
 // Expose public methods.
-export {
+export default {
   setItem,
   getItem,
   removeItem

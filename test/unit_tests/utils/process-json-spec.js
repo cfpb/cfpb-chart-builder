@@ -33,6 +33,7 @@ describe( 'process-json', () => {
 
   describe( 'getProjectedTimestamp', () => {
     beforeEach( () => {
+      /* eslint-disable line-comment-position, no-inline-comments */
       data = [
         [ 1477958400000, 1 ], // nov 16
         [ 1480550400000, 2 ], // dec
@@ -45,6 +46,7 @@ describe( 'process-json', () => {
         [ 1498867200000, 9 ], // july
         [ 1501545600000, 10 ] // aug
       ];
+      /* eslint-enable line-comment-position, no-inline-comments */
     } );
 
     it( 'should return UTC timestamp for ' +
@@ -75,6 +77,7 @@ describe( 'process-json', () => {
 
   describe( 'processYoyData', () => {
     beforeEach( () => {
+      /* eslint-disable line-comment-position, no-inline-comments */
       data = {
         test: [
           [ 1117584000000, 100 ], // jun 2005
@@ -92,6 +95,7 @@ describe( 'process-json', () => {
           [ 1259625600000, 0.33 ] // dec 2009
         ]
       };
+      /* eslint-enable line-comment-position, no-inline-comments */
       testData = yoy( data, 'test' );
     } );
 

@@ -1,7 +1,7 @@
-import accessibility from 'highcharts/js/modules/accessibility';
 import Highcharts from 'highcharts/js/highmaps';
-const getTileMapColor = require( '../utils/get-tile-map-color' );
-import * as process from '../utils/process-json';
+import accessibility from 'highcharts/js/modules/accessibility';
+import getTileMapColor from '../utils/get-tile-map-color';
+import { processMapData } from '../utils/process-json';
 
 accessibility( Highcharts );
 
@@ -68,7 +68,7 @@ Highcharts.setOptions( {
 
 class TileMap {
   constructor( { el, description, data, metadata, title } ) {
-    data = process.processMapData( data[0], metadata );
+    data = processMapData( data[0], metadata );
 
     const options = {
       chart: {

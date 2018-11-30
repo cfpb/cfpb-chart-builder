@@ -54,7 +54,6 @@ gulp.task( 'watch',
     'watch:scripts',
     'watch:styles',
     'watch:tests',
-    'connect',
     browserSyncInit
   )
 );

@@ -38,8 +38,8 @@ gulp.task( 'watch:tests', done => {
  */
 function browserSyncInit( done ) {
   const browserSyncSettings = {
-    proxy: 'localhost:8081',
     port: 5000,
+    server: [ './dist', './test' ],
     files: [ './dist' ],
     notify: true
   };

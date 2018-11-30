@@ -27,7 +27,7 @@ function getColorByValue( value ) {
   return green50;
 }
 
-module.exports = {
+export default {
   getColorByValue: getColorByValue,
   green50: green50,
   green20: green20,

@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 // Visual line separators for Hawaii, Alaska, Puerto Rico
-module.exports = {
+export default {
   "type":"FeatureCollection",
   "crs": {
     "type": "name",

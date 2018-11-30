@@ -1,8 +1,8 @@
-import accessibility from 'highcharts/js/modules/accessibility';
 import Highcharts from 'highcharts/js/highmaps';
-const outlines = require( '../utils/state-outlines' );
-const separators = require( '../utils/map-separators' );
-const colorRange = require( '../utils/color-range' );
+import accessibility from 'highcharts/js/modules/accessibility';
+import colorRange from '../utils/color-range';
+import outlines from '../utils/state-outlines';
+import separators from '../utils/map-separators';
 
 accessibility( Highcharts );
 
@@ -29,7 +29,7 @@ class GeoMap {
     }
   ) {
 
-  // Add the color attribute if needed so we can hook into it with the CSS.
+    // Add the color attribute if needed so we can hook into it with the CSS.
     if ( color && el.getAttribute( 'data-chart-color' ) === null ) {
       el.setAttribute( 'data-chart-color', color );
     }

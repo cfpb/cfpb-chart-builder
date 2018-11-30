@@ -205,4 +205,4 @@ const getTileMapState = {
   }
 };
 
-module.exports = getTileMapState;
+export default getTileMapState;

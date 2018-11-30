@@ -1,5 +1,5 @@
 import ajax from 'xdr';
-import * as cache from './session-storage';
+import cache from './session-storage';
 
 let DATA_SOURCE_BASE = 'https://files.consumerfinance.gov/data/';
 

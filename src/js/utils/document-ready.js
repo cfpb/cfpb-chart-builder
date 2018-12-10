@@ -87,7 +87,7 @@ function ready( callback ) {
      others are safe when readyState is "interactive". */
   if ( document.readyState === 'complete' ||
        ( !document.attachEvent && document.readyState === 'interactive' ) ) {
-    setTimeout( ready, 1 );
+    setTimeout( docReady, 1 );
   } else if ( !readyEventHandlersInstalled ) {
     // Otherwise if we don't have event handlers installed, install them.
     if ( document.addEventListener ) {

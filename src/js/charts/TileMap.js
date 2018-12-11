@@ -1,5 +1,5 @@
-import Highcharts from 'highcharts/js/highmaps';
-import accessibility from 'highcharts/js/modules/accessibility';
+import Highcharts from 'highcharts/highmaps';
+import accessibility from 'highcharts/modules/accessibility';
 import getTileMapColor from '../utils/get-tile-map-color';
 import { processMapData } from '../utils/process-json';
 
@@ -72,7 +72,8 @@ class TileMap {
 
     const options = {
       chart: {
-        marginTop: 150
+        marginTop: 150,
+        styledMode: true
       },
       title: false,
       description: description,

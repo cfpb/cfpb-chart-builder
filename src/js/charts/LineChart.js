@@ -1,5 +1,5 @@
-import Highcharts from 'highcharts/js/highstock';
-import accessibility from 'highcharts/js/modules/accessibility';
+import Highcharts from 'highcharts/highstock';
+import accessibility from 'highcharts/modules/accessibility';
 import { getFirstNumber } from '../utils/calculation';
 import { processNumOriginationsData } from '../utils/process-json';
 
@@ -72,6 +72,7 @@ class LineChart {
         marginBottom: 100,
         marginLeft: 60,
         marginRight: 20,
+        styledMode: true,
         zoomType: 'none'
       },
       description: description,

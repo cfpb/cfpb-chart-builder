@@ -1,5 +1,5 @@
-import Highcharts from 'highcharts/js/highstock';
-import accessibility from 'highcharts/js/modules/accessibility';
+import Highcharts from 'highcharts/highstock';
+import accessibility from 'highcharts/modules/accessibility';
 import { processDelinquencies } from '../utils/process-json';
 
 accessibility( Highcharts );
@@ -31,10 +31,11 @@ class LineChartComparison {
 
     this.chartOptions = {
       chart: {
+        animation: false,
         marginRight: 0,
         marginTop: 100,
-        zoomType: 'none',
-        animation: false
+        styledMode: true,
+        zoomType: 'none'
       },
       className: 'cfpb-chart_line-comparison',
       description: description,

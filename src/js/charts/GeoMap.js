@@ -1,5 +1,5 @@
-import Highcharts from 'highcharts/js/highmaps';
-import accessibility from 'highcharts/js/modules/accessibility';
+import Highcharts from 'highcharts/highmaps';
+import accessibility from 'highcharts/modules/accessibility';
 import colorRange from '../utils/color-range';
 import outlines from '../utils/state-outlines';
 import separators from '../utils/map-separators';

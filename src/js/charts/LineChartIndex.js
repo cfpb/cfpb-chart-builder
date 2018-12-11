@@ -178,6 +178,9 @@ class LineChartIndex {
                 marginLeft: 80
               },
               xAxis: {
+                labels: {
+                  y: 26
+                },
                 plotLines: [ {
                   value: data.projectedDate.timestamp,
                   label: {
@@ -185,7 +188,7 @@ class LineChartIndex {
                     rotation: 0,
                     useHTML: true,
                     x: -300,
-                    y: -24
+                    y: -20
                   }
                 } ]
               },

@@ -80,7 +80,8 @@ class LineChartComparison {
           year: '%b<br/>%Y'
         },
         labels: {
-          useHTML: true
+          useHTML: true,
+          y: 26
         }
       },
       yAxis: {

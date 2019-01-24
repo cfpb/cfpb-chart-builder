@@ -154,7 +154,8 @@ and automatically update the running site.
 
 `npm test` will run unit and browser tests.
 
-Sauce Labs is used to test the charts in IE 8 through 10.
+Sauce Labs is used to test the charts in IE 10.
+_(Note: This is not working correctly as of 1/24/19.)_
 An [Open Sauce](https://saucelabs.com/open-source) account has been created for this repo.
 Its credentials can be found at https://GHE/gist/contolini/504ea71f6a19c74090c7a150aff60421.
 Add the credentials locally by doing:

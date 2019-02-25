@@ -78,7 +78,8 @@ class LineChart {
       credits: false,
       rangeSelector: {
         floating: true,
-        selected: 'all',
+        // The index of the button to appear pre-selected.
+        selected: 2,
         height: 35,
         inputEnabled: false,
         verticalAlign: 'bottom',

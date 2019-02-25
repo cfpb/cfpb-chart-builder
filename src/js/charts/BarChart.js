@@ -28,7 +28,8 @@ class BarChart {
       credits: false,
       rangeSelector: {
         floating: true,
-        selected: 'all',
+        // The index of the button to appear pre-selected.
+        selected: 2,
         height: 35,
         inputEnabled: false,
         verticalAlign: 'bottom',
@@ -58,10 +59,6 @@ class BarChart {
             type: 'year',
             count: 5,
             text: '5y'
-          },
-          {
-            type: 'all',
-            text: 'All'
           }
         ]
       },

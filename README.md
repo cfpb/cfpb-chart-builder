@@ -152,7 +152,11 @@ and automatically update the running site.
 
 ### Publish a release
 
-1. After merging all PRs needed for release, update the version in `package.json` using [semantic versioning](https://semver.org) and commit it.
+1. After merging all PRs needed for release, update the version in `package.json` using [semantic versioning](https://semver.org) and commit it:
+   ```
+   npm version patch
+   git commit -m 'describe the version upgrade'
+   ```
 1. Tag the repo with the new version number. This example tags a release as `v5.1.2` and then pushes the tag to Github:
    ```
    git tag -a v5.1.2 -m 'description of what is in the release'

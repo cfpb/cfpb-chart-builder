@@ -28,7 +28,8 @@ class BarChart {
       credits: false,
       rangeSelector: {
         floating: true,
-        selected: 2, // The index of the button to appear pre-selected.
+        // The index of the button to appear pre-selected.
+        selected: 2,
         height: 35,
         inputEnabled: false,
         verticalAlign: 'bottom',

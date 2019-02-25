@@ -150,6 +150,20 @@ run `gulp watch` from the project root.
 Running in this manner will also watch for changes in the source code
 and automatically update the running site.
 
+### Publish a release
+
+1. After merging all PRs needed for release, tag the latest code on master, using [semantic versioning](https://semver.org). This example tags a release as `v5.1.2` and then pushes the tag to Github:
+   ```
+   git tag -a v5.1.2 -m 'description of what is in the release'
+   git push upstream master --tags
+   ```
+1. Create a new release description on Github at https://github.com/cfpb/cfpb-chart-builder/releases/new using your new tag.
+1. Publish to npm:
+   ```
+   npm publish
+   ```
+
+
 ## Testing
 
 `npm test` will run unit and browser tests.

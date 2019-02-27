@@ -136,6 +136,9 @@ class BarChart {
           type: 'column',
           data: data,
           name: 'Year-over-year change (%)',
+          dataGrouping: {
+            groupPixelWidth: 5
+          },
           tooltip: {
             valueDecimals: 2
           },

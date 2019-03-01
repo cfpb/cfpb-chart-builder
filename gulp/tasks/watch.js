@@ -11,7 +11,7 @@ gulp.task( 'watch:scripts', done => {
   gulp.watch(
     [ config.test.src, config.demoScripts.src, config.test.tests ],
     gulp.series( 'scripts', 'test:unit' )
-  ).on( 'change', browserSync.reload );
+  );
   done();
 } );
 
@@ -52,8 +52,8 @@ function browserSyncInit( done ) {
 gulp.task( 'watch',
   gulp.parallel(
     'watch:scripts',
-    'watch:styles',
     'watch:tests',
+    'watch:styles',
     browserSyncInit
   )
 );

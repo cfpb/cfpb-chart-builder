@@ -37,7 +37,8 @@ module.exports = {
   test: {
     src:   loc.src + '/js/**/*.js',
     tests: loc.test,
-    unit: loc.test + '/unit_tests/**/*.js'
+    unit: loc.test + '/unit_tests/**/*.js',
+    demo: loc.test + '/index.html'
   },
   clean: {
     dest: loc.dist

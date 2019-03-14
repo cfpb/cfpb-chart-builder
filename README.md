@@ -136,7 +136,7 @@ for more details.
 3. Install the dependencies and compile the project with: `./setup.sh`
 
   __NOTE:__ To re-install and rebuild all the site’s assets run
-  `./setup.sh` again. See the [usage](#usage) section on updating all the
+  `./setup.sh` again. See the [usage](#development-usage) section on updating all the
   project dependencies.
 
 ### Development usage
@@ -145,18 +145,36 @@ Each time you fetch from the upstream repository (this repo), run `./setup.sh`.
 This setup script will remove and re-install the project dependencies and
 rebuild the site's JavaScript and CSS assets.
 
-To watch for changes in the source code and automatically update the running site,
-open a terminal and run:
+To run the site on a local server,
+run `gulp watch` from the project root.
+Running in this manner will also watch for changes in the source code
+and automatically update the running site.
 
-```bash
-gulp watch
-```
+### Publish a release
+
+1. After merging all PRs needed for release, update the version in `package.json` using [semantic versioning](https://semver.org) and commit it:
+   ```
+   npm version patch
+   git commit -m 'describe the version upgrade'
+   ```
+1. Tag the repo with the new version number. This example tags a release as `v5.1.2` and then pushes the tag to Github:
+   ```
+   git tag -a v5.1.2 -m 'description of what is in the release'
+   git push upstream master --tags
+   ```
+1. Create a new release description on Github at https://github.com/cfpb/cfpb-chart-builder/releases/new using your new tag.
+1. Publish to npm:
+   ```
+   npm publish
+   ```
+
 
 ## Testing
 
 `npm test` will run unit and browser tests.
 
-Sauce Labs is used to test the charts in IE 8 through 10.
+Sauce Labs is used to test the charts in IE 10.
+_(Note: This is not working correctly as of 1/24/19.)_
 An [Open Sauce](https://saucelabs.com/open-source) account has been created for this repo.
 Its credentials can be found at https://GHE/gist/contolini/504ea71f6a19c74090c7a150aff60421.
 Add the credentials locally by doing:
@@ -165,7 +183,7 @@ Add the credentials locally by doing:
 1. Add valid Sauce Labs credentials to `test/config.json` (see above gist).
 
 The browser tests will take several minutes to run.
-The test script simply loads `http://localhost:8089/test` in IE VMs and reports any `window` errors.
+The test script simply loads `http://localhost:8089/` in IE VMs and reports any `window` errors.
 
 ## Getting help
 

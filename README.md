@@ -152,14 +152,13 @@ and automatically update the running site.
 
 ### Publish a release
 
-1. After merging all PRs needed for release, update the version in `package.json` using [semantic versioning](https://semver.org) and commit it:
+1. After merging all PRs needed for release, update the version in `package.json` using [semantic versioning](https://semver.org). This command will also tag and commit the updated version:
    ```
+   # change patch to minor or major as needed
    npm version patch
-   git commit -m 'describe the version upgrade'
    ```
-1. Tag the repo with the new version number. This example tags a release as `v5.1.2` and then pushes the tag to Github:
+1. Push the new version and tag to Github:
    ```
-   git tag -a v5.1.2 -m 'description of what is in the release'
    git push upstream master --tags
    ```
 1. Create a new release description on Github at https://github.com/cfpb/cfpb-chart-builder/releases/new using your new tag.

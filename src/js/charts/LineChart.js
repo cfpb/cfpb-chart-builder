@@ -1,5 +1,5 @@
-import Highcharts from 'highcharts/js/highstock';
-import accessibility from 'highcharts/js/modules/accessibility';
+import Highcharts from 'highcharts/highstock';
+import accessibility from 'highcharts/modules/accessibility';
 import { getFirstNumber } from '../utils/calculation';
 import { processNumOriginationsData } from '../utils/process-json';
 
@@ -72,6 +72,7 @@ class LineChart {
         marginBottom: 100,
         marginLeft: 60,
         marginRight: 20,
+        styledMode: true,
         zoomType: 'none'
       },
       description: description,
@@ -237,6 +238,9 @@ class LineChart {
                 marginLeft: 80
               },
               xAxis: {
+                labels: {
+                  y: 26
+                },
                 plotLines: [ {
                   value: data.projectedDate.timestamp,
                   label: {
@@ -244,7 +248,7 @@ class LineChart {
                     rotation: 0,
                     useHTML: true,
                     x: -300,
-                    y: -24
+                    y: -20
                   }
                 } ]
               },

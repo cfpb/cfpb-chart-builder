@@ -1,4 +1,4 @@
-jest.mock( 'highcharts/js/highstock', () => ( {
+jest.mock( 'highcharts/highstock', () => ( {
   setOptions: jest.fn(),
   stockChart: ( props, opts ) => {
     const options = opts;
@@ -11,7 +11,7 @@ jest.mock( 'highcharts/js/highstock', () => ( {
   }
 } ) );
 
-jest.mock( 'highcharts/js/modules/accessibility', () => jest.fn() );
+jest.mock( 'highcharts/modules/accessibility', () => jest.fn() );
 
 import LineChart from '../../../src/js/charts/LineChartComparison';
 let line;

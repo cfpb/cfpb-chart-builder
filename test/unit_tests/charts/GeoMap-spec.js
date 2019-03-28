@@ -1,6 +1,6 @@
 const shapes = require( '../../sample_data/mortgage-performance/map-data/30-89/states/us-states.geo.json' );
 
-jest.mock( 'highcharts/js/highmaps', () => ( {
+jest.mock( 'highcharts/highmaps', () => ( {
   setOptions: jest.fn(),
   geojson: () => [],
   mapChart: ( props, opts ) => {
@@ -14,7 +14,7 @@ jest.mock( 'highcharts/js/highmaps', () => ( {
   }
 } ) );
 
-jest.mock( 'highcharts/js/modules/accessibility', () => jest.fn() );
+jest.mock( 'highcharts/modules/accessibility', () => jest.fn() );
 
 import GeoMap from '../../../src/js/charts/GeoMap';
 let geoMap;

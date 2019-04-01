@@ -37,6 +37,10 @@ const interval = setInterval( () => {
 
 const updateAllTheCharts = () => {
   setTimeout( () => {
+    map.highchart.chart.get( '10740' ).select( true );
+  }, 1000 );
+
+  setTimeout( () => {
     chart.update({
       source: 'mortgage-performance/time-series/30-89/12031;mortgage-performance/time-series/30-89/national',
       metadata: 'pct90'
@@ -67,6 +71,11 @@ const updateAllTheCharts = () => {
       metadata: 'metros'
     });
   }, 20000 );
+
+  setTimeout( () => {
+    map.highchart.chart.get( '10740' ).select( true );
+  }, 25000 );
+
 };
 
 // Sauce Labs only runs the tests for ten seconds so don't test all

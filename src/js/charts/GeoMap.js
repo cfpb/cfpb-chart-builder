@@ -35,6 +35,9 @@ class GeoMap {
     }
 
     this.chartOptions = {
+      chart: {
+        styledMode: true
+      },
       credits: false,
       title: {
         text: ''

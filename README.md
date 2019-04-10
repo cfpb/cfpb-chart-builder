@@ -165,6 +165,12 @@ When running the site locally, you can temporarily link changes you are making t
    gulp build
    ./runserver.sh
    ```
+1. When you're done and want to bring back the published package:
+   ```
+   npm unlink cfpb-chart-builder
+   yarn add cfpb-chart-builder
+   gulp build
+   ```
 
 ### Publish a release
 

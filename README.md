@@ -150,6 +150,28 @@ run `gulp watch` from the project root.
 Running in this manner will also watch for changes in the source code
 and automatically update the running site.
 
+#### Development with cfgov-refresh
+
+When running the site locally, you can temporarily link changes you are making to the code with the [cfgov-refresh](https://github.com/cfpb/cfgov-refresh/) project. 
+
+1. In the cfpb-chart-builder directory, run:
+   ```
+   npm link
+   ```
+1. In the cfgov-refresh directory:
+   ```
+   ./setup.sh
+   npm link cfpb-chart-builder
+   gulp build
+   ./runserver.sh
+   ```
+1. When you're done and want to bring back the published package:
+   ```
+   npm unlink cfpb-chart-builder
+   yarn add cfpb-chart-builder
+   gulp build
+   ```
+
 ### Publish a release
 
 1. After merging all PRs needed for release, update the version in `package.json` using [semantic versioning](https://semver.org). This command will also tag and commit the updated version:

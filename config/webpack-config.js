@@ -19,6 +19,7 @@ const COMMON_MODULE_CONFIG = {
           /* Use useBuiltIns: 'usage' and set `debug: true` to see what
              scripts require polyfilling. */
           useBuiltIns: 'usage',
+          corejs: 3,
           debug: false
         } ] ]
       }

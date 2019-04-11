@@ -36,42 +36,45 @@ const interval = setInterval( () => {
 }, 1000 );
 
 const updateAllTheCharts = () => {
+
+  // 10740 refers to a county ID that'll highlight so we can check the borders.
   setTimeout( () => {
     map.highchart.chart.get( '10740' ).select( true );
   }, 1000 );
 
   setTimeout( () => {
-    chart.update({
+    chart.update( {
       source: 'mortgage-performance/time-series/30-89/12031;mortgage-performance/time-series/30-89/national',
       metadata: 'pct90'
-    });
-    map.update({
+    } );
+    map.update( {
       source: 'mortgage-performance/map-data/30-89/counties/2009-01',
       metadata: 'counties'
-    });
+    } );
   }, 5000 );
 
   setTimeout( () => {
-    map.update({
+    map.update( {
       source: 'mortgage-performance/map-data/30-89/states/2009-01',
       metadata: 'states'
-    });
+    } );
   }, 10000 );
 
   setTimeout( () => {
-    map.update({
+    map.update( {
       source: 'mortgage-performance/map-data/30-89/counties/2009-01',
       metadata: 'counties'
-    });
+    } );
   }, 15000 );
 
   setTimeout( () => {
-    map.update({
+    map.update( {
       source: 'mortgage-performance/map-data/30-89/metros/2009-01',
       metadata: 'metros'
-    });
+    } );
   }, 20000 );
 
+  // 10740 refers to a county ID that'll highlight so we can check the borders.
   setTimeout( () => {
     map.highchart.chart.get( '10740' ).select( true );
   }, 25000 );

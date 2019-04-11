@@ -52,10 +52,8 @@ class GeoMap {
         enabled: true,
         enableMouseWheelZoom: false
       },
-      plotOptions: {
-        exposeElementToA11y: true
-      },
       accessibility: {
+        exposeAsGroupOnly: true,
         enabled: true,
         keyboardNavigation: {
           enabled: true
@@ -176,10 +174,12 @@ class GeoMap {
     const stateOutlinesLayer = {
       type: 'mapline',
       name: 'Borders',
-      exposeElementToA11y: false,
+      accessibility: {
+        exposeAsGroupOnly: false,
+        keyboardNavigation: { enabled: false }
+      },
       data: borders,
       enableMouseTracking: false,
-      skipKeyboardNavigation: true,
       className: `cfpb-chart-geo-state-outline-${ metadata }`,
       id: `cfpb-chart-geo-state-outline-${ metadata }`,
       // State data comes with state outlines so remove that layer
@@ -194,10 +194,12 @@ class GeoMap {
     const mapSeparatorsLayer = {
       type: 'mapline',
       name: 'Map separators',
-      exposeElementToA11y: false,
+      accessibility: {
+        exposeAsGroupOnly: false,
+        keyboardNavigation: { enabled: false }
+      },
       data: lines,
       enableMouseTracking: false,
-      skipKeyboardNavigation: true,
       className: 'cfpb-chart-geo-map-separators',
       states: {
         hover: {
@@ -208,7 +210,7 @@ class GeoMap {
 
     const dataLayer = {
       mapData: points,
-      exposeElementToA11y: true,
+      accessibility: { exposeAsGroupOnly: true },
       className: `cfpb-chart-geo-data-outline-${ metadata }`,
       id: `cfpb-chart-geo-data-outline-${ metadata }`,
       data: data,

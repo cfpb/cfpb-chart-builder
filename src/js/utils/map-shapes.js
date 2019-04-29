@@ -1,7 +1,10 @@
 import ajax from './get-data';
 import cache from './session-storage';
 
-const DATA_SOURCE_BASE = 'https://files.consumerfinance.gov/data/';
+let DATA_SOURCE_BASE = 'https://files.consumerfinance.gov/data/';
+
+// Let browsers override the data source root (useful for localhost testing).
+DATA_SOURCE_BASE = window.CFPB_CHART_DATA_SOURCE_BASE || DATA_SOURCE_BASE;
 
 const shapes = {
   states: `${ DATA_SOURCE_BASE }mortgage-performance/meta/us-states.geo.json`,

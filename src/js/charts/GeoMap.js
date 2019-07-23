@@ -3,6 +3,7 @@ import accessibility from 'highcharts/modules/accessibility';
 import colorRange from '../utils/color-range';
 import outlines from '../utils/state-outlines';
 import separators from '../utils/map-separators';
+import EventObserver from '../utils/EventObserver';
 
 accessibility( Highcharts );
 
@@ -28,15 +29,45 @@ class GeoMap {
       screenReaderSectionFormatter
     }
   ) {
+    // Attach public events.
+    const eventObserver = new EventObserver();
+    this.addEventListener = eventObserver.addEventListener;
+    this.removeEventListener = eventObserver.removeEventListener;
+    this.dispatchEvent = eventObserver.dispatchEvent;
 
     // Add the color attribute if needed so we can hook into it with the CSS.
     if ( color && el.getAttribute( 'data-chart-color' ) === null ) {
       el.setAttribute( 'data-chart-color', color );
     }
 
+    const that = this;
+
+    this.lastGeoType = 'metros';
+
     this.chartOptions = {
       chart: {
-        styledMode: true
+        styledMode: true,
+        events: {
+          addSeries: event => {
+            console.log('addSeries firing…', event);
+          },
+          load: event => {
+            console.log('load firing…', event);
+          },
+          update: event => {
+            console.log('update firing…', event);
+          },
+          render: event => {
+            console.log('render firing…', event);
+          },
+          redraw: event => {
+            console.log('redraw firing…', event);
+          },
+          afterUpdate: event => {
+            console.log( 'afterUpdate firing…', event );
+            that.dispatchEvent( 'afterUpdate', event );
+          }
+        }
       },
       credits: false,
       title: {
@@ -142,6 +173,7 @@ class GeoMap {
 
     // TODO: remove when gulp build config is updated to handle spread operator.
     // eslint-disable-next-line prefer-object-spread
+    console.log( 'Highcharts.mapChart', Object.assign( {}, this.chartOptions ) );
     this.chart = Highcharts.mapChart( el, Object.assign( {}, this.chartOptions ) );
   }
 
@@ -156,7 +188,7 @@ class GeoMap {
       if ( rows[mapPoint.properties.id] ) {
         mapPoint.name = rows[mapPoint.properties.id].name;
       } else {
-        // Preserve the map point but leave its name blank if it has no data
+        // Preserve the map point but leave its name blank if it has no data.
         mapPoint.name = '';
       }
       points.push( mapPoint );
@@ -188,7 +220,8 @@ class GeoMap {
         hover: {
           enabled: false
         }
-      }
+      },
+      index: 2
     };
 
     const mapSeparatorsLayer = {
@@ -200,12 +233,14 @@ class GeoMap {
       },
       data: lines,
       enableMouseTracking: false,
+      id: 'cfpb-chart-geo-map-separators',
       className: 'cfpb-chart-geo-map-separators',
       states: {
         hover: {
           enabled: false
         }
-      }
+      },
+      index: 1
     };
 
     const dataLayer = {
@@ -220,16 +255,26 @@ class GeoMap {
         hover: {
           enabled: false
         }
-      }
+      },
+      index: 0
     };
+
+    console.log( 'the data is', data, 'mapData is', points );
 
     return [ dataLayer, mapSeparatorsLayer, stateOutlinesLayer ];
   }
 
   update( newOptions ) {
+    console.log( 'GeoMap:update called!' );
+
     if ( newOptions.data ) {
-      newOptions.series = this.constructor.getSeries( newOptions.data, newOptions.shapes, newOptions.metadata );
+      newOptions.series = this.constructor.getSeries(
+        newOptions.data,
+        newOptions.shapes,
+        newOptions.metadata
+      );
     }
+
     if ( newOptions.tooltipFormatter ) {
       newOptions.tooltip = {
         useHTML: true,
@@ -240,9 +285,36 @@ class GeoMap {
         }
       };
     }
+
     // Merge the old chart options with the new ones
-    Object.assign( this.chartOptions, newOptions );
-    this.chart.update( this.chartOptions );
+    this.chartOptions = Object.assign( this.chartOptions, newOptions );
+    console.log( 'AFTER2: this.newOptions data', newOptions.series[0].id );
+    console.log( 'GeoMap::update', newOptions );
+    console.log( 'cfpb-chart-geo-data-outline-'+this.lastGeoType, newOptions.needNewMapShapes );
+    if ( newOptions.needNewMapShapes ) {
+
+      const dataLayer = JSON.parse( JSON.stringify( newOptions.series[0] ) );
+      const seperatorLayer = JSON.parse( JSON.stringify( newOptions.series[1] ) );
+      const mapLayer = JSON.parse( JSON.stringify( newOptions.series[2] ) );
+
+      this.chart.get( `cfpb-chart-geo-data-outline-${ this.lastGeoType }` ).remove( false );
+      //this.chart.addSeries( newOptions.series[0], false );
+      //this.chart.addSeries( dataLayer, false );
+
+      /*
+      this.chart.get( 'cfpb-chart-geo-map-separators' ).remove( false );
+      this.chart.addSeries( seperatorLayer, false );
+
+      this.chart.get( `cfpb-chart-geo-state-outline-${ this.lastGeoType }` ).remove( false );
+      this.chart.addSeries( mapLayer, false );
+
+      this.chart.addSeries( newOptions.series[1], false );
+      this.chart.addSeries( newOptions.series[2], false );
+      */
+      this.lastGeoType = newOptions.metadata;
+    }
+    this.chart.update( {} );
+    //this.chart.update( this.chartOptions );
     this.chart.hideLoading();
   }
 

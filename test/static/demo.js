@@ -26,7 +26,7 @@ const map = createChart( {
   </dl>`
 } );
 
-const interval = setInterval( () => {
+/*const interval = setInterval( () => {
   if ( seconds > 1 ) {
     countdown.innerHTML = `will update in ${--seconds} seconds`;
     return;
@@ -39,6 +39,7 @@ const updateAllTheCharts = () => {
 
   // 10740 refers to a county ID that'll highlight so we can check the borders.
   setTimeout( () => {
+    console.log( 'map.highchart', map.highchart );
     map.highchart.chart.get( '10740' ).select( true );
   }, 1000 );
 
@@ -77,10 +78,88 @@ const updateAllTheCharts = () => {
   // 10740 refers to a county ID that'll highlight so we can check the borders.
   setTimeout( () => {
     map.highchart.chart.get( '10740' ).select( true );
-  }, 25000 );
+  }, 30000 );
 
-};
+};*/
 
 // Sauce Labs only runs the tests for ten seconds so don't test all
 // the chart updating stuff if we're in a CI environment.
-if (!isCI()) updateAllTheCharts();
+//if ( !isCI() ) {
+  //updateAllTheCharts();
+//}
+
+const testGeomapStatesBtn = document.querySelector( '#test-geomap-states' );
+testGeomapStatesBtn.addEventListener( 'click', testGeomapStates );
+
+const testGeomapCountiesBtn = document.querySelector( '#test-geomap-counties' );
+testGeomapCountiesBtn.addEventListener( 'click', testGeomapCounties );
+
+const testGeomapMetrosBtn = document.querySelector( '#test-geomap-metros' );
+testGeomapMetrosBtn.addEventListener( 'click', testGeomapMetros );
+
+const testGeomapHighlightBtn = document.querySelector( '#test-geomap-highlight' );
+testGeomapHighlightBtn.addEventListener( 'click', testGeomapHighlight );
+
+const btns = [
+  testGeomapStatesBtn,
+  testGeomapCountiesBtn,
+  testGeomapMetrosBtn,
+  testGeomapHighlightBtn
+];
+
+function disableBtns() {
+  for ( let i in btns ) {
+    btns[i].setAttribute( 'disabled', '' );
+  }
+}
+
+function enableBtns() {
+  for ( let i in btns ) {
+    btns[i].removeAttribute( 'disabled' );
+  }
+}
+
+function testGeomapStates() {
+  disableBtns();
+
+  map.update( {
+    source: 'mortgage-performance/map-data/30-89/states/2009-01',
+    metadata: 'states'
+  } ).then( () => {
+    enableBtns();
+  } );
+}
+
+function testGeomapCounties() {
+  disableBtns();
+
+  map.update( {
+    source: 'mortgage-performance/map-data/30-89/counties/2009-01',
+    metadata: 'counties'
+  } ).then( () => {
+    enableBtns();
+  } );
+}
+
+function testGeomapMetros() {
+  disableBtns();
+
+  map.update( {
+    source: 'mortgage-performance/map-data/30-89/metros/2009-01',
+    metadata: 'metros'
+  } ).then( () => {
+    enableBtns();
+  } );
+}
+
+function testGeomapHighlight() {
+  disableBtns();
+
+  map.update( {
+    source: 'mortgage-performance/map-data/30-89/metros/2009-01',
+    metadata: 'metros'
+  } ).then( () => {
+    map.highchart.chart.get( '10740' ).select( true );
+    enableBtns();
+  } );
+}

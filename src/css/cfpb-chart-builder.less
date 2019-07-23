@@ -1,7 +1,7 @@
 @import (less) 'highcharts/css/highcharts.css';
 
 // cf-core is included for cf-brand-colors and media queries.
-@import (less) 'cf-core.less';
+@import (reference) 'cf-core.less';
 
 // Chart colors.
 @chart-blue-primary: @pacific;
@@ -58,6 +58,17 @@ x/y positioning on the SVG elements.
       width: 100%;
       height: 0;
       border-top: 2px solid @gray-10;
+    }
+  }
+
+  &[data-chart-type='line'],
+  &[data-chart-type='line-index'],
+  &[data-chart-type='line-comparison'],
+  &[data-chart-type='bar'] .highcharts-navigator-series {
+
+    // Hide markers on line charts.
+    .highcharts-point {
+      display: none;
     }
   }
 

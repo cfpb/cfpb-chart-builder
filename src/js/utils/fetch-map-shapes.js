@@ -1,5 +1,5 @@
-import ajax from './get-data';
 import cache from './session-storage';
+import getData from './get-data';
 
 const DATA_SOURCE_BASE = 'https://files.consumerfinance.gov/data/';
 
@@ -9,17 +9,24 @@ const shapes = {
   counties: `${ DATA_SOURCE_BASE }mortgage-performance/meta/us-counties.geo.json`
 };
 
-const fetchShapes = geoType => {
+const fetchMapShapes = geoType => {
+  console.log( 'fetchMapShapes…' );
+
   // If the shapes have already been downloaded resolve the promise immediately.
   if ( cache.getItem( `shapes-${ geoType }` ) ) {
+    console.log( `getting cached shape shapes-${ geoType }` );
     return Promise.resolve( cache.getItem( `shapes-${ geoType }` ) );
   }
+
   // Otherwise, download the shapes and cache them for future requests.
-  const promise = ajax( shapes[geoType] );
+  const promise = getData( shapes[geoType] );
+
   promise.then( data => {
+    console.log( `setting cached shape shapes-${ geoType }` )
     cache.setItem( `shapes-${ geoType }`, data );
   } );
+
   return promise;
 };
 
-export default fetchShapes;
+export default fetchMapShapes;

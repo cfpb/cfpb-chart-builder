@@ -1,13 +1,13 @@
-import ajax from './utils/get-data';
 import createChartDir from './charts';
 import documentReady from './utils/document-ready';
-import fetchShapes from './utils/map-shapes';
+import fetchMapShapes from './utils/fetch-map-shapes';
+import getData from './utils/get-data';
 
 class Chart {
 
   constructor( chartOptions ) {
     this.chartOptions = chartOptions;
-    ajax( chartOptions.source ).then( data => {
+    getData( chartOptions.source ).then( data => {
       this.chartOptions.data = data;
       this.draw( this.chartOptions );
     } );
@@ -16,8 +16,9 @@ class Chart {
   draw( chartOptions ) {
     switch ( chartOptions.type ) {
       case 'geo-map':
-        fetchShapes( chartOptions.metadata ).then( shapes => {
+        fetchMapShapes( chartOptions.metadata ).then( shapes => {
           chartOptions.shapes = shapes[0];
+          console.log( 'creating new GeoMap', chartOptions );
           this.highchart = new createChartDir.GeoMap( chartOptions );
         } );
         break;
@@ -40,31 +41,67 @@ class Chart {
     }
   }
 
+  /**
+   *
+   * @param {Object} newOptions - Options to update the chart with.
+   * @returns {Promise} A promise from the get data method.
+   */
   update( newOptions ) {
-
     const needNewMapShapes = this.chartOptions.type === 'geo-map' &&
                              this.chartOptions.metadata !== newOptions.metadata;
 
     // Merge the old chart options with the new ones
     Object.assign( this.chartOptions, newOptions );
 
+    let promiseError = '';
+
     /* If the source wasn't changed, we don't need to fetch new data and can
        immediately redraw the chart */
     if ( !newOptions.source ) {
-      return this.highchart.update( this.chartOptions );
-    }
-    // Otherwise fetch the data and redraw once it arrives
-    this.highchart.chart.showLoading( ' ' );
-    return ajax( this.chartOptions.source ).then( data => {
-      this.chartOptions.data = data;
-      if ( needNewMapShapes ) {
-        fetchShapes( this.chartOptions.metadata ).then( shapes => {
-          this.chartOptions.shapes = shapes[0];
-          this.highchart.update( this.chartOptions );
-        } );
-        return;
-      }
+      console.log( 'updating::NOT source' )
       this.highchart.update( this.chartOptions );
+    } else {
+      // Otherwise fetch the data and redraw once it arrives
+      this.highchart.chart.hideLoading();
+
+      getData( this.chartOptions.source ).then( data => {
+        this.chartOptions.data = data;
+
+        if ( needNewMapShapes ) {
+          this.chartOptions.needNewMapShapes = true;
+          fetchMapShapes( this.chartOptions.metadata ).then( shapes => {
+            console.log( 'updating::needNewMapShapes before', this.chartOptions.shapes )
+            this.chartOptions.shapes = shapes[0];
+            console.log( 'updating::needNewMapShapes after', this.chartOptions.shapes )
+            this.highchart.update( this.chartOptions );
+          } ).catch( err => {
+            promiseError = err;
+          } );
+
+          // We're in the fetch-map-shapes get-data promise call, so bail out.
+          return;
+        }
+
+        console.log( 'updating::NOT needNewMapShapes', this.chartOptions.shapes )
+        this.highchart.update( this.chartOptions );
+      } ).catch( err => {
+        promiseError = err;
+      } );
+    }
+
+    return new Promise( ( resolve, reject ) => {
+      if ( promiseError !== '' ) {
+        reject( promiseError );
+      }
+
+      const afterUpdateHandlerBinded = afterUpdateHandler.bind( this );
+      this.highchart.addEventListener( 'afterUpdate', afterUpdateHandlerBinded );
+
+      function afterUpdateHandler( event ) {
+        console.log( 'afterUpdate fired', event );
+        this.highchart.removeEventListener( 'afterUpdate', afterUpdateHandlerBinded );
+        resolve();
+      }
     } );
   }
 

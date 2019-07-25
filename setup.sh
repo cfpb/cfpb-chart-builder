@@ -31,8 +31,8 @@ install(){
 # Run tasks to build the project for distribution.
 build(){
   echo 'Building project...'
-  gulp clean
-  gulp build
+  ./node_modules/.bin/gulp clean
+  ./node_modules/.bin/gulp build
 }
 
 init

@@ -269,6 +269,7 @@ class GeoMap {
        so we remove and re-add the map layers instead and then call update
        with an empty configuration object to redraw the map. */
     if ( newOptions.needNewMapShapes ) {
+      delete this.chartOptions.series;
 
       this.chart.get( `cfpb-chart-geo-data-outline-${ this.lastGeoType }` ).remove( false );
       this.chart.addSeries( newOptions.series[0], false );
@@ -281,7 +282,7 @@ class GeoMap {
 
       this.lastGeoType = newOptions.metadata;
     }
-    this.chart.update( {} );
+    this.chart.update( this.chartOptions );
     this.chart.hideLoading();
   }
 

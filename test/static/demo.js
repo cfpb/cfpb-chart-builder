@@ -1,11 +1,9 @@
-// This file is used to test the programmatic rendering and updating of a chart
+// This file is used to test the programmatic rendering and updating of a chart.
 
 import { createChart } from '../../src/js/index';
 
 const container = document.getElementById( 'update-demo' );
-const countdown = document.getElementById( 'update-demo-countdown' );
 const mapContainer = document.getElementById( 'map' );
-let seconds = 5;
 
 const chart = createChart( {
   el: container,
@@ -26,68 +24,22 @@ const map = createChart( {
   </dl>`
 } );
 
-/*const interval = setInterval( () => {
-  if ( seconds > 1 ) {
-    countdown.innerHTML = `will update in ${--seconds} seconds`;
-    return;
-  }
-  countdown.innerHTML = 'has been automatically updated';
-  clearInterval( interval );
-}, 1000 );
+// Test chart updating.
+const testChartUpdateBtn = document.querySelector( '#test-chart-update' );
+testChartUpdateBtn.addEventListener( 'click', testChartUpdate );
 
-const updateAllTheCharts = () => {
+function testChartUpdate() {
+  testChartUpdateBtn.setAttribute( 'disabled', '' );
 
-  // 10740 refers to a county ID that'll highlight so we can check the borders.
-  setTimeout( () => {
-    console.log( 'map.highchart', map.highchart );
-    map.highchart.chart.get( '10740' ).select( true );
-  }, 1000 );
+  chart.update( {
+    source: 'mortgage-performance/time-series/30-89/12031;mortgage-performance/time-series/30-89/national',
+    metadata: 'pct90'
+  } ).then( () => {
+    testChartUpdateBtn.removeAttribute( 'disabled' );
+  } );
+}
 
-  setTimeout( () => {
-    chart.update( {
-      source: 'mortgage-performance/time-series/30-89/12031;mortgage-performance/time-series/30-89/national',
-      metadata: 'pct90'
-    } );
-    map.update( {
-      source: 'mortgage-performance/map-data/30-89/counties/2009-01',
-      metadata: 'counties'
-    } );
-  }, 5000 );
-
-  setTimeout( () => {
-    map.update( {
-      source: 'mortgage-performance/map-data/30-89/states/2009-01',
-      metadata: 'states'
-    } );
-  }, 10000 );
-
-  setTimeout( () => {
-    map.update( {
-      source: 'mortgage-performance/map-data/30-89/counties/2009-01',
-      metadata: 'counties'
-    } );
-  }, 15000 );
-
-  setTimeout( () => {
-    map.update( {
-      source: 'mortgage-performance/map-data/30-89/metros/2009-01',
-      metadata: 'metros'
-    } );
-  }, 20000 );
-
-  // 10740 refers to a county ID that'll highlight so we can check the borders.
-  setTimeout( () => {
-    map.highchart.chart.get( '10740' ).select( true );
-  }, 30000 );
-
-};*/
-
-// Sauce Labs only runs the tests for ten seconds so don't test all
-// the chart updating stuff if we're in a CI environment.
-//if ( !isCI() ) {
-  //updateAllTheCharts();
-//}
-
+// Test map updating.
 const testGeomapStatesBtn = document.querySelector( '#test-geomap-states' );
 testGeomapStatesBtn.addEventListener( 'click', testGeomapStates );
 
@@ -148,6 +100,7 @@ function testGeomapMetros() {
     source: 'mortgage-performance/map-data/30-89/metros/2009-01',
     metadata: 'metros'
   } ).then( () => {
+    map.highchart.chart.get( '10740' ).select( false );
     enableBtns();
   } );
 }
@@ -159,7 +112,7 @@ function testGeomapHighlight() {
     source: 'mortgage-performance/map-data/30-89/metros/2009-01',
     metadata: 'metros'
   } ).then( () => {
-    map.highchart.chart.get( '10740' ).select( true );
+    map.highchart.chart.get( '10740' ).select( true, false );
     enableBtns();
   } );
 }

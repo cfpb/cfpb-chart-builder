@@ -34,37 +34,20 @@ class GeoMap {
     this.addEventListener = eventObserver.addEventListener;
     this.removeEventListener = eventObserver.removeEventListener;
     this.dispatchEvent = eventObserver.dispatchEvent;
+    const that = this;
 
     // Add the color attribute if needed so we can hook into it with the CSS.
     if ( color && el.getAttribute( 'data-chart-color' ) === null ) {
       el.setAttribute( 'data-chart-color', color );
     }
 
-    const that = this;
-
-    this.lastGeoType = 'metros';
+    this.lastGeoType = metadata;
 
     this.chartOptions = {
       chart: {
         styledMode: true,
         events: {
-          addSeries: event => {
-            console.log('addSeries firing…', event);
-          },
-          load: event => {
-            console.log('load firing…', event);
-          },
-          update: event => {
-            console.log('update firing…', event);
-          },
-          render: event => {
-            console.log('render firing…', event);
-          },
-          redraw: event => {
-            console.log('redraw firing…', event);
-          },
           afterUpdate: event => {
-            console.log( 'afterUpdate firing…', event );
             that.dispatchEvent( 'afterUpdate', event );
           }
         }
@@ -173,7 +156,6 @@ class GeoMap {
 
     // TODO: remove when gulp build config is updated to handle spread operator.
     // eslint-disable-next-line prefer-object-spread
-    console.log( 'Highcharts.mapChart', Object.assign( {}, this.chartOptions ) );
     this.chart = Highcharts.mapChart( el, Object.assign( {}, this.chartOptions ) );
   }
 
@@ -220,8 +202,7 @@ class GeoMap {
         hover: {
           enabled: false
         }
-      },
-      index: 2
+      }
     };
 
     const mapSeparatorsLayer = {
@@ -239,8 +220,7 @@ class GeoMap {
         hover: {
           enabled: false
         }
-      },
-      index: 1
+      }
     };
 
     const dataLayer = {
@@ -255,17 +235,13 @@ class GeoMap {
         hover: {
           enabled: false
         }
-      },
-      index: 0
+      }
     };
-
-    console.log( 'the data is', data, 'mapData is', points );
 
     return [ dataLayer, mapSeparatorsLayer, stateOutlinesLayer ];
   }
 
   update( newOptions ) {
-    console.log( 'GeoMap:update called!' );
 
     if ( newOptions.data ) {
       newOptions.series = this.constructor.getSeries(
@@ -288,33 +264,24 @@ class GeoMap {
 
     // Merge the old chart options with the new ones
     this.chartOptions = Object.assign( this.chartOptions, newOptions );
-    console.log( 'AFTER2: this.newOptions data', newOptions.series[0].id );
-    console.log( 'GeoMap::update', newOptions );
-    console.log( 'cfpb-chart-geo-data-outline-'+this.lastGeoType, newOptions.needNewMapShapes );
+
+    /* For some reason this.chart.update( this.chartOptions ) isn't working
+       so we remove and re-add the map layers instead and then call update
+       with an empty configuration object to redraw the map. */
     if ( newOptions.needNewMapShapes ) {
 
-      const dataLayer = JSON.parse( JSON.stringify( newOptions.series[0] ) );
-      const seperatorLayer = JSON.parse( JSON.stringify( newOptions.series[1] ) );
-      const mapLayer = JSON.parse( JSON.stringify( newOptions.series[2] ) );
-
       this.chart.get( `cfpb-chart-geo-data-outline-${ this.lastGeoType }` ).remove( false );
-      //this.chart.addSeries( newOptions.series[0], false );
-      //this.chart.addSeries( dataLayer, false );
+      this.chart.addSeries( newOptions.series[0], false );
 
-      /*
       this.chart.get( 'cfpb-chart-geo-map-separators' ).remove( false );
-      this.chart.addSeries( seperatorLayer, false );
+      this.chart.addSeries( newOptions.series[1], false );
 
       this.chart.get( `cfpb-chart-geo-state-outline-${ this.lastGeoType }` ).remove( false );
-      this.chart.addSeries( mapLayer, false );
-
-      this.chart.addSeries( newOptions.series[1], false );
       this.chart.addSeries( newOptions.series[2], false );
-      */
+
       this.lastGeoType = newOptions.metadata;
     }
     this.chart.update( {} );
-    //this.chart.update( this.chartOptions );
     this.chart.hideLoading();
   }
 

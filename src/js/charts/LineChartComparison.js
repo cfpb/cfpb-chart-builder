@@ -1,6 +1,7 @@
 import Highcharts from 'highcharts/highstock';
 import accessibility from 'highcharts/modules/accessibility';
 import { processDelinquencies } from '../utils/process-json';
+import EventObserver from '../utils/EventObserver';
 
 accessibility( Highcharts );
 
@@ -28,6 +29,12 @@ function _getTickValue( value ) {
 class LineChartComparison {
 
   constructor( { el, description, data } ) {
+    // Attach public events.
+    const eventObserver = new EventObserver();
+    this.addEventListener = eventObserver.addEventListener;
+    this.removeEventListener = eventObserver.removeEventListener;
+    this.dispatchEvent = eventObserver.dispatchEvent;
+    const that = this;
 
     this.chartOptions = {
       chart: {
@@ -35,7 +42,12 @@ class LineChartComparison {
         marginRight: 0,
         marginTop: 100,
         styledMode: true,
-        zoomType: 'none'
+        zoomType: 'none',
+        events: {
+          afterUpdate: event => {
+            that.dispatchEvent( 'afterUpdate', event );
+          }
+        }
       },
       className: 'cfpb-chart_line-comparison',
       description: description,

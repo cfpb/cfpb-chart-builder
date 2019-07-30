@@ -5,8 +5,6 @@ let DATA_SOURCE_BASE = 'https://files.consumerfinance.gov/data/';
 
 const getData = sources => {
 
-  console.log( 'getData', sources );
-
   // Let browsers override the data source root (useful for localhost testing).
   DATA_SOURCE_BASE = window.CFPB_CHART_DATA_SOURCE_BASE || DATA_SOURCE_BASE;
 

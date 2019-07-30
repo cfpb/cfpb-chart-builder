@@ -18,7 +18,6 @@ class Chart {
       case 'geo-map':
         fetchMapShapes( chartOptions.metadata ).then( shapes => {
           chartOptions.shapes = shapes[0];
-          console.log( 'creating new GeoMap', chartOptions );
           this.highchart = new createChartDir.GeoMap( chartOptions );
         } );
         break;
@@ -57,8 +56,7 @@ class Chart {
 
     /* If the source wasn't changed, we don't need to fetch new data and can
        immediately redraw the chart */
-    if ( !newOptions.source ) {
-      console.log( 'updating::NOT source' )
+    if ( typeof newOptions.source === 'undefined' ) {
       this.highchart.update( this.chartOptions );
     } else {
       // Otherwise fetch the data and redraw once it arrives
@@ -70,9 +68,7 @@ class Chart {
         if ( needNewMapShapes ) {
           this.chartOptions.needNewMapShapes = true;
           fetchMapShapes( this.chartOptions.metadata ).then( shapes => {
-            console.log( 'updating::needNewMapShapes before', this.chartOptions.shapes )
             this.chartOptions.shapes = shapes[0];
-            console.log( 'updating::needNewMapShapes after', this.chartOptions.shapes )
             this.highchart.update( this.chartOptions );
           } ).catch( err => {
             promiseError = err;
@@ -82,7 +78,6 @@ class Chart {
           return;
         }
 
-        console.log( 'updating::NOT needNewMapShapes', this.chartOptions.shapes )
         this.highchart.update( this.chartOptions );
       } ).catch( err => {
         promiseError = err;
@@ -98,7 +93,6 @@ class Chart {
       this.highchart.addEventListener( 'afterUpdate', afterUpdateHandlerBinded );
 
       function afterUpdateHandler( event ) {
-        console.log( 'afterUpdate fired', event );
         this.highchart.removeEventListener( 'afterUpdate', afterUpdateHandlerBinded );
         resolve();
       }

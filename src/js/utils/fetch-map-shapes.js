@@ -10,11 +10,9 @@ const shapes = {
 };
 
 const fetchMapShapes = geoType => {
-  console.log( 'fetchMapShapes…' );
 
   // If the shapes have already been downloaded resolve the promise immediately.
   if ( cache.getItem( `shapes-${ geoType }` ) ) {
-    console.log( `getting cached shape shapes-${ geoType }` );
     return Promise.resolve( cache.getItem( `shapes-${ geoType }` ) );
   }
 
@@ -22,7 +20,6 @@ const fetchMapShapes = geoType => {
   const promise = getData( shapes[geoType] );
 
   promise.then( data => {
-    console.log( `setting cached shape shapes-${ geoType }` )
     cache.setItem( `shapes-${ geoType }`, data );
   } );
 

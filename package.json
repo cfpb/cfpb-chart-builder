@@ -34,9 +34,9 @@
   },
   "homepage": "https://github.com/cfpb/cfpb-chart-builder#readme",
   "dependencies": {
-    "cf-core": "10.2.1",
-    "cf-layout": "10.2.1",
-    "cf-typography": "10.2.1",
+    "cf-core": "11.0.0",
+    "cf-layout": "11.0.0",
+    "cf-typography": "11.0.1",
     "core-js": "3.1.4",
     "highcharts": "7.1.2",
     "xdr": "0.5.3"

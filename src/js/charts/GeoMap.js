@@ -266,8 +266,9 @@ class GeoMap {
     this.chartOptions = Object.assign( this.chartOptions, newOptions );
 
     /* For some reason this.chart.update( this.chartOptions ) isn't working
-       so we remove and re-add the map layers instead and then call update
-       with an empty configuration object to redraw the map. */
+       for updating the map series (the prior series gets merged in),
+       so we remove and re-add the map layers instead before calling
+       update to redraw the map. */
     if ( newOptions.needNewMapShapes ) {
       delete this.chartOptions.series;
 

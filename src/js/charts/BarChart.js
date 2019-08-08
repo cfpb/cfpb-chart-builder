@@ -18,7 +18,7 @@ class BarChart {
     const options = {
       chart: {
         className: 'cfpb-chart__small',
-        marginTop: 80,
+        marginTop: 142,
         marginBottom: 100,
         marginLeft: 60,
         marginRight: 20,
@@ -157,7 +157,7 @@ class BarChart {
             chartOptions: {
               chart: {
                 className: 'cfpb-chart__large',
-                marginTop: 90,
+                marginTop: 135,
                 marginBottom: 60,
                 marginLeft: 80
               },
@@ -186,7 +186,7 @@ class BarChart {
                 buttonPosition: {
                   align: 'left',
                   x: -40,
-                  y: -59
+                  y: -104
                 },
                 buttonSpacing: 10,
                 buttonTheme: {

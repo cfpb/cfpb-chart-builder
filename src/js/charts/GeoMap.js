@@ -3,6 +3,7 @@ import accessibility from 'highcharts/modules/accessibility';
 import colorRange from '../utils/color-range';
 import outlines from '../utils/state-outlines';
 import separators from '../utils/map-separators';
+import EventObserver from '../utils/EventObserver';
 
 accessibility( Highcharts );
 
@@ -28,15 +29,28 @@ class GeoMap {
       screenReaderSectionFormatter
     }
   ) {
+    // Attach public events.
+    const eventObserver = new EventObserver();
+    this.addEventListener = eventObserver.addEventListener;
+    this.removeEventListener = eventObserver.removeEventListener;
+    this.dispatchEvent = eventObserver.dispatchEvent;
+    const that = this;
 
     // Add the color attribute if needed so we can hook into it with the CSS.
     if ( color && el.getAttribute( 'data-chart-color' ) === null ) {
       el.setAttribute( 'data-chart-color', color );
     }
 
+    this.lastGeoType = metadata;
+
     this.chartOptions = {
       chart: {
-        styledMode: true
+        styledMode: true,
+        events: {
+          afterUpdate: event => {
+            that.dispatchEvent( 'afterUpdate', event );
+          }
+        }
       },
       credits: false,
       title: {
@@ -52,10 +66,8 @@ class GeoMap {
         enabled: true,
         enableMouseWheelZoom: false
       },
-      plotOptions: {
-        exposeElementToA11y: true
-      },
       accessibility: {
+        exposeAsGroupOnly: true,
         enabled: true,
         keyboardNavigation: {
           enabled: true
@@ -158,7 +170,7 @@ class GeoMap {
       if ( rows[mapPoint.properties.id] ) {
         mapPoint.name = rows[mapPoint.properties.id].name;
       } else {
-        // Preserve the map point but leave its name blank if it has no data
+        // Preserve the map point but leave its name blank if it has no data.
         mapPoint.name = '';
       }
       points.push( mapPoint );
@@ -176,10 +188,12 @@ class GeoMap {
     const stateOutlinesLayer = {
       type: 'mapline',
       name: 'Borders',
-      exposeElementToA11y: false,
+      accessibility: {
+        exposeAsGroupOnly: false,
+        keyboardNavigation: { enabled: false }
+      },
       data: borders,
       enableMouseTracking: false,
-      skipKeyboardNavigation: true,
       className: `cfpb-chart-geo-state-outline-${ metadata }`,
       id: `cfpb-chart-geo-state-outline-${ metadata }`,
       // State data comes with state outlines so remove that layer
@@ -194,10 +208,13 @@ class GeoMap {
     const mapSeparatorsLayer = {
       type: 'mapline',
       name: 'Map separators',
-      exposeElementToA11y: false,
+      accessibility: {
+        exposeAsGroupOnly: false,
+        keyboardNavigation: { enabled: false }
+      },
       data: lines,
       enableMouseTracking: false,
-      skipKeyboardNavigation: true,
+      id: 'cfpb-chart-geo-map-separators',
       className: 'cfpb-chart-geo-map-separators',
       states: {
         hover: {
@@ -208,7 +225,7 @@ class GeoMap {
 
     const dataLayer = {
       mapData: points,
-      exposeElementToA11y: true,
+      accessibility: { exposeAsGroupOnly: true },
       className: `cfpb-chart-geo-data-outline-${ metadata }`,
       id: `cfpb-chart-geo-data-outline-${ metadata }`,
       data: data,
@@ -225,9 +242,15 @@ class GeoMap {
   }
 
   update( newOptions ) {
+
     if ( newOptions.data ) {
-      newOptions.series = this.constructor.getSeries( newOptions.data, newOptions.shapes, newOptions.metadata );
+      newOptions.series = this.constructor.getSeries(
+        newOptions.data,
+        newOptions.shapes,
+        newOptions.metadata
+      );
     }
+
     if ( newOptions.tooltipFormatter ) {
       newOptions.tooltip = {
         useHTML: true,
@@ -238,8 +261,28 @@ class GeoMap {
         }
       };
     }
+
     // Merge the old chart options with the new ones
-    Object.assign( this.chartOptions, newOptions );
+    this.chartOptions = Object.assign( this.chartOptions, newOptions );
+
+    /* For some reason this.chart.update( this.chartOptions ) isn't working
+       for updating the map series (the prior series gets merged in),
+       so we remove and re-add the map layers instead before calling
+       update to redraw the map. */
+    if ( newOptions.needNewMapShapes ) {
+      delete this.chartOptions.series;
+
+      this.chart.get( `cfpb-chart-geo-data-outline-${ this.lastGeoType }` ).remove( false );
+      this.chart.addSeries( newOptions.series[0], false );
+
+      this.chart.get( 'cfpb-chart-geo-map-separators' ).remove( false );
+      this.chart.addSeries( newOptions.series[1], false );
+
+      this.chart.get( `cfpb-chart-geo-state-outline-${ this.lastGeoType }` ).remove( false );
+      this.chart.addSeries( newOptions.series[2], false );
+
+      this.lastGeoType = newOptions.metadata;
+    }
     this.chart.update( this.chartOptions );
     this.chart.hideLoading();
   }

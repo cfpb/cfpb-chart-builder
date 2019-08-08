@@ -147,7 +147,7 @@ describe( 'GeoMapComparison', () => {
           }
         }
       }
-    ]} );
+    ] } );
     expect( geoMap.chart.options.series[0].data[0].fips ).toBe( '18' );
     expect( geoMap.chart.options.series[0].data[1].fips ).toBe( '22' );
   } );

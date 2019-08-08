@@ -30,7 +30,7 @@ class BarChart {
       rangeSelector: {
         floating: true,
         // The index of the button to appear pre-selected.
-        selected: 2,
+        selected: 3,
         height: 35,
         inputEnabled: false,
         verticalAlign: 'bottom',
@@ -60,6 +60,10 @@ class BarChart {
             type: 'year',
             count: 5,
             text: '5y'
+          },
+          {
+            type: 'all',
+            text: 'All'
           }
         ]
       },
@@ -133,6 +137,9 @@ class BarChart {
           type: 'column',
           data: data,
           name: 'Year-over-year change (%)',
+          dataGrouping: {
+            groupPixelWidth: 5
+          },
           tooltip: {
             valueDecimals: 2
           },

@@ -1,6 +1,6 @@
 {
   "name": "cfpb-chart-builder",
-  "version": "6.1.1",
+  "version": "6.1.2",
   "description": "Charts for the Consumer Financial Protection Bureau",
   "main": "src/js/index.js",
   "scripts": {

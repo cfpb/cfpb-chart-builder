@@ -78,9 +78,7 @@ function startSauce() {
     json: {
       platforms: [
         [ 'Windows 7', 'internet explorer', '11' ],
-        [ 'Windows 7', 'firefox', '27' ],
-        [ 'Windows 7', 'chrome', '' ],
-        [ 'Linux', 'android', '' ]
+        [ 'Windows 7', 'firefox', '27' ]
       ],
       url: 'http://localhost:' + STATIC_SERVER_PORT + '/?ci_environment=' + NODE_ENV,
       framework: 'custom',

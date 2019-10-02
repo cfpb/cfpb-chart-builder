@@ -15,6 +15,11 @@ class BarChart {
   constructor( { el, description, data, metadata } ) {
     data = processYoyData( data[0], metadata );
 
+    // Calculate the maximum range as the last data point minus 7 years.
+    const today = new Date( data[data.length - 1][0] );
+    const past = new Date( today ).setFullYear( today.getFullYear() - 7 );
+    const maxRangeValue = today - past;
+
     const options = {
       chart: {
         className: 'cfpb-chart__small',
@@ -30,7 +35,7 @@ class BarChart {
       rangeSelector: {
         floating: true,
         // The index of the button to appear pre-selected.
-        selected: 2,
+        selected: 3,
         height: 35,
         inputEnabled: false,
         verticalAlign: 'bottom',
@@ -60,6 +65,11 @@ class BarChart {
             type: 'year',
             count: 5,
             text: '5y'
+          },
+          {
+            type: 'year',
+            count: 7,
+            text: '7y'
           }
         ]
       },
@@ -73,6 +83,11 @@ class BarChart {
           groupPadding: 0,
           shadow: false,
           grouping: false
+        },
+        series: {
+          dataGrouping: {
+            enabled: false
+          }
         }
       },
       scrollbar: {
@@ -87,6 +102,7 @@ class BarChart {
       xAxis: {
         startOnTick: true,
         tickLength: 5,
+        maxRange: maxRangeValue,
         type: 'datetime',
         dateTimeLabelFormats: {
           month: '%b<br/>%Y',

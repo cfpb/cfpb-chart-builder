@@ -92,6 +92,10 @@ class Chart {
       const afterUpdateHandlerBinded = afterUpdateHandler.bind( this );
       this.highchart.addEventListener( 'afterUpdate', afterUpdateHandlerBinded );
 
+      /**
+       * Handle afterUpdate event for when the chart is updated.
+       * @param {Object} event - Highcharts event object for chart state.
+       */
       function afterUpdateHandler( event ) {
         this.highchart.removeEventListener( 'afterUpdate', afterUpdateHandlerBinded );
         resolve();

@@ -37,7 +37,7 @@
     "cf-core": "11.0.0",
     "cf-layout": "11.0.0",
     "cf-typography": "11.0.1",
-    "core-js": "3.4.0",
+    "core-js": "3.4.1",
     "highcharts": "7.2.1",
     "xdr": "0.5.3"
   },

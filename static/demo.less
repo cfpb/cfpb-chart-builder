@@ -1,0 +1,20 @@
+/* ==========================================================================
+   cfpb-chart-builder
+   ========================================================================== */
+
+// This is your project's main Less file.
+// Project-specific Less rules go after the imports.
+
+// Import Capital Framework.
+@import (less) "@cfpb/cfpb-layout/src/cfpb-layout.less";
+@import (less) "@cfpb/cfpb-typography/src/cfpb-typography.less";
+
+// Whether or not to override the local path and retrieve fonts from fonts.net.
+@use-font-cdn: true;
+
+.cfpb-chart-geo-state-outline-states path,
+.cfpb-chart-geo-state-outline-counties path,
+.cfpb-chart-geo-state-outline-metros path,
+.cfpb-chart-geo-map-separators path {
+    stroke: @black;
+}

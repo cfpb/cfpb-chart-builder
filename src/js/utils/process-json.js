@@ -94,7 +94,10 @@ function processNumOriginationsData( data, group, source ) {
   } else if ( source && source.indexOf( 'crt_' ) !== -1 ) {
     projectedMonths = 0;
   }
-  data.projectedDate.timestamp = getProjectedTimestamp( data.adjusted, projectedMonths );
+  data.projectedDate.timestamp = getProjectedTimestamp(
+    data.adjusted,
+    projectedMonths
+  );
   data.projectedDate.label = getProjectedDate( data.projectedDate.timestamp );
 
   return data;

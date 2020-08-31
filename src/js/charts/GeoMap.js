@@ -1,9 +1,9 @@
+import EventObserver from '../utils/EventObserver';
 import Highcharts from 'highcharts/highmaps';
 import accessibility from 'highcharts/modules/accessibility';
 import colorRange from '../utils/color-range';
 import outlines from '../utils/state-outlines';
 import separators from '../utils/map-separators';
-import EventObserver from '../utils/EventObserver';
 
 accessibility( Highcharts );
 
@@ -257,7 +257,10 @@ class GeoMap {
         followPointer: false,
         animation: false,
         formatter: function() {
-          return newOptions.tooltipFormatter( this.point, newOptions.data[0].meta );
+          return newOptions.tooltipFormatter(
+            this.point,
+            newOptions.data[0].meta
+          );
         }
       };
     }

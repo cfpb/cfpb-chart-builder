@@ -2,7 +2,6 @@
    Settings for webpack JavaScript bundling system.
    ========================================================================== */
 
-const webpack = require( 'webpack' );
 const TerserPlugin = require( 'terser-webpack-plugin' );
 const envvars = require( './environment' ).envvars;
 

@@ -39,11 +39,7 @@ gulp.task( 'styles:chartsConcat', () => {
     } ) )
     .on( 'error', handleErrors )
     .pipe( gulpPostcss( [
-      autoprefixer( {
-        browsers: [
-          'last 2 version'
-        ]
-      } )
+      autoprefixer()
     ] ) )
     .pipe( gulp.dest( config.styles.dest ) );
   return stream;
@@ -55,11 +51,7 @@ gulp.task( 'styles:chartsMinify', () => {
     .pipe( gulpLess( config.styles.settings ) )
     .on( 'error', handleErrors )
     .pipe( gulpPostcss( [
-      autoprefixer( {
-        browsers: [
-          'last 2 version'
-        ]
-      } )
+      autoprefixer()
     ] ) )
     .pipe( gulpRename( {
       suffix: '.min'

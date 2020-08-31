@@ -1,0 +1,29 @@
+name: Tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the repo
+      uses: actions/checkout@v2
+
+    - name: Set up Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+
+    - name: Install dependencies with Yarn
+      run: ./setup.sh
+
+    - name: Lint code
+      run: gulp lint --ci
+
+    - name: Run unit tests
+      run: gulp test

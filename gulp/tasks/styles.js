@@ -19,11 +19,7 @@ function stylesDemo() {
     .pipe( gulpLess( config.demoStyles.settings ) )
     .on( 'error', handleErrors )
     .pipe( gulpPostcss( [
-      autoprefixer( {
-        browsers: [
-          'last 2 version'
-        ]
-      } )
+      autoprefixer()
     ] ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpSourcemaps.write( '.' ) )

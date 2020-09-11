@@ -35,9 +35,9 @@
   "homepage": "https://github.com/cfpb/cfpb-chart-builder#readme",
   "browserslist": "> 0.5%, last 2 versions, Firefox ESR, not dead, ie >= 9",
   "dependencies": {
-    "@cfpb/cfpb-core": "0.1.0",
-    "@cfpb/cfpb-layout": "0.1.1",
-    "@cfpb/cfpb-typography": "0.1.0",
+    "@cfpb/cfpb-core": "0.3.1",
+    "@cfpb/cfpb-layout": "0.3.1",
+    "@cfpb/cfpb-typography": "0.3.1",
     "core-js": "3.6.5",
     "highcharts": "7.2.2",
     "xdr": "0.5.3"

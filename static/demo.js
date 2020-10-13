@@ -7,14 +7,14 @@ const mapContainer = document.getElementById( 'map' );
 
 const chart = createChart( {
   el: container,
-  source: 'mortgage-performance/time-series/30-89/national',
+  source: '/cfpb-chart-builder/sample_data/mortgage-performance/time-series/30-89/national',
   type: 'line-comparison',
   metadata: 'pct30'
 } );
 
 const map = createChart( {
   el: mapContainer,
-  source: 'mortgage-performance/map-data/30-89/metros/2009-01',
+  source: '/cfpb-chart-builder/sample_data/mortgage-performance/map-data/30-89/metros/2009-01',
   type: 'geo-map',
   metadata: 'metros',
   color: 'blue',
@@ -32,7 +32,7 @@ function testChartUpdate() {
   testChartUpdateBtn.setAttribute( 'disabled', '' );
 
   chart.update( {
-    source: 'mortgage-performance/time-series/30-89/12031;mortgage-performance/time-series/30-89/national',
+    source: '/cfpb-chart-builder/sample_data/mortgage-performance/time-series/30-89/12031;mortgage-performance/time-series/30-89/national',
     metadata: 'pct90'
   } ).then( () => {
     testChartUpdateBtn.removeAttribute( 'disabled' );
@@ -75,7 +75,7 @@ function testGeomapStates() {
   disableBtns();
 
   map.update( {
-    source: 'mortgage-performance/map-data/30-89/states/2009-01',
+    source: '/cfpb-chart-builder/sample_data/mortgage-performance/map-data/30-89/states/2009-01',
     metadata: 'states'
   } ).then( () => {
     enableBtns();
@@ -86,7 +86,7 @@ function testGeomapCounties() {
   disableBtns();
 
   map.update( {
-    source: 'mortgage-performance/map-data/30-89/counties/2009-01',
+    source: '/cfpb-chart-builder/sample_data/mortgage-performance/map-data/30-89/counties/2009-01',
     metadata: 'counties'
   } ).then( () => {
     enableBtns();
@@ -97,7 +97,7 @@ function testGeomapMetros() {
   disableBtns();
 
   map.update( {
-    source: 'mortgage-performance/map-data/30-89/metros/2009-01',
+    source: '/cfpb-chart-builder/sample_data/mortgage-performance/map-data/30-89/metros/2009-01',
     metadata: 'metros'
   } ).then( () => {
     map.highchart.chart.get( '10740' ).select( false );
@@ -109,7 +109,7 @@ function testGeomapHighlight() {
   disableBtns();
 
   map.update( {
-    source: 'mortgage-performance/map-data/30-89/metros/2009-01',
+    source: '/cfpb-chart-builder/sample_data/mortgage-performance/map-data/30-89/metros/2009-01',
     metadata: 'metros'
   } ).then( () => {
     map.highchart.chart.get( '10740' ).select( true, false );

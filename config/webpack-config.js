@@ -34,7 +34,7 @@ const COMMON_MINIFICATION_CONFIG = new TerserPlugin( {
   terserOptions: {
     ie8: false,
     ecma: 5,
-    warnings: false,
+    warnings: true,
     mangle: true,
     output: {
       comments: false,

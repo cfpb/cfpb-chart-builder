@@ -28,13 +28,13 @@ const COMMON_MODULE_CONFIG = {
 
 /* Set warnings to true to show linter-style warnings.
    Set mangle to false and beautify to true to debug the output code. */
-const COMMON_UGLIFY_CONFIG = new TerserPlugin( {
-  cache: true,
+const COMMON_MINIFICATION_CONFIG = new TerserPlugin( {
   parallel: true,
+  extractComments: false,
   terserOptions: {
     ie8: false,
     ecma: 5,
-    warnings: true,
+    warnings: false,
     mangle: true,
     output: {
       comments: false,
@@ -48,7 +48,7 @@ const commonConf = {
   module: COMMON_MODULE_CONFIG,
   mode: (() => envvars.NODE_ENV ? envvars.NODE_ENV : 'production')(),
   plugins: (() => {
-    return envvars.NODE_ENV !== 'development' ? [COMMON_UGLIFY_CONFIG] : [];
+    return envvars.NODE_ENV !== 'development' ? [COMMON_MINIFICATION_CONFIG] : [];
   })(),
   stats: {
     warnings: true

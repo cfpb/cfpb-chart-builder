@@ -1,5 +1,5 @@
 
-# CFPB Chart Builder [![Build Status](https://travis-ci.org/cfpb/cfpb-chart-builder.svg?branch=master)](https://travis-ci.org/cfpb/cfpb-chart-builder) [![codecov](https://codecov.io/gh/cfpb/cfpb-chart-builder/branch/master/graph/badge.svg)](https://codecov.io/gh/cfpb/cfpb-chart-builder) [![Sauce Test Status](https://saucelabs.com/browser-matrix/cct-sauce.svg)](https://saucelabs.com/u/cct-sauce)
+# CFPB Chart Builder [![Build Status](https://travis-ci.org/cfpb/cfpb-chart-builder.svg?branch=main)](https://travis-ci.org/cfpb/cfpb-chart-builder) [![codecov](https://codecov.io/gh/cfpb/cfpb-chart-builder/branch/main/graph/badge.svg)](https://codecov.io/gh/cfpb/cfpb-chart-builder) [![Sauce Test Status](https://saucelabs.com/browser-matrix/cct-sauce.svg)](https://saucelabs.com/u/cct-sauce)
 
 Charts for the [Consumer Financial Protection Bureau](https://cfpb.github.io/).
 
@@ -126,7 +126,7 @@ Provide any of the above options and the chart will be redrawn with those new se
 ## Contributing
 
 We welcome your feedback and contributions. See the
-[contribution guidelines](https://github.com/cfpb/open-source-project-template/blob/master/CONTRIBUTING.md)
+[contribution guidelines](https://github.com/cfpb/open-source-project-template/blob/main/CONTRIBUTING.md)
 for more details.
 
 ### Install locally
@@ -152,7 +152,7 @@ and automatically update the running site.
 
 #### Development with cfgov-refresh
 
-When running the site locally, you can temporarily link changes you are making to the code with the [cfgov-refresh](https://github.com/cfpb/cfgov-refresh/) project. 
+When running the site locally, you can temporarily link changes you are making to the code with the [cfgov-refresh](https://github.com/cfpb/cfgov-refresh/) project.
 
 1. In the cfpb-chart-builder directory, run:
    ```
@@ -181,7 +181,7 @@ When running the site locally, you can temporarily link changes you are making t
    ```
 1. Push the new version and tag to Github:
    ```
-   git push upstream master --tags
+   git push upstream main --tags
    ```
 1. Create a new release description on Github at https://github.com/cfpb/cfpb-chart-builder/releases/new using your new tag.
 1. Publish to npm:
@@ -214,7 +214,7 @@ If you find a bug not listed in the issue tracker, please file a bug report.
 ## Getting involved
 
 We welcome your feedback and contributions. See the
-[contribution guidelines](https://github.com/cfpb/open-source-project-template/blob/master/CONTRIBUTING.md)
+[contribution guidelines](https://github.com/cfpb/open-source-project-template/blob/main/CONTRIBUTING.md)
 for more details.
 
 Additionally, you may want to consider

@@ -74,7 +74,7 @@
     "terser-webpack-plugin": "5.1.1",
     "through2": "4.0.2",
     "vinyl-named": "1.1.0",
-    "webpack": "5.26.3",
+    "webpack": "5.27.1",
     "webpack-stream": "6.1.2"
   }
 }

@@ -37,13 +37,13 @@
   "dependencies": {
     "@cfpb/cfpb-core": "0.7.7",
     "@cfpb/cfpb-layout": "0.7.7",
-    "@cfpb/cfpb-typography": "0.7.9",
+    "@cfpb/cfpb-typography": "0.7.10",
     "core-js": "3.9.1",
     "highcharts": "7.2.2",
     "xdr": "0.5.3"
   },
   "devDependencies": {
-    "@babel/core": "7.13.10",
+    "@babel/core": "7.13.13",
     "@babel/preset-env": "7.13.12",
     "autoprefixer": "10.2.5",
     "babel-core": "^7.0.0-bridge.0",

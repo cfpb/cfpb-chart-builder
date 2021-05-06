@@ -39,7 +39,7 @@
     "@cfpb/cfpb-layout": "0.7.7",
     "@cfpb/cfpb-typography": "0.7.10",
     "core-js": "3.10.0",
-    "highcharts": "7.2.2",
+    "highcharts": "9.0.0",
     "xdr": "0.5.3"
   },
   "devDependencies": {

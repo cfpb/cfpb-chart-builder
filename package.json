@@ -52,7 +52,7 @@
     "browser-sync": "2.26.14",
     "cors": "2.8.5",
     "del": "6.0.0",
-    "express": "4.17.3",
+    "express": "4.19.2",
     "glob": "7.1.6",
     "gulp": "4.0.2",
     "gulp-eslint": "6.0.0",

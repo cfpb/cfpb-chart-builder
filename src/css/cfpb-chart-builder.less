@@ -4,20 +4,20 @@
 @import (reference) '@cfpb/cfpb-core/src/cfpb-core.less';
 
 // Chart colors.
-@chart-blue-primary: @pacific;
-@chart-blue-secondary: @pacific-60;
-@chart-gold-primary: @gold-dark;
-@chart-gold-secondary: @gold-80;
-@chart-green-primary: @green;
-@chart-green-secondary: @green-60;
-@chart-navy-primary: @navy;
-@chart-navy-secondary: @navy-60;
-@chart-neutral-primary: @neutral;
-@chart-neutral-secondary: @neutral-60;
-@chart-purple-primary: @purple;
-@chart-purple-secondary: @purple-60;
-@chart-teal-primary: @teal;
-@chart-teal-secondary: @teal-60;
+@chart-blue-primary: var(--pacific);
+@chart-blue-secondary: var(--pacific-60);
+@chart-gold-primary: var(--gold-dark);
+@chart-gold-secondary: var(--gold-80);
+@chart-green-primary: var(--green);
+@chart-green-secondary: var(--green-60);
+@chart-navy-primary: var(--navy);
+@chart-navy-secondary: var(--navy-60);
+@chart-neutral-primary: var(--neutral);
+@chart-neutral-secondary: var(--neutral-60);
+@chart-purple-primary: var(--purple);
+@chart-purple-secondary: var(--purple-60);
+@chart-teal-primary: var(--teal);
+@chart-teal-secondary: var(--teal-60);
 
 /*
 Updating the charts:
@@ -57,7 +57,7 @@ x/y positioning on the SVG elements.
       top: 80px;
       width: 100%;
       height: 0;
-      border-top: 2px solid @gray-10;
+      border-top: 2px solid var(--gray-10);
     }
   }
 
@@ -171,20 +171,20 @@ x/y positioning on the SVG elements.
     }
 
     .highcharts-button {
-      fill: @pacific-20;
+      fill: var(--pacific-20);
       font-size: @size-v;
 
       &:hover {
         cursor: pointer;
         .highcharts-button-box {
-          fill: @pacific-60;
+          fill: var(--pacific-60);
         }
       }
     }
 
     .highcharts-button-pressed,
     .highcharts-button-hover {
-      fill: @pacific-60;
+      fill: var(--pacific-60);
       font-weight: 600;
     }
 
@@ -216,17 +216,17 @@ x/y positioning on the SVG elements.
 
       .highcharts-navigator {
         // The border around the navigator.
-        stroke: @gray-40;
+        stroke: var(--gray-40);
       }
 
       .highcharts-navigator-mask-inside {
-        fill: @gray-10;
+        fill: var(--gray-10);
         fill-opacity: 0.25;
       }
 
       .highcharts-navigator-handle {
-        fill: @white;
-        stroke: @black;
+        fill: var(--white);
+        stroke: var(--black);
       }
 
       .highcharts-navigator-xaxis {
